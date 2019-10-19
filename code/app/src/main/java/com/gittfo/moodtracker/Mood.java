@@ -2,6 +2,10 @@ package com.gittfo.moodtracker;
 
 import android.graphics.Color;
 
+/**
+ * Represents the notion of a 'Mood' for our mood tracker app. Stores both information related to
+ * the state of a mood (i.e. emotion) and the representation of a mood (i.e. color, emoticon).
+ */
 public class Mood {
 
     /**
