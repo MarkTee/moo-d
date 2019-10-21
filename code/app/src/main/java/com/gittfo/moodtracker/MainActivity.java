@@ -35,29 +35,15 @@ public class MainActivity extends AppCompatActivity {
                 0,
                 mood);
 
-        //
-        ArrayList<MoodEvent> moodEventList = new ArrayList<>();
-        MoodHistory moodHistory = new MoodHistory(moodEventList);
 
-        //Populate list
-        moodEventList.add(moodEvent);
-        moodEventList.add(moodEvent);
-        moodEventList.add(moodEvent);
-        moodEventList.add(moodEvent);
-        moodEventList.add(moodEvent);
-        moodEventList.add(moodEvent);
-        moodEventList.add(moodEvent);
-        moodEventList.add(moodEvent);
-        moodEventList.add(moodEvent);
-        moodEventList.add(moodEvent);
-        moodEventList.add(moodEvent);
-        moodEventList.add(moodEvent);
-        moodEventList.add(moodEvent);
-        moodEventList.add(moodEvent);
-
-        //Create listViewAdapter and link it to listView
-        MoodHistoryAdapter mhAdapter = new MoodHistoryAdapter(this, moodHistory);
         ListView historyView = findViewById(R.id.mood_history);
-        historyView.setAdapter(mhAdapter);
+        MoodHistory moodHistory = new MoodHistory();
+
+        moodHistory.notifyDataSetChanged();
+
+        moodHistory.render(this, historyView);
+        moodHistory.addMoodEvent(moodEvent);
+
+
     }
 }
