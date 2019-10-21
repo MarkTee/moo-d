@@ -29,19 +29,25 @@ public class MoodHistoryAdapter extends ArrayAdapter {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 
         View view = convertView;
-        if(view == null){
-            view = LayoutInflater.from(context).inflate(R.layout.mood_event_container, parent,false);
+        if(view == null) {
+            view = populateMoodEventContainer(
+                    LayoutInflater.from(
+                            context).inflate(R.layout.mood_event_container,
+                            parent,
+                            false),
+                    moodHistory.get(position));
         }
-
-        MoodEvent moodE = moodHistory.get(position);
-        TextView thing1 = view.findViewById(R.id.thing1);
-        TextView thing2 = view.findViewById(R.id.thing2);
-        thing1.setText(moodE.getComment());
-        thing2.setText(moodE.getReason());
-
         return view;
     }
 
+    private View populateMoodEventContainer(View view, MoodEvent moodEvent){
+        //TODO: find a better way to do this
+        TextView thing1 = view.findViewById(R.id.event_comment);
+        thing1.setText(moodEvent.getComment());
 
-
+        TextView thing2 = view.findViewById(R.id.event_reason);
+        thing2.setText(moodEvent.getReason());
+        return view;
+    }
+    
 }
