@@ -18,7 +18,7 @@ public class MoodHistory {
     // Custom ArrayAdapter
     private MoodHistoryAdapter moodHistoryAdapter;
     // View object
-    public ListView historyView;
+    public ListView historyView; //TODO: change this to RecycleView
 
     /**
      * Create a new, empty mood history.
