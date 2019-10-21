@@ -1,5 +1,9 @@
 package com.gittfo.moodtracker;
 
+import android.content.Context;
+import android.view.View;
+import android.widget.ListView;
+
 import java.util.ArrayList;
 
 /**
@@ -11,11 +15,17 @@ public class MoodHistory {
 
     // The list of moods in this history
     private ArrayList<MoodEvent> moodEvents;
+    // Custom ArrayAdapter
+    private MoodHistoryAdapter moodHistoryAdapter;
+    // View object
+    public ListView historyView;
 
     /**
      * Create a new, empty mood history.
      */
-    public MoodHistory() {}
+    public MoodHistory() {
+        this.moodEvents = new ArrayList<>();
+    }
 
     /**
      * Create a new mood history with a given list of moods.
@@ -48,8 +58,23 @@ public class MoodHistory {
 
     /**
      * Present this mood history visually, for display in a convenient scrollable format.
+     * @param context Activity context to render in
+     * @param listView View object to render with
      */
-    public void render() {
-
+    public void render(Context context, ListView listView) {
+        moodHistoryAdapter = new MoodHistoryAdapter(context, this);
+        historyView = listView;
+        historyView.setAdapter(moodHistoryAdapter);
     }
+
+    /**
+     * Expose ArrayAdapter.notifyDataSetChanged() call.
+     * do nothing if MoodHistory hasnt been rendered yet
+     */
+    public void notifyDataSetChanged(){
+        if(moodHistoryAdapter != null) {
+            moodHistoryAdapter.notifyDataSetChanged();
+        }
+    }
+
 }
