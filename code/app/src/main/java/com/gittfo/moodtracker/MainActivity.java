@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Setup a quick example 
+     * Setup a quick example
      */
     private void exampleListView(){
         Mood mood = new Mood(new Color(),

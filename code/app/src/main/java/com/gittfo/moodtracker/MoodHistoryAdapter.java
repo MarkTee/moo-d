@@ -14,7 +14,7 @@ import android.view.LayoutInflater;
 import java.util.ArrayList;
 
 public class MoodHistoryAdapter extends ArrayAdapter {
-    private ArrayList<MoodEvent> moodHistory; // should this be a list or a moodhistory?
+    private ArrayList<MoodEvent> moodHistory;
     private Context context;
 
 
@@ -30,7 +30,7 @@ public class MoodHistoryAdapter extends ArrayAdapter {
 
         View view = convertView;
         if(view == null){
-            view = LayoutInflater.from(context).inflate(R.layout.content, parent,false);
+            view = LayoutInflater.from(context).inflate(R.layout.mood_event_container, parent,false);
         }
 
         MoodEvent moodE = moodHistory.get(position);
