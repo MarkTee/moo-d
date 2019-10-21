@@ -1,25 +1,19 @@
 package com.gittfo.moodtracker.database;
 
 import android.content.Context;
-import android.util.Log;
 
-import androidx.annotation.NonNull;
 
-import com.gittfo.moodtracker.mood.Mood;
 import com.gittfo.moodtracker.mood.MoodEvent;
-import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -31,10 +25,11 @@ public class Database {
     private static final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private static final ExecutorService executor = Executors.newSingleThreadExecutor();
 
-    private Context context;
+    private String userId;
 
     private Database (Context c) {
-        this.context = c;
+        userId = c.getSharedPreferences(Database.PREFS, MODE_PRIVATE)
+                .getString("user", "");
     }
 
     public static Database get(Context c) {
@@ -99,7 +94,6 @@ public class Database {
     }
 
     public String currentUser() {
-        return context.getSharedPreferences(Database.PREFS, MODE_PRIVATE)
-                .getString("user", "");
+        return userId;
     }
 }
