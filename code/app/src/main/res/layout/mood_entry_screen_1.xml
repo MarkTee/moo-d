@@ -72,6 +72,8 @@
 
     <!-- Mood Score Buttons (1-5) and Text go here -->
 
+    <!-- This should be populated with exactly 5 mood_score_button items. -->
+
     <LinearLayout
         android:id="@+id/mood_button_layout"
         android:layout_width="match_parent"
@@ -92,7 +94,7 @@
 
     <!-- The custom mood button and text is of the exact same form, and uses
     an emotion_button. This region will be populated with buttons from
-    emotion_button.xmlht.xml -->
+    emotion_button.xml.xml -->
 
     <!-- Moods should be added in the following order:
         1. add mood to emotion_button_layout_left

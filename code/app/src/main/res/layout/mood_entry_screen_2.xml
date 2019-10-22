@@ -82,7 +82,8 @@
     <!-- BEGIN ACTIVITY ICONS AND DESCRIPTIONS -->
 
     <!-- 5 items per row (each row represented by a LinearLayout). 3 rows total.
-        Custom item button is of the same form as the other activity choice buttons. -->
+        Custom item button is of the same form as the other activity choice buttons.
+        Items come from activity_choice_button.xml -->
 
     <LinearLayout
         android:id="@+id/activity_icon_layout_row1"
