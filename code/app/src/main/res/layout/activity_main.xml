@@ -37,6 +37,8 @@ tools:context=".MainActivity">
             style="@style/Widget.MaterialComponents.BottomAppBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingBottom="6dp"
+            android:paddingTop="6dp"
             app:backgroundTint="@color/colorPrimary"
             android:layout_gravity="bottom"
             app:fabAlignmentMode="center"
@@ -100,6 +102,8 @@ tools:context=".MainActivity">
                     app:layout_constraintStart_toStartOf="@id/inbox_menu_item"
                     app:layout_constraintBottom_toBottomOf="parent"/>
 
+                <!-- placeholder for center -->
+
                 <View
                     android:id="@+id/placeholder"
                     android:layout_width="60dp"
@@ -111,6 +115,8 @@ tools:context=".MainActivity">
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.0" />
+
+                <!-- create Maps menu item -->
 
                 <ImageButton
                     android:id="@+id/maps_menu_item"
@@ -136,6 +142,7 @@ tools:context=".MainActivity">
                     app:layout_constraintEnd_toEndOf="@id/maps_menu_item"
                     app:layout_constraintBottom_toBottomOf="parent"/>
 
+                <!-- create Profile menu item -->
 
                 <ImageButton
                     android:id="@+id/profile_menu_item"
@@ -172,7 +179,7 @@ tools:context=".MainActivity">
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_add_black_72dp"
-            app:fabSize="normal"
+            app:fabCustomSize="64dp"
             app:layout_anchor="@+id/bottom_app_bar"
             app:layout_anchorGravity="center_horizontal" />
 
