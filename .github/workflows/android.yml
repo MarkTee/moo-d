@@ -19,6 +19,14 @@ jobs:
     - name: Unit Test
       working-directory: ./code
       run: ./gradlew test
-    - name: UI Test
-      working-directory: ./code
-      run: ./gradlew cAT
+      #    - name: UI Test
+      #      working-directory: ./code
+      #run: |
+      #        avdmanager create avd -n test -k "system-images;android-29;google_apis;x86"
+      #        emulator -avd test -no-audio -no-window -no-boot-anim & adb wait-for-device
+      #        adb shell input keyevent 82
+      #        ./gradlew cAT
+    # copy the build outputs to artifacts
+    # cp -r app/build/outputs $CIRCLE_ARTIFACTS
+    # copy the test results to the test results directory.
+    # cp -r app/build/outputs/androidTest-results/*
