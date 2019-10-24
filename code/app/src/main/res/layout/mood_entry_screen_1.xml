@@ -1,178 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/linearLayout"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:layout_gravity="center">
 
-    <!-- Cancel button -->
-
+    <!-- EXIT BUTTON -->
     <ImageButton
-        android:id="@+id/cancel_button_1"
-
-        android:contentDescription="cancel_button"
+        android:id="@+id/exit_button"
         android:layout_width="wrap_content"
+
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="16dp"
-        android:layout_marginRight="8dp"
+
+        android:layout_marginEnd="8dp"
         android:background="@color/design_default_color_background"
 
-        android:src="@drawable/ic_cancel_grey_24dp"/>
+        android:contentDescription="Exit Button"
+        android:src="@drawable/ic_cancel_grey_24dp"
 
-    <!-- "How are you doing today?" TextView -->
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- GREETING MESSAGE -->
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/greeting_message"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+
         android:layout_marginTop="48dp"
+
         android:text="How are you feeling today?"
         android:textSize="24sp"
         android:textStyle="bold"
+
+        app:layout_constraintBottom_toTopOf="@+id/selected_date"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <!-- Calendar TextView and ImageButton
-     (button will direct to CalendarPicker) -->
-
+    <!-- DATE SELECTION AND DISPLAY -->
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/selected_date"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="1dp"
-        android:layout_marginLeft="1dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="2dp"
-        android:text="MONTH DAY, YEAR"
+
+        android:layout_marginTop="18dp"
+
+        android:background="@color/design_default_color_background"
+        android:text="MONTH, DAY, YEAR"
+        android:textSize="18sp"
+
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/calendar_button"
+
         app:layout_constraintEnd_toStartOf="@+id/calendar_button"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/greeting_message" />
 
     <ImageButton
         android:id="@+id/calendar_button"
-
-        android:contentDescription="calendar button"
         android:layout_width="wrap_content"
+
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:background="@color/design_default_color_background"
-        android:src="@drawable/ic_date_range_black_24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView2"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-
-    <!-- Mood Score Buttons (1-5) and Text go here -->
-
-    <!-- This should be populated with exactly 5 mood_score_button items. -->
-
-    <LinearLayout
-        android:id="@+id/mood_button_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-
-        android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@id/calendar_button"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-
-    </LinearLayout>
-
-
-
-    <!-- EMOTICONS AND TEXT START HERE -->
-
-    <!-- The custom mood button and text is of the exact same form, and uses
-    an emotion_button. This region will be populated with buttons from
-    emotion_button.xml.xml -->
-
-    <!-- Moods should be added in the following order:
-        1. add mood to emotion_button_layout_left
-        2. add mood to emotion_button_layout_right
-        3. add mood to emotion_button_layout_left, etc... -->
-
-    <LinearLayout
-        android:id="@+id/emotion_button_layout_left"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-        app:layout_constraintTop_toBottomOf="@+id/mood_button_layout"
-        app:layout_constraintStart_toStartOf="@+id/mood_button_layout"
-        app:layout_constraintEnd_toStartOf="@id/emotion_button_layout_right"
-
-        android:orientation="vertical">
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/emotion_button_layout_right"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-        app:layout_constraintTop_toBottomOf="@+id/mood_button_layout"
-        app:layout_constraintStart_toEndOf="@+id/emotion_button_layout_left"
-        app:layout_constraintEnd_toEndOf="@id/mood_button_layout"
-        android:orientation="vertical">
-
-    </LinearLayout>
-
-
-
-    <!-- END OF EMOTICONS AND TEXT-->
-
-    <!-- LOCATION ENTRY -->
-
-    <ImageButton
-        android:id="@+id/location_button"
-
-        android:contentDescription="location_services"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:layout_marginLeft="24dp"
-        app:layout_constraintTop_toBottomOf="@id/emotion_button_layout_left"
-        app:layout_constraintStart_toStartOf="@id/textView"
         android:background="@android:color/white"
 
-        android:src="@drawable/ic_near_me_black_24dp"/>
+        android:contentDescription="Calendar Icon"
+        android:src="@drawable/ic_date_range_black_24dp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/selected_date"
+        app:layout_constraintTop_toTopOf="@+id/selected_date" />
+    <!-- END DATE SELECTION AND DISPLAY -->
+
+
+    <!-- MOOD SCORE BUTTONS -->
+
+    <!-- END MOOD SCORE BUTTONS -->
+
+
+
+    <!-- LOCATION ENTRY -->
+    <ImageButton
+        android:id="@+id/location_button"
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+
+        android:layout_marginTop="48dp"
+        android:background="@android:color/white"
+
+        android:contentDescription="Location Services Icon"
+        android:src="@drawable/ic_near_me_black_24dp"
+
+        app:layout_constraintEnd_toStartOf="@+id/use_location_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/selected_date" />
 
     <Button
         android:id="@+id/use_location_button"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Use Location (optional)"
-        app:layout_constraintTop_toTopOf="@+id/location_button"
-        app:layout_constraintStart_toStartOf="@+id/location_button"
-        app:layout_constraintEnd_toEndOf="@id/textView"
-        app:layout_constraintBottom_toBottomOf="@id/location_button"/>
 
+        android:layout_marginEnd="24dp"
+
+        android:text="Use Location (optional)"
+
+        app:layout_constraintBottom_toBottomOf="@+id/location_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/location_button"
+        app:layout_constraintTop_toTopOf="@+id/location_button" />
     <!-- END LOCATION ENTRY -->
+
 
     <!-- Continue Button -->
     <Button
         android:id="@+id/continue_button_1"
+
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:text="Continue"
-        android:layout_marginLeft="8dp"
 
+        android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintEnd_toEndOf="@id/textView"
-        app:layout_constraintTop_toBottomOf="@id/use_location_button"
-        app:layout_constraintStart_toStartOf="@id/textView"
-        app:layout_constraintBottom_toBottomOf="parent" />
 
+        android:layout_marginBottom="16dp"
+        android:text="Continue"
+        app:layout_constraintEnd_toEndOf="@+id/greeting_message"
+        app:layout_constraintStart_toStartOf="@+id/greeting_message"
+        app:layout_constraintTop_toBottomOf="@+id/use_location_button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
