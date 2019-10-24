@@ -97,9 +97,9 @@ tools:context=".MainActivity">
                     android:layout_height="wrap_content"
                     android:text="Inbox"
                     android:textColor="@android:color/black"
-                    app:layout_constraintTop_toBottomOf="@id/inbox_menu_item"
+                    app:layout_constraintTop_toBottomOf="@+id/inbox_menu_item"
                     android:layout_marginRight="3dp"
-                    app:layout_constraintStart_toStartOf="@id/inbox_menu_item"
+                    app:layout_constraintStart_toStartOf="@+id/inbox_menu_item"
                     app:layout_constraintBottom_toBottomOf="parent"/>
 
                 <!-- placeholder for center -->
@@ -126,7 +126,7 @@ tools:context=".MainActivity">
                     android:src="@drawable/ic_map_black_32dp"
                     android:background="@color/colorPrimary"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toTopOf="@id/maps_textView"
+                    app:layout_constraintBottom_toTopOf="@+id/maps_textView"
                     app:layout_constraintEnd_toStartOf="@+id/profile_menu_item"
                     app:layout_constraintStart_toEndOf="@+id/placeholder" />
 
@@ -136,10 +136,10 @@ tools:context=".MainActivity">
                     android:layout_height="wrap_content"
                     android:text="Maps"
                     android:textColor="@android:color/black"
-                    app:layout_constraintTop_toBottomOf="@id/maps_menu_item"
+                    app:layout_constraintTop_toBottomOf="@+id/maps_menu_item"
                     android:layout_marginRight="3dp"
-                    app:layout_constraintStart_toStartOf="@id/maps_menu_item"
-                    app:layout_constraintEnd_toEndOf="@id/maps_menu_item"
+                    app:layout_constraintStart_toStartOf="@+id/maps_menu_item"
+                    app:layout_constraintEnd_toEndOf="@+id/maps_menu_item"
                     app:layout_constraintBottom_toBottomOf="parent"/>
 
                 <!-- create Profile menu item -->
@@ -161,9 +161,9 @@ tools:context=".MainActivity">
                     android:layout_height="wrap_content"
                     android:text="Profile"
                     android:textColor="@android:color/black"
-                    app:layout_constraintTop_toBottomOf="@id/profile_menu_item"
-                    app:layout_constraintStart_toStartOf="@id/profile_menu_item"
-                    app:layout_constraintEnd_toEndOf="@id/profile_menu_item"
+                    app:layout_constraintTop_toBottomOf="@+id/profile_menu_item"
+                    app:layout_constraintStart_toStartOf="@+id/profile_menu_item"
+                    app:layout_constraintEnd_toEndOf="@+id/profile_menu_item"
                     app:layout_constraintBottom_toBottomOf="parent"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
