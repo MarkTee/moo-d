@@ -7,7 +7,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.widget.ListView;
 
-import com.gittfo.moodtracker.R;
+import com.gittfo.moodtracker.views.R;
+
 
 public class MoodHistoryTest extends AppCompatActivity {
 
