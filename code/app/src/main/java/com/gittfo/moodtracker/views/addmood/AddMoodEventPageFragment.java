@@ -1,4 +1,4 @@
-package com.gittfo.moodtracker;
+package com.gittfo.moodtracker.views.addmood;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
+
+import com.gittfo.moodtracker.R;
 
 public class AddMoodEventPageFragment extends Fragment {
 

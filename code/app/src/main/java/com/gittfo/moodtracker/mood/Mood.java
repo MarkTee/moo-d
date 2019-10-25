@@ -1,4 +1,4 @@
-package com.gittfo.moodtracker;
+package com.gittfo.moodtracker.mood;
 
 import android.graphics.Color;
 
