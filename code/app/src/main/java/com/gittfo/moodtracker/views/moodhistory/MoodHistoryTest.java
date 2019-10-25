@@ -4,10 +4,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.ListView;
 
+import com.gittfo.moodtracker.mood.Mood;
+import com.gittfo.moodtracker.mood.MoodEvent;
+import com.gittfo.moodtracker.mood.MoodHistory;
 import com.gittfo.moodtracker.views.R;
+
+import java.util.Date;
 
 
 public class MoodHistoryTest extends AppCompatActivity {
@@ -29,13 +35,28 @@ public class MoodHistoryTest extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         // specify an adapter (see also next example)
-        String[] myDataset = {"first one", "second one"};
-        MyAdapter mAdapter = new MyAdapter(myDataset);
+
+        //ListView mood_history_view = findViewById(R.id.mood_history);
+        MoodHistory moodHistory = new MoodHistory();
+
+        moodHistory.addMoodEvent(new MoodEvent("comment",
+                "location",
+                "photo",
+                "reason",
+                new Date(),
+                5,
+                new Mood(new Color(),
+                        "nothing",
+                        Mood.EmotionalState.HAPPY,
+                        3)));
+
+
+        //moodHistory.render(this, mood_history_view);
+
+        MyAdapter mAdapter = new MyAdapter(moodHistory);
         recyclerView.setAdapter(mAdapter);
 
 
-        //ListView mood_history_view = findViewById(R.id.mood_history);
-        //MoodHistory moodHistory = new MoodHistory();
-        //moodHistory.render(this, mood_history_view);
+
     }
 }
