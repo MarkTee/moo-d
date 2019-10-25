@@ -12,17 +12,18 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        tools:ignore="GoogleAppIndexingWarning"
-        android:theme="@style/AppTheme">
-        <activity android:name=".views.addmood.AddMoodEventActivity">
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".views.moodhistory.MoodHistoryTest">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".views.SigninActivity"></activity>
         <activity android:name=".views.MainActivity"></activity>
+        <activity android:name=".views.SigninActivity" />
+        <activity android:name=".views.addmood.AddMoodEventActivity" />
     </application>
 
 </manifest>
