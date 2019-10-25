@@ -61,6 +61,16 @@ public class MoodHistory {
      * Present this mood history visually, for display in a convenient scrollable format.
      * @param context Activity context to render in
      * @param listView View object to render with
+     *
+     *<pre>
+     *<code>
+     *         // in MainActivity Classs 
+     *         ListView historyView = findViewById(R.id.mood_history);
+     *         MoodHistory moodHistory = new MoodHistory();
+     *         moodHistory.render(this, historyView);
+     *</code>
+     *</pre>
+     *
      */
     public void render(Context context, ListView listView) {
         moodHistoryAdapter = new MoodHistoryAdapter(context, this);
