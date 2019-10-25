@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 
-import com.gittfo.moodtracker.R;
+import com.gittfo.moodtracker.views.R;
 
 public class AddMoodEventPageFragment extends Fragment {
 

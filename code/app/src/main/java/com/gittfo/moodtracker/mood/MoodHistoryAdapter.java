@@ -1,4 +1,4 @@
-package com.gittfo.moodtracker.views.moodhistory;
+package com.gittfo.moodtracker.mood;
 
 import android.content.Context;
 import androidx.annotation.NonNull;
@@ -10,8 +10,7 @@ import android.widget.TextView;
 import android.view.LayoutInflater;
 
 
-import com.gittfo.moodtracker.R;
-import com.gittfo.moodtracker.mood.MoodEvent;
+import com.gittfo.moodtracker.views.R;
 
 import java.util.ArrayList;
 

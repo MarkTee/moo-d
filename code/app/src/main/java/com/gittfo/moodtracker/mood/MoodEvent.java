@@ -1,5 +1,7 @@
 package com.gittfo.moodtracker.mood;
 
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+
 import java.util.Date;
 
 /**
@@ -41,6 +43,11 @@ public class MoodEvent {
         this.date = date;
         SocialSituation = socialSituation;
         this.mood = mood;
+    }
+
+    public static MoodEvent fromFirebase(QueryDocumentSnapshot document) {
+        // TODO: make mood event from firebase
+        return null;
     }
 
     /**
