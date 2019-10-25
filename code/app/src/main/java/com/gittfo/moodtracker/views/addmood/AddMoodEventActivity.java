@@ -10,7 +10,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
 
-import com.gittfo.moodtracker.R;
+import com.gittfo.moodtracker.views.R;
 
 public class AddMoodEventActivity extends AppCompatActivity {
     private static final int NUM_PAGES = 3; // Mood Event entry has 3 separate pages

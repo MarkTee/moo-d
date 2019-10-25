@@ -3,8 +3,6 @@ package com.gittfo.moodtracker.views;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.gittfo.moodtracker.R;
-
 public class MainActivity extends AppCompatActivity {
 
     @Override

@@ -1,9 +1,7 @@
-package com.gittfo.moodtracker.views.moodhistory;
+package com.gittfo.moodtracker.mood;
 
 import android.content.Context;
 import android.widget.ListView;
-
-import com.gittfo.moodtracker.mood.MoodEvent;
 
 import java.util.ArrayList;
 
