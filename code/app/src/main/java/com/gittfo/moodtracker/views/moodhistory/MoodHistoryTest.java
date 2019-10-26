@@ -55,8 +55,5 @@ public class MoodHistoryTest extends AppCompatActivity {
 
         MyAdapter mAdapter = new MyAdapter(moodHistory);
         recyclerView.setAdapter(mAdapter);
-
-
-
     }
 }
