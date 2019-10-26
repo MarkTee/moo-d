@@ -19,6 +19,3 @@ jobs:
     - name: Build with Gradle and Unit Test
       working-directory: ./code
       run: ./gradlew build
-    - name: Unit Test
-      working-directory: ./code
-      run: ./gradlew test
