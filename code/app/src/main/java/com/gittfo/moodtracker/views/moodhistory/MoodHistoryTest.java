@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.widget.ListView;
 
 import com.gittfo.moodtracker.mood.Mood;
 import com.gittfo.moodtracker.mood.MoodEvent;
@@ -53,7 +52,7 @@ public class MoodHistoryTest extends AppCompatActivity {
 
         //moodHistory.render(this, mood_history_view);
 
-        MyAdapter mAdapter = new MyAdapter(moodHistory);
+        MoodAdapter mAdapter = new MoodAdapter(moodHistory);
         recyclerView.setAdapter(mAdapter);
     }
 }
