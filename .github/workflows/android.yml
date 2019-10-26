@@ -13,20 +13,12 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.8
-    - name: Build with Gradle
+    - name: google-services.json
+      working-directory: ./code/app
+      run: echo "${{ secrets.GOOGLE_SERVICES_JSON }}" | base64 -di > google-services.json
+    - name: Build with Gradle and Unit Test
       working-directory: ./code
       run: ./gradlew build
     - name: Unit Test
       working-directory: ./code
       run: ./gradlew test
-      #    - name: UI Test
-      #      working-directory: ./code
-      #run: |
-      #        avdmanager create avd -n test -k "system-images;android-29;google_apis;x86"
-      #        emulator -avd test -no-audio -no-window -no-boot-anim & adb wait-for-device
-      #        adb shell input keyevent 82
-      #        ./gradlew cAT
-    # copy the build outputs to artifacts
-    # cp -r app/build/outputs $CIRCLE_ARTIFACTS
-    # copy the test results to the test results directory.
-    # cp -r app/build/outputs/androidTest-results/*
