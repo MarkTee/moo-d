@@ -16,7 +16,7 @@ jobs:
     - name: google-services.json
       working-directory: ./code/app
       run: |
-        gpg --import <(echo "${{ secrets.GOOGLE_SERVICES_JSON }}")
+        gpg --import <(echo "${{ secrets.GITHUB_GPG_SECRET }}")
         git secret reveal
     - name: Build with Gradle and Unit Test
       working-directory: ./code
