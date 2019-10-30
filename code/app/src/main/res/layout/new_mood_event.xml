@@ -191,7 +191,9 @@
                     android:layout_column="0"
                     android:layout_gravity="fill"
                     android:text="Sad"
-                    android:drawableLeft="@drawable/ic_sentiment_sad_black_32dp" />
+                    android:textColor="#000000"
+                    android:drawableLeft="@drawable/ic_sentiment_sad_black_32dp"
+                    android:backgroundTint="#64b5f6"/>
 
                 <Button
                     android:id="@+id/excited_mood_button"
@@ -199,7 +201,9 @@
                     android:layout_column="1"
                     android:layout_gravity="fill"
                     android:text="Excited"
-                    android:drawableLeft="@drawable/ic_sentiment_very_happy_black_32dp" />
+                    android:textColor="#000000"
+                    android:drawableLeft="@drawable/ic_sentiment_very_happy_black_32dp"
+                    android:backgroundTint="#fff176"/>
 
                 <Button
                     android:id="@+id/happy_mood_button"
@@ -207,7 +211,9 @@
                     android:layout_column="0"
                     android:layout_gravity="fill"
                     android:text="Happy"
-                    android:drawableLeft="@drawable/ic_sentiment_satisfied_happy_32dp" />
+                    android:textColor="#000000"
+                    android:drawableLeft="@drawable/ic_sentiment_satisfied_happy_32dp"
+                    android:backgroundTint="#81c784"/>
 
                 <Button
                     android:id="@+id/tired_mood_button"
@@ -215,7 +221,9 @@
                     android:layout_column="1"
                     android:layout_gravity="fill"
                     android:text="Tired"
-                    android:drawableLeft="@drawable/ic_sentiment_sick_black_32dp" />
+                    android:textColor="#000000"
+                    android:drawableLeft="@drawable/ic_sentiment_sick_black_32dp"
+                    android:backgroundTint="#ffb74d" />
 
                 <Button
                     android:id="@+id/meh_mood_button"
@@ -223,7 +231,9 @@
                     android:layout_column="0"
                     android:layout_gravity="fill"
                     android:text="Meh"
-                    android:drawableLeft="@drawable/ic_sentiment_neutral_black_32dp" />
+                    android:textColor="#000000"
+                    android:drawableLeft="@drawable/ic_sentiment_neutral_black_32dp"
+                    android:backgroundTint="#b39ddb"/>
 
                 <Button
                     android:id="@+id/sick_mood_button"
@@ -231,7 +241,9 @@
                     android:layout_column="1"
                     android:layout_gravity="fill"
                     android:text="Sick"
-                    android:drawableLeft="@drawable/ic_sentiment_sick_black_32dp"/>
+                    android:textColor="#000000"
+                    android:drawableLeft="@drawable/ic_sentiment_sick_black_32dp"
+                    android:backgroundTint="#ff8a65"/>
 
             </GridLayout>
             <!-- END MOOD SELECTION BUTTONS -->
