@@ -81,88 +81,6 @@
             <!-- END DATE SELECTION AND DISPLAY -->
 
 
-            <!-- MOOD SCORE BUTTONS -->
-            <LinearLayout
-                android:id="@+id/mood_score_buttons"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center"
-
-                android:layout_marginTop="20dp"
-
-                app:layout_constraintTop_toBottomOf="@id/selected_date"
-                app:layout_constraintStart_toStartOf="@id/greeting_message"
-                app:layout_constraintEnd_toEndOf="@id/greeting_message" >
-
-                <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:background="@android:color/white"
-                    android:src="@drawable/ic_lens_red_48dp" />
-
-                <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:background="@android:color/white"
-                    android:src="@drawable/ic_lens_orange_48dp" />
-
-                <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:background="@android:color/white"
-                    android:src="@drawable/ic_lens_yellow_48dp" />
-
-                <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:background="@android:color/white"
-                    android:src="@drawable/ic_lens_green_48dp" />
-
-                <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:background="@android:color/white"
-                    android:src="@drawable/ic_lens_blue_48dp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/mood_score_buttons_labels"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:orientation="horizontal"
-                android:gravity="center"
-
-                app:layout_constraintTop_toBottomOf="@id/mood_score_buttons"
-                app:layout_constraintStart_toStartOf="@id/greeting_message"
-                app:layout_constraintEnd_toEndOf="@id/greeting_message" >
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="awful" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="okay" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="great" />
-
-            </LinearLayout>
-            <!-- END MOOD SCORE BUTTONS -->
-
-
             <!-- MOOD SELECTION BUTTONS -->
             <GridLayout
                 xmlns:tools="http://schemas.android.com/tools"
@@ -180,7 +98,7 @@
                 android:useDefaultMargins="true"
                 tools:context=".GridXMLActivity"
 
-                app:layout_constraintTop_toBottomOf="@id/mood_score_buttons_labels"
+                app:layout_constraintTop_toBottomOf="@id/selected_date"
                 app:layout_constraintStart_toStartOf="@id/greeting_message"
                 app:layout_constraintEnd_toEndOf="@id/greeting_message"
                 app:layout_constraintBottom_toTopOf="@id/location_button">
