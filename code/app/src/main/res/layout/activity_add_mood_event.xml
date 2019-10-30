@@ -5,12 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="false"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android" >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content" >
 
 
             <!-- EXIT BUTTON -->
@@ -19,7 +20,7 @@
                 android:layout_width="wrap_content"
 
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="4dp"
 
                 android:layout_marginEnd="8dp"
                 android:background="@android:color/white"
@@ -38,7 +39,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="26dp"
 
                 android:text="How are you feeling today?"
                 android:textSize="24sp"
@@ -57,31 +58,30 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
 
                 android:background="#9C9C9C"
 
-                android:drawableRight="@drawable/ic_date_range_black_24dp"
-                android:drawablePadding="20dp"
-                android:gravity="center"
                 android:text="MONTH, DAY, YEAR"
-                android:textSize="18sp"
+                android:textSize="16sp"
 
-                app:layout_constraintEnd_toEndOf="@+id/greeting_message"
+                android:drawableRight="@drawable/ic_date_range_black_24dp"
+                android:gravity="center"
+
+                app:layout_constraintTop_toBottomOf="@+id/greeting_message"
                 app:layout_constraintStart_toStartOf="@+id/greeting_message"
-                app:layout_constraintTop_toBottomOf="@+id/greeting_message" />
+                app:layout_constraintEnd_toEndOf="@+id/greeting_message"
+                app:layout_constraintBottom_toTopOf="@+id/mood_selection_buttons" />
 
 
             <!-- MOOD SELECTION BUTTONS -->
             <GridLayout
-                xmlns:tools="http://schemas.android.com/tools"
-
                 android:id="@+id/mood_selection_buttons"
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
 
                 android:columnCount="2"
                 android:rowCount="4"
@@ -92,7 +92,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/selected_date"
                 app:layout_constraintStart_toStartOf="@+id/greeting_message"
                 app:layout_constraintEnd_toEndOf="@+id/greeting_message"
-                app:layout_constraintBottom_toTopOf="@+id/location_button">
+                app:layout_constraintBottom_toTopOf="@+id/location_button" >
 
                 <Button
                     android:id="@+id/sad_mood_button"
@@ -102,7 +102,7 @@
                     android:text="Sad"
                     android:textColor="#000000"
                     android:drawableLeft="@drawable/ic_sentiment_sad_black_32dp"
-                    android:backgroundTint="#64b5f6"/>
+                    android:backgroundTint="#64b5f6" />
 
                 <Button
                     android:id="@+id/excited_mood_button"
@@ -112,7 +112,7 @@
                     android:text="Excited"
                     android:textColor="#000000"
                     android:drawableLeft="@drawable/ic_sentiment_very_happy_black_32dp"
-                    android:backgroundTint="#fff176"/>
+                    android:backgroundTint="#fff176" />
 
                 <Button
                     android:id="@+id/happy_mood_button"
@@ -122,7 +122,7 @@
                     android:text="Happy"
                     android:textColor="#000000"
                     android:drawableLeft="@drawable/ic_sentiment_satisfied_happy_32dp"
-                    android:backgroundTint="#81c784"/>
+                    android:backgroundTint="#81c784" />
 
                 <Button
                     android:id="@+id/tired_mood_button"
@@ -142,7 +142,7 @@
                     android:text="Meh"
                     android:textColor="#000000"
                     android:drawableLeft="@drawable/ic_sentiment_neutral_black_32dp"
-                    android:backgroundTint="#b39ddb"/>
+                    android:backgroundTint="#b39ddb" />
 
                 <Button
                     android:id="@+id/sick_mood_button"
@@ -152,7 +152,7 @@
                     android:text="Sick"
                     android:textColor="#000000"
                     android:drawableLeft="@drawable/ic_sentiment_sick_black_32dp"
-                    android:backgroundTint="#ff8a65"/>
+                    android:backgroundTint="#ff8a65" />
 
             </GridLayout>
             <!-- END MOOD SELECTION BUTTONS -->
@@ -165,13 +165,12 @@
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
 
-                android:layout_marginTop="24dp"
-                android:layout_marginBottom="24dp"
+                android:layout_marginTop="12dp"
 
-                android:gravity="center"
                 android:text="Use Location (optional)"
+
                 android:drawableLeft="@drawable/ic_near_me_black_24dp"
-                android:drawablePadding="20dp"
+                android:gravity="center"
 
                 app:layout_constraintTop_toBottomOf="@+id/mood_selection_buttons"
                 app:layout_constraintStart_toStartOf="@+id/mood_selection_buttons"
@@ -186,6 +185,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
+                android:layout_marginTop="12dp"
+
                 android:text="Anything you'd like to add?"
                 android:textSize="24sp"
                 android:textStyle="bold"
@@ -193,7 +194,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/location_button"
                 app:layout_constraintStart_toStartOf="@id/greeting_message"
                 app:layout_constraintEnd_toEndOf="@id/greeting_message"
-                app:layout_constraintBottom_toTopOf="@+id/reason_entry"/>
+                app:layout_constraintBottom_toTopOf="@+id/reason_entry" />
 
 
             <!-- (OPTIONAL) REASON ENTRY -->
@@ -209,7 +210,8 @@
 
                 app:layout_constraintTop_toBottomOf="@+id/additional_info_message"
                 app:layout_constraintStart_toStartOf="@+id/additional_info_message"
-                app:layout_constraintEnd_toEndOf="@+id/additional_info_message" />
+                app:layout_constraintEnd_toEndOf="@+id/additional_info_message"
+                app:layout_constraintBottom_toTopOf="@+id/social_situation_message" />
 
 
             <!-- SOCIAL SITUATION ENTRY -->
@@ -228,11 +230,12 @@
 
                 app:layout_constraintTop_toBottomOf="@+id/reason_entry"
                 app:layout_constraintStart_toStartOf="@+id/additional_info_message"
-                app:layout_constraintEnd_toEndOf="@+id/additional_info_message" />
+                app:layout_constraintEnd_toEndOf="@+id/additional_info_message"
+                app:layout_constraintBottom_toTopOf="@+id/social_situation_buttons" />
 
             <!-- SOCIAL SITUATION BUTTONS -->
             <LinearLayout
-                android:id="@+id/button_bar_2"
+                android:id="@+id/social_situation_buttons"
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -242,7 +245,8 @@
 
                 app:layout_constraintTop_toBottomOf="@+id/social_situation_message"
                 app:layout_constraintStart_toStartOf="@+id/additional_info_message"
-                app:layout_constraintEnd_toEndOf="@+id/additional_info_message">
+                app:layout_constraintEnd_toEndOf="@+id/additional_info_message"
+                app:layout_constraintBottom_toTopOf="@+id/add_photo_message" >
 
                 <Button
                     android:id="@+id/social_button_zero"
@@ -289,66 +293,74 @@
             </LinearLayout>
             <!-- END SOCIAL SITUATION ENTRY -->
 
-<!--            &lt;!&ndash; Add an optional photo &ndash;&gt;-->
 
-<!--            <TextView-->
-<!--                android:id="@+id/add_photo_textView"-->
+            <!-- (OPTIONAL) ADD PHOTO -->
+            <TextView
+                android:id="@+id/add_photo_message"
 
-<!--                android:layout_marginTop="24dp"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                app:layout_constraintTop_toBottomOf="@+id/button_bar_2"-->
-<!--                app:layout_constraintStart_toStartOf="@+id/textView2"-->
-<!--                app:layout_constraintEnd_toStartOf="@+id/add_image_button"-->
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
 
-<!--                android:textStyle="bold"-->
-<!--                android:textSize="18sp"-->
-<!--                android:text="Add an optional photo:"/>-->
+                android:layout_marginTop="16dp"
 
+                android:text="Add an optional photo:"
+                android:textSize="18sp"
+                android:textStyle="bold"
 
-<!--            <ImageButton-->
-<!--                android:id="@+id/add_image_button"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:background="@android:color/white"-->
-<!--                app:layout_constraintStart_toEndOf="@+id/add_photo_textView"-->
-<!--                app:layout_constraintTop_toTopOf="@+id/add_photo_textView"-->
-<!--                app:layout_constraintEnd_toEndOf="@+id/textView2"-->
-<!--                android:layout_marginRight="16dp"-->
-<!--                app:layout_constraintBottom_toBottomOf="@+id/add_photo_textView"-->
-<!--                android:src="@drawable/ic_image_black_24dp"/>-->
+                app:layout_constraintTop_toBottomOf="@+id/social_situation_buttons"
+                app:layout_constraintStart_toStartOf="@+id/additional_info_message"
+                app:layout_constraintEnd_toStartOf="@+id/add_photo_button"
+                app:layout_constraintBottom_toTopOf="@+id/photo_preview"/>
 
+            <ImageButton
+                android:id="@+id/add_photo_button"
 
-<!--            &lt;!&ndash; Photograph holder, use view_photograph.xml within this LinearLayout &ndash;&gt;-->
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
 
-<!--            <LinearLayout-->
-<!--                android:id="@+id/photograph_holder_layout"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:orientation="horizontal"-->
-<!--                app:layout_constraintTop_toBottomOf="@+id/add_photo_textView"-->
-<!--                app:layout_constraintStart_toStartOf="@+id/textView2"-->
-<!--                app:layout_constraintEnd_toEndOf="@+id/textView2">-->
+                android:src="@drawable/ic_image_black_24dp"
+                android:background="@android:color/white"
+
+                app:layout_constraintTop_toTopOf="@+id/add_photo_message"
+                app:layout_constraintStart_toEndOf="@+id/add_photo_message"
+                app:layout_constraintEnd_toEndOf="@+id/additional_info_message"
+                app:layout_constraintBottom_toBottomOf="@+id/add_photo_message" />
 
 
-<!--            </LinearLayout>-->
+            <!-- USER PHOTO PREVIEW (dynamically uses user_photo_preview.xml) -->
+            <LinearLayout
+                android:id="@+id/user_photo_preview"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:orientation="horizontal"
+
+                app:layout_constraintTop_toBottomOf="@+id/add_photo_message"
+                app:layout_constraintStart_toStartOf="@+id/additional_info_message"
+                app:layout_constraintEnd_toEndOf="@+id/additional_info_message"
+                app:layout_constraintBottom_toTopOf="@+id/create_mood_event_button" >
 
 
-<!--            &lt;!&ndash; Finish Button &ndash;&gt;-->
-<!--            <Button-->
-<!--                android:id="@+id/finish_button"-->
-<!--                android:layout_width="250dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="Finish"-->
-
-<!--                android:layout_marginTop="32dp"-->
-<!--                android:layout_marginBottom="16dp"-->
-<!--                app:layout_constraintEnd_toEndOf="@+id/photograph_holder_layout"-->
-<!--                app:layout_constraintTop_toBottomOf="@+id/photograph_holder_layout"-->
-<!--                app:layout_constraintStart_toStartOf="@+id/photograph_holder_layout"-->
-<!--                app:layout_constraintBottom_toBottomOf="parent" />-->
+            </LinearLayout>
+            <!-- END ADD PHOTO -->
 
 
+            <!-- CREATE MOOD EVENT BUTTON -->
+            <Button
+                android:id="@+id/create_mood_event_button"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+
+                android:text="Create Mood Event"
+
+                app:layout_constraintTop_toBottomOf="@+id/user_photo_preview"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
