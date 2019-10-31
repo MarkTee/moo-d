@@ -19,16 +19,16 @@
                 android:layout_width="wrap_content"
 
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-
-                android:layout_marginEnd="8dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="12dp"
                 android:background="@android:color/white"
 
                 android:contentDescription="Exit Button"
-                android:src="@drawable/ic_cancel_grey_24dp"
+                android:onClick="exit"
 
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                android:src="@drawable/ic_cancel_grey_24dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
 
             <!-- GREETING MESSAGE -->

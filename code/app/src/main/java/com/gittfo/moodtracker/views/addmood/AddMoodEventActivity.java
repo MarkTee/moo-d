@@ -1,9 +1,12 @@
 package com.gittfo.moodtracker.views.addmood;
 
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import com.gittfo.moodtracker.views.R;
@@ -44,6 +47,19 @@ public class AddMoodEventActivity extends AppCompatActivity {
         timeDisplay = findViewById(R.id.time_display);
         timeDisplay.setText(mTime);
 
+    }
 
+    public void exit(View view) {
+        new AlertDialog.Builder(AddMoodEventActivity.this)
+                .setTitle("Exit Mood Event Creation")
+                .setMessage("Are you sure you want to exit?\n\nAny changes will be lost.")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                })
+                .setNegativeButton(android.R.string.no, null)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
     }
 }
