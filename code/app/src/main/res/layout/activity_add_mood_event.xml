@@ -336,7 +336,7 @@
 
                 android:layout_marginTop="16dp"
 
-                android:text="Add an optional photo:"
+                android:text="Add a photo (optional):"
                 android:textSize="18sp"
                 android:textStyle="bold"
 
