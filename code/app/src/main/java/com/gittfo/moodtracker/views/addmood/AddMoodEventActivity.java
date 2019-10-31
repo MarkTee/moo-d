@@ -215,6 +215,17 @@ public class AddMoodEventActivity extends AppCompatActivity {
      * @param view - The view that caused the method to be called
      */
     public void saveMoodEvent(View view) {
+        // Ensure that the user has selected a mood
+        if (selectedMood == null) {
+            new AlertDialog.Builder(AddMoodEventActivity.this)
+                    .setTitle("Missing Information")
+                    .setMessage("Please select a mood.")
+                    .setPositiveButton(android.R.string.ok, null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+            return;
+        }
+        
         // TODO: Validate user input
         // TODO: Create a new MoodEvent and save it, or save changes to the existing mood event
         finish();
