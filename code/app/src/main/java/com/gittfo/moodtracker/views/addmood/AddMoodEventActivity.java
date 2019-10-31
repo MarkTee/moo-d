@@ -152,6 +152,15 @@ public class AddMoodEventActivity extends AppCompatActivity {
     }
 
     /**
+     * When implemented, this method will obtain the user's current GPS coordinates.
+     *
+     * @param view - The view that caused the method to be called
+     */
+    public void getLocation(View view) {
+        ;
+    }
+
+    /**
      * The user can select a social situation by clicking one of the social situation buttons.
      * The selected social situation button will be highlighted, all other social situation  buttons
      * will lose colour, and selectedSocialSituation will be set to the selected social situation.
