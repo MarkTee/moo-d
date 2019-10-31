@@ -200,6 +200,16 @@ public class AddMoodEventActivity extends AppCompatActivity {
     }
 
     /**
+     * When implemented, this method will allow the user to optionally attach a photo to the current
+     * mood event.
+     *
+     * @param view - The view that caused the method to be called
+     */
+    public void addPhoto(View view) {
+        ;
+    }
+
+    /**
      * If all user input is valid, save the current MoodEvent and return to the previous screen.
      *
      * @param view - The view that caused the method to be called

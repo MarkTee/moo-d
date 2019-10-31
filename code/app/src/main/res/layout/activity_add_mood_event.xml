@@ -353,6 +353,7 @@
 
                 android:background="@android:color/white"
 
+                android:onClick="addPhoto"
                 android:src="@drawable/ic_image_black_24dp"
                 app:layout_constraintBottom_toBottomOf="@+id/add_photo_message"
                 app:layout_constraintEnd_toEndOf="@+id/additional_info_message"
