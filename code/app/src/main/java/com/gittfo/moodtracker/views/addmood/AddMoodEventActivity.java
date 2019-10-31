@@ -225,7 +225,17 @@ public class AddMoodEventActivity extends AppCompatActivity {
                     .show();
             return;
         }
-        
+
+        // Ensure that the user has selected a social situation
+        if (selectedSocialSituation == null) {
+            new AlertDialog.Builder(AddMoodEventActivity.this)
+                    .setTitle("Missing Information")
+                    .setMessage("Please select a social situation.")
+                    .setPositiveButton(android.R.string.ok, null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+            return;
+        }
         // TODO: Validate user input
         // TODO: Create a new MoodEvent and save it, or save changes to the existing mood event
         finish();
