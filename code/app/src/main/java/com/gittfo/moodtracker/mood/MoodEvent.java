@@ -21,7 +21,7 @@ public class MoodEvent {
     // The time this event happened
     private Date date;
     // The number of people around during this event
-    private int SocialSituation;
+    private int socialSituation;
     // Last but not least, the actual Mood associated to this event
     private Mood mood;
 
@@ -41,7 +41,7 @@ public class MoodEvent {
         this.photoReference = photoReference;
         this.reason = reason;
         this.date = date;
-        SocialSituation = socialSituation;
+        this.socialSituation = socialSituation;
         this.mood = mood;
     }
 
@@ -124,14 +124,14 @@ public class MoodEvent {
      * @return The number of people around during this event.
      */
     public int getSocialSituation() {
-        return SocialSituation;
+        return socialSituation;
     }
 
     /**
      * @param socialSituation The number of people around during this event.
      */
     public void setSocialSituation(int socialSituation) {
-        SocialSituation = socialSituation;
+        this.socialSituation = socialSituation;
     }
 
     /**
