@@ -39,16 +39,14 @@ public class AddMoodEventActivity extends AppCompatActivity {
     String mTime = timeFormat.format(currentDate);
 
     // Buttons representing pre-defined moods that the user may choose from
-    private Button happyButton;
-    private Button sadButton;
-    private Button surprisedButton;
-    private Button afraidButton;
-    private Button disgustedButton;
-    private Button angryButton;
     private List<Button> moodButtons;
 
-    // The user can select a mood by clicking on one of the mood buttons
+    // Buttons representing pre-defined social situations that the user may choose from
+    private List<Button> socialSituationButtons;
+
+    // Use user input to create a new Mood Event
     private String selectedMood = null;
+    private String selectedSocialSituation = null;
 
     /**
      * In the oncreate method, dynamically update the layout as needed.
@@ -72,13 +70,20 @@ public class AddMoodEventActivity extends AppCompatActivity {
         timeDisplay.setText(mTime);
 
         // Initialize Mood Buttons
-        happyButton = findViewById(R.id.happy_mood_button);
-        sadButton = findViewById(R.id.sad_mood_button);
-        surprisedButton = findViewById(R.id.surprised_mood_button);
-        afraidButton = findViewById(R.id.afraid_mood_button);
-        disgustedButton = findViewById(R.id.disgusted_mood_button);
-        angryButton = findViewById(R.id.angry_mood_button);
+        Button happyButton = findViewById(R.id.happy_mood_button);
+        Button sadButton = findViewById(R.id.sad_mood_button);
+        Button surprisedButton = findViewById(R.id.surprised_mood_button);
+        Button afraidButton = findViewById(R.id.afraid_mood_button);
+        Button disgustedButton = findViewById(R.id.disgusted_mood_button);
+        Button angryButton = findViewById(R.id.angry_mood_button);
         moodButtons = Arrays.asList(happyButton, sadButton, surprisedButton, afraidButton, disgustedButton, angryButton);
+
+        // Initialize Social Situation Buttons
+        Button zeroButton = findViewById(R.id.social_button_zero);
+        Button oneButton = findViewById(R.id.social_button_one);
+        Button twoPlusButton = findViewById(R.id.social_button_two_plus);
+        Button crowdButton = findViewById(R.id.social_button_crowd);
+        socialSituationButtons = Arrays.asList(zeroButton, oneButton, twoPlusButton, crowdButton);
     }
 
     /**
@@ -111,12 +116,12 @@ public class AddMoodEventActivity extends AppCompatActivity {
      * @param view - The view that caused the method to be called
      */
     public void selectMoodButton(View view) {
-        // deselect all other buttons (remove their colour)
+        // Deselect all other buttons (remove their colour)
         for (Button button : moodButtons) {
             button.setBackgroundColor(Color.GRAY);
         }
 
-        // Add the appropriate colour to the button that was just clicked
+        // Add the corresponding colour to the button that was just clicked
         switch(view.getId()) {
             case R.id.happy_mood_button:
                 view.setBackgroundColor(Color.parseColor("#81c784"));
@@ -144,5 +149,41 @@ public class AddMoodEventActivity extends AppCompatActivity {
         }
 
         selectedMood = ((TextView) view).getText().toString(); // save the selected emotional state
+    }
+
+    /**
+     * The user can select a social situation by clicking one of the social situation buttons.
+     * The selected social situation button will be highlighted, all other social situation  buttons
+     * will lose colour, and selectedSocialSituation will be set to the selected social situation.
+     *
+     * @param view - The view that caused the method to be called
+     */
+    public void selectSocialSituationButton(View view) {
+        // Deselect all other buttons (remove their colour)
+        for (Button button : socialSituationButtons) {
+            button.setBackgroundColor(Color.GRAY);
+        }
+
+        // Add colour to the button that was just clicked
+        int selectedColor = Color.parseColor("#008577");
+        switch(view.getId()) {
+            case R.id.social_button_zero:
+                view.setBackgroundColor(selectedColor);
+                break;
+
+            case R.id.social_button_one:
+                view.setBackgroundColor(selectedColor);
+                break;
+
+            case R.id.social_button_two_plus:
+                view.setBackgroundColor(selectedColor);
+                break;
+
+            case R.id.social_button_crowd:
+                view.setBackgroundColor(selectedColor);
+                break;
+        }
+
+        selectedSocialSituation = ((TextView) view).getText().toString(); // save the selected emotional state
     }
 }

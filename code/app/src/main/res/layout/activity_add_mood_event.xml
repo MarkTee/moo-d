@@ -283,6 +283,7 @@
 
                     android:layout_marginEnd="2dp"
 
+                    android:onClick="selectSocialSituationButton"
                     android:text="0" />
 
                 <Button
@@ -294,6 +295,7 @@
                     android:layout_marginStart="2dp"
                     android:layout_marginEnd="2dp"
 
+                    android:onClick="selectSocialSituationButton"
                     android:text="1" />
 
                 <Button
@@ -305,6 +307,7 @@
                     android:layout_marginStart="2dp"
                     android:layout_marginEnd="2dp"
 
+                    android:onClick="selectSocialSituationButton"
                     android:text="2+" />
 
                 <Button
@@ -315,6 +318,7 @@
 
                     android:layout_marginStart="2dp"
 
+                    android:onClick="selectSocialSituationButton"
                     android:text="A crowd" />
 
             </LinearLayout>
