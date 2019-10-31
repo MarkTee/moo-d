@@ -235,6 +235,7 @@
                 android:layout_marginTop="16dp"
 
                 android:hint="Reason for your mood (optional)"
+                android:inputType="text"
 
                 app:layout_constraintTop_toBottomOf="@+id/additional_info_message"
                 app:layout_constraintStart_toStartOf="@+id/additional_info_message"
@@ -350,13 +351,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                android:src="@drawable/ic_image_black_24dp"
                 android:background="@android:color/white"
 
-                app:layout_constraintTop_toTopOf="@+id/add_photo_message"
-                app:layout_constraintStart_toEndOf="@+id/add_photo_message"
+                android:src="@drawable/ic_image_black_24dp"
+                app:layout_constraintBottom_toBottomOf="@+id/add_photo_message"
                 app:layout_constraintEnd_toEndOf="@+id/additional_info_message"
-                app:layout_constraintBottom_toBottomOf="@+id/add_photo_message" />
+                app:layout_constraintStart_toEndOf="@+id/add_photo_message"
+                app:layout_constraintTop_toTopOf="@+id/add_photo_message" />
 
 
             <!-- USER PHOTO PREVIEW (dynamically uses user_photo_preview.xml) -->
@@ -371,7 +372,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/add_photo_message"
                 app:layout_constraintStart_toStartOf="@+id/additional_info_message"
                 app:layout_constraintEnd_toEndOf="@+id/additional_info_message"
-                app:layout_constraintBottom_toTopOf="@+id/create_mood_event_button" >
+                app:layout_constraintBottom_toTopOf="@+id/save_mood_event_button" >
 
 
             </LinearLayout>
@@ -380,19 +381,20 @@
 
             <!-- CREATE MOOD EVENT BUTTON -->
             <Button
-                android:id="@+id/create_mood_event_button"
+                android:id="@+id/save_mood_event_button"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
 
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
 
-                android:text="Create Mood Event"
+                android:onClick="saveMoodEvent"
 
-                app:layout_constraintTop_toBottomOf="@+id/user_photo_preview"
-                app:layout_constraintStart_toStartOf="parent"
+                android:text="Save Mood Event"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/user_photo_preview" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

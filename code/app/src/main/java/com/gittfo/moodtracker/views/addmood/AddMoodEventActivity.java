@@ -46,7 +46,10 @@ public class AddMoodEventActivity extends AppCompatActivity {
 
     // Use user input to create a new Mood Event
     private String selectedMood = null;
+    private String location = null;
+    private String reason = null;
     private String selectedSocialSituation = null;
+    private String photo = null;
 
     /**
      * In the oncreate method, dynamically update the layout as needed.
@@ -194,5 +197,16 @@ public class AddMoodEventActivity extends AppCompatActivity {
         }
 
         selectedSocialSituation = ((TextView) view).getText().toString(); // save the selected emotional state
+    }
+
+    /**
+     * If all user input is valid, save the current MoodEvent and return to the previous screen.
+     *
+     * @param view - The view that caused the method to be called
+     */
+    public void saveMoodEvent(View view) {
+        // TODO: Validate user input
+        // TODO: Create a new MoodEvent and save it, or save changes to the existing mood event
+        finish();
     }
 }
