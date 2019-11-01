@@ -12,7 +12,7 @@ public class Mood {
      * The list of possible emotional states a user can choose for their moods.
      * Based on the "six universal moods" as classified by Paul Ekman.
      */
-    public enum EmotionalState{
+    private enum EmotionalState{
         HAPPY,
         SAD,
         ANGRY,
@@ -32,7 +32,7 @@ public class Mood {
 
     /**
      * Creates a new mood
-     * 
+     *
      * @param color The color of this mood, should be consistent across the app.
      * @param emoticon Filname of the icon representing this mood.
      * @param emotionalState Enum describing the emotional state of this mood

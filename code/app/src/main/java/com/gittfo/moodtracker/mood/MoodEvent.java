@@ -10,16 +10,14 @@ import java.util.Date;
  */
 public class MoodEvent {
 
-    // Brief textual comment about this event
-    private String comment;
     // Location of an event, stored as a string for now. Type might change later
     private String location;
     // The name of a photograph corresponding to this event
     private String photoReference;
     // Brief textual comment describing the reason for this event
     private String reason;
-    // The time this event happened
-    private Date date;
+    // The date/time this event happened
+    private Date dateTime;
     // The number of people around during this event
     private int socialSituation;
     // Last but not least, the actual Mood associated to this event
@@ -27,20 +25,18 @@ public class MoodEvent {
 
     /**
      * Create a new mood a event, which is a mood, together with metadata.
-     * @param comment Brief comment on this event.
      * @param location Where the event happened.
      * @param photoReference Filename for a photo of the event.
-     * @param reason Reason for this event, i.e. "breakup".
+     * @param reason Reason for this mood event, e.g. "breakup".
      * @param date When this event happened.
      * @param socialSituation How many people were around.
      * @param mood The mood of this event.
      */
-    public MoodEvent(String comment, String location, String photoReference, String reason, Date date, int socialSituation, Mood mood) {
-        this.comment = comment;
+    public MoodEvent(String location, String photoReference, String reason, Date date, int socialSituation, Mood mood) {
         this.location = location;
         this.photoReference = photoReference;
         this.reason = reason;
-        this.date = date;
+        this.dateTime = date;
         this.socialSituation = socialSituation;
         this.mood = mood;
     }
@@ -48,20 +44,6 @@ public class MoodEvent {
     public static MoodEvent fromFirebase(QueryDocumentSnapshot document) {
         // TODO: make mood event from firebase
         return null;
-    }
-
-    /**
-     * @return A description of this event.
-     */
-    public String getComment() {
-        return comment;
-    }
-
-    /**
-     * @param comment The description of this event.
-     */
-    public void setComment(String comment) {
-        this.comment = comment;
     }
 
     /**
@@ -110,14 +92,14 @@ public class MoodEvent {
      * @return When this event happened.
      */
     public Date getDate() {
-        return date;
+        return dateTime;
     }
 
     /**
      * @param date When this event happened.
      */
     public void setDate(Date date) {
-        this.date = date;
+        this.dateTime = date;
     }
 
     /**
