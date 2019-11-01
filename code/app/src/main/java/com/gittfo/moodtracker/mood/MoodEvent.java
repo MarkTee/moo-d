@@ -25,7 +25,7 @@ public class MoodEvent {
     private String photoReference;
     // Brief textual comment describing the reason for this event
     private String reason;
-    // The date/time this event happened
+    // The date/time the mood event was create
     private Date dateTime;
     // The number of people around during this event
     private SocialSituation socialSituation;
@@ -37,7 +37,7 @@ public class MoodEvent {
      * @param location Where the event happened.
      * @param photoReference Filename for a photo of the event.
      * @param reason Reason for this mood event, e.g. "breakup".
-     * @param date When this event happened.
+     * @param date When the mood event was created
      * @param socialSituation How many people were around.
      * @param mood The mood of this event.
      */
@@ -98,14 +98,14 @@ public class MoodEvent {
     }
 
     /**
-     * @return When this event happened.
+     * @return When the mood event was created
      */
     public Date getDate() {
         return dateTime;
     }
 
     /**
-     * @param date When this event happened.
+     * @param date When the mood event was created
      */
     public void setDate(Date date) {
         this.dateTime = date;
