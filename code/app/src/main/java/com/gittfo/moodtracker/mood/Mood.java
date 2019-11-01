@@ -1,5 +1,6 @@
 package com.gittfo.moodtracker.mood;
 
+
 import android.graphics.Color;
 
 /**
@@ -10,9 +11,7 @@ public class Mood {
 
     /**
      * The list of possible emotional states a user can choose for their moods.
-     * Based on the "six universal moods" as classified by Paul Ekman, with the addition of "tired,
-     * lonely" and "meh", as suggested by Chuck.
-     * Subject to change.
+     * Based on the "six universal moods" as classified by Paul Ekman.
      */
     public enum EmotionalState{
         HAPPY,
@@ -21,38 +20,36 @@ public class Mood {
         DISGUSTED,
         AFRAID,
         SURPRISED,
-        TIRED,
-        LONELY,
-        MEH
     };
 
     // Moods will be assigned a consistent color in the app, i.e. angry -> red
-    private Color color;
+    private int color;
     // Filename of emoticon representing this mood. Will save on memory by not storing a copy
     private String emoticon;
     // Enum holding the "emotional state" this mood represents
     private EmotionalState emotionalState;
-    // The "value" of this mood
-    private int value;
+    // A String containing the name of the mood
+    private String name;
 
     /**
-     * Creates a new mood, typically to be added to a mood history.
+     * Creates a new mood
+     *
      * @param color The color of this mood, should be consistent across the app.
      * @param emoticon Filname of the icon representing this mood.
      * @param emotionalState Enum describing the emotional state of this mood
-     * @param value Value of this mood.
+     * @param name A String containing the name of the mood
      */
-    public Mood(Color color, String emoticon, EmotionalState emotionalState, int value) {
+    public Mood(int color, String emoticon, EmotionalState emotionalState, String name) {
         this.color = color;
         this.emoticon = emoticon;
         this.emotionalState = emotionalState;
-        this.value = value;
+        this.name = name;
     }
 
     /**
      * @return The color of this mood.
      */
-    public Color getColor() {
+    public int getColor() {
         return color;
     }
 
@@ -60,7 +57,7 @@ public class Mood {
      * @param color Set the color of this mood. Might remove method in future, not sure why colors
      *              would need to change.
      */
-    public void setColor(Color color) {
+    public void setColor(int color) {
         this.color = color;
     }
 
@@ -93,16 +90,16 @@ public class Mood {
     }
 
     /**
-     * @return The value of this mood.
+     * @return A string containing the name of hte mood
      */
-    public int getValue() {
-        return value;
+    public String getName() {
+        return name;
     }
 
     /**
-     * @param value Set the integer value of this mood.
+     * @param name A string containing the new name for this mood
      */
-    public void setValue(int value) {
-        this.value = value;
+    public void setName(String name) {
+        this.name = name;
     }
 }
