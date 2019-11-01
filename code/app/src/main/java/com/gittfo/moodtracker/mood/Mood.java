@@ -31,7 +31,8 @@ public class Mood {
     private String name;
 
     /**
-     * Creates a new mood, typically to be added to a mood history.
+     * Creates a new mood
+     * 
      * @param color The color of this mood, should be consistent across the app.
      * @param emoticon Filname of the icon representing this mood.
      * @param emotionalState Enum describing the emotional state of this mood
