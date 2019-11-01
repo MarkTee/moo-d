@@ -7,10 +7,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.gittfo.moodtracker.mood.MoodEvent;
 import com.gittfo.moodtracker.views.R;
 
 import java.text.Format;
@@ -48,7 +50,7 @@ public class AddMoodEventActivity extends AppCompatActivity {
     private String selectedMood = null;
     private String location = null;
     private String reason = null;
-    private String selectedSocialSituation = null;
+    private MoodEvent.SocialSituation selectedSocialSituation = null;
     private String photo = null;
 
     /**
@@ -181,7 +183,33 @@ public class AddMoodEventActivity extends AppCompatActivity {
         int selectedColor = Color.parseColor("#008577");
         view.setBackgroundColor(selectedColor);
 
-        selectedSocialSituation = ((TextView) view).getText().toString(); // save the selected emotional state
+        // Get the text from the selected button
+        String clickedSocialButtonText = ((TextView) view).getText().toString();
+
+        // Save the selected emotional state (using one of MoodEvent's pre-defined socialSituations)
+        switch (clickedSocialButtonText) {
+            case "0":
+                selectedSocialSituation = MoodEvent.SocialSituation.ZERO;
+                break;
+
+            case "1":
+                selectedSocialSituation = MoodEvent.SocialSituation.ONE;
+                break;
+
+            case "2+":
+                selectedSocialSituation = MoodEvent.SocialSituation.TWOPLUS;
+                break;
+
+            case "A Crowd":
+                selectedSocialSituation = MoodEvent.SocialSituation.CROWD;
+                break;
+
+            case "N/A":
+                selectedSocialSituation = MoodEvent.SocialSituation.NA;
+                break;
+        }
+
+        Log.d("STATE", selectedSocialSituation.toString());
     }
 
     /**

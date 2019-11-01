@@ -10,6 +10,15 @@ import java.util.Date;
  */
 public class MoodEvent {
 
+    // Valid social situations for a MoodEvent
+    public enum SocialSituation {
+        ZERO,
+        ONE,
+        TWOPLUS,
+        CROWD,
+        NA
+    };
+
     // Location of an event, stored as a string for now. Type might change later
     private String location;
     // The name of a photograph corresponding to this event
@@ -19,7 +28,7 @@ public class MoodEvent {
     // The date/time this event happened
     private Date dateTime;
     // The number of people around during this event
-    private int socialSituation;
+    private SocialSituation socialSituation;
     // Last but not least, the actual Mood associated to this event
     private Mood mood;
 
@@ -32,7 +41,7 @@ public class MoodEvent {
      * @param socialSituation How many people were around.
      * @param mood The mood of this event.
      */
-    public MoodEvent(String location, String photoReference, String reason, Date date, int socialSituation, Mood mood) {
+    public MoodEvent(String location, String photoReference, String reason, Date date, SocialSituation socialSituation, Mood mood) {
         this.location = location;
         this.photoReference = photoReference;
         this.reason = reason;
@@ -105,14 +114,14 @@ public class MoodEvent {
     /**
      * @return The number of people around during this event.
      */
-    public int getSocialSituation() {
+    public SocialSituation getSocialSituation() {
         return socialSituation;
     }
 
     /**
      * @param socialSituation The number of people around during this event.
      */
-    public void setSocialSituation(int socialSituation) {
+    public void setSocialSituation(SocialSituation socialSituation) {
         this.socialSituation = socialSituation;
     }
 
