@@ -10,9 +10,7 @@ public class Mood {
 
     /**
      * The list of possible emotional states a user can choose for their moods.
-     * Based on the "six universal moods" as classified by Paul Ekman, with the addition of "tired,
-     * lonely" and "meh", as suggested by Chuck.
-     * Subject to change.
+     * Based on the "six universal moods" as classified by Paul Ekman.
      */
     public enum EmotionalState{
         HAPPY,
@@ -21,9 +19,6 @@ public class Mood {
         DISGUSTED,
         AFRAID,
         SURPRISED,
-        TIRED,
-        LONELY,
-        MEH
     };
 
     // Moods will be assigned a consistent color in the app, i.e. angry -> red
