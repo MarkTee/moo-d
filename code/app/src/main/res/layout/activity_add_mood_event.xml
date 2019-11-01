@@ -270,58 +270,84 @@
                 android:layout_height="wrap_content"
 
                 android:layout_marginTop="8dp"
-                android:orientation="horizontal"
+                android:orientation="vertical"
 
                 app:layout_constraintTop_toBottomOf="@+id/social_situation_message"
                 app:layout_constraintStart_toStartOf="@+id/additional_info_message"
                 app:layout_constraintEnd_toEndOf="@+id/additional_info_message"
                 app:layout_constraintBottom_toTopOf="@+id/add_photo_message" >
 
-                <Button
-                    android:id="@+id/social_button_zero"
-
-                    android:layout_width="70dp"
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
 
-                    android:layout_marginEnd="2dp"
+                    <Button
+                        android:id="@+id/social_button_zero"
 
-                    android:onClick="selectSocialSituationButton"
-                    android:text="0" />
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+
+                        android:layout_marginEnd="2dp"
+
+                        android:onClick="selectSocialSituationButton"
+                        android:text="0"
+                        android:backgroundTint="@android:color/darker_gray" />
+
+                    <Button
+                        android:id="@+id/social_button_one"
+
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+
+                        android:layout_marginStart="2dp"
+                        android:layout_marginEnd="2dp"
+
+                        android:onClick="selectSocialSituationButton"
+                        android:text="1"
+                        android:backgroundTint="@android:color/darker_gray" />
+
+                    <Button
+                        android:id="@+id/social_button_two_plus"
+
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+
+                        android:layout_marginStart="2dp"
+                        android:layout_marginEnd="2dp"
+
+                        android:onClick="selectSocialSituationButton"
+                        android:text="2+"
+                        android:backgroundTint="@android:color/darker_gray" />
+
+                    <Button
+                        android:id="@+id/social_button_crowd"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:layout_marginStart="2dp"
+                        android:layout_marginEnd="2dp"
+
+                        android:onClick="selectSocialSituationButton"
+                        android:text="A crowd"
+                        android:backgroundTint="@android:color/darker_gray" />
+
+                </LinearLayout>
 
                 <Button
-                    android:id="@+id/social_button_one"
-
-                    android:layout_width="70dp"
-                    android:layout_height="wrap_content"
-
-                    android:layout_marginStart="2dp"
-                    android:layout_marginEnd="2dp"
-
-                    android:onClick="selectSocialSituationButton"
-                    android:text="1" />
-
-                <Button
-                    android:id="@+id/social_button_two_plus"
-
-                    android:layout_width="70dp"
-                    android:layout_height="wrap_content"
-
-                    android:layout_marginStart="2dp"
-                    android:layout_marginEnd="2dp"
-
-                    android:onClick="selectSocialSituationButton"
-                    android:text="2+" />
-
-                <Button
-                    android:id="@+id/social_button_crowd"
+                    android:id="@+id/social_button_na"
 
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 
                     android:layout_marginStart="2dp"
 
+                    android:layout_gravity="center"
+
                     android:onClick="selectSocialSituationButton"
-                    android:text="A crowd" />
+                    android:text="N/A"
+                    android:backgroundTint="@android:color/darker_gray" />
 
             </LinearLayout>
             <!-- END SOCIAL SITUATION ENTRY -->

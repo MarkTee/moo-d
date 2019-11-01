@@ -86,7 +86,8 @@ public class AddMoodEventActivity extends AppCompatActivity {
         Button oneButton = findViewById(R.id.social_button_one);
         Button twoPlusButton = findViewById(R.id.social_button_two_plus);
         Button crowdButton = findViewById(R.id.social_button_crowd);
-        socialSituationButtons = Arrays.asList(zeroButton, oneButton, twoPlusButton, crowdButton);
+        Button naButton = findViewById(R.id.social_button_na);
+        socialSituationButtons = Arrays.asList(zeroButton, oneButton, twoPlusButton, crowdButton, naButton);
     }
 
     /**
@@ -178,23 +179,7 @@ public class AddMoodEventActivity extends AppCompatActivity {
 
         // Add colour to the button that was just clicked
         int selectedColor = Color.parseColor("#008577");
-        switch(view.getId()) {
-            case R.id.social_button_zero:
-                view.setBackgroundColor(selectedColor);
-                break;
-
-            case R.id.social_button_one:
-                view.setBackgroundColor(selectedColor);
-                break;
-
-            case R.id.social_button_two_plus:
-                view.setBackgroundColor(selectedColor);
-                break;
-
-            case R.id.social_button_crowd:
-                view.setBackgroundColor(selectedColor);
-                break;
-        }
+        view.setBackgroundColor(selectedColor);
 
         selectedSocialSituation = ((TextView) view).getText().toString(); // save the selected emotional state
     }
