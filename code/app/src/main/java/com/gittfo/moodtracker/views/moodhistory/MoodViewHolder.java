@@ -38,7 +38,7 @@ class MoodViewHolder extends RecyclerView.ViewHolder {
     void populateMoodEventContainer(MoodEvent moodEvent){
         // TODO we need to add more to this
         TextView eventComment = container.findViewById(R.id.event_comment);
-        eventComment.setText(moodEvent.getComment());
+        eventComment.setText(moodEvent.getReason());
 
         TextView eventReason = container.findViewById(R.id.event_reason);
         eventReason.setText(moodEvent.getReason());
