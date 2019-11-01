@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.gittfo.moodtracker.database.Database;
+import com.gittfo.moodtracker.mood.MoodEvent;
 import com.gittfo.moodtracker.views.addmood.AddMoodEventActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -14,6 +16,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+         Database.get(this).getMoods().addOnSuccessListener(moods -> {
+                     for(MoodEvent ev : moods) {
+                         // TODO: add these to the mood history
+                         System.out.println(ev.toString());
+                     }
+                 });
     }
 
     public void createMoodEvent(View view) {
