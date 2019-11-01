@@ -1,5 +1,6 @@
 package com.gittfo.moodtracker.mood;
 
+
 import android.graphics.Color;
 
 /**
@@ -12,7 +13,7 @@ public class Mood {
      * The list of possible emotional states a user can choose for their moods.
      * Based on the "six universal moods" as classified by Paul Ekman.
      */
-    private enum EmotionalState{
+    public enum EmotionalState{
         HAPPY,
         SAD,
         ANGRY,
@@ -22,7 +23,7 @@ public class Mood {
     };
 
     // Moods will be assigned a consistent color in the app, i.e. angry -> red
-    private Color color;
+    private int color;
     // Filename of emoticon representing this mood. Will save on memory by not storing a copy
     private String emoticon;
     // Enum holding the "emotional state" this mood represents
@@ -38,7 +39,7 @@ public class Mood {
      * @param emotionalState Enum describing the emotional state of this mood
      * @param name A String containing the name of the mood
      */
-    public Mood(Color color, String emoticon, EmotionalState emotionalState, String name) {
+    public Mood(int color, String emoticon, EmotionalState emotionalState, String name) {
         this.color = color;
         this.emoticon = emoticon;
         this.emotionalState = emotionalState;
@@ -48,7 +49,7 @@ public class Mood {
     /**
      * @return The color of this mood.
      */
-    public Color getColor() {
+    public int getColor() {
         return color;
     }
 
@@ -56,7 +57,7 @@ public class Mood {
      * @param color Set the color of this mood. Might remove method in future, not sure why colors
      *              would need to change.
      */
-    public void setColor(Color color) {
+    public void setColor(int color) {
         this.color = color;
     }
 
