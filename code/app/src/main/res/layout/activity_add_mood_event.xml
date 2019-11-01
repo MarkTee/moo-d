@@ -57,7 +57,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="12dp"
 
                 android:text="MONTH DAY, YEAR"
                 android:textColor="#000000"
@@ -96,6 +96,23 @@
 
 
             <!-- MOOD SELECTION BUTTONS -->
+            <TextView
+                android:id="@+id/mood_message"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginTop="12dp"
+
+                android:text="What kind of mood are you in?"
+                android:textSize="24sp"
+                android:textStyle="bold"
+
+                app:layout_constraintTop_toBottomOf="@+id/time_display"
+                app:layout_constraintStart_toStartOf="@id/greeting_message"
+                app:layout_constraintEnd_toEndOf="@id/greeting_message"
+                app:layout_constraintBottom_toTopOf="@+id/mood_selection_buttons" />
+
             <GridLayout
                 android:id="@+id/mood_selection_buttons"
 
@@ -113,7 +130,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/time_display"
                 app:layout_constraintStart_toStartOf="@+id/greeting_message"
                 app:layout_constraintEnd_toEndOf="@+id/greeting_message"
-                app:layout_constraintBottom_toTopOf="@+id/location_button" >
+                app:layout_constraintBottom_toTopOf="@+id/additional_info_message" >
 
                 <Button
                     android:id="@+id/happy_mood_button"
@@ -185,27 +202,6 @@
             <!-- END MOOD SELECTION BUTTONS -->
 
 
-            <!-- LOCATION ENTRY -->
-            <Button
-                android:id="@+id/location_button"
-
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-
-                android:layout_marginTop="12dp"
-
-                android:drawableLeft="@drawable/ic_near_me_black_24dp"
-
-                android:gravity="center"
-                android:onClick="getLocation"
-
-                android:text="Use Location (optional)"
-                app:layout_constraintBottom_toTopOf="@+id/additional_info_message"
-                app:layout_constraintEnd_toEndOf="@+id/mood_selection_buttons"
-                app:layout_constraintStart_toStartOf="@+id/mood_selection_buttons"
-                app:layout_constraintTop_toBottomOf="@+id/mood_selection_buttons" />
-
-
             <!-- ADDITIONAL INFO MESSAGE -->
             <TextView
                 android:id="@+id/additional_info_message"
@@ -215,11 +211,11 @@
 
                 android:layout_marginTop="12dp"
 
-                android:text="Anything you'd like to add?"
+                android:text="Anything else you'd like to add?"
                 android:textSize="24sp"
                 android:textStyle="bold"
 
-                app:layout_constraintTop_toBottomOf="@+id/location_button"
+                app:layout_constraintTop_toBottomOf="@+id/mood_selection_buttons"
                 app:layout_constraintStart_toStartOf="@id/greeting_message"
                 app:layout_constraintEnd_toEndOf="@id/greeting_message"
                 app:layout_constraintBottom_toTopOf="@+id/reason_entry" />
@@ -229,7 +225,7 @@
             <EditText
                 android:id="@+id/reason_entry"
 
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
 
                 android:layout_marginTop="16dp"
@@ -399,11 +395,32 @@
                 app:layout_constraintTop_toBottomOf="@+id/add_photo_message"
                 app:layout_constraintStart_toStartOf="@+id/additional_info_message"
                 app:layout_constraintEnd_toEndOf="@+id/additional_info_message"
-                app:layout_constraintBottom_toTopOf="@+id/save_mood_event_button" >
+                app:layout_constraintBottom_toTopOf="@+id/location_button" >
 
 
             </LinearLayout>
             <!-- END ADD PHOTO -->
+
+
+            <!-- LOCATION ENTRY -->
+            <Button
+                android:id="@+id/location_button"
+
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+
+                android:layout_marginTop="24dp"
+
+                android:drawableLeft="@drawable/ic_near_me_black_24dp"
+
+                android:gravity="center"
+                android:onClick="getLocation"
+
+                android:text="Use Location (optional)"
+                app:layout_constraintBottom_toTopOf="@+id/save_mood_event_button"
+                app:layout_constraintEnd_toEndOf="@+id/mood_selection_buttons"
+                app:layout_constraintStart_toStartOf="@+id/mood_selection_buttons"
+                app:layout_constraintTop_toBottomOf="@+id/user_photo_preview" />
 
 
             <!-- CREATE MOOD EVENT BUTTON -->
@@ -412,7 +429,6 @@
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
 
-                android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
 
                 android:onClick="saveMoodEvent"
@@ -421,7 +437,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/user_photo_preview" />
+                app:layout_constraintTop_toBottomOf="@+id/location_button" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
