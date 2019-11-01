@@ -32,21 +32,17 @@ public class Mood {
     private String emoticon;
     // Enum holding the "emotional state" this mood represents
     private EmotionalState emotionalState;
-    // The "value" of this mood
-    private int value;
 
     /**
      * Creates a new mood, typically to be added to a mood history.
      * @param color The color of this mood, should be consistent across the app.
      * @param emoticon Filname of the icon representing this mood.
      * @param emotionalState Enum describing the emotional state of this mood
-     * @param value Value of this mood.
      */
-    public Mood(Color color, String emoticon, EmotionalState emotionalState, int value) {
+    public Mood(Color color, String emoticon, EmotionalState emotionalState) {
         this.color = color;
         this.emoticon = emoticon;
         this.emotionalState = emotionalState;
-        this.value = value;
     }
 
     /**
@@ -90,19 +86,5 @@ public class Mood {
      */
     public void setEmotionalState(EmotionalState emotionalState) {
         this.emotionalState = emotionalState;
-    }
-
-    /**
-     * @return The value of this mood.
-     */
-    public int getValue() {
-        return value;
-    }
-
-    /**
-     * @param value Set the integer value of this mood.
-     */
-    public void setValue(int value) {
-        this.value = value;
     }
 }
