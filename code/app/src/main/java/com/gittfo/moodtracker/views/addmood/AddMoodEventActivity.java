@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.gittfo.moodtracker.database.Database;
 import com.gittfo.moodtracker.mood.Mood;
 import com.gittfo.moodtracker.mood.MoodEvent;
+import com.gittfo.moodtracker.views.MainActivity;
 import com.gittfo.moodtracker.views.R;
 
 import java.text.Format;
@@ -265,6 +266,9 @@ public class AddMoodEventActivity extends AppCompatActivity {
 
         // Create the MoodEvent object
         moodEvent = new MoodEvent(location, photoReference, reason, date, socialSituation, mood);
+
+        // add the new mood event to the local mood history
+        MainActivity.getMoodHistory().addMoodEvent(moodEvent);
 
         Database.get(this).addMoodEvent(moodEvent);
         finish();
