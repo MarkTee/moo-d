@@ -42,6 +42,7 @@ public class MoodHistoryAdapter extends ArrayAdapter {
     }
 
     private View populateMoodEventContainer(View view, MoodEvent moodEvent){
+        // Do we actually edit the view??
         //TODO: find a better way to do this
         TextView thing1 = view.findViewById(R.id.event_comment);
         thing1.setText(moodEvent.getReason());
