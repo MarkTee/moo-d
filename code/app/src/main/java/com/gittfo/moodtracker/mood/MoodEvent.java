@@ -4,6 +4,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.Date;
 
+
 /**
  * A 'Mood Event' is a mood, together with a bunch of relevant metadata, like a location.
  * The creation and display of MoodEvents is the core functionality of the mood tracker app.
@@ -19,6 +20,17 @@ public class MoodEvent {
         NA
     };
 
+    private static SocialSituation fromFirebaseString(String s) {
+        switch (s){
+            case "ZERO": return SocialSituation.ZERO;
+            case "ONE": return SocialSituation.ONE;
+            case "TWOPLUS": return SocialSituation.TWOPLUS;
+            case "CROWD": return SocialSituation.CROWD;
+            default:
+                return SocialSituation.NA;
+        }
+    }
+
     // Location of an event, stored as a string for now. Type might change later
     private String location;
     // The name of a photograph corresponding to this event
@@ -30,29 +42,38 @@ public class MoodEvent {
     // The number of people around during this event
     private SocialSituation socialSituation;
     // Last but not least, the actual Mood associated to this event
-    private Mood mood;
+    private Mood.EmotionalState mood;
 
     /**
      * Create a new mood a event, which is a mood, together with metadata.
      * @param location Where the event happened.
      * @param photoReference Filename for a photo of the event.
      * @param reason Reason for this mood event, e.g. "breakup".
-     * @param date When the mood event was created
+     * @param dateTime When the mood event was created
      * @param socialSituation How many people were around.
      * @param mood The mood of this event.
      */
-    public MoodEvent(String location, String photoReference, String reason, Date date, SocialSituation socialSituation, Mood mood) {
+    public MoodEvent(String location, String photoReference, String reason, Date dateTime, SocialSituation socialSituation, Mood.EmotionalState mood) {
         this.location = location;
         this.photoReference = photoReference;
         this.reason = reason;
-        this.dateTime = date;
+        this.dateTime = dateTime;
         this.socialSituation = socialSituation;
         this.mood = mood;
     }
 
+
+
     public static MoodEvent fromFirebase(QueryDocumentSnapshot document) {
-        // TODO: make mood event from firebase
-        return null;
+        MoodEvent moodEvent = new MoodEvent(
+                document.getString("location"),
+                document.getString("photoReference"),
+                document.getString("reason"),
+                document.getDate("dateTime"),
+                fromFirebaseString(document.getString("socialSituation")),
+                Mood.EmotionalStateFromString(document.getString("mood"))
+        );
+        return moodEvent;
     }
 
     /**
@@ -128,14 +149,14 @@ public class MoodEvent {
     /**
      * @return The mood of this event.
      */
-    public Mood getMood() {
+    public Mood.EmotionalState getMood() {
         return mood;
     }
 
     /**
      * @param mood The mood of this event.
      */
-    public void setMood(Mood mood) {
+    public void setMood(Mood.EmotionalState mood) {
         this.mood = mood;
     }
 }

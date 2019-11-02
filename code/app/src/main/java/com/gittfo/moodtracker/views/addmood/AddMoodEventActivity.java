@@ -34,7 +34,7 @@ public class AddMoodEventActivity extends AppCompatActivity {
     // Get the current date and time, which are used when creating a new Mood Event
     private Date date = new Date();
     // Use user input to create a new Mood Event
-    private Mood mood = null;
+    private Mood.EmotionalState mood = null;
     private String reason = "";
     private MoodEvent.SocialSituation socialSituation = null;
     private String photoReference = "";
@@ -138,40 +138,35 @@ public class AddMoodEventActivity extends AppCompatActivity {
         // TODO: more easily.
         switch(view.getId()) {
             case R.id.happy_mood_button:
-                view.setBackgroundColor(Color.parseColor("#81c784"));
-//                mood = Mood.EmotionalState.HAPPY;
+                view.setBackgroundColor(Mood.DEFAULT_HAPPY.getColor());
+                mood = Mood.EmotionalState.HAPPY;
                 break;
 
             case R.id.sad_mood_button:
-                view.setBackgroundColor(Color.parseColor("#64b5f6"));
-//                mood = Mood.EmotionalState.SAD;
+                view.setBackgroundColor(Mood.DEFAULT_HAPPY.getColor());
+                mood = Mood.EmotionalState.SAD;
                 break;
 
             case R.id.surprised_mood_button:
-                view.setBackgroundColor(Color.parseColor("#fff176"));
-//                mood = Mood.EmotionalState.SURPRISED;
+                view.setBackgroundColor(Mood.DEFAULT_SURPRISED.getColor());
+                mood = Mood.EmotionalState.SURPRISED;
                 break;
 
             case R.id.afraid_mood_button:
-                view.setBackgroundColor(Color.parseColor("#ffb74d"));
-//                mood = Mood.EmotionalState.AFRAID;
+                view.setBackgroundColor(Mood.DEFAULT_AFRAID.getColor());
+                mood = Mood.EmotionalState.AFRAID;
                 break;
 
             case R.id.disgusted_mood_button:
-                view.setBackgroundColor(Color.parseColor("#b39ddb"));
-//                mood = Mood.EmotionalState.DISGUSTED;
+                view.setBackgroundColor(Mood.DEFAULT_DISGUISED.getColor());
+                mood = Mood.EmotionalState.DISGUSTED;
                 break;
 
             case R.id.angry_mood_button:
-                view.setBackgroundColor(Color.parseColor("#ff8a65"));
-//                mood = Mood.EmotionalState.ANGRY;
+                view.setBackgroundColor(Mood.DEFAULT_ANGRY.getColor());
+                mood = Mood.EmotionalState.ANGRY;
                 break;
         }
-        // placeholder mood until we have pre-defined moods stored somewhere
-        mood = new Mood(Color.parseColor("#81c784"),
-                "@drawable/ic_sentiment_very_happy_black_32dp",
-                Mood.EmotionalState.HAPPY,
-                "Happy");
     }
 
     /**

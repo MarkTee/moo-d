@@ -22,42 +22,51 @@ public class Mood {
         SURPRISED,
     };
 
-    // Moods will be assigned a consistent color in the app, i.e. angry -> red
-    private int color;
+    public static EmotionalState EmotionalStateFromString(String emo) {
+        switch (emo) {
+            case "HAPPY": return EmotionalState.HAPPY;
+            case "SAD": return EmotionalState.SAD;
+            case "ANGRY": return EmotionalState.ANGRY;
+            case "AFRAID": return EmotionalState.AFRAID;
+            case "DISGUSTED": return EmotionalState.DISGUSTED;
+            case "SURPRISED": return EmotionalState.SURPRISED;
+        }
+        return null;
+    }
+
+    public static Mood MoodFromEmotionalState(EmotionalState em) {
+        switch (em) {
+            case HAPPY: return DEFAULT_HAPPY;
+            case SAD: return DEFAULT_SAD;
+            case ANGRY: return DEFAULT_ANGRY;
+            case AFRAID: return DEFAULT_AFRAID;
+            case DISGUSTED: return DEFAULT_DISGUISED;
+            case SURPRISED: return DEFAULT_SURPRISED;
+        }
+        return null;
+    }
+
     // Filename of emoticon representing this mood. Will save on memory by not storing a copy
     private String emoticon;
     // Enum holding the "emotional state" this mood represents
     private EmotionalState emotionalState;
     // A String containing the name of the mood
     private String name;
+    // A color for the mood, stored as an int
+    private int color;
 
     /**
      * Creates a new mood
      *
-     * @param color The color of this mood, should be consistent across the app.
-     * @param emoticon Filname of the icon representing this mood.
+     * @param emoticon Filename of the icon representing this mood.
      * @param emotionalState Enum describing the emotional state of this mood
      * @param name A String containing the name of the mood
+     * @param color A color for the mood
      */
-    public Mood(int color, String emoticon, EmotionalState emotionalState, String name) {
-        this.color = color;
+    public Mood(String emoticon, EmotionalState emotionalState, String name, int color) {
         this.emoticon = emoticon;
         this.emotionalState = emotionalState;
         this.name = name;
-    }
-
-    /**
-     * @return The color of this mood.
-     */
-    public int getColor() {
-        return color;
-    }
-
-    /**
-     * @param color Set the color of this mood. Might remove method in future, not sure why colors
-     *              would need to change.
-     */
-    public void setColor(int color) {
         this.color = color;
     }
 
@@ -102,4 +111,25 @@ public class Mood {
     public void setName(String name) {
         this.name = name;
     }
+
+    /**
+     * Color is the android in for the color codes
+     * @return the color
+     */
+    public int getColor() {
+        return this.color;
+    }
+
+    public static Mood DEFAULT_HAPPY = new Mood("@drawable/ic_sentiment_very_happy_black_32dp", Mood.EmotionalState.HAPPY,
+            "Happy", Color.parseColor("#81c784"));
+    public static Mood DEFAULT_SAD = new Mood("@drawable/ic_sentiment_sad_black_32dp", EmotionalState.SAD,
+            "Sad", Color.parseColor("#64b5f6"));
+    public static Mood DEFAULT_SURPRISED = new Mood("@drawable/ic_sentiment_satisfied_happy_32dp", EmotionalState.SURPRISED,
+            "Surprised", Color.parseColor("#fff176"));
+    public static Mood DEFAULT_AFRAID = new Mood("@drawable/ic_sentiment_sick_black_32dp", EmotionalState.AFRAID,
+            "Afraid", Color.parseColor("#ffb74d"));
+    public static Mood DEFAULT_DISGUISED = new Mood("@drawable/ic_sentiment_neutral_black_32dp", EmotionalState.DISGUSTED,
+            "Disgusted", Color.parseColor("#b39ddb"));
+    public static Mood DEFAULT_ANGRY = new Mood("@drawable/ic_sentiment_sick_black_32dp", EmotionalState.ANGRY,
+            "Angry", Color.parseColor("#ff8a65"));
 }
