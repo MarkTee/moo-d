@@ -23,7 +23,7 @@ public class MoodHistoryTest extends AppCompatActivity {
         setContentView(R.layout.activity_mood_history_test);
 
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.mood_history);
+        RecyclerView recyclerView = findViewById(R.id.mood_history);
 
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
@@ -38,21 +38,18 @@ public class MoodHistoryTest extends AppCompatActivity {
         //ListView mood_history_view = findViewById(R.id.mood_history);
         MoodHistory moodHistory = new MoodHistory();
 
-        moodHistory.addMoodEvent(new MoodEvent("comment",
+        MoodEvent me = new MoodEvent(
                 "location",
-                "photo",
+                "photoref",
                 "reason",
                 new Date(),
-                5,
-                new Mood(new Color(),
-                        "nothing",
-                        Mood.EmotionalState.HAPPY,
-                        3)));
+                MoodEvent.SocialSituation.CROWD,
+                Mood.EmotionalState.AFRAID
+                );
 
+        moodHistory.addMoodEvent(me);
 
-        //moodHistory.render(this, mood_history_view);
-
-        MoodAdapter mAdapter = new MoodAdapter(moodHistory);
-        recyclerView.setAdapter(mAdapter);
+        MoodAdapter moodAdapter = new MoodAdapter(moodHistory);
+        recyclerView.setAdapter(moodAdapter);
     }
 }

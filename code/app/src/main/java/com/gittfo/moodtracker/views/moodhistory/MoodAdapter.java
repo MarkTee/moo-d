@@ -21,7 +21,7 @@ public class MoodAdapter extends RecyclerView.Adapter<MoodViewHolder> {
      * Construct a new MoodAdapter.
      * @param mh the mood history this adapter will hold onto.
      */
-    MoodAdapter(MoodHistory mh) {
+    public MoodAdapter(MoodHistory mh) {
         this.moodHistory = mh;
     }
 
