@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -135,8 +136,7 @@ public class AddMoodEventActivity extends AppCompatActivity {
         }
 
         // Add the corresponding colour to the button that was just clicked, and save the selected mood.
-        // TODO: Once we have moods stored somewhere, we'll be able to rebind mood and set colours
-        // TODO: more easily.
+        // TODO: Once we have moods stored somewhere, we'll be able to rebind mood and set colours more easily.
         switch(view.getId()) {
             case R.id.happy_mood_button:
                 view.setBackgroundColor(Mood.DEFAULT_HAPPY.getColor());
@@ -240,6 +240,7 @@ public class AddMoodEventActivity extends AppCompatActivity {
      * @param view - The view that caused the method to be called
      */
     public void saveMoodEvent(View view) {
+
         // Ensure that the user has selected a mood
         if (mood == null) {
             new AlertDialog.Builder(AddMoodEventActivity.this)
@@ -268,7 +269,8 @@ public class AddMoodEventActivity extends AppCompatActivity {
         moodEvent = new MoodEvent(location, photoReference, reason, date, socialSituation, mood);
 
         // add the new mood event to the local mood history
-        MainActivity.getMoodHistory().addMoodEvent(moodEvent);
+        Log.d("JDB", "Adding new mood of type " + moodEvent.getMood().toString() + " to mood history.");
+        MainActivity.addMoodEvent(moodEvent);
 
         Database.get(this).addMoodEvent(moodEvent);
         finish();

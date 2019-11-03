@@ -1,55 +1,73 @@
 package com.gittfo.moodtracker.mood;
 
-import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.view.LayoutInflater;
 
 
+import com.gittfo.moodtracker.views.MainActivity;
 import com.gittfo.moodtracker.views.R;
-
-import java.util.ArrayList;
-
-public class MoodHistoryAdapter extends ArrayAdapter {
-    private ArrayList<MoodEvent> moodHistory;
-    private Context context;
+import com.gittfo.moodtracker.views.moodhistory.MoodViewHolder;
 
 
-    public MoodHistoryAdapter(Context context, MoodHistory moodHistory){
-        super(context,0, moodHistory.getMoodEvents());
-        this.moodHistory = moodHistory.getMoodEvents();
-        this.context = context;
+public class MoodHistoryAdapter extends RecyclerView.Adapter<MoodViewHolder> {
+
+    private MoodHistory moodHistory;
+
+
+    public MoodHistoryAdapter(MoodHistory moodHistory){
+        this.moodHistory = moodHistory;
     }
 
+    /*
     @NonNull
-    @Override
+    //@Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 
         View view = convertView;
         if(view == null) {
             view = populateMoodEventContainer(
                     LayoutInflater.from(
-                            context).inflate(R.layout.mood_event_container,
+                            MainActivity.getContext()).inflate(R.layout.mood_event_container,
                             parent,
                             false),
-                    moodHistory.get(position));
+                    moodHistory.getMoodEvents().get(position));
         }
         return view;
     }
+    */
 
-    private View populateMoodEventContainer(View view, MoodEvent moodEvent){
-        // Do we actually edit the view??
-        //TODO: find a better way to do this
-        TextView thing1 = view.findViewById(R.id.event_comment);
-        thing1.setText(moodEvent.getReason());
 
-        TextView thing2 = view.findViewById(R.id.event_reason);
-        thing2.setText(moodEvent.getReason());
-        return view;
+    @NonNull
+    @Override
+    public MoodViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        LinearLayout v = (LinearLayout) LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.mood_event_container, parent, false);
+
+        return new MoodViewHolder(v);
     }
-    
+
+    /**
+     * Replace the contents of a view (invoked by the layout manager)
+     * @param holder
+     * @param position
+     */
+    @Override
+    public void onBindViewHolder(MoodViewHolder holder, int position) {
+        // - get element from your dataset at this position
+        // - replace the contents of the view with that element
+        //holder.container.setText(mDataset[position]);
+        holder.populateMoodEventContainer(moodHistory.getMoodEvents().get(position));
+    }
+
+    @Override
+    public int getItemCount() {
+        return moodHistory.getMoodEvents().size();
+    }
 }
