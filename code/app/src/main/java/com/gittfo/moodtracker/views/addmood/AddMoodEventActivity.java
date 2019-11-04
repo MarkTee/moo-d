@@ -97,6 +97,11 @@ public class AddMoodEventActivity extends AppCompatActivity {
         Button crowdButton = findViewById(R.id.social_button_crowd);
         Button naButton = findViewById(R.id.social_button_na);
         socialSituationButtons = Arrays.asList(zeroButton, oneButton, twoPlusButton, crowdButton, naButton);
+
+        if (!editing) {
+            Button deleteButton = findViewById(R.id.delete_mood_event_button);
+            deleteButton.setVisibility(View.GONE);
+        }
     }
 
     /**
