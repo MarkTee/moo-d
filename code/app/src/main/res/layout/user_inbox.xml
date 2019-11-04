@@ -47,10 +47,10 @@
             app:layout_constraintTop_toTopOf="@id/follow_request_username"
             app:layout_constraintBottom_toBottomOf="@id/follow_request_username"
             app:layout_constraintStart_toEndOf="@id/follow_request_username"
-            android:layout_marginStart="6dp"
+            android:layout_marginStart="5dp"
 
             android:textColor="#000000"
-            android:text="would like permission to follow you."/>
+            android:text="would like permission to view your posts."/>
 
 
 
