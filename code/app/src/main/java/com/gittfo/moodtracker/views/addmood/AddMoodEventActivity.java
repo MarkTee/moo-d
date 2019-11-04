@@ -50,6 +50,8 @@ public class AddMoodEventActivity extends AppCompatActivity {
     // EditText that the user can optionally use to attach a reason to the MoodEvent
     private EditText reasonEditText;
 
+    private boolean editing = false;
+
     /**
      * In the oncreate method, dynamically update the layout as needed and initialize views.
      *
@@ -228,5 +230,28 @@ public class AddMoodEventActivity extends AppCompatActivity {
 
         Database.get(this).addMoodEvent(moodEvent);
         finish();
+    }
+
+    /**
+     * Delete the current Mood Event from the database. Prompts the user for confirmation first.
+     * Only available when the user is editing
+     *
+     * @param view The view that caused the method to be called
+     */
+    public void deleteMoodEvent(View view) {
+        new AlertDialog.Builder(AddMoodEventActivity.this)
+                .setTitle("Delete Mood Event")
+                .setMessage("Are you sure you want to delete this Mood Event?")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    // Delete the current Mood Event from the database, then exit the activity
+                    public void onClick(DialogInterface dialog, int which) {
+                        //TODO: Delete the Mood Event from the database
+                        finish();
+                    }
+                })
+                .setNegativeButton(android.R.string.no, null)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+        return;
     }
 }
