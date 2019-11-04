@@ -66,6 +66,12 @@ public class AddMoodEventActivity extends AppCompatActivity {
         actionBar.hide();
         setContentView(R.layout.activity_add_mood_event);
 
+        // If the user is editing an existing MoodEvent
+        if (editing) {
+            Button deleteButton = findViewById(R.id.delete_mood_event_button);
+            deleteButton.setVisibility(View.VISIBLE);
+        }
+
         // Format date and time for display
         Format dateFormat = new SimpleDateFormat("MMMM dd, yyyy");
         String mDate = dateFormat.format(date);
@@ -97,11 +103,6 @@ public class AddMoodEventActivity extends AppCompatActivity {
         Button crowdButton = findViewById(R.id.social_button_crowd);
         Button naButton = findViewById(R.id.social_button_na);
         socialSituationButtons = Arrays.asList(zeroButton, oneButton, twoPlusButton, crowdButton, naButton);
-
-        if (!editing) {
-            Button deleteButton = findViewById(R.id.delete_mood_event_button);
-            deleteButton.setVisibility(View.GONE);
-        }
     }
 
     /**
@@ -238,7 +239,7 @@ public class AddMoodEventActivity extends AppCompatActivity {
     }
 
     /**
-     * Delete the current Mood Event from the database. Prompts the user for confirmation first.
+     * Delete the current MoodEvent from the database. Prompts the user for confirmation first.
      * Only available when the user is editing
      *
      * @param view The view that caused the method to be called
@@ -248,9 +249,9 @@ public class AddMoodEventActivity extends AppCompatActivity {
                 .setTitle("Delete Mood Event")
                 .setMessage("Are you sure you want to delete this Mood Event?")
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    // Delete the current Mood Event from the database, then exit the activity
+                    // Delete the current MoodEvent from the database, then exit the activity
                     public void onClick(DialogInterface dialog, int which) {
-                        //TODO: Delete the Mood Event from the database
+                        //TODO: Delete the MoodEvent from the database
                         finish();
                     }
                 })
