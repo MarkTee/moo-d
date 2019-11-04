@@ -36,7 +36,7 @@ public class AddMoodEventActivity extends AppCompatActivity {
     // Get the current date and time, which are used when creating a new Mood Event
     private Date date = new Date();
     // Use user input to create a new Mood Event
-    private Mood.EmotionalState mood = null;
+    private Mood.EmotionalState emotionalState = null;
     private String reason = "";
     private MoodEvent.SocialSituation socialSituation = null;
     private String photoReference = "";
@@ -90,6 +90,7 @@ public class AddMoodEventActivity extends AppCompatActivity {
             Button deleteButton = findViewById(R.id.delete_mood_event_button);
             deleteButton.setVisibility(View.VISIBLE);
 
+            //TODO: Get passed-in MoodEvent here
             // Placeholder MoodEvent
             MoodEvent placeholderMoodEvent = new MoodEvent(
                     "location",
@@ -97,14 +98,43 @@ public class AddMoodEventActivity extends AppCompatActivity {
                     "reason",
                     date,
                     MoodEvent.SocialSituation.CROWD,
-                    Mood.EmotionalState.AFRAID
+                    Mood.EmotionalState.HAPPY
             );
 
             // Display current MoodEvent's date/time
             date = placeholderMoodEvent.getDate();
 
+            // Display current MoodEvent's emotional state
+            emotionalState = placeholderMoodEvent.getMood();
+            switch (emotionalState) {
+                case HAPPY:
+                    happyButton.performClick();
+                    break;
+
+                case SAD:
+                    sadButton.performClick();
+                    break;
+
+                case SURPRISED:
+                    surprisedButton.performClick();
+                    break;
+
+                case AFRAID:
+                    afraidButton.performClick();
+                    break;
+
+                case DISGUSTED:
+                    disgustedButton.performClick();
+                    break;
+
+                case ANGRY:
+                    angryButton.performClick();
+                    break;
+            }
+            
             // Display current MoodEvent's reason
             reasonEditText.setText(placeholderMoodEvent.getReason());
+
 
         }
 
@@ -163,11 +193,11 @@ public class AddMoodEventActivity extends AppCompatActivity {
         Button selectedMoodButton = (Button) view;
         String selectedMoodString = selectedMoodButton.getText().toString();
 
-        // Get the selected mood
-        mood = Mood.emotionalStateFromString(selectedMoodString);
+        // Get the selected emotionalState
+        emotionalState = Mood.emotionalStateFromString(selectedMoodString);
 
         // Add the corresponding colour to the button that was just clicked
-        Mood selectedMood = Mood.moodFromEmotionalState(mood);
+        Mood selectedMood = Mood.moodFromEmotionalState(emotionalState);
         view.setBackgroundColor(selectedMood.getColor());
     }
 
@@ -220,8 +250,8 @@ public class AddMoodEventActivity extends AppCompatActivity {
      */
     public void saveMoodEvent(View view) {
 
-        // Ensure that the user has selected a mood
-        if (mood == null) {
+        // Ensure that the user has selected an emotionalState
+        if (emotionalState == null) {
             new AlertDialog.Builder(AddMoodEventActivity.this)
                     .setTitle("Missing Information")
                     .setMessage("Please select a mood.")
@@ -245,7 +275,7 @@ public class AddMoodEventActivity extends AppCompatActivity {
         reason = reasonEditText.getText().toString();
 
         // Create the MoodEvent object
-        moodEvent = new MoodEvent(location, photoReference, reason, date, socialSituation, mood);
+        moodEvent = new MoodEvent(location, photoReference, reason, date, socialSituation, emotionalState);
 
         // add the new mood event to the local mood history
         Log.d("JDB", "Adding new mood of type " + moodEvent.getMood().toString() + " to mood history.");
