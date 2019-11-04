@@ -47,7 +47,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/date_display" />
+                app:layout_constraintBottom_toTopOf="@id/date_display" />
 
 
             <!-- DATE AND TIME DISPLAY -->
@@ -67,10 +67,10 @@
                 android:drawablePadding="20dp"
                 android:gravity="center"
 
-                app:layout_constraintTop_toBottomOf="@+id/greeting_message"
-                app:layout_constraintStart_toStartOf="@+id/greeting_message"
-                app:layout_constraintEnd_toEndOf="@+id/greeting_message"
-                app:layout_constraintBottom_toTopOf="@+id/time_display" />
+                app:layout_constraintTop_toBottomOf="@id/greeting_message"
+                app:layout_constraintStart_toStartOf="@id/greeting_message"
+                app:layout_constraintEnd_toEndOf="@id/greeting_message"
+                app:layout_constraintBottom_toTopOf="@id/time_display" />
 
             <!-- Replace with a clock icon -->
             <TextView
@@ -89,10 +89,10 @@
                 android:textColor="#000000"
                 android:textSize="16sp"
 
-                app:layout_constraintTop_toBottomOf="@+id/date_display"
-                app:layout_constraintStart_toStartOf="@+id/date_display"
-                app:layout_constraintEnd_toEndOf="@+id/date_display"
-                app:layout_constraintBottom_toTopOf="@+id/mood_selection_buttons" />
+                app:layout_constraintTop_toBottomOf="@id/date_display"
+                app:layout_constraintStart_toStartOf="@id/date_display"
+                app:layout_constraintEnd_toEndOf="@id/date_display"
+                app:layout_constraintBottom_toTopOf="@id/mood_selection_buttons" />
 
 
             <!-- MOOD SELECTION BUTTONS -->
@@ -108,10 +108,10 @@
                 android:textSize="24sp"
                 android:textStyle="bold"
 
-                app:layout_constraintTop_toBottomOf="@+id/time_display"
+                app:layout_constraintTop_toBottomOf="@id/time_display"
                 app:layout_constraintStart_toStartOf="@id/greeting_message"
                 app:layout_constraintEnd_toEndOf="@id/greeting_message"
-                app:layout_constraintBottom_toTopOf="@+id/mood_selection_buttons" />
+                app:layout_constraintBottom_toTopOf="@id/mood_selection_buttons" />
 
             <GridLayout
                 android:id="@+id/mood_selection_buttons"
@@ -127,10 +127,10 @@
                 android:useDefaultMargins="true"
                 tools:context=".GridXMLActivity"
 
-                app:layout_constraintTop_toBottomOf="@+id/time_display"
-                app:layout_constraintStart_toStartOf="@+id/greeting_message"
-                app:layout_constraintEnd_toEndOf="@+id/greeting_message"
-                app:layout_constraintBottom_toTopOf="@+id/additional_info_message" >
+                app:layout_constraintTop_toBottomOf="@id/time_display"
+                app:layout_constraintStart_toStartOf="@id/greeting_message"
+                app:layout_constraintEnd_toEndOf="@id/greeting_message"
+                app:layout_constraintBottom_toTopOf="@id/additional_info_message" >
 
                 <Button
                     android:id="@+id/happy_mood_button"
@@ -215,10 +215,10 @@
                 android:textSize="24sp"
                 android:textStyle="bold"
 
-                app:layout_constraintTop_toBottomOf="@+id/mood_selection_buttons"
+                app:layout_constraintTop_toBottomOf="@id/mood_selection_buttons"
                 app:layout_constraintStart_toStartOf="@id/greeting_message"
                 app:layout_constraintEnd_toEndOf="@id/greeting_message"
-                app:layout_constraintBottom_toTopOf="@+id/reason_entry" />
+                app:layout_constraintBottom_toTopOf="@id/reason_entry" />
 
 
             <!-- (OPTIONAL) REASON ENTRY -->
@@ -233,10 +233,10 @@
                 android:hint="Reason for your mood (optional)"
                 android:inputType="text"
 
-                app:layout_constraintTop_toBottomOf="@+id/additional_info_message"
-                app:layout_constraintStart_toStartOf="@+id/additional_info_message"
-                app:layout_constraintEnd_toEndOf="@+id/additional_info_message"
-                app:layout_constraintBottom_toTopOf="@+id/social_situation_message" />
+                app:layout_constraintTop_toBottomOf="@id/additional_info_message"
+                app:layout_constraintStart_toStartOf="@id/additional_info_message"
+                app:layout_constraintEnd_toEndOf="@id/additional_info_message"
+                app:layout_constraintBottom_toTopOf="@id/social_situation_message" />
 
 
             <!-- SOCIAL SITUATION ENTRY -->
@@ -253,10 +253,10 @@
                 android:textSize="18sp"
                 android:textStyle="bold"
 
-                app:layout_constraintTop_toBottomOf="@+id/reason_entry"
-                app:layout_constraintStart_toStartOf="@+id/additional_info_message"
-                app:layout_constraintEnd_toEndOf="@+id/additional_info_message"
-                app:layout_constraintBottom_toTopOf="@+id/social_situation_buttons" />
+                app:layout_constraintTop_toBottomOf="@id/reason_entry"
+                app:layout_constraintStart_toStartOf="@id/additional_info_message"
+                app:layout_constraintEnd_toEndOf="@id/additional_info_message"
+                app:layout_constraintBottom_toTopOf="@id/social_situation_buttons" />
 
             <!-- SOCIAL SITUATION BUTTONS -->
             <LinearLayout
@@ -268,10 +268,10 @@
                 android:layout_marginTop="8dp"
                 android:orientation="vertical"
 
-                app:layout_constraintTop_toBottomOf="@+id/social_situation_message"
-                app:layout_constraintStart_toStartOf="@+id/additional_info_message"
-                app:layout_constraintEnd_toEndOf="@+id/additional_info_message"
-                app:layout_constraintBottom_toTopOf="@+id/add_photo_message" >
+                app:layout_constraintTop_toBottomOf="@id/social_situation_message"
+                app:layout_constraintStart_toStartOf="@id/additional_info_message"
+                app:layout_constraintEnd_toEndOf="@id/additional_info_message"
+                app:layout_constraintBottom_toTopOf="@id/add_photo_message" >
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -362,10 +362,10 @@
                 android:textSize="18sp"
                 android:textStyle="bold"
 
-                app:layout_constraintTop_toBottomOf="@+id/social_situation_buttons"
-                app:layout_constraintStart_toStartOf="@+id/additional_info_message"
-                app:layout_constraintEnd_toStartOf="@+id/add_photo_button"
-                app:layout_constraintBottom_toTopOf="@+id/photo_preview"/>
+                app:layout_constraintTop_toBottomOf="@id/social_situation_buttons"
+                app:layout_constraintStart_toStartOf="@id/additional_info_message"
+                app:layout_constraintEnd_toStartOf="@id/add_photo_button"
+                app:layout_constraintBottom_toTopOf="@id/photo_preview"/>
 
             <ImageButton
                 android:id="@+id/add_photo_button"
@@ -377,10 +377,10 @@
 
                 android:onClick="addPhoto"
                 android:src="@drawable/ic_image_black_24dp"
-                app:layout_constraintBottom_toBottomOf="@+id/add_photo_message"
-                app:layout_constraintEnd_toEndOf="@+id/additional_info_message"
-                app:layout_constraintStart_toEndOf="@+id/add_photo_message"
-                app:layout_constraintTop_toTopOf="@+id/add_photo_message" />
+                app:layout_constraintBottom_toBottomOf="@id/add_photo_message"
+                app:layout_constraintEnd_toEndOf="@id/additional_info_message"
+                app:layout_constraintStart_toEndOf="@id/add_photo_message"
+                app:layout_constraintTop_toTopOf="@id/add_photo_message" />
 
 
             <!-- USER PHOTO PREVIEW (dynamically uses user_photo_preview.xml) -->
@@ -392,10 +392,10 @@
 
                 android:orientation="horizontal"
 
-                app:layout_constraintTop_toBottomOf="@+id/add_photo_message"
-                app:layout_constraintStart_toStartOf="@+id/additional_info_message"
-                app:layout_constraintEnd_toEndOf="@+id/additional_info_message"
-                app:layout_constraintBottom_toTopOf="@+id/location_button" >
+                app:layout_constraintTop_toBottomOf="@id/add_photo_message"
+                app:layout_constraintStart_toStartOf="@id/additional_info_message"
+                app:layout_constraintEnd_toEndOf="@id/additional_info_message"
+                app:layout_constraintBottom_toTopOf="@id/location_button" >
 
 
             </LinearLayout>
@@ -417,10 +417,10 @@
                 android:onClick="getLocation"
 
                 android:text="Use Location (optional)"
-                app:layout_constraintBottom_toTopOf="@+id/save_mood_event_button"
-                app:layout_constraintEnd_toEndOf="@+id/mood_selection_buttons"
-                app:layout_constraintStart_toStartOf="@+id/mood_selection_buttons"
-                app:layout_constraintTop_toBottomOf="@+id/user_photo_preview" />
+                app:layout_constraintBottom_toTopOf="@id/save_mood_event_button"
+                app:layout_constraintEnd_toEndOf="@id/mood_selection_buttons"
+                app:layout_constraintStart_toStartOf="@id/mood_selection_buttons"
+                app:layout_constraintTop_toBottomOf="@id/user_photo_preview" />
 
 
             <!-- CREATE MOOD EVENT BUTTON -->
@@ -428,6 +428,8 @@
                 android:id="@+id/save_mood_event_button"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
+
+                android:layout_marginTop="16dp"
 
                 android:onClick="saveMoodEvent"
 
@@ -443,7 +445,7 @@
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
 
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
 
                 android:onClick="deleteMoodEvent"

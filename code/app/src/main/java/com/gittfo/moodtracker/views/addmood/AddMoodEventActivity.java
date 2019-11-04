@@ -87,6 +87,7 @@ public class AddMoodEventActivity extends AppCompatActivity {
 
         // If the user is editing an existing MoodEvent
         if (editing) {
+            // Display the Delete Mood Event button
             Button deleteButton = findViewById(R.id.delete_mood_event_button);
             deleteButton.setVisibility(View.VISIBLE);
 
@@ -158,8 +159,6 @@ public class AddMoodEventActivity extends AppCompatActivity {
                     naButton.performClick();
                     break;
             }
-
-
         }
 
         // Format date and time for display
