@@ -13,7 +13,7 @@ public class Mood {
      * The list of possible emotional states a user can choose for their moods.
      * Based on the "six universal moods" as classified by Paul Ekman.
      */
-    public enum EmotionalState{
+    public enum EmotionalState {
         HAPPY,
         SAD,
         ANGRY,
@@ -22,8 +22,13 @@ public class Mood {
         SURPRISED,
     };
 
-    public static EmotionalState EmotionalStateFromString(String emo) {
-        switch (emo) {
+    /**
+     * Given a string representation, return a valid EmotionalState
+     * @param emotionalState A string representation of a valid EmotionalState
+     * @return               A valid EmotionalState
+     */
+    public static EmotionalState emotionalStateFromString(String emotionalState) {
+        switch (emotionalState) {
             case "HAPPY": return EmotionalState.HAPPY;
             case "SAD": return EmotionalState.SAD;
             case "ANGRY": return EmotionalState.ANGRY;
@@ -34,8 +39,13 @@ public class Mood {
         return null;
     }
 
-    public static Mood MoodFromEmotionalState(EmotionalState em) {
-        switch (em) {
+    /**
+     * Return a string representation of a valid EmotionalState
+     * @param emotionalState A valid EmotionalState
+     * @return               A string representation of a valid EmotionalState
+     */
+    public static Mood moodFromEmotionalState(EmotionalState emotionalState) {
+        switch (emotionalState) {
             case HAPPY: return DEFAULT_HAPPY;
             case SAD: return DEFAULT_SAD;
             case ANGRY: return DEFAULT_ANGRY;
@@ -58,10 +68,10 @@ public class Mood {
     /**
      * Creates a new mood
      *
-     * @param emoticon Filename of the icon representing this mood.
+     * @param emoticon       Filename of the icon representing this mood.
      * @param emotionalState Enum describing the emotional state of this mood
-     * @param name A String containing the name of the mood
-     * @param color A color for the mood
+     * @param name           A String containing the name of the mood
+     * @param color          A color for the mood
      */
     public Mood(String emoticon, EmotionalState emotionalState, String name, int color) {
         this.emoticon = emoticon;
@@ -78,13 +88,6 @@ public class Mood {
     }
 
     /**
-     * @param emoticon Filename for the icon representing this mood.
-     */
-    public void setEmoticon(String emoticon) {
-        this.emoticon = emoticon;
-    }
-
-    /**
      * @return An enum describing the emotional state of this mood.
      */
     public EmotionalState getEmotionalState() {
@@ -92,24 +95,10 @@ public class Mood {
     }
 
     /**
-     * @param emotionalState Sets the enum emotional state of this mood.
-     */
-    public void setEmotionalState(EmotionalState emotionalState) {
-        this.emotionalState = emotionalState;
-    }
-
-    /**
      * @return A string containing the name of hte mood
      */
     public String getName() {
         return name;
-    }
-
-    /**
-     * @param name A string containing the new name for this mood
-     */
-    public void setName(String name) {
-        this.name = name;
     }
 
     /**

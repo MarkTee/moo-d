@@ -47,7 +47,7 @@ public class MoodHistory {
      * @param moodEvent The mood event to add to this history.
      */
     public void addMoodEvent(MoodEvent moodEvent) {
-        moodEvents.add(moodEvent);
+        moodEvents.add(0, moodEvent);
     }
 
     /**

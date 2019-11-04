@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import com.gittfo.moodtracker.views.MainActivity;
 import com.gittfo.moodtracker.views.R;
 import com.gittfo.moodtracker.views.moodhistory.MoodViewHolder;
+import com.google.api.Distribution;
 
 
 public class MoodHistoryAdapter extends RecyclerView.Adapter<MoodViewHolder> {
@@ -48,7 +49,7 @@ public class MoodHistoryAdapter extends RecyclerView.Adapter<MoodViewHolder> {
     @Override
     public MoodViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LinearLayout v = (LinearLayout) LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.mood_event_container, parent, false);
+                .inflate(R.layout.mood_event, parent, false);
 
         return new MoodViewHolder(v);
     }

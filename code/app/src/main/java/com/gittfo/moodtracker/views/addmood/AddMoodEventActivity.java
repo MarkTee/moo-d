@@ -53,7 +53,7 @@ public class AddMoodEventActivity extends AppCompatActivity {
     /**
      * In the oncreate method, dynamically update the layout as needed and initialize views.
      *
-     * @param savedInstanceState
+     * @param savedInstanceState Reference to the Bundle object passed into the activity
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,7 +103,7 @@ public class AddMoodEventActivity extends AppCompatActivity {
      *
      * Called when the user clicks the exit button in the top-right corner of the screen.
      *
-     * @param view - The view that caused the method to be called
+     * @param view The view that caused the method to be called
      */
     public void exit(View view) {
         new AlertDialog.Builder(AddMoodEventActivity.this)
@@ -111,6 +111,7 @@ public class AddMoodEventActivity extends AppCompatActivity {
                 .setMessage("Are you sure you want to exit?\n\nAny changes will be lost.")
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     // If the user confirms that they want to exit, finish the activity
+                    // (without saving changes)
                     public void onClick(DialogInterface dialog, int which) {
                         finish();
                     }
@@ -123,11 +124,10 @@ public class AddMoodEventActivity extends AppCompatActivity {
     /**
      * The user can select a mood by clicking one of the mood buttons.
      *
-     * The selected mood button will
-     * be highlighted, all other mood buttons will lose colour, and the activity's mood attribute
-     * will be set accordingly.
+     * The selected mood button will be highlighted, all other mood buttons will lose colour, and
+     * the activity's mood attribute will be set accordingly.
      *
-     * @param view - The view that caused the method to be called
+     * @param view The view that caused the method to be called
      */
     public void selectMoodButton(View view) {
         // Deselect all other buttons (remove their colour)
@@ -135,45 +135,21 @@ public class AddMoodEventActivity extends AppCompatActivity {
             button.setBackgroundColor(Color.GRAY);
         }
 
-        // Add the corresponding colour to the button that was just clicked, and save the selected mood.
-        // TODO: Once we have moods stored somewhere, we'll be able to rebind mood and set colours more easily.
-        switch(view.getId()) {
-            case R.id.happy_mood_button:
-                view.setBackgroundColor(Mood.DEFAULT_HAPPY.getColor());
-                mood = Mood.EmotionalState.HAPPY;
-                break;
+        Button selectedMoodButton = (Button) view;
+        String selectedMoodString = selectedMoodButton.getText().toString();
 
-            case R.id.sad_mood_button:
-                view.setBackgroundColor(Mood.DEFAULT_HAPPY.getColor());
-                mood = Mood.EmotionalState.SAD;
-                break;
+        // Get the selected mood
+        mood = Mood.emotionalStateFromString(selectedMoodString);
 
-            case R.id.surprised_mood_button:
-                view.setBackgroundColor(Mood.DEFAULT_SURPRISED.getColor());
-                mood = Mood.EmotionalState.SURPRISED;
-                break;
-
-            case R.id.afraid_mood_button:
-                view.setBackgroundColor(Mood.DEFAULT_AFRAID.getColor());
-                mood = Mood.EmotionalState.AFRAID;
-                break;
-
-            case R.id.disgusted_mood_button:
-                view.setBackgroundColor(Mood.DEFAULT_DISGUISED.getColor());
-                mood = Mood.EmotionalState.DISGUSTED;
-                break;
-
-            case R.id.angry_mood_button:
-                view.setBackgroundColor(Mood.DEFAULT_ANGRY.getColor());
-                mood = Mood.EmotionalState.ANGRY;
-                break;
-        }
+        // Add the corresponding colour to the button that was just clicked
+        Mood selectedMood = Mood.moodFromEmotionalState(mood);
+        view.setBackgroundColor(selectedMood.getColor());
     }
 
     /**
      * When implemented, this method will obtain the user's current GPS coordinates.
      *
-     * @param view - The view that caused the method to be called
+     * @param view The view that caused the method to be called
      */
     public void getLocation(View view) {
         ;
@@ -185,7 +161,7 @@ public class AddMoodEventActivity extends AppCompatActivity {
      * The selected social situation button will be highlighted, all other social situation buttons
      * will lose colour, and the activity's socialSituation attribute will be set accordingly.
      *
-     * @param view - The view that caused the method to be called
+     * @param view The view that caused the method to be called
      */
     public void selectSocialSituationButton(View view) {
         // Deselect all other buttons (remove their colour)
@@ -193,42 +169,20 @@ public class AddMoodEventActivity extends AppCompatActivity {
             button.setBackgroundColor(Color.GRAY);
         }
 
+        // Get the selected social situation
+        String selectedSocialSituationString = ((TextView) view).getText().toString();
+        socialSituation = MoodEvent.socialSituationFromString(selectedSocialSituationString);
+
         // Add colour to the button that was just clicked
         int selectedColor = Color.parseColor("#008577");
         view.setBackgroundColor(selectedColor);
-
-        // Get the text from the selected button
-        String clickedSocialButtonText = ((TextView) view).getText().toString();
-
-        // Save the selected emotional state (using one of MoodEvent's pre-defined socialSituations)
-        switch (clickedSocialButtonText) {
-            case "0":
-                socialSituation = MoodEvent.SocialSituation.ZERO;
-                break;
-
-            case "1":
-                socialSituation = MoodEvent.SocialSituation.ONE;
-                break;
-
-            case "2+":
-                socialSituation = MoodEvent.SocialSituation.TWOPLUS;
-                break;
-
-            case "A Crowd":
-                socialSituation = MoodEvent.SocialSituation.CROWD;
-                break;
-
-            case "N/A":
-                socialSituation = MoodEvent.SocialSituation.NA;
-                break;
-        }
     }
 
     /**
      * When implemented, this method will allow the user to optionally attach a photo to the current
      * mood event.
      *
-     * @param view - The view that caused the method to be called
+     * @param view The view that caused the method to be called
      */
     public void addPhoto(View view) {
         ;
@@ -237,7 +191,7 @@ public class AddMoodEventActivity extends AppCompatActivity {
     /**
      * If all user input is valid, save the current MoodEvent and return to the previous screen.
      *
-     * @param view - The view that caused the method to be called
+     * @param view The view that caused the method to be called
      */
     public void saveMoodEvent(View view) {
 
