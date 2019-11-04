@@ -21,16 +21,16 @@
 
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/follow_event_title"
+            app:layout_constraintBottom_toTopOf="@id/follow_denied_textView"
 
             android:background="#00000000"
             android:contentDescription="cancel button"
             android:src="@drawable/ic_cancel_grey_24dp"/>
 
-        <!-- PERMISSION TEXT -->
+        <!-- "Follow Request Denied" text -->
 
         <TextView
-            android:id="@+id/follow_event_title"
+            android:id="@+id/follow_denied_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
@@ -43,30 +43,30 @@
             android:textStyle="bold"
             android:textSize="20sp"
             android:textColor="#000000"
-            android:text="New follow request"/>
+            android:text="Follow request denied"/>
 
         <TextView
-            android:id="@+id/allow_textView1"
+            android:id="@+id/deny_textView_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            app:layout_constraintTop_toBottomOf="@id/follow_event_title"
-            app:layout_constraintStart_toStartOf="@id/follow_event_title"
+            app:layout_constraintTop_toBottomOf="@id/follow_denied_textView"
+            app:layout_constraintStart_toStartOf="@id/follow_denied_textView"
             app:layout_constraintEnd_toStartOf="@id/requesting_username"
             android:layout_marginTop="12dp"
 
             android:textColor="#000000"
-            android:text="Allow"/>
+            android:text="We won't let"/>
 
         <TextView
             android:id="@+id/requesting_username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            app:layout_constraintTop_toTopOf="@id/allow_textView1"
-            app:layout_constraintBottom_toBottomOf="@id/allow_textView1"
-            app:layout_constraintStart_toEndOf="@id/allow_textView1"
-            app:layout_constraintEnd_toStartOf="@id/allow_textView2"
+            app:layout_constraintTop_toTopOf="@id/deny_textView_1"
+            app:layout_constraintBottom_toBottomOf="@id/deny_textView_1"
+            app:layout_constraintStart_toEndOf="@id/deny_textView_1"
+            app:layout_constraintEnd_toStartOf="@id/deny_textView_2"
             android:layout_marginStart="5dp"
 
             android:textColor="@color/colorPrimary"
@@ -74,83 +74,45 @@
             android:text="moo_d_friend"/>
 
         <TextView
-            android:id="@+id/allow_textView2"
+            android:id="@+id/deny_textView_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            app:layout_constraintTop_toTopOf="@id/allow_textView1"
-            app:layout_constraintBottom_toBottomOf="@id/allow_textView1"
+            app:layout_constraintTop_toTopOf="@id/deny_textView_1"
+            app:layout_constraintBottom_toBottomOf="@id/deny_textView_1"
             app:layout_constraintStart_toEndOf="@id/requesting_username"
-            app:layout_constraintEnd_toEndOf="@id/follow_event_title"
+            app:layout_constraintEnd_toEndOf="@id/follow_denied_textView"
             android:layout_marginStart="5dp"
 
             android:textColor="#000000"
-            android:text="to view your"/>
+            android:text="know that"/>
 
         <TextView
-            android:id="@+id/allow_textView3"
+            android:id="@+id/deny_textView_3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            app:layout_constraintTop_toBottomOf="@id/allow_textView1"
-            app:layout_constraintStart_toStartOf="@id/follow_event_title"
-            app:layout_constraintEnd_toEndOf="@id/follow_event_title"
+            app:layout_constraintTop_toBottomOf="@id/deny_textView_2"
+            app:layout_constraintStart_toStartOf="@id/follow_denied_textView"
+            app:layout_constraintEnd_toEndOf="@id/follow_denied_textView"
             android:layout_marginTop="8dp"
 
             android:textColor="#000000"
-            android:text="current and future posts?"/>
+            android:text="the request was denied."/>
 
-
-        <!-- ALLOW/DENY BUTTONS -->
-
-        <Button
-            android:id="@+id/allow_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/allow_textView3"
-            app:layout_constraintStart_toStartOf="@id/follow_event_title"
-            app:layout_constraintEnd_toEndOf="@id/follow_event_title"
-            android:layout_marginTop="16dp"
-
-            android:text="Allow"/>
-
+        <!-- "Back to Inbox" button -->
 
         <Button
-            android:id="@+id/deny_button"
+            android:id="@+id/back_to_inbox_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/allow_button"
-            app:layout_constraintStart_toStartOf="@id/follow_event_title"
-            app:layout_constraintEnd_toEndOf="@id/follow_event_title"
+
+            app:layout_constraintTop_toBottomOf="@id/deny_textView_3"
+            app:layout_constraintStart_toStartOf="@id/follow_denied_textView"
+            app:layout_constraintEnd_toEndOf="@id/follow_denied_textView"
             android:layout_marginTop="16dp"
 
-            android:text="Deny"/>
-
-
-        <!-- "We won't tell them if you deny" -->
-
-
-        <TextView
-            android:id="@+id/deny_reassurance_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/deny_button"
-            app:layout_constraintStart_toStartOf="@id/follow_event_title"
-            app:layout_constraintEnd_toEndOf="@id/follow_event_title"
-            android:layout_marginTop="18dp"
-
-            android:textSize="13sp"
-            android:textColor="#000000"
-            android:text="(We won't tell them if you deny.)"/>
-
-
-
-
-
-
-
-
-
+            android:text="Back to Inbox"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
