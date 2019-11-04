@@ -139,10 +139,10 @@ public class AddMoodEventActivity extends AppCompatActivity {
         String selectedMoodString = selectedMoodButton.getText().toString();
 
         // Get the selected mood
-        mood = Mood.EmotionalStateFromString(selectedMoodString);
+        mood = Mood.emotionalStateFromString(selectedMoodString);
 
         // Add the corresponding colour to the button that was just clicked
-        Mood selectedMood = Mood.MoodFromEmotionalState(mood);
+        Mood selectedMood = Mood.moodFromEmotionalState(mood);
         view.setBackgroundColor(selectedMood.getColor());
     }
 

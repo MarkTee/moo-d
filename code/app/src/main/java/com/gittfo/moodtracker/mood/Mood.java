@@ -22,7 +22,7 @@ public class Mood {
         SURPRISED,
     };
 
-    public static EmotionalState EmotionalStateFromString(String emo) {
+    public static EmotionalState emotionalStateFromString(String emo) {
         switch (emo) {
             case "HAPPY": return EmotionalState.HAPPY;
             case "SAD": return EmotionalState.SAD;
@@ -34,7 +34,7 @@ public class Mood {
         return null;
     }
 
-    public static Mood MoodFromEmotionalState(EmotionalState em) {
+    public static Mood moodFromEmotionalState(EmotionalState em) {
         switch (em) {
             case HAPPY: return DEFAULT_HAPPY;
             case SAD: return DEFAULT_SAD;
@@ -78,13 +78,6 @@ public class Mood {
     }
 
     /**
-     * @param emoticon Filename for the icon representing this mood.
-     */
-    public void setEmoticon(String emoticon) {
-        this.emoticon = emoticon;
-    }
-
-    /**
      * @return An enum describing the emotional state of this mood.
      */
     public EmotionalState getEmotionalState() {
@@ -92,24 +85,10 @@ public class Mood {
     }
 
     /**
-     * @param emotionalState Sets the enum emotional state of this mood.
-     */
-    public void setEmotionalState(EmotionalState emotionalState) {
-        this.emotionalState = emotionalState;
-    }
-
-    /**
      * @return A string containing the name of hte mood
      */
     public String getName() {
         return name;
-    }
-
-    /**
-     * @param name A string containing the new name for this mood
-     */
-    public void setName(String name) {
-        this.name = name;
     }
 
     /**
