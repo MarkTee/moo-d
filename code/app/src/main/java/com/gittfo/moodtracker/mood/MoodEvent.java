@@ -20,12 +20,12 @@ public class MoodEvent {
         NA
     };
 
-    private static SocialSituation fromFirebaseString(String s) {
-        switch (s){
-            case "ZERO": return SocialSituation.ZERO;
-            case "ONE": return SocialSituation.ONE;
-            case "TWOPLUS": return SocialSituation.TWOPLUS;
-            case "CROWD": return SocialSituation.CROWD;
+    public static SocialSituation socialSituationFromString(String socialSituation) {
+        switch (socialSituation) {
+            case "0": return SocialSituation.ZERO;
+            case "1": return SocialSituation.ONE;
+            case "2+": return SocialSituation.TWOPLUS;
+            case "A Crowd": return SocialSituation.CROWD;
             default:
                 return SocialSituation.NA;
         }
@@ -70,8 +70,8 @@ public class MoodEvent {
                 document.getString("photoReference"),
                 document.getString("reason"),
                 document.getDate("dateTime"),
-                fromFirebaseString(document.getString("socialSituation")),
-                Mood.EmotionalStateFromString(document.getString("mood"))
+                socialSituationFromString(document.getString("socialSituation")),
+                Mood.emotionalStateFromString(document.getString("mood"))
         );
         return moodEvent;
     }
