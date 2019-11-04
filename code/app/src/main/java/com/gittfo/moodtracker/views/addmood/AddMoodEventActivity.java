@@ -50,7 +50,7 @@ public class AddMoodEventActivity extends AppCompatActivity {
     // EditText that the user can optionally use to attach a reason to the MoodEvent
     private EditText reasonEditText;
 
-    private boolean editing = false;
+    private boolean editing = true;
 
     /**
      * In the oncreate method, dynamically update the layout as needed and initialize views.
@@ -65,25 +65,6 @@ public class AddMoodEventActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
         setContentView(R.layout.activity_add_mood_event);
-
-        // If the user is editing an existing MoodEvent
-        if (editing) {
-            Button deleteButton = findViewById(R.id.delete_mood_event_button);
-            deleteButton.setVisibility(View.VISIBLE);
-        }
-
-        // Format date and time for display
-        Format dateFormat = new SimpleDateFormat("MMMM dd, yyyy");
-        String mDate = dateFormat.format(date);
-        Format timeFormat = new SimpleDateFormat("h:mm a");
-        String mTime = timeFormat.format(date);
-
-        // Display date and time. If creating a new mood event, the current date and time will be
-        // shown. If editing an existing mood event, its date and time will be shown.
-        TextView dateDisplay = findViewById(R.id.date_display);
-        dateDisplay.setText(mDate);
-        TextView timeDisplay = findViewById(R.id.time_display);
-        timeDisplay.setText(mTime);
 
         // Initialize Mood Buttons
         Button happyButton = findViewById(R.id.happy_mood_button);
@@ -103,6 +84,42 @@ public class AddMoodEventActivity extends AppCompatActivity {
         Button crowdButton = findViewById(R.id.social_button_crowd);
         Button naButton = findViewById(R.id.social_button_na);
         socialSituationButtons = Arrays.asList(zeroButton, oneButton, twoPlusButton, crowdButton, naButton);
+
+        // If the user is editing an existing MoodEvent
+        if (editing) {
+            Button deleteButton = findViewById(R.id.delete_mood_event_button);
+            deleteButton.setVisibility(View.VISIBLE);
+
+            // Placeholder MoodEvent
+            MoodEvent placeholderMoodEvent = new MoodEvent(
+                    "location",
+                    "photoref",
+                    "reason",
+                    date,
+                    MoodEvent.SocialSituation.CROWD,
+                    Mood.EmotionalState.AFRAID
+            );
+
+            // Display current MoodEvent's date/time
+            date = placeholderMoodEvent.getDate();
+
+            // Display current MoodEvent's reason
+            reasonEditText.setText(placeholderMoodEvent.getReason());
+
+        }
+
+        // Format date and time for display
+        Format dateFormat = new SimpleDateFormat("MMMM dd, yyyy");
+        String mDate = dateFormat.format(date);
+        Format timeFormat = new SimpleDateFormat("h:mm a");
+        String mTime = timeFormat.format(date);
+
+        // Display date and time. If creating a new mood event, the current date and time will be
+        // shown. If editing an existing mood event, its date and time will be shown.
+        TextView dateDisplay = findViewById(R.id.date_display);
+        dateDisplay.setText(mDate);
+        TextView timeDisplay = findViewById(R.id.time_display);
+        timeDisplay.setText(mTime);
     }
 
     /**
