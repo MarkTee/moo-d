@@ -1,5 +1,6 @@
 package com.gittfo.moodtracker.mood;
 
+import com.google.firebase.firestore.Exclude;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.Date;
@@ -10,6 +11,14 @@ import java.util.Date;
  * The creation and display of MoodEvents is the core functionality of the mood tracker app.
  */
 public class MoodEvent {
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     // Valid social situations for a MoodEvent
     public enum SocialSituation {
@@ -48,6 +57,9 @@ public class MoodEvent {
     private SocialSituation socialSituation;
     // Last but not least, the actual Mood associated to this event
     private Mood.EmotionalState mood;
+    // ID used for firebase
+    @Exclude
+    private String id;
 
     /**
      * Create a new mood a event, which is a mood, together with metadata.
@@ -82,6 +94,7 @@ public class MoodEvent {
                 socialSituationFromString(document.getString("socialSituation")),
                 Mood.emotionalStateFromString(document.getString("mood"))
         );
+        moodEvent.setId(document.getId());
         return moodEvent;
     }
 

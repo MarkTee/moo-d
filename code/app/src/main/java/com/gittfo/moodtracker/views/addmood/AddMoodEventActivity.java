@@ -291,7 +291,7 @@ public class AddMoodEventActivity extends AppCompatActivity {
             moodEvent.setPhotoReference(photoReference);
             moodEvent.setLocation(location);
 
-            // TODO: Save the updates to Firebase
+            Database.get(this).updateMoodEvent(moodEvent);
         } else {
             // Ensure that the user has selected an emotionalState
             if (emotionalState == null) {
