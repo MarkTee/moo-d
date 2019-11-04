@@ -92,20 +92,20 @@ public class AddMoodEventActivity extends AppCompatActivity {
 
             //TODO: Get passed-in MoodEvent here
             // Placeholder MoodEvent
-            MoodEvent placeholderMoodEvent = new MoodEvent(
+            MoodEvent moodEvent = new MoodEvent(
                     "location",
                     "photoref",
                     "reason",
                     date,
-                    MoodEvent.SocialSituation.CROWD,
+                    MoodEvent.SocialSituation.ONE,
                     Mood.EmotionalState.HAPPY
             );
 
             // Display current MoodEvent's date/time
-            date = placeholderMoodEvent.getDate();
+            date = moodEvent.getDate();
 
             // Display current MoodEvent's emotional state
-            emotionalState = placeholderMoodEvent.getMood();
+            emotionalState = moodEvent.getMood();
             switch (emotionalState) {
                 case HAPPY:
                     happyButton.performClick();
@@ -131,9 +131,33 @@ public class AddMoodEventActivity extends AppCompatActivity {
                     angryButton.performClick();
                     break;
             }
-            
+
             // Display current MoodEvent's reason
-            reasonEditText.setText(placeholderMoodEvent.getReason());
+            reasonEditText.setText(moodEvent.getReason());
+
+            // Display current MoodEvent's social situation
+            socialSituation = moodEvent.getSocialSituation();
+            switch (socialSituation) {
+                case ZERO:
+                    zeroButton.performClick();
+                    break;
+
+                case ONE:
+                    oneButton.performClick();
+                    break;
+
+                case TWOPLUS:
+                    twoPlusButton.performClick();
+                    break;
+
+                case CROWD:
+                    crowdButton.performClick();
+                    break;
+
+                case NA:
+                    naButton.performClick();
+                    break;
+            }
 
 
         }
