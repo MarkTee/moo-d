@@ -365,7 +365,7 @@
                 app:layout_constraintTop_toBottomOf="@id/social_situation_buttons"
                 app:layout_constraintStart_toStartOf="@id/additional_info_message"
                 app:layout_constraintEnd_toStartOf="@id/add_photo_button"
-                app:layout_constraintBottom_toTopOf="@id/photo_preview"/>
+                app:layout_constraintBottom_toTopOf="@id/user_photo_preview"/>
 
             <ImageButton
                 android:id="@+id/add_photo_button"
