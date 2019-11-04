@@ -53,7 +53,7 @@ public class AddMoodEventActivity extends AppCompatActivity {
     /**
      * In the oncreate method, dynamically update the layout as needed and initialize views.
      *
-     * @param savedInstanceState
+     * @param savedInstanceState Reference to the Bundle object passed into the activity
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,7 +103,7 @@ public class AddMoodEventActivity extends AppCompatActivity {
      *
      * Called when the user clicks the exit button in the top-right corner of the screen.
      *
-     * @param view - The view that caused the method to be called
+     * @param view The view that caused the method to be called
      */
     public void exit(View view) {
         new AlertDialog.Builder(AddMoodEventActivity.this)
@@ -127,7 +127,7 @@ public class AddMoodEventActivity extends AppCompatActivity {
      * The selected mood button will be highlighted, all other mood buttons will lose colour, and
      * the activity's mood attribute will be set accordingly.
      *
-     * @param view - The view that caused the method to be called
+     * @param view The view that caused the method to be called
      */
     public void selectMoodButton(View view) {
         // Deselect all other buttons (remove their colour)
@@ -149,7 +149,7 @@ public class AddMoodEventActivity extends AppCompatActivity {
     /**
      * When implemented, this method will obtain the user's current GPS coordinates.
      *
-     * @param view - The view that caused the method to be called
+     * @param view The view that caused the method to be called
      */
     public void getLocation(View view) {
         ;
@@ -161,7 +161,7 @@ public class AddMoodEventActivity extends AppCompatActivity {
      * The selected social situation button will be highlighted, all other social situation buttons
      * will lose colour, and the activity's socialSituation attribute will be set accordingly.
      *
-     * @param view - The view that caused the method to be called
+     * @param view The view that caused the method to be called
      */
     public void selectSocialSituationButton(View view) {
         // Deselect all other buttons (remove their colour)
@@ -182,7 +182,7 @@ public class AddMoodEventActivity extends AppCompatActivity {
      * When implemented, this method will allow the user to optionally attach a photo to the current
      * mood event.
      *
-     * @param view - The view that caused the method to be called
+     * @param view The view that caused the method to be called
      */
     public void addPhoto(View view) {
         ;
@@ -191,7 +191,7 @@ public class AddMoodEventActivity extends AppCompatActivity {
     /**
      * If all user input is valid, save the current MoodEvent and return to the previous screen.
      *
-     * @param view - The view that caused the method to be called
+     * @param view The view that caused the method to be called
      */
     public void saveMoodEvent(View view) {
 

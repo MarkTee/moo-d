@@ -20,6 +20,11 @@ public class MoodEvent {
         NA
     };
 
+    /**
+     * Given a string representation, return a valid SocialSituation
+     * @param socialSituation A string representation of a valid SocialSituation
+     * @return                A valid SocialSituation
+     */
     public static SocialSituation socialSituationFromString(String socialSituation) {
         switch (socialSituation) {
             case "0": return SocialSituation.ZERO;
@@ -46,12 +51,12 @@ public class MoodEvent {
 
     /**
      * Create a new mood a event, which is a mood, together with metadata.
-     * @param location Where the event happened.
-     * @param photoReference Filename for a photo of the event.
-     * @param reason Reason for this mood event, e.g. "breakup".
-     * @param dateTime When the mood event was created
+     * @param location        Where the event happened.
+     * @param photoReference  Filename for a photo of the event.
+     * @param reason          Reason for this mood event, e.g. "breakup".
+     * @param dateTime        When the mood event was created
      * @param socialSituation How many people were around.
-     * @param mood The mood of this event.
+     * @param mood            The mood of this event.
      */
     public MoodEvent(String location, String photoReference, String reason, Date dateTime, SocialSituation socialSituation, Mood.EmotionalState mood) {
         this.location = location;
@@ -62,9 +67,13 @@ public class MoodEvent {
         this.mood = mood;
     }
 
-
-
-    public static MoodEvent fromFirebase(QueryDocumentSnapshot document) {
+    /**
+     * Create a MoodEvent object based on data stored in Firebase.
+     *
+     * @param document A Firebase document containing data describing a MoodEvent
+     * @return         A MoodEvent object based on data stored in Firebase
+     */
+    public static MoodEvent getMoodEventFromFirebase(QueryDocumentSnapshot document) {
         MoodEvent moodEvent = new MoodEvent(
                 document.getString("location"),
                 document.getString("photoReference"),
