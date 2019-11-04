@@ -100,7 +100,7 @@
             app:layout_constraintEnd_toEndOf="@id/follow_someone_textView"
             android:layout_marginTop="20dp"
 
-            android:text="Send Request"
+            android:text="Send Request"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
