@@ -3,6 +3,8 @@ package com.gittfo.moodtracker.mood;
 import android.content.Context;
 import android.widget.ListView;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import java.util.ArrayList;
 
 /**
@@ -16,14 +18,13 @@ public class MoodHistory {
     private ArrayList<MoodEvent> moodEvents;
     // Custom ArrayAdapter
     private MoodHistoryAdapter moodHistoryAdapter;
-    // View object
-    public ListView historyView; //TODO: change this to RecycleView
 
     /**
      * Create a new, empty mood history.
      */
     public MoodHistory() {
         this.moodEvents = new ArrayList<>();
+        moodHistoryAdapter = new MoodHistoryAdapter(this);
     }
 
     /**
@@ -32,6 +33,7 @@ public class MoodHistory {
      */
     public MoodHistory(ArrayList<MoodEvent> moodEvents) {
         this.moodEvents = moodEvents;
+        moodHistoryAdapter = new MoodHistoryAdapter(this);
     }
 
     /**
@@ -56,14 +58,23 @@ public class MoodHistory {
     }
 
     /**
-     * Present this mood history visually, for display in a convenient scrollable format.
+     * Present this mood history visually in a RecyclerView. We might not actually need this.
      * @param context Activity context to render in
-     * @param listView View object to render with
+     * @param recyclerView View object to render with
+     *
+     *<pre>
+     *<code>
+     *         // in MainActivity Classs 
+     *         ListView historyView = findViewById(R.id.mood_history);
+     *         MoodHistory moodHistory = new MoodHistory();
+     *         moodHistory.render(this, historyView);
+     *</code>
+     *</pre>
+     *
      */
-    public void render(Context context, ListView listView) {
-        moodHistoryAdapter = new MoodHistoryAdapter(context, this);
-        historyView = listView;
-        historyView.setAdapter(moodHistoryAdapter);
+    public void render(Context context, RecyclerView recyclerView) {
+        // View object
+        recyclerView.setAdapter(moodHistoryAdapter);
     }
 
     /**
@@ -75,5 +86,4 @@ public class MoodHistory {
             moodHistoryAdapter.notifyDataSetChanged();
         }
     }
-
 }

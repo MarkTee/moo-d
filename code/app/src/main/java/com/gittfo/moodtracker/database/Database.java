@@ -1,6 +1,7 @@
 package com.gittfo.moodtracker.database;
 
 import android.content.Context;
+import android.util.Log;
 
 
 import com.gittfo.moodtracker.mood.MoodEvent;
@@ -21,6 +22,7 @@ import static android.content.Context.MODE_PRIVATE;
  * A singleton class for abstracting out firestore
  */
 public class Database {
+    private static final String TAG = "DB_INTERNAL";
     public static final String PREFS = "databasesharedprefereneces";
     private static final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private static final ExecutorService executor = Executors.newSingleThreadExecutor();
@@ -61,6 +63,7 @@ public class Database {
                 .collection("moods");
         return moods.get().continueWithTask(
                 task -> {
+                    Log.d(TAG, "Found a mood");
                     List<MoodEvent> me = new ArrayList<>();
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         MoodEvent v = MoodEvent.fromFirebase(document);
