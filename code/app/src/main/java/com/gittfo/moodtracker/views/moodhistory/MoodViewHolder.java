@@ -1,5 +1,6 @@
 package com.gittfo.moodtracker.views.moodhistory;
 
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -35,22 +36,41 @@ public class MoodViewHolder extends RecyclerView.ViewHolder {
      */
     public void populateMoodEventContainer(MoodEvent moodEvent){
 
-        TextView eventMood = container.findViewById(R.id.event_mood);
+        TextView eventMood = container.findViewById(R.id.user_mood_textView);
         eventMood.setText(moodEvent.getMood().toString());
 
-        TextView eventReason = container.findViewById(R.id.event_reason);
+        TextView eventReason = container.findViewById(R.id.user_comment_textView);
         eventReason.setText(moodEvent.getReason());
 
-        TextView eventLocation = container.findViewById(R.id.event_location);
+        TextView eventLocation = container.findViewById(R.id.location_textView);
         eventLocation.setText(moodEvent.getLocation());
 
-        TextView eventPhoto = container.findViewById(R.id.event_photo);
-        eventPhoto.setText(moodEvent.getPhotoReference());
-
-        TextView eventDate = container.findViewById(R.id.event_date);
+        TextView eventDate = container.findViewById(R.id.date_time_textView);
         eventDate.setText(moodEvent.getDate().toString());
 
-        TextView eventSocialSituation = container.findViewById(R.id.event_social_situation);
-        eventSocialSituation.setText(moodEvent.getSocialSituation().toString());
+        TextView eventSocialSituation = container.findViewById(R.id.num_people_textView);
+        eventSocialSituation.setText(moodEvent.getSocialSituation().toString().toLowerCase());
+
+        ImageView eventIcon = container.findViewById(R.id.user_emotion_imageView);
+        switch  (moodEvent.getMood()){
+            case SAD:
+                eventIcon.setImageResource(R.drawable.ic_sad_icon_24dp);
+                break;
+            case ANGRY:
+                eventIcon.setImageResource(R.drawable.ic_angry_icon_24dp);
+                break;
+            case HAPPY:
+                eventIcon.setImageResource(R.drawable.ic_happy_icon_24dp);
+                break;
+            case AFRAID:
+                eventIcon.setImageResource(R.drawable.ic_afraid_icon_24dp);
+                break;
+            case DISGUSTED:
+                eventIcon.setImageResource(R.drawable.ic_disgusted_icon_24dp);
+                break;
+            case SURPRISED:
+                eventIcon.setImageResource(R.drawable.ic_surprised_icon_24dp);
+                break;
+        }
     }
 }
