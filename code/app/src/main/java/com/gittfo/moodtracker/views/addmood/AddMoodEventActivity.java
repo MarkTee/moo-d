@@ -111,6 +111,7 @@ public class AddMoodEventActivity extends AppCompatActivity {
                 .setMessage("Are you sure you want to exit?\n\nAny changes will be lost.")
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     // If the user confirms that they want to exit, finish the activity
+                    // (without saving changes)
                     public void onClick(DialogInterface dialog, int which) {
                         finish();
                     }
@@ -123,9 +124,8 @@ public class AddMoodEventActivity extends AppCompatActivity {
     /**
      * The user can select a mood by clicking one of the mood buttons.
      *
-     * The selected mood button will
-     * be highlighted, all other mood buttons will lose colour, and the activity's mood attribute
-     * will be set accordingly.
+     * The selected mood button will be highlighted, all other mood buttons will lose colour, and
+     * the activity's mood attribute will be set accordingly.
      *
      * @param view - The view that caused the method to be called
      */
@@ -135,39 +135,15 @@ public class AddMoodEventActivity extends AppCompatActivity {
             button.setBackgroundColor(Color.GRAY);
         }
 
-        // Add the corresponding colour to the button that was just clicked, and save the selected mood.
-        // TODO: Once we have moods stored somewhere, we'll be able to rebind mood and set colours more easily.
-        switch(view.getId()) {
-            case R.id.happy_mood_button:
-                view.setBackgroundColor(Mood.DEFAULT_HAPPY.getColor());
-                mood = Mood.EmotionalState.HAPPY;
-                break;
+        Button selectedMoodButton = (Button) view;
+        String selectedMoodString = selectedMoodButton.getText().toString();
 
-            case R.id.sad_mood_button:
-                view.setBackgroundColor(Mood.DEFAULT_HAPPY.getColor());
-                mood = Mood.EmotionalState.SAD;
-                break;
+        // Save the selected mood
+        mood = Mood.EmotionalStateFromString(selectedMoodString);
 
-            case R.id.surprised_mood_button:
-                view.setBackgroundColor(Mood.DEFAULT_SURPRISED.getColor());
-                mood = Mood.EmotionalState.SURPRISED;
-                break;
-
-            case R.id.afraid_mood_button:
-                view.setBackgroundColor(Mood.DEFAULT_AFRAID.getColor());
-                mood = Mood.EmotionalState.AFRAID;
-                break;
-
-            case R.id.disgusted_mood_button:
-                view.setBackgroundColor(Mood.DEFAULT_DISGUISED.getColor());
-                mood = Mood.EmotionalState.DISGUSTED;
-                break;
-
-            case R.id.angry_mood_button:
-                view.setBackgroundColor(Mood.DEFAULT_ANGRY.getColor());
-                mood = Mood.EmotionalState.ANGRY;
-                break;
-        }
+        // Add the corresponding colour to the button that was just clicked
+        Mood selectedMood = Mood.MoodFromEmotionalState(mood);
+        view.setBackgroundColor(selectedMood.getColor());
     }
 
     /**

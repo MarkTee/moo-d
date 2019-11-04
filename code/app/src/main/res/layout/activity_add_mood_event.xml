@@ -140,7 +140,7 @@
                     android:backgroundTint="#81c784"
                     android:drawableLeft="@drawable/ic_happy_icon_24dp"
                     android:onClick="selectMoodButton"
-                    android:text="Happy"
+                    android:text="HAPPY"
                     android:textColor="#000000" />
 
                 <Button
@@ -151,7 +151,7 @@
                     android:backgroundTint="#64b5f6"
                     android:drawableLeft="@drawable/ic_sad_icon_24dp"
                     android:onClick="selectMoodButton"
-                    android:text="Sad"
+                    android:text="SAD"
                     android:textColor="#000000" />
 
                 <Button
@@ -162,7 +162,7 @@
                     android:backgroundTint="#fff176"
                     android:drawableLeft="@drawable/ic_surprised_icon_24dp"
                     android:onClick="selectMoodButton"
-                    android:text="Surprised"
+                    android:text="SURPRISED"
                     android:textColor="#000000" />
 
                 <Button
@@ -173,7 +173,7 @@
                     android:backgroundTint="#ffb74d"
                     android:drawableLeft="@drawable/ic_afraid_icon_24dp"
                     android:onClick="selectMoodButton"
-                    android:text="Afraid"
+                    android:text="AFRAID"
                     android:textColor="#000000" />
 
                 <Button
@@ -184,7 +184,7 @@
                     android:backgroundTint="#b39ddb"
                     android:drawableLeft="@drawable/ic_disgusted_icon_24dp"
                     android:onClick="selectMoodButton"
-                    android:text="Disgusted"
+                    android:text="DISGUSTED"
                     android:textColor="#000000" />
 
                 <Button
@@ -195,7 +195,7 @@
                     android:backgroundTint="#ff8a65"
                     android:drawableLeft="@drawable/ic_angry_icon_24dp"
                     android:onClick="selectMoodButton"
-                    android:text="Angry"
+                    android:text="ANGRY"
                     android:textColor="#000000" />
 
             </GridLayout>
