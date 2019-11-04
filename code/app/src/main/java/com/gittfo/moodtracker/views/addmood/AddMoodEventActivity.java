@@ -138,7 +138,7 @@ public class AddMoodEventActivity extends AppCompatActivity {
         Button selectedMoodButton = (Button) view;
         String selectedMoodString = selectedMoodButton.getText().toString();
 
-        // Save the selected mood
+        // Get the selected mood
         mood = Mood.EmotionalStateFromString(selectedMoodString);
 
         // Add the corresponding colour to the button that was just clicked
@@ -169,35 +169,13 @@ public class AddMoodEventActivity extends AppCompatActivity {
             button.setBackgroundColor(Color.GRAY);
         }
 
+        // Get the selected social situation
+        String selectedSocialSituationString = ((TextView) view).getText().toString();
+        socialSituation = MoodEvent.socialSituationFromString(selectedSocialSituationString);
+
         // Add colour to the button that was just clicked
         int selectedColor = Color.parseColor("#008577");
         view.setBackgroundColor(selectedColor);
-
-        // Get the text from the selected button
-        String clickedSocialButtonText = ((TextView) view).getText().toString();
-
-        // Save the selected emotional state (using one of MoodEvent's pre-defined socialSituations)
-        switch (clickedSocialButtonText) {
-            case "0":
-                socialSituation = MoodEvent.SocialSituation.ZERO;
-                break;
-
-            case "1":
-                socialSituation = MoodEvent.SocialSituation.ONE;
-                break;
-
-            case "2+":
-                socialSituation = MoodEvent.SocialSituation.TWOPLUS;
-                break;
-
-            case "A Crowd":
-                socialSituation = MoodEvent.SocialSituation.CROWD;
-                break;
-
-            case "N/A":
-                socialSituation = MoodEvent.SocialSituation.NA;
-                break;
-        }
     }
 
     /**
