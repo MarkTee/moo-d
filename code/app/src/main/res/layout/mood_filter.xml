@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp">
+
+        <!-- CANCEL BUTTON -->
+
+        <ImageButton
+            android:id="@+id/cancel_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/mood_filter_textView"
+            app:layout_constraintEnd_toEndOf="parent"
+
+            android:contentDescription="cancel button"
+            android:background="#00000000"
+            android:src="@drawable/ic_cancel_grey_24dp"/>
+
+
+        <!-- Filter TextView -->
+
+        <TextView
+            android:id="@+id/mood_filter_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintTop_toBottomOf="@id/cancel_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="8dp"
+
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:text="Filter posts by mood"/>
+
+
+        <GridLayout
+            android:id="@+id/mood_selection_buttons"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="16dp"
+
+            android:columnCount="2"
+            android:rowCount="4"
+            android:orientation="horizontal"
+            android:useDefaultMargins="true"
+            tools:context=".GridXMLActivity"
+
+            app:layout_constraintTop_toBottomOf="@id/mood_filter_textView"
+            app:layout_constraintStart_toStartOf="@id/mood_filter_textView"
+            app:layout_constraintEnd_toEndOf="@id/mood_filter_textView">
+
+            <Button
+                android:id="@+id/happy_mood_button"
+                android:layout_row="0"
+                android:layout_column="0"
+                android:layout_gravity="fill"
+                android:backgroundTint="#81c784"
+                android:drawableLeft="@drawable/ic_happy_icon_24dp"
+                android:onClick="selectMoodButton"
+                android:text="HAPPY"
+                android:textColor="#000000" />
+
+            <Button
+                android:id="@+id/sad_mood_button"
+                android:layout_row="0"
+                android:layout_column="1"
+                android:layout_gravity="fill"
+                android:backgroundTint="#64b5f6"
+                android:drawableLeft="@drawable/ic_sad_icon_24dp"
+                android:onClick="selectMoodButton"
+                android:text="SAD"
+                android:textColor="#000000" />
+
+            <Button
+                android:id="@+id/surprised_mood_button"
+                android:layout_row="1"
+                android:layout_column="0"
+                android:layout_gravity="fill"
+                android:backgroundTint="#fff176"
+                android:drawableLeft="@drawable/ic_surprised_icon_24dp"
+                android:onClick="selectMoodButton"
+                android:text="SURPRISED"
+                android:textColor="#000000" />
+
+            <Button
+                android:id="@+id/afraid_mood_button"
+                android:layout_row="1"
+                android:layout_column="1"
+                android:layout_gravity="fill"
+                android:backgroundTint="#ffb74d"
+                android:drawableLeft="@drawable/ic_afraid_icon_24dp"
+                android:onClick="selectMoodButton"
+                android:text="AFRAID"
+                android:textColor="#000000" />
+
+            <Button
+                android:id="@+id/disgusted_mood_button"
+                android:layout_row="2"
+                android:layout_column="0"
+                android:layout_gravity="fill"
+                android:backgroundTint="#b39ddb"
+                android:drawableLeft="@drawable/ic_disgusted_icon_24dp"
+                android:onClick="selectMoodButton"
+                android:text="DISGUSTED"
+                android:textColor="#000000" />
+
+            <Button
+                android:id="@+id/angry_mood_button"
+                android:layout_row="2"
+                android:layout_column="1"
+                android:layout_gravity="fill"
+                android:backgroundTint="#ff8a65"
+                android:drawableLeft="@drawable/ic_angry_icon_24dp"
+                android:onClick="selectMoodButton"
+                android:text="ANGRY"
+                android:textColor="#000000" />
+
+        </GridLayout>
+        <!-- END MOOD SELECTION BUTTONS -->
+
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+
+            app:layout_constraintTop_toBottomOf="@id/mood_selection_buttons"
+            app:layout_constraintStart_toStartOf="@id/mood_selection_buttons"
+            app:layout_constraintEnd_toEndOf="@id/mood_selection_buttons"
+
+            android:text="Apply Filter" />
+            
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>
