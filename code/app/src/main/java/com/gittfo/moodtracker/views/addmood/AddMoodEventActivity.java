@@ -328,15 +328,13 @@ public class AddMoodEventActivity extends AppCompatActivity {
      * @param view The view that caused the method to be called
      */
     public void deleteMoodEvent(View view) {
+        // Delete the current MoodEvent from the database, then exit the activity
         new AlertDialog.Builder(AddMoodEventActivity.this)
                 .setTitle("Delete Mood Event")
                 .setMessage("Are you sure you want to delete this Mood Event?")
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    // Delete the current MoodEvent from the database, then exit the activity
-                    public void onClick(DialogInterface dialog, int which) {
-                        //TODO: Delete the MoodEvent from the database
-                        finish();
-                    }
+                .setPositiveButton(android.R.string.yes, (dialog, which) -> {
+                    Database.get(AddMoodEventActivity.this).deleteMoodEvent(moodEvent);
+                    finish();
                 })
                 .setNegativeButton(android.R.string.no, null)
                 .setIcon(android.R.drawable.ic_dialog_alert)

@@ -127,4 +127,13 @@ public class Database {
         }
         return MoodEvent.getMoodEventFromFirebase(t.getResult());
     }
+
+    public void deleteMoodEvent(MoodEvent moode) {
+        db.collection("users")
+                .document(currentUser())
+                .collection("moods")
+                .document(moode.getId())
+                .delete();
+    }
+
 }
