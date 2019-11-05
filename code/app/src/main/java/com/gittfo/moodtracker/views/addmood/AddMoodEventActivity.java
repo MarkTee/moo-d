@@ -16,7 +16,6 @@ import android.widget.TextView;
 import com.gittfo.moodtracker.database.Database;
 import com.gittfo.moodtracker.mood.Mood;
 import com.gittfo.moodtracker.mood.MoodEvent;
-import com.gittfo.moodtracker.views.MainActivity;
 import com.gittfo.moodtracker.views.R;
 
 import java.text.Format;
@@ -32,6 +31,19 @@ import java.util.List;
  * @author Mark Thomas
  */
 public class AddMoodEventActivity extends AppCompatActivity {
+
+    public static final String EDIT_MOOD = "EDIT THE MOODS";
+    private static final int HAPPY_INDEX = 0;
+    private static final int SAD_INDEX = 1;
+    private static final int SURPRISED_INDEX = 2;
+    private static final int AFRAID_INDEX = 3;
+    private static final int DISGUSTED_INDEX = 4;
+    private static final int ANGRY_INDEX = 5;
+    private static final int ZERO_SOCIAL_INDEX = 0;
+    private static final int ONE_SOCIAL_INDEX = 1;
+    private static final int TWOPLUS_SOCIAL_INDEX = 2;
+    private static final int CROWD_SOCIAL_INDEX = 3;
+    private static final int NA_SOCIAL_INDEX = 4;
 
     // Get the current date and time, which are used when creating a new Mood Event
     private Date date = new Date();
@@ -85,91 +97,16 @@ public class AddMoodEventActivity extends AppCompatActivity {
         Button naButton = findViewById(R.id.social_button_na);
         socialSituationButtons = Arrays.asList(zeroButton, oneButton, twoPlusButton, crowdButton, naButton);
 
-        //TODO: Based on Intent, determine if the user is creating a new MoodEvent, or editing an
-        // existing one
-
-        // If the user is editing an existing MoodEvent, carry out the appropriate actions
-        if (editing) {
-            // Display the Delete Mood Event button
-            Button deleteButton = findViewById(R.id.delete_mood_event_button);
-            deleteButton.setVisibility(View.VISIBLE);
-
-            //---------------------------------------/
-            //TODO: Get passed-in MoodEvent here
-            // Placeholder MoodEvent
-            moodEvent = new MoodEvent(
-                    "location",
-                    "photoref",
-                    "reason",
-                    date,
-                    MoodEvent.SocialSituation.ONE,
-                    Mood.EmotionalState.HAPPY
-            );
-            //---------------------------------------/
-
-            // Display current MoodEvent's date/time
-            date = moodEvent.getDate();
-
-            // Display current MoodEvent's emotional state
-            emotionalState = moodEvent.getMood();
-            switch (emotionalState) {
-                case HAPPY:
-                    happyButton.performClick();
-                    break;
-
-                case SAD:
-                    sadButton.performClick();
-                    break;
-
-                case SURPRISED:
-                    surprisedButton.performClick();
-                    break;
-
-                case AFRAID:
-                    afraidButton.performClick();
-                    break;
-
-                case DISGUSTED:
-                    disgustedButton.performClick();
-                    break;
-
-                case ANGRY:
-                    angryButton.performClick();
-                    break;
-            }
-
-            // Display current MoodEvent's reason
-            reasonEditText.setText(moodEvent.getReason());
-
-            // Display current MoodEvent's social situation
-            socialSituation = moodEvent.getSocialSituation();
-            switch (socialSituation) {
-                case ZERO:
-                    zeroButton.performClick();
-                    break;
-
-                case ONE:
-                    oneButton.performClick();
-                    break;
-
-                case TWOPLUS:
-                    twoPlusButton.performClick();
-                    break;
-
-                case CROWD:
-                    crowdButton.performClick();
-                    break;
-
-                case NA:
-                    naButton.performClick();
-                    break;
-            }
-
-            //TODO: display current MoodEvent's photo
-            photoReference = moodEvent.getPhotoReference();
-            //TODO: display current MoodEvent's location
-            location = moodEvent.getLocation();
+        String isEdit = this.getIntent().getStringExtra(EDIT_MOOD);
+        if (isEdit != null) {
+            editing = true;
+            Database.get(this).getMoodByID(isEdit).addOnSuccessListener(moodEvent1 -> {
+                this.moodEvent = moodEvent1;
+                populateEdit();
+                // TODO: Maybe show a loading wheel/spinner?
+            });
         }
+        // If the user is editing an existing MoodEvent, carry out the appropriate actions
 
         // Format date and time for display
         Format dateFormat = new SimpleDateFormat("MMMM dd, yyyy");
@@ -183,6 +120,77 @@ public class AddMoodEventActivity extends AppCompatActivity {
         dateDisplay.setText(mDate);
         TextView timeDisplay = findViewById(R.id.time_display);
         timeDisplay.setText(mTime);
+    }
+
+    private void populateEdit() {
+        if (editing) {
+            // Display the Delete Mood Event button
+            Button deleteButton = findViewById(R.id.delete_mood_event_button);
+            deleteButton.setVisibility(View.VISIBLE);
+
+            // Display current MoodEvent's date/time
+            date = moodEvent.getDate();
+
+            // Display current MoodEvent's emotional state
+            emotionalState = moodEvent.getMood();
+            switch (emotionalState) {
+                case HAPPY:
+                    moodButtons.get(HAPPY_INDEX).performClick();
+                    break;
+
+                case SAD:
+                    moodButtons.get(SAD_INDEX).performClick();
+                    break;
+
+                case SURPRISED:
+                    moodButtons.get(SURPRISED_INDEX).performClick();
+                    break;
+
+                case AFRAID:
+                    moodButtons.get(AFRAID_INDEX).performClick();
+                    break;
+
+                case DISGUSTED:
+                    moodButtons.get(DISGUSTED_INDEX).performClick();
+                    break;
+
+                case ANGRY:
+                    moodButtons.get(ANGRY_INDEX).performClick();
+                    break;
+            }
+
+            // Display current MoodEvent's reason
+            reasonEditText.setText(moodEvent.getReason());
+
+            // Display current MoodEvent's social situation
+            socialSituation = moodEvent.getSocialSituation();
+            switch (socialSituation) {
+                case ZERO:
+                    socialSituationButtons.get(ZERO_SOCIAL_INDEX).performClick();
+                    break;
+
+                case ONE:
+                    socialSituationButtons.get(ONE_SOCIAL_INDEX).performClick();
+                    break;
+
+                case TWOPLUS:
+                    socialSituationButtons.get(TWOPLUS_SOCIAL_INDEX).performClick();
+                    break;
+
+                case CROWD:
+                    socialSituationButtons.get(CROWD_SOCIAL_INDEX).performClick();
+                    break;
+
+                case NA:
+                    socialSituationButtons.get(NA_SOCIAL_INDEX).performClick();
+                    break;
+            }
+
+            //TODO: display current MoodEvent's photo
+            photoReference = moodEvent.getPhotoReference();
+            //TODO: display current MoodEvent's location
+            location = moodEvent.getLocation();
+        }
     }
 
     /**
@@ -282,7 +290,7 @@ public class AddMoodEventActivity extends AppCompatActivity {
      * @param view The view that caused the method to be called
      */
     public void saveMoodEvent(View view) {
-
+        reason = reasonEditText.getText().toString();
         if (editing) {
             // Update all of the selected MoodEvent's attributes so that they reflect any changes
             moodEvent.setMood(emotionalState);
@@ -315,14 +323,12 @@ public class AddMoodEventActivity extends AppCompatActivity {
                 return;
             }
 
-            reason = reasonEditText.getText().toString();
 
             // Create the MoodEvent object
             moodEvent = new MoodEvent(location, photoReference, reason, date, socialSituation, emotionalState);
 
             // add the new mood event to the local mood history
             Log.d("JDB", "Adding new mood of type " + moodEvent.getMood().toString() + " to mood history.");
-            MainActivity.addMoodEvent(moodEvent);
 
             Database.get(this).addMoodEvent(moodEvent);
         }
@@ -336,15 +342,13 @@ public class AddMoodEventActivity extends AppCompatActivity {
      * @param view The view that caused the method to be called
      */
     public void deleteMoodEvent(View view) {
+        // Delete the current MoodEvent from the database, then exit the activity
         new AlertDialog.Builder(AddMoodEventActivity.this)
                 .setTitle("Delete Mood Event")
                 .setMessage("Are you sure you want to delete this Mood Event?")
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    // Delete the current MoodEvent from the database, then exit the activity
-                    public void onClick(DialogInterface dialog, int which) {
-                        //TODO: Delete the MoodEvent from the database
-                        finish();
-                    }
+                .setPositiveButton(android.R.string.yes, (dialog, which) -> {
+                    Database.get(AddMoodEventActivity.this).deleteMoodEvent(moodEvent);
+                    finish();
                 })
                 .setNegativeButton(android.R.string.no, null)
                 .setIcon(android.R.drawable.ic_dialog_alert)

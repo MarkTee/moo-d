@@ -23,6 +23,7 @@ public class MoodHistoryTest extends AppCompatActivity {
         setContentView(R.layout.activity_mood_history_test);
 
 
+        /*
         RecyclerView recyclerView = findViewById(R.id.mood_history);
 
         // use this setting to improve performance if you know that changes
@@ -51,5 +52,7 @@ public class MoodHistoryTest extends AppCompatActivity {
 
         MoodAdapter moodAdapter = new MoodAdapter(moodHistory);
         recyclerView.setAdapter(moodAdapter);
+
+         */
     }
 }

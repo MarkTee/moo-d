@@ -1,7 +1,7 @@
 package com.gittfo.moodtracker.mood;
 
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Exclude;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.Date;
 
@@ -28,6 +28,22 @@ public class MoodEvent {
         CROWD,
         NA
     };
+
+    /**
+     * Given a string representation, return a valid SocialSituation
+     * @param socialSituation A string representation of a valid SocialSituation
+     * @return                A valid SocialSituation
+     */
+    public static SocialSituation socialSituationFromFirebaseString(String socialSituation) {
+        switch (socialSituation) {
+            case "ZERO": return SocialSituation.ZERO;
+            case "ONE": return SocialSituation.ONE;
+            case "TWOPLUS": return SocialSituation.TWOPLUS;
+            case "CROWD": return SocialSituation.CROWD;
+            default:
+                return SocialSituation.NA;
+        }
+    }
 
     /**
      * Given a string representation, return a valid SocialSituation
@@ -85,13 +101,13 @@ public class MoodEvent {
      * @param document A Firebase document containing data describing a MoodEvent
      * @return         A MoodEvent object based on data stored in Firebase
      */
-    public static MoodEvent getMoodEventFromFirebase(QueryDocumentSnapshot document) {
+    public static MoodEvent getMoodEventFromFirebase(DocumentSnapshot document) {
         MoodEvent moodEvent = new MoodEvent(
                 document.getString("location"),
                 document.getString("photoReference"),
                 document.getString("reason"),
-                document.getDate("dateTime"),
-                socialSituationFromString(document.getString("socialSituation")),
+                document.getDate("date"),
+                socialSituationFromFirebaseString(document.getString("socialSituation")),
                 Mood.emotionalStateFromString(document.getString("mood"))
         );
         moodEvent.setId(document.getId());
@@ -180,5 +196,9 @@ public class MoodEvent {
      */
     public void setMood(Mood.EmotionalState mood) {
         this.mood = mood;
+    }
+
+    public String toString() {
+        return String.format("%s: (%s, %s, %s)", this.id, this.mood.toString(), this.dateTime.toString(), this.reason);
     }
 }

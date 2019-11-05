@@ -19,7 +19,10 @@ import com.gittfo.moodtracker.views.R;
 public class MoodViewHolder extends RecyclerView.ViewHolder {
 
     // layout to hold attributes of a mood event
-    private LinearLayout container;
+    // TODO: make private
+    public LinearLayout container;
+    // TODO: make private
+    public String moodEventID;
 
     /**
      * Makes a new MoodViewHolder, sets it's container.
@@ -35,6 +38,7 @@ public class MoodViewHolder extends RecyclerView.ViewHolder {
      * @param moodEvent the moodEvent whose attributes will be shown.
      */
     public void populateMoodEventContainer(MoodEvent moodEvent){
+        this.moodEventID = moodEvent.getId();
 
         TextView eventMood = container.findViewById(R.id.user_mood_textView);
         eventMood.setText(moodEvent.getMood().toString());
@@ -46,7 +50,7 @@ public class MoodViewHolder extends RecyclerView.ViewHolder {
         eventLocation.setText(moodEvent.getLocation());
 
         TextView eventDate = container.findViewById(R.id.date_time_textView);
-        eventDate.setText(moodEvent.getDate().toString());
+        eventDate.setText(moodEvent.getDate() != null ? moodEvent.getDate().toString() : "NULL");
 
         TextView eventSocialSituation = container.findViewById(R.id.num_people_textView);
         eventSocialSituation.setText(moodEvent.getSocialSituation().toString().toLowerCase());
@@ -73,4 +77,6 @@ public class MoodViewHolder extends RecyclerView.ViewHolder {
                 break;
         }
     }
+
+
 }

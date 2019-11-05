@@ -8,6 +8,8 @@ import com.gittfo.moodtracker.mood.MoodEvent;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -17,6 +19,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import static android.content.Context.MODE_PRIVATE;
+import static java.lang.Thread.sleep;
 
 /**
  * A singleton class for abstracting out firestore
@@ -101,10 +104,32 @@ public class Database {
     }
 
     public void updateMoodEvent(MoodEvent me) {
+        Log.d(TAG, "UPDATING TO: " + me.toString());
         db.collection("users")
                 .document(currentUser())
                 .collection("moods")
                 .document(me.getId())
                 .set(me);
     }
+
+    public Task<MoodEvent> getMoodByID(String isEdit) {
+        DocumentReference moods = db.collection("users")
+                .document(currentUser())
+                .collection("moods")
+                .document(isEdit);
+        Task<DocumentSnapshot> t = moods.get();
+        return t.continueWithTask(task -> {
+            DocumentSnapshot ds = task.getResult();
+            return Tasks.call(() -> MoodEvent.getMoodEventFromFirebase(ds));
+        });
+    }
+
+    public void deleteMoodEvent(MoodEvent moode) {
+        db.collection("users")
+                .document(currentUser())
+                .collection("moods")
+                .document(moode.getId())
+                .delete();
+    }
+
 }
