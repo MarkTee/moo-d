@@ -104,6 +104,7 @@ public class Database {
     }
 
     public void updateMoodEvent(MoodEvent me) {
+        Log.d(TAG, "UPDATING TO: " + me.toString());
         db.collection("users")
                 .document(currentUser())
                 .collection("moods")

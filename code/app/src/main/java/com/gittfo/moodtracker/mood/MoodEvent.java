@@ -34,6 +34,22 @@ public class MoodEvent {
      * @param socialSituation A string representation of a valid SocialSituation
      * @return                A valid SocialSituation
      */
+    public static SocialSituation socialSituationFromFirebaseString(String socialSituation) {
+        switch (socialSituation) {
+            case "ZERO": return SocialSituation.ZERO;
+            case "ONE": return SocialSituation.ONE;
+            case "TWOPLUS": return SocialSituation.TWOPLUS;
+            case "CROWD": return SocialSituation.CROWD;
+            default:
+                return SocialSituation.NA;
+        }
+    }
+
+    /**
+     * Given a string representation, return a valid SocialSituation
+     * @param socialSituation A string representation of a valid SocialSituation
+     * @return                A valid SocialSituation
+     */
     public static SocialSituation socialSituationFromString(String socialSituation) {
         switch (socialSituation) {
             case "0": return SocialSituation.ZERO;
@@ -91,7 +107,7 @@ public class MoodEvent {
                 document.getString("photoReference"),
                 document.getString("reason"),
                 document.getDate("date"),
-                socialSituationFromString(document.getString("socialSituation")),
+                socialSituationFromFirebaseString(document.getString("socialSituation")),
                 Mood.emotionalStateFromString(document.getString("mood"))
         );
         moodEvent.setId(document.getId());
