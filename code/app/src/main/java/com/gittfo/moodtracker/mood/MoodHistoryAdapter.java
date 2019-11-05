@@ -1,20 +1,15 @@
 package com.gittfo.moodtracker.mood;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.view.LayoutInflater;
 
 
-import com.gittfo.moodtracker.views.MainActivity;
 import com.gittfo.moodtracker.views.R;
 import com.gittfo.moodtracker.views.moodhistory.MoodViewHolder;
-import com.google.api.Distribution;
 
 
 public class MoodHistoryAdapter extends RecyclerView.Adapter<MoodViewHolder> {

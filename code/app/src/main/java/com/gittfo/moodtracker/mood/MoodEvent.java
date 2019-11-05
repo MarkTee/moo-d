@@ -181,4 +181,8 @@ public class MoodEvent {
     public void setMood(Mood.EmotionalState mood) {
         this.mood = mood;
     }
+
+    public String toString() {
+        return String.format("%s: (%s, %s, %s)", this.id, this.mood.toString(), this.dateTime.toString(), this.reason);
+    }
 }

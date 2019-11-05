@@ -18,9 +18,16 @@ import com.gittfo.moodtracker.views.addmood.AddMoodEventActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static MoodHistory moodHistory;
-    private static RecyclerView moodView;
-    private static MoodHistoryAdapter moodHistoryAdapter;
+    private MoodHistory moodHistory;
+    private RecyclerView moodView;
+    private MoodHistoryAdapter moodHistoryAdapter;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getFromDB();
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,42 +35,36 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // initialize the mood history
-        if (moodHistory == null) {
-            moodHistory = new MoodHistory();
-        }
+        moodHistory = new MoodHistory(null);
 
-        Log.d("JDB", "Getting Moods");
-         Database.get(this).getMoods().addOnSuccessListener(moods -> {
-                     for(MoodEvent ev : moods) {
-                         // add events to the mood history
-                         moodHistory.addMoodEvent(ev);
-                         moodHistoryAdapter.notifyDataSetChanged();
-                         Log.d("JDB", ev.toString());
-                     }
-                 });
-        Log.d("JDB", "Got Moods");
-
-
-        if (moodView == null) {
-            moodView = findViewById(R.id.mood_history_view);
-            moodView.addItemDecoration(new DividerItemDecoration(moodView.getContext(), DividerItemDecoration.VERTICAL));
-            // use a linear layout manager
-            LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-            moodView.setLayoutManager(layoutManager);
-        }
+        moodView = findViewById(R.id.mood_history_view);
+        moodView.addItemDecoration(new DividerItemDecoration(moodView.getContext(), DividerItemDecoration.VERTICAL));
+        // use a linear layout manager
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        moodView.setLayoutManager(layoutManager);
 
         moodHistoryAdapter = new MoodHistoryAdapter(moodHistory);
         moodView.setAdapter(moodHistoryAdapter);
+        moodHistory.setMoodHistoryAdapter(moodHistoryAdapter);
+        moodHistory.render(this, this.findViewById(R.id.mood_history_view));
+    }
+
+    public void getFromDB() {
+        Log.d("JDB", "Getting Moods");
+        Database.get(this).getMoods().addOnSuccessListener(moods -> {
+            moodHistory.clear();
+            for(MoodEvent ev : moods) {
+                // add events to the mood history
+                moodHistory.addMoodEvent(ev);
+                Log.d("JDB", ev.toString());
+            }
+            moodHistoryAdapter.notifyDataSetChanged();
+        });
+        Log.d("JDB", "Got Moods");
     }
 
     public void createMoodEvent(View view) {
         Intent i = new Intent(this, AddMoodEventActivity.class);
         this.startActivity(i);
-    }
-
-    public static void addMoodEvent(MoodEvent moodEvent) {
-        moodHistory.addMoodEvent(moodEvent);
-        moodHistoryAdapter = new MoodHistoryAdapter(moodHistory);
-        moodView.setAdapter(moodHistoryAdapter);
     }
 }

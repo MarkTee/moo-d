@@ -322,7 +322,7 @@ public class AddMoodEventActivity extends AppCompatActivity {
 
             // add the new mood event to the local mood history
             Log.d("JDB", "Adding new mood of type " + moodEvent.getMood().toString() + " to mood history.");
-            MainActivity.addMoodEvent(moodEvent);
+            // MainActivity.addMoodEvent(moodEvent);
 
             Database.get(this).addMoodEvent(moodEvent);
         }

@@ -16,24 +16,28 @@ public class MoodHistory {
 
     // The list of moods in this history
     private ArrayList<MoodEvent> moodEvents;
+
+    public void setMoodHistoryAdapter(MoodHistoryAdapter moodHistoryAdapter) {
+        this.moodHistoryAdapter = moodHistoryAdapter;
+    }
+
     // Custom ArrayAdapter
     private MoodHistoryAdapter moodHistoryAdapter;
 
     /**
      * Create a new, empty mood history.
      */
-    public MoodHistory() {
-        this.moodEvents = new ArrayList<>();
-        moodHistoryAdapter = new MoodHistoryAdapter(this);
+    public MoodHistory(MoodHistoryAdapter mha) {
+        this(mha, new ArrayList<>());
     }
 
     /**
      * Create a new mood history with a given list of moods.
      * @param moodEvents The list of moods to be held in this history.
      */
-    public MoodHistory(ArrayList<MoodEvent> moodEvents) {
+    public MoodHistory(MoodHistoryAdapter mha, ArrayList<MoodEvent> moodEvents) {
         this.moodEvents = moodEvents;
-        moodHistoryAdapter = new MoodHistoryAdapter(this);
+        moodHistoryAdapter = mha;
     }
 
     /**
@@ -48,6 +52,13 @@ public class MoodHistory {
      */
     public void addMoodEvent(MoodEvent moodEvent) {
         moodEvents.add(0, moodEvent);
+    }
+
+    /**
+     * Removes all mood events
+     */
+    public void clear() {
+        this.moodEvents.clear();
     }
 
     /**
