@@ -99,4 +99,12 @@ public class Database {
     public String currentUser() {
         return userId;
     }
+
+    public void updateMoodEvent(MoodEvent me) {
+        db.collection("users")
+                .document(currentUser())
+                .collection("moods")
+                .document(me.getId())
+                .set(me);
+    }
 }
