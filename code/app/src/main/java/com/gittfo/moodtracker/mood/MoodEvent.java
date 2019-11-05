@@ -90,7 +90,7 @@ public class MoodEvent {
                 document.getString("location"),
                 document.getString("photoReference"),
                 document.getString("reason"),
-                document.getDate("dateTime"),
+                document.getDate("date"),
                 socialSituationFromString(document.getString("socialSituation")),
                 Mood.emotionalStateFromString(document.getString("mood"))
         );

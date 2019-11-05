@@ -46,7 +46,7 @@ public class MoodViewHolder extends RecyclerView.ViewHolder {
         eventLocation.setText(moodEvent.getLocation());
 
         TextView eventDate = container.findViewById(R.id.date_time_textView);
-        eventDate.setText(moodEvent.getDate().toString());
+        eventDate.setText(moodEvent.getDate() != null ? moodEvent.getDate().toString() : "NULL");
 
         TextView eventSocialSituation = container.findViewById(R.id.num_people_textView);
         eventSocialSituation.setText(moodEvent.getSocialSituation().toString().toLowerCase());

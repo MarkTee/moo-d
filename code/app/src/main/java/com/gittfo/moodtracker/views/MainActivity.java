@@ -5,20 +5,16 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
 import com.gittfo.moodtracker.database.Database;
-import com.gittfo.moodtracker.mood.Mood;
 import com.gittfo.moodtracker.mood.MoodEvent;
 import com.gittfo.moodtracker.mood.MoodHistory;
 import com.gittfo.moodtracker.mood.MoodHistoryAdapter;
 import com.gittfo.moodtracker.views.addmood.AddMoodEventActivity;
-
-import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
                      for(MoodEvent ev : moods) {
                          // add events to the mood history
                          moodHistory.addMoodEvent(ev);
+                         moodHistoryAdapter.notifyDataSetChanged();
                          Log.d("JDB", ev.toString());
                      }
                  });
@@ -48,24 +45,11 @@ public class MainActivity extends AppCompatActivity {
 
 
         if (moodView == null) {
-            moodView= findViewById(R.id.mood_history_view);
+            moodView = findViewById(R.id.mood_history_view);
             moodView.addItemDecoration(new DividerItemDecoration(moodView.getContext(), DividerItemDecoration.VERTICAL));
             // use a linear layout manager
             LinearLayoutManager layoutManager = new LinearLayoutManager(this);
             moodView.setLayoutManager(layoutManager);
-
-            MoodEvent me = new MoodEvent(
-                    "location",
-                    "photoref",
-                    "reason",
-                    new Date(),
-                    MoodEvent.SocialSituation.CROWD,
-                    Mood.EmotionalState.AFRAID
-            );
-
-            for (int i = 0; i < 3; i++){
-                moodHistory.addMoodEvent(me);
-            }
         }
 
         moodHistoryAdapter = new MoodHistoryAdapter(moodHistory);
