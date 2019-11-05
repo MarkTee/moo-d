@@ -112,21 +112,16 @@ public class Database {
                 .set(me);
     }
 
-    public MoodEvent getMoodByID(String isEdit) {
+    public Task<MoodEvent> getMoodByID(String isEdit) {
         DocumentReference moods = db.collection("users")
                 .document(currentUser())
                 .collection("moods")
                 .document(isEdit);
         Task<DocumentSnapshot> t = moods.get();
-        // Im so sorry
-        while (!t.isComplete()) {
-            try {
-                sleep(100); // TODO: remove this all
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        return MoodEvent.getMoodEventFromFirebase(t.getResult());
+        return t.continueWithTask(task -> {
+            DocumentSnapshot ds = task.getResult();
+            return Tasks.call(() -> MoodEvent.getMoodEventFromFirebase(ds));
+        });
     }
 
     public void deleteMoodEvent(MoodEvent moode) {
