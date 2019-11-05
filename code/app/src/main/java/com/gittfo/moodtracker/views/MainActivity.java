@@ -1,5 +1,6 @@
 package com.gittfo.moodtracker.views;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -8,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 
 import com.gittfo.moodtracker.database.Database;
@@ -46,7 +48,8 @@ public class MainActivity extends AppCompatActivity {
         moodHistoryAdapter = new MoodHistoryAdapter(moodHistory);
         moodView.setAdapter(moodHistoryAdapter);
         moodHistory.setMoodHistoryAdapter(moodHistoryAdapter);
-        moodHistory.render(this, this.findViewById(R.id.mood_history_view));
+        moodHistory.render(this, moodView);
+
     }
 
     public void getFromDB() {

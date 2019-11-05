@@ -1,7 +1,7 @@
 package com.gittfo.moodtracker.mood;
 
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Exclude;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.Date;
 
@@ -85,7 +85,7 @@ public class MoodEvent {
      * @param document A Firebase document containing data describing a MoodEvent
      * @return         A MoodEvent object based on data stored in Firebase
      */
-    public static MoodEvent getMoodEventFromFirebase(QueryDocumentSnapshot document) {
+    public static MoodEvent getMoodEventFromFirebase(DocumentSnapshot document) {
         MoodEvent moodEvent = new MoodEvent(
                 document.getString("location"),
                 document.getString("photoReference"),

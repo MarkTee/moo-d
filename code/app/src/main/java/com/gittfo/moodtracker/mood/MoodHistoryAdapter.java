@@ -3,12 +3,15 @@ package com.gittfo.moodtracker.mood;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.view.LayoutInflater;
 
 
 import com.gittfo.moodtracker.views.R;
+import com.gittfo.moodtracker.views.addmood.AddMoodEventActivity;
 import com.gittfo.moodtracker.views.moodhistory.MoodViewHolder;
 
 
@@ -55,11 +58,17 @@ public class MoodHistoryAdapter extends RecyclerView.Adapter<MoodViewHolder> {
      * @param position
      */
     @Override
-    public void onBindViewHolder(MoodViewHolder holder, int position) {
+    public void onBindViewHolder(final MoodViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         //holder.container.setText(mDataset[position]);
         holder.populateMoodEventContainer(moodHistory.getMoodEvents().get(position));
+        holder.container.setOnClickListener(v -> {
+            Context c = moodHistory.getContext();
+            Intent i = new Intent(c, AddMoodEventActivity.class);
+            i.putExtra(AddMoodEventActivity.EDIT_MOOD, holder.moodEventID);
+            c.startActivity(i);
+        });
     }
 
     @Override

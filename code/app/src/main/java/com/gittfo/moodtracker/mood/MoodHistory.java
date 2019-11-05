@@ -16,6 +16,7 @@ public class MoodHistory {
 
     // The list of moods in this history
     private ArrayList<MoodEvent> moodEvents;
+    private Context c;
 
     public void setMoodHistoryAdapter(MoodHistoryAdapter moodHistoryAdapter) {
         this.moodHistoryAdapter = moodHistoryAdapter;
@@ -86,6 +87,7 @@ public class MoodHistory {
     public void render(Context context, RecyclerView recyclerView) {
         // View object
         recyclerView.setAdapter(moodHistoryAdapter);
+        c = context;
     }
 
     /**
@@ -96,5 +98,9 @@ public class MoodHistory {
         if(moodHistoryAdapter != null) {
             moodHistoryAdapter.notifyDataSetChanged();
         }
+    }
+
+    public Context getContext() {
+        return c;
     }
 }

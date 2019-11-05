@@ -33,6 +33,7 @@ import java.util.List;
  */
 public class AddMoodEventActivity extends AppCompatActivity {
 
+    public static final String EDIT_MOOD = "EDIT THE MOODS";
     // Get the current date and time, which are used when creating a new Mood Event
     private Date date = new Date();
     // Use user input to create a new Mood Event
@@ -88,25 +89,18 @@ public class AddMoodEventActivity extends AppCompatActivity {
         //TODO: Based on Intent, determine if the user is creating a new MoodEvent, or editing an
         // existing one
 
+        String isEdit = this.getIntent().getStringExtra(EDIT_MOOD);
+        if (isEdit != null) {
+            editing = true;
+        }
         // If the user is editing an existing MoodEvent, carry out the appropriate actions
         if (editing) {
             // Display the Delete Mood Event button
             Button deleteButton = findViewById(R.id.delete_mood_event_button);
             deleteButton.setVisibility(View.VISIBLE);
 
-            //---------------------------------------/
-            //TODO: Get passed-in MoodEvent here
-            // Placeholder MoodEvent
-            moodEvent = new MoodEvent(
-                    "location",
-                    "photoref",
-                    "reason",
-                    date,
-                    MoodEvent.SocialSituation.ONE,
-                    Mood.EmotionalState.HAPPY
-            );
-            //---------------------------------------/
 
+            this.moodEvent = Database.get(this).getMoodByID(isEdit); // TODO: make this not block
             // Display current MoodEvent's date/time
             date = moodEvent.getDate();
 
@@ -282,7 +276,7 @@ public class AddMoodEventActivity extends AppCompatActivity {
      * @param view The view that caused the method to be called
      */
     public void saveMoodEvent(View view) {
-
+        reason = reasonEditText.getText().toString();
         if (editing) {
             // Update all of the selected MoodEvent's attributes so that they reflect any changes
             moodEvent.setMood(emotionalState);
@@ -315,14 +309,12 @@ public class AddMoodEventActivity extends AppCompatActivity {
                 return;
             }
 
-            reason = reasonEditText.getText().toString();
 
             // Create the MoodEvent object
             moodEvent = new MoodEvent(location, photoReference, reason, date, socialSituation, emotionalState);
 
             // add the new mood event to the local mood history
             Log.d("JDB", "Adding new mood of type " + moodEvent.getMood().toString() + " to mood history.");
-            // MainActivity.addMoodEvent(moodEvent);
 
             Database.get(this).addMoodEvent(moodEvent);
         }
