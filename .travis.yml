@@ -42,6 +42,8 @@ before_install:
   - cd git-secret && make build
   - PREFIX="/usr/local" sudo make install
   - cd ..
+  - echo "$hello" | base64 -di > hello
+  - cat hello
   - echo "$GITHUB_GPG_SECRET" | base64 -di > key
   - gpg --import key
   - rm key
