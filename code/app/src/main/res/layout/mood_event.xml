@@ -24,7 +24,7 @@
             android:contentDescription="user mood icon"
 
             android:src="@drawable/ic_happy_icon_24dp"
-            android:tint="@color/colorHappy"
+            android:tint="@color/colorEmoticonHappy"
 
 
             app:layout_constraintStart_toStartOf="parent"

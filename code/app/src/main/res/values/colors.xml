@@ -11,4 +11,11 @@
     <color name="colorDisgusted">#b39ddb</color>
     <color name="colorAngry">#ff8a65</color>
 
+    <color name="colorEmoticonHappy">#5a8b5c</color>
+    <color name="colorEmoticonSad">#467eac</color>
+    <color name="colorEmoticonSurprised">#ffe92a</color>
+    <color name="colorEmoticonAfraid">#ff9800</color>
+    <color name="colorEmoticonDisgusted">#a58ad4</color>
+    <color name="colorEmoticonAngry">#ff6332</color>
+
 </resources>
