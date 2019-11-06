@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:requiresFadingEdge="vertical"
+    android:fadingEdgeLength="30dp"
 
     android:fillViewport="false"
     xmlns:android="http://schemas.android.com/apk/res/android" >
@@ -74,7 +75,7 @@
                 app:layout_constraintEnd_toEndOf="@+id/greeting_message"
                 app:layout_constraintBottom_toTopOf="@+id/time_display" />
 
-            <!-- Replace with a clock icon -->
+            <!-- Time of mood event-->
             <TextView
                 android:id="@+id/time_display"
 
@@ -83,7 +84,7 @@
 
                 android:layout_marginTop="10dp"
 
-                android:drawableEnd="@drawable/ic_date_range_black_24dp"
+                android:drawableEnd="@drawable/ic_time_black_24dp"
                 android:drawablePadding="20dp"
                 android:gravity="center"
 
