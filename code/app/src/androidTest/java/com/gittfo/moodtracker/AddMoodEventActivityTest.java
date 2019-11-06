@@ -13,6 +13,8 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
+import static junit.framework.TestCase.assertTrue;
+
 public class AddMoodEventActivityTest {
     private Solo solo;
 
@@ -39,6 +41,32 @@ public class AddMoodEventActivityTest {
     public void start() throws Exception {
         Activity activity = rule.getActivity();
     }
+
+    /**
+     * Test the exit button
+     * 
+     * @throws Exception
+     */
+    @Test
+    public void checkExit() throws Exception {
+        solo.assertCurrentActivity("Wrong Activity", AddMoodEventActivity.class);
+
+        // Click on the exit button
+        solo.clickOnView(solo.getView("@id/exit_button"));
+
+        // Wait for the alert dialog to appear
+        assertTrue(solo.waitForText("Exit Mood Event Creation", 1, 2000));
+
+        // Test the alert dialog's "Cancel" button
+        solo.clickOnButton("Cancel");
+        solo.assertCurrentActivity("Wrong Activity", AddMoodEventActivity.class);
+
+        // Test the alert dialog's "OK" button
+        solo.clickOnView(solo.getView("@id/exit_button"));
+        solo.clickOnButton("OK");
+    }
+
+
 
     // After testing is complete, ensure we've closed all opened activities
     @After
