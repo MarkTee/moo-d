@@ -24,6 +24,7 @@ public class SigninActivity extends AppCompatActivity {
 
     /**
      * In the oncreate method, create the signin client
+     *
      * @param savedInstanceState
      */
     @Override
@@ -40,7 +41,7 @@ public class SigninActivity extends AppCompatActivity {
 
     /**
      * In onStart, check if the user is already signed in, and if so
-     * skip the whole signin process
+     * skip the whole sign-in process
      */
     @Override
     protected void onStart() {
@@ -52,7 +53,7 @@ public class SigninActivity extends AppCompatActivity {
     }
 
     /**
-     * Calls googles sign in screen
+     * Calls Google's sign in screen
      */
     private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
@@ -60,7 +61,7 @@ public class SigninActivity extends AppCompatActivity {
     }
 
     /**
-     * This function gets back the information from the google signin.
+     * This function gets back the information from the google sign-in.
      * It uses that to pass the info to the finalizeSignin, where it is
      * processed for use in the app
      *
@@ -89,10 +90,12 @@ public class SigninActivity extends AppCompatActivity {
     }
 
     /**
+     * If sign-in is successful, pass the user through to the MainActivity.
      *
-     * @param account The google account used for signin in
+     * @param account The google account used for sign-in
      */
     private void finalizeSignIn(GoogleSignInAccount account) {
+        // Ensure a valid Google account has been provided
         if (account != null) {
             // Store user id
             this.getSharedPreferences(Database.PREFS, MODE_PRIVATE)
