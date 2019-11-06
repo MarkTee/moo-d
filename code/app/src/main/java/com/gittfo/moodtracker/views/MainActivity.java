@@ -24,13 +24,21 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView moodView;
     private MoodHistoryAdapter moodHistoryAdapter;
 
+    /**
+     * Each time the user returns to this activity, update the RecyclerView with moods from the
+     * database.
+     */
     @Override
     protected void onResume() {
         super.onResume();
         getFromDB();
     }
 
-
+    /**
+     * In the oncreate method, dynamically update the layout as needed and initialize views.
+     *
+     * @param savedInstanceState Reference to the Bundle object passed into the activity
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         // initialize the mood history
         moodHistory = new MoodHistory(null);
 
+        // setup the RecyclerView
         moodView = findViewById(R.id.mood_history_view);
         moodView.addItemDecoration(new DividerItemDecoration(moodView.getContext(), DividerItemDecoration.VERTICAL));
         // use a linear layout manager
@@ -52,7 +61,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Get all moods from the database, then update the RecyclerView in order to display them.
+     */
     public void getFromDB() {
+        // Get all moods from the database
         Log.d("JDB", "Getting Moods");
         Database.get(this).getMoods().addOnSuccessListener(moods -> {
             moodHistory.clear();
@@ -61,11 +74,18 @@ public class MainActivity extends AppCompatActivity {
                 moodHistory.addMoodEvent(ev);
                 Log.d("JDB", ev.toString());
             }
+            // Update the RecyclerView so that any new moods can be displayed
             moodHistoryAdapter.notifyDataSetChanged();
         });
         Log.d("JDB", "Got Moods");
     }
 
+    /**
+     * When the New MoodEvent Button (the '+' icon in the bottom-middle of the screen) is clicked,
+     * pass the user through to AddMoodEventActivity.
+     *
+     * @param view The New MoodEvent Button
+     */
     public void createMoodEvent(View view) {
         Intent i = new Intent(this, AddMoodEventActivity.class);
         this.startActivity(i);

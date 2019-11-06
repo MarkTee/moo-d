@@ -99,10 +99,21 @@ public class Database {
                 .set(me);
     }
 
+    /**
+     * Returns the userID of the current user (each user has a unique userID).
+     * @return The userID of the current user
+     */
     public String currentUser() {
         return userId;
     }
 
+    /**
+     * Updates a user's MoodEvent from the database. This is necessary when the user chooses to edit
+     * a MoodEvent, making changes to its data. The database knows the proper MoodEvent to update
+     * based on the MoodEvent's ID.
+     *
+     * @param me The MoodEvent to be updated
+     */
     public void updateMoodEvent(MoodEvent me) {
         Log.d(TAG, "UPDATING TO: " + me.toString());
         db.collection("users")
@@ -112,6 +123,12 @@ public class Database {
                 .set(me);
     }
 
+    /**
+     * Retrieves a MoodEvent from the database based on its ID.
+     *
+     * @param isEdit The ID of the MoodEvent to be retrieved
+     * @return A Task containing the specified MoodEvent
+     */
     public Task<MoodEvent> getMoodByID(String isEdit) {
         DocumentReference moods = db.collection("users")
                 .document(currentUser())
@@ -124,6 +141,12 @@ public class Database {
         });
     }
 
+    /**
+     * Permanently deletes a user's MoodEvent from the database. The database knows the proper
+     * MoodEvent to delete based on the MoodEvent's ID.
+     *
+     * @param moode The MoodEvent to be deleted
+     */
     public void deleteMoodEvent(MoodEvent moode) {
         db.collection("users")
                 .document(currentUser())

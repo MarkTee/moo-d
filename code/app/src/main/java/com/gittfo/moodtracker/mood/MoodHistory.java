@@ -34,6 +34,7 @@ public class MoodHistory {
 
     /**
      * Create a new mood history with a given list of moods.
+     *
      * @param moodEvents The list of moods to be held in this history.
      */
     public MoodHistory(MoodHistoryAdapter mha, ArrayList<MoodEvent> moodEvents) {
@@ -42,6 +43,8 @@ public class MoodHistory {
     }
 
     /**
+     * Returns an ArrayList containing the MoodEvents in this MoodHistory
+     *
      * @return The list of mood events in this history.
      */
     public ArrayList<MoodEvent> getMoodEvents() {
@@ -49,6 +52,8 @@ public class MoodHistory {
     }
 
     /**
+     * Adds a MoodEvent to this MoodHistory
+     *
      * @param moodEvent The mood event to add to this history.
      */
     public void addMoodEvent(MoodEvent moodEvent) {
@@ -56,13 +61,15 @@ public class MoodHistory {
     }
 
     /**
-     * Removes all mood events
+     * Removes all mood events from this MoodHistory
      */
     public void clear() {
         this.moodEvents.clear();
     }
 
     /**
+     * Removes a single MoodEvent from this MoodHistory
+     *
      * @param moodEvent The mood event to remove from this history.
      */
     public void removeMoodEvent(MoodEvent moodEvent) {
@@ -71,6 +78,7 @@ public class MoodHistory {
 
     /**
      * Present this mood history visually in a RecyclerView. We might not actually need this.
+     *
      * @param context Activity context to render in
      * @param recyclerView View object to render with
      *
@@ -100,6 +108,12 @@ public class MoodHistory {
         }
     }
 
+    /**
+     * Get the context of this MoodHistory (i.e. the activity context that the MoodHistory has been
+     * rendered in).
+     *
+     * @return The activity context that the MoodHistory has been rendered in
+     */
     public Context getContext() {
         return c;
     }

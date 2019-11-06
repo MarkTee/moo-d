@@ -15,6 +15,9 @@ import org.junit.Test;
 
 import static junit.framework.TestCase.assertTrue;
 
+/**
+ * Tests for AddMoodEventActivity
+ */
 public class AddMoodEventActivityTest {
     private Solo solo;
 
