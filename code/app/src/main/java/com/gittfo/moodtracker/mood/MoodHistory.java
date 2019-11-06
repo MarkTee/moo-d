@@ -6,6 +6,7 @@ import android.widget.ListView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 /**
  * Holds a list of moods. This list can be for a single user, or a collection of users (for
@@ -103,6 +104,7 @@ public class MoodHistory {
      * do nothing if MoodHistory hasnt been rendered yet
      */
     public void notifyDataSetChanged(){
+        this.moodEvents.sort((o1, o2) -> o2.getDate().compareTo(o1.getDate()));
         if(moodHistoryAdapter != null) {
             moodHistoryAdapter.notifyDataSetChanged();
         }

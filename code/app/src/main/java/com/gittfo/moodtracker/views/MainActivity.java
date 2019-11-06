@@ -75,7 +75,8 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("JDB", ev.toString());
             }
             // Update the RecyclerView so that any new moods can be displayed
-            moodHistoryAdapter.notifyDataSetChanged();
+            moodHistory.notifyDataSetChanged();
+
         });
         Log.d("JDB", "Got Moods");
     }
