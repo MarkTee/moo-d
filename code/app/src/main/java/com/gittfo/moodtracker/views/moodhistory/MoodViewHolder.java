@@ -26,6 +26,7 @@ public class MoodViewHolder extends RecyclerView.ViewHolder {
 
     /**
      * Makes a new MoodViewHolder, sets it's container.
+     *
      * @param layout the view which will contain a mood event.
      */
     public MoodViewHolder(LinearLayout layout) {
@@ -35,6 +36,7 @@ public class MoodViewHolder extends RecyclerView.ViewHolder {
 
     /**
      * Populate the container with the attributes of a mood event.
+     *
      * @param moodEvent the moodEvent whose attributes will be shown.
      */
     public void populateMoodEventContainer(MoodEvent moodEvent){
