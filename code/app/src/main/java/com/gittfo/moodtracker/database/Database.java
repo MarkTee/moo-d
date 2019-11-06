@@ -19,7 +19,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import static android.content.Context.MODE_PRIVATE;
-import static java.lang.Thread.sleep;
 
 /**
  * A singleton class for abstracting out firestore

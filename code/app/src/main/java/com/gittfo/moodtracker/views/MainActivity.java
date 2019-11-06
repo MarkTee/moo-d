@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
                 moodHistory.addMoodEvent(ev);
                 Log.d("JDB", ev.toString());
             }
-            moodHistoryAdapter.notifyDataSetChanged();
+            moodHistory.notifyDataSetChanged();
         });
         Log.d("JDB", "Got Moods");
     }
