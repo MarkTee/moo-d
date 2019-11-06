@@ -42,8 +42,9 @@ before_install:
   - cd git-secret && make build
   - PREFIX="/usr/local" sudo make install
   - cd ..
-  - echo 
-  - gpg --import <(echo "$GITHUB_GPG_SECRET" | base64 -di)
+  - echo "$GITHUB_GPG_SECRET" | base64 -di > key
+  - gpg --import key
+  - rm key
   - git secret reveal
   - cd code
   # Accept sdk licenses
