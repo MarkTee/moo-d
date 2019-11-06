@@ -24,6 +24,7 @@
             android:contentDescription="user mood icon"
             android:src="@drawable/ic_happy_icon_24dp"
 
+
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
