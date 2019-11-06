@@ -30,7 +30,7 @@ public class MoodEvent {
     };
 
     /**
-     * Given a string representation, return a valid SocialSituation
+     * Given a string representation (as described on Firebase) return a valid SocialSituation
      * @param socialSituation A string representation of a valid SocialSituation
      * @return                A valid SocialSituation
      */
@@ -46,7 +46,7 @@ public class MoodEvent {
     }
 
     /**
-     * Given a string representation, return a valid SocialSituation
+     * Given a string representation (as displayed on our app UI) return a valid SocialSituation
      * @param socialSituation A string representation of a valid SocialSituation
      * @return                A valid SocialSituation
      */
