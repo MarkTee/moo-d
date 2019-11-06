@@ -29,4 +29,18 @@ public class MoodEventTest {
         assertEquals(socialSituationFromFirebaseString("test"), MoodEvent.SocialSituation.NA);
     }
 
+    /**
+     * Test socialSituationFromString method, which is used to translate string representations (as
+     * displayed in our app's UI), to valid Social Situations
+     */
+    @Test
+    public void testSocialSituationFromString() {
+        assertEquals(socialSituationFromString("0"), MoodEvent.SocialSituation.ZERO);
+        assertEquals(socialSituationFromString("1"), MoodEvent.SocialSituation.ONE);
+        assertEquals(socialSituationFromString("2+"), MoodEvent.SocialSituation.TWOPLUS);
+        assertEquals(socialSituationFromString("A Crowd"), MoodEvent.SocialSituation.CROWD);
+        assertEquals(socialSituationFromString("N/A"), MoodEvent.SocialSituation.NA);
+        // test an undefined value
+        assertEquals(socialSituationFromString("test"), MoodEvent.SocialSituation.NA);
+    }
 }
