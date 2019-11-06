@@ -9,17 +9,20 @@ import static com.gittfo.moodtracker.mood.MoodEvent.socialSituationFromString;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
- * Test the MoodEvent class.
+ * Tests for the MoodEvent class
  *
+ * The class is quite simplistic, but these tests have been added for the sake
+ * of completeness.
  */
 public class MoodEventTest {
 
     /**
      * Test socialSituationFromFirebaseString method, which is used to translate string
-     * representations (as described in our database), to valid Social Situations
+     * representations (as described in our database) to valid Social Situations
      */
     @Test
     public void testSocialSituationFromFirebaseString() {
+        // test all valid values
         assertEquals(socialSituationFromFirebaseString("ZERO"), MoodEvent.SocialSituation.ZERO);
         assertEquals(socialSituationFromFirebaseString("ONE"), MoodEvent.SocialSituation.ONE);
         assertEquals(socialSituationFromFirebaseString("TWOPLUS"), MoodEvent.SocialSituation.TWOPLUS);
@@ -31,10 +34,11 @@ public class MoodEventTest {
 
     /**
      * Test socialSituationFromString method, which is used to translate string representations (as
-     * displayed in our app's UI), to valid Social Situations
+     * displayed in our app's UI) to valid Social Situations
      */
     @Test
     public void testSocialSituationFromString() {
+        // test all valid values
         assertEquals(socialSituationFromString("0"), MoodEvent.SocialSituation.ZERO);
         assertEquals(socialSituationFromString("1"), MoodEvent.SocialSituation.ONE);
         assertEquals(socialSituationFromString("2+"), MoodEvent.SocialSituation.TWOPLUS);

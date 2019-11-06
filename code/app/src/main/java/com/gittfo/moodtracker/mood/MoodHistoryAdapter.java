@@ -14,35 +14,29 @@ import com.gittfo.moodtracker.views.R;
 import com.gittfo.moodtracker.views.addmood.AddMoodEventActivity;
 import com.gittfo.moodtracker.views.moodhistory.MoodViewHolder;
 
-
+/**
+ * This class serves as an adapter, allowing MoodEvents to be properly displayed in a RecyclerView.
+ */
 public class MoodHistoryAdapter extends RecyclerView.Adapter<MoodViewHolder> {
 
     private MoodHistory moodHistory;
 
-
+    /**
+     * Create a new MoodHistoryAdapter.
+     *
+     * @param moodHistory The MoodHistory that this adapter will hold
+     */
     public MoodHistoryAdapter(MoodHistory moodHistory){
         this.moodHistory = moodHistory;
     }
 
-    /*
-    @NonNull
-    //@Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-
-        View view = convertView;
-        if(view == null) {
-            view = populateMoodEventContainer(
-                    LayoutInflater.from(
-                            MainActivity.getContext()).inflate(R.layout.mood_event_container,
-                            parent,
-                            false),
-                    moodHistory.getMoodEvents().get(position));
-        }
-        return view;
-    }
-    */
-
-
+    /**
+     * Create a new MoodViewHolder.
+     *
+     * @param parent The parent view
+     * @param viewType The type of view
+     * @return A MoodViewHolder that will be used to hold MoodEvent views
+     */
     @NonNull
     @Override
     public MoodViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -53,9 +47,12 @@ public class MoodHistoryAdapter extends RecyclerView.Adapter<MoodViewHolder> {
     }
 
     /**
-     * Replace the contents of a view (invoked by the layout manager)
-     * @param holder
-     * @param position
+     * Replace the contents of a view (invoked by the layout manager).
+     *
+     * Also adds a listener for when a MoodEvent in the RecyclerView is clicked.
+     *
+     * @param holder The MoodViewHolder that needs to be populated
+     * @param position The position of the element from MoodHistory
      */
     @Override
     public void onBindViewHolder(final MoodViewHolder holder, int position) {
@@ -71,6 +68,11 @@ public class MoodHistoryAdapter extends RecyclerView.Adapter<MoodViewHolder> {
         });
     }
 
+    /**
+     * Get the item count of this Adapter's MoodHistory
+     *
+     * @return Item count of the MoodHistory
+     */
     @Override
     public int getItemCount() {
         return moodHistory.getMoodEvents().size();

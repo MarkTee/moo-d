@@ -19,6 +19,7 @@ public class MoodAdapter extends RecyclerView.Adapter<MoodViewHolder> {
 
     /**
      * Construct a new MoodAdapter.
+     *
      * @param mh the mood history this adapter will hold onto.
      */
     public MoodAdapter(MoodHistory mh) {
@@ -27,6 +28,7 @@ public class MoodAdapter extends RecyclerView.Adapter<MoodViewHolder> {
 
     /**
      * Create new views (invoked by the layout manager).
+     *
      * @param parent
      * @param viewType
      * @return a new MoodViewHolder
@@ -42,6 +44,7 @@ public class MoodAdapter extends RecyclerView.Adapter<MoodViewHolder> {
 
     /**
      * Replace the contents of a view (invoked by the layout manager)
+     *
      * @param holder
      * @param position
      */
