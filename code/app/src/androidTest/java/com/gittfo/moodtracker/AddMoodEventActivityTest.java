@@ -44,7 +44,7 @@ public class AddMoodEventActivityTest {
 
     /**
      * Test the exit button
-     * 
+     *
      * @throws Exception
      */
     @Test
@@ -65,8 +65,6 @@ public class AddMoodEventActivityTest {
         solo.clickOnView(solo.getView("@id/exit_button"));
         solo.clickOnButton("OK");
     }
-
-
 
     // After testing is complete, ensure we've closed all opened activities
     @After
