@@ -24,6 +24,7 @@ public class Mood {
 
     /**
      * Given a string representation, return a valid EmotionalState
+     *
      * @param emotionalState A string representation of a valid EmotionalState
      * @return               A valid EmotionalState
      */
@@ -41,6 +42,7 @@ public class Mood {
 
     /**
      * Return a string representation of a valid EmotionalState
+     *
      * @param emotionalState A valid EmotionalState
      * @return               A string representation of a valid EmotionalState
      */
@@ -50,7 +52,7 @@ public class Mood {
             case SAD: return DEFAULT_SAD;
             case ANGRY: return DEFAULT_ANGRY;
             case AFRAID: return DEFAULT_AFRAID;
-            case DISGUSTED: return DEFAULT_DISGUISED;
+            case DISGUSTED: return DEFAULT_DISGUSTED;
             case SURPRISED: return DEFAULT_SURPRISED;
         }
         return null;
@@ -117,7 +119,7 @@ public class Mood {
             "Surprised", Color.parseColor("#fff176"));
     public static Mood DEFAULT_AFRAID = new Mood("@drawable/ic_sentiment_sick_black_32dp", EmotionalState.AFRAID,
             "Afraid", Color.parseColor("#ffb74d"));
-    public static Mood DEFAULT_DISGUISED = new Mood("@drawable/ic_sentiment_neutral_black_32dp", EmotionalState.DISGUSTED,
+    public static Mood DEFAULT_DISGUSTED = new Mood("@drawable/ic_sentiment_neutral_black_32dp", EmotionalState.DISGUSTED,
             "Disgusted", Color.parseColor("#b39ddb"));
     public static Mood DEFAULT_ANGRY = new Mood("@drawable/ic_sentiment_sick_black_32dp", EmotionalState.ANGRY,
             "Angry", Color.parseColor("#ff8a65"));
