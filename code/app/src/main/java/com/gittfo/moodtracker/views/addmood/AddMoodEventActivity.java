@@ -28,6 +28,8 @@ import java.util.List;
  * Allows the user to create a new MoodEvent, or edit an existing one (by passing a MoodEvent
  * through an intent).
  *
+ * If the user chooses to save the MoodEvent, the data will be saved to the database.
+ *
  * @author Mark Thomas
  */
 public class AddMoodEventActivity extends AppCompatActivity {
@@ -66,6 +68,9 @@ public class AddMoodEventActivity extends AppCompatActivity {
 
     /**
      * In the oncreate method, dynamically update the layout as needed and initialize views.
+     * Determine if the user is creating a new MoodEvent, or editing an existing one.
+     *
+     * If editing, obtain the MoodEvent from the database, and prepopulate the form with its data.
      *
      * @param savedInstanceState Reference to the Bundle object passed into the activity
      */
@@ -97,6 +102,7 @@ public class AddMoodEventActivity extends AppCompatActivity {
         Button naButton = findViewById(R.id.social_button_na);
         socialSituationButtons = Arrays.asList(zeroButton, oneButton, twoPlusButton, crowdButton, naButton);
 
+        // If editing, obtain the MoodEvent from the database
         String isEdit = this.getIntent().getStringExtra(EDIT_MOOD);
         if (isEdit != null) {
             editing = true;
@@ -122,6 +128,9 @@ public class AddMoodEventActivity extends AppCompatActivity {
         timeDisplay.setText(mTime);
     }
 
+    /**
+     * If the user is editing a pre-existing MoodEvent, then populate the form with that MoodEvent's data.
+     */
     private void populateEdit() {
         if (editing) {
             // Display the Delete Mood Event button
@@ -353,6 +362,5 @@ public class AddMoodEventActivity extends AppCompatActivity {
                 .setNegativeButton(android.R.string.no, null)
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
-        return;
     }
 }
