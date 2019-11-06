@@ -45,10 +45,11 @@ before_install:
   - echo "$hello" | base64 -di > hello
   - cat hello
   - echo "$GITHUB_GPG_SECRET" | base64 -di > key
-  - gpg --import key
+    #- gpg --import key
   - rm key
-  - git secret reveal
+    #- git secret reveal
   - cd code
+  - echo "$GSERVICESJSON" | base64 -di > app/google-services.json
   # Accept sdk licenses
   - yes | sdkmanager "platforms;android-29"
 
