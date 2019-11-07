@@ -89,7 +89,7 @@
             <Button
                 android:id="@+id/surprised_mood_button"
                 android:layout_row="1"
-                android:layout_column="0"
+                android:layout_column="1"
                 android:layout_gravity="fill"
                 android:backgroundTint="#fff176"
                 android:drawableLeft="@drawable/ic_surprised_icon_24dp"
@@ -100,7 +100,7 @@
             <Button
                 android:id="@+id/afraid_mood_button"
                 android:layout_row="1"
-                android:layout_column="1"
+                android:layout_column="0"
                 android:layout_gravity="fill"
                 android:backgroundTint="#ffb74d"
                 android:drawableLeft="@drawable/ic_afraid_icon_24dp"
