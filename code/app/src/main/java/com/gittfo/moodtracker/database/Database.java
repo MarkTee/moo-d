@@ -33,7 +33,7 @@ public class Database {
 
     private Database (Context c) {
         userId = c.getSharedPreferences(Database.PREFS, MODE_PRIVATE)
-                .getString("user", "");
+                .getString("user", "105648403813593449833");
     }
 
     public static Database get(Context c) {
