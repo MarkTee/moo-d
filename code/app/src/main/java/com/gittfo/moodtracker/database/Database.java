@@ -33,12 +33,26 @@ public class Database {
 
     private Database (Context c) {
         userId = c.getSharedPreferences(Database.PREFS, MODE_PRIVATE)
-                .getString("user", "105648403813593449833");
+                .getString("user", "");
     }
 
     public static Database get(Context c) {
         return new Database(c);
     }
+
+    /**
+     * Return an instance of the Database object with testymctestface301's
+     * user ID.
+     *
+     * @param c context
+     * @return instance of Database
+     */
+    public static Database getMock(Context c){
+        Database mocked  = new Database(c);
+        mocked.userId = "105648403813593449833";
+        return mocked;
+    }
+
 
     /**
      * Gets all the mood events for the signed in user
