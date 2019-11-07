@@ -71,7 +71,9 @@
             android:layout_marginStart="4dp"
             android:layout_marginRight="2dp"
             android:text="happy"
-            android:textColor="@color/colorPrimary"
+
+
+            android:textColor="@color/colorEmoticonHappy"
             android:textStyle="bold"
 
             app:layout_constraintBottom_toBottomOf="@id/user_emotion_imageView"
