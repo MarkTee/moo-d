@@ -41,6 +41,20 @@ public class Database {
     }
 
     /**
+     * Return an instance of the Database object with testymctestface301's
+     * user ID.
+     *
+     * @param c context
+     * @return instance of Database
+     */
+    public static Database getMock(Context c){
+        Database mocked  = new Database(c);
+        mocked.userId = "105648403813593449833";
+        return mocked;
+    }
+
+
+    /**
      * Gets all the mood events for the signed in user
      *
      * Usage:
