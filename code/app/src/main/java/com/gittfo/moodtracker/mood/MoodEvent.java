@@ -7,8 +7,9 @@ import java.util.Date;
 
 
 /**
- * A 'Mood Event' is a mood, together with a bunch of relevant metadata, like a location.
- * The creation and display of MoodEvents is the core functionality of the mood tracker app.
+ * A Mood Event contains information about a User's emotional state, the date and time of entry,
+ * an optional reason for that emotional state, an optional description of the Social Situation that
+ * the User was in at time of entry, an optional picture, and an optional location.
  */
 public class MoodEvent {
 
@@ -20,6 +21,46 @@ public class MoodEvent {
         CROWD,
         NA
     };
+
+    // Location of an event, stored as a string for now. Type might change later
+    private String location;
+
+    // The name of a photograph corresponding to this event
+    private String photoReference;
+
+    // Brief textual comment describing the reason for this event
+    private String reason;
+
+    // The date/time the mood event was create
+    private Date dateTime;
+
+    // The number of people around during this event
+    private SocialSituation socialSituation;
+
+    // Last but not least, the actual Mood associated to this event
+    private Mood.EmotionalState mood;
+
+    // ID used for firebase
+    @Exclude
+    private String id;
+
+    /**
+     * Create a new Mood Event
+     * @param location        Where the event happened.
+     * @param photoReference  Filename for a photo of the event.
+     * @param reason          Reason for this mood event, e.g. "breakup".
+     * @param dateTime        When the mood event was created
+     * @param socialSituation How many people were around.
+     * @param mood            The mood of this event.
+     */
+    public MoodEvent(String location, String photoReference, String reason, Date dateTime, SocialSituation socialSituation, Mood.EmotionalState mood) {
+        this.location = location;
+        this.photoReference = photoReference;
+        this.reason = reason;
+        this.dateTime = dateTime;
+        this.socialSituation = socialSituation;
+        this.mood = mood;
+    }
 
     /**
      * Given a string representation (as described on Firebase) return a valid SocialSituation
@@ -53,44 +94,10 @@ public class MoodEvent {
         }
     }
 
-    // Location of an event, stored as a string for now. Type might change later
-    private String location;
-    // The name of a photograph corresponding to this event
-    private String photoReference;
-    // Brief textual comment describing the reason for this event
-    private String reason;
-    // The date/time the mood event was create
-    private Date dateTime;
-    // The number of people around during this event
-    private SocialSituation socialSituation;
-    // Last but not least, the actual Mood associated to this event
-    private Mood.EmotionalState mood;
-    // ID used for firebase
-    @Exclude
-    private String id;
-
-    /**
-     * Create a new mood a event, which is a mood, together with metadata.
-     * @param location        Where the event happened.
-     * @param photoReference  Filename for a photo of the event.
-     * @param reason          Reason for this mood event, e.g. "breakup".
-     * @param dateTime        When the mood event was created
-     * @param socialSituation How many people were around.
-     * @param mood            The mood of this event.
-     */
-    public MoodEvent(String location, String photoReference, String reason, Date dateTime, SocialSituation socialSituation, Mood.EmotionalState mood) {
-        this.location = location;
-        this.photoReference = photoReference;
-        this.reason = reason;
-        this.dateTime = dateTime;
-        this.socialSituation = socialSituation;
-        this.mood = mood;
-    }
-
     /**
      * Get the ID for this MoodEvent
      *
-     * @retrun The ID for this MoodEvent
+     * @return The ID for this MoodEvent
      */
     public String getId() {
         return id;
