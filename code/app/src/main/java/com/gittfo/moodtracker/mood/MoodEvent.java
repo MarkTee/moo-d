@@ -12,14 +12,6 @@ import java.util.Date;
  */
 public class MoodEvent {
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
     // Valid social situations for a MoodEvent
     public enum SocialSituation {
         ZERO,
@@ -93,6 +85,24 @@ public class MoodEvent {
         this.dateTime = dateTime;
         this.socialSituation = socialSituation;
         this.mood = mood;
+    }
+
+    /**
+     * Get the ID for this MoodEvent
+     *
+     * @retrun The ID for this MoodEvent
+     */
+    public String getId() {
+        return id;
+    }
+
+    /**
+     * Set the ID for this MoodEvent
+     *
+     * @param id The new ID for this MoodEvent
+     */
+    public void setId(String id) {
+        this.id = id;
     }
 
     /**
