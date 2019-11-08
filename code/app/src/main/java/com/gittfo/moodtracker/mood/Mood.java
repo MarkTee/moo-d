@@ -26,6 +26,33 @@ public class Mood {
         SURPRISED,
     };
 
+    // Filename of emoticon representing this mood
+    private @DrawableRes int emoticon;
+
+    // Enum holding the "emotional state" this mood represents
+    private EmotionalState emotionalState;
+
+    // A String containing the name of the mood
+    private String name;
+
+    // A color for the mood, stored as an int
+    private int color;
+
+    /**
+     * Creates a new mood
+     *
+     * @param emoticon       Filename of the icon representing this mood.
+     * @param emotionalState Enum describing the emotional state of this mood
+     * @param name           A String containing the name of the mood
+     * @param color          A color for the mood
+     */
+    public Mood(@DrawableRes int emoticon, EmotionalState emotionalState, String name, int color) {
+        this.emoticon = emoticon;
+        this.emotionalState = emotionalState;
+        this.name = name;
+        this.color = color;
+    }
+
     /**
      * Given a string representation, return a valid EmotionalState
      *
@@ -60,33 +87,6 @@ public class Mood {
             case SURPRISED: return DEFAULT_SURPRISED;
         }
         return null;
-    }
-
-    // Filename of emoticon representing this mood
-    private @DrawableRes int emoticon;
-
-    // Enum holding the "emotional state" this mood represents
-    private EmotionalState emotionalState;
-
-    // A String containing the name of the mood
-    private String name;
-
-    // A color for the mood, stored as an int
-    private int color;
-
-    /**
-     * Creates a new mood
-     *
-     * @param emoticon       Filename of the icon representing this mood.
-     * @param emotionalState Enum describing the emotional state of this mood
-     * @param name           A String containing the name of the mood
-     * @param color          A color for the mood
-     */
-    public Mood(@DrawableRes int emoticon, EmotionalState emotionalState, String name, int color) {
-        this.emoticon = emoticon;
-        this.emotionalState = emotionalState;
-        this.name = name;
-        this.color = color;
     }
 
     /**
