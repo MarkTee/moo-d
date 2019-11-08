@@ -71,18 +71,18 @@ public class FilterDialog {
                 filterDialog.findViewById(R.id.happy_mood_button),
                 filterDialog.findViewById(R.id.sad_mood_button),
                 filterDialog.findViewById(R.id.surprised_mood_button),
-                filterDialog.findViewById(R.id.angry_mood_button),
-                filterDialog.findViewById(R.id.disgusted_mood_button),
                 filterDialog.findViewById(R.id.afraid_mood_button),
+                filterDialog.findViewById(R.id.disgusted_mood_button),
+                filterDialog.findViewById(R.id.angry_mood_button),
         };
 
         ColorStateList[] tints = new ColorStateList[]{
                 ContextCompat.getColorStateList(c, R.color.colorHappy),
                 ContextCompat.getColorStateList(c, R.color.colorSad),
                 ContextCompat.getColorStateList(c, R.color.colorSurprised),
-                ContextCompat.getColorStateList(c, R.color.colorAngry),
+                ContextCompat.getColorStateList(c, R.color.colorAfraid),
                 ContextCompat.getColorStateList(c, R.color.colorDisgusted),
-                ContextCompat.getColorStateList(c, R.color.colorAfraid)
+                ContextCompat.getColorStateList(c, R.color.colorAngry)
         };
         ColorStateList notSelectedTint = ContextCompat.getColorStateList(c, R.color.design_default_color_background);
 
