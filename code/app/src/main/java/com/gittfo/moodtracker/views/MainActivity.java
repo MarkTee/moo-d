@@ -17,6 +17,7 @@ import com.gittfo.moodtracker.mood.MoodEvent;
 import com.gittfo.moodtracker.mood.MoodHistory;
 import com.gittfo.moodtracker.mood.MoodHistoryAdapter;
 import com.gittfo.moodtracker.views.addmood.AddMoodEventActivity;
+import com.gittfo.moodtracker.views.addmood.InboxActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -100,6 +101,15 @@ public class MainActivity extends AppCompatActivity {
      */
     public void createMoodEvent(View view) {
         Intent i = new Intent(this, AddMoodEventActivity.class);
+        this.startActivity(i);
+    }
+
+    /**
+     * When the "inbox" button is pressed, go to the inbox-managing activity.
+     * @param view the Inbox button.
+     */
+    public void startInboxActivity(View view) {
+        Intent i = new Intent(this, InboxActivity.class);
         this.startActivity(i);
     }
 }
