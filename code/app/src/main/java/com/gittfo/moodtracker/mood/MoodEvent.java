@@ -4,6 +4,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Exclude;
 
 import java.util.Date;
+import java.util.function.Supplier;
 
 
 /**
@@ -46,9 +47,6 @@ public class MoodEvent {
         NA
     };
 
-    // Location of an event, stored as a string for now. Type might change later
-    private String location;
-
     // The name of a photograph corresponding to this event
     private String photoReference;
 
@@ -64,26 +62,32 @@ public class MoodEvent {
     // Last but not least, the actual Mood associated to this event
     private Mood.EmotionalState mood;
 
+    // The location the event was created
+    private double latitude;
+    private double longtitude;
+
     // ID used for Firebase
     @Exclude
     private String id;
 
     /**
      * Create a new Mood Event
-     * @param location        Where the event happened.
      * @param photoReference  Filename for a photo of the event.
      * @param reason          Reason for this mood event, e.g. "breakup".
      * @param dateTime        When the mood event was created
      * @param socialSituation How many people were around.
      * @param mood            The mood of this event.
+     * @param lat             Where the event happened.
+     * @param lon             Where the event happened.
      */
-    public MoodEvent(String location, String photoReference, String reason, Date dateTime, SocialSituation socialSituation, Mood.EmotionalState mood) {
-        this.location = location;
+    public MoodEvent(String photoReference, String reason, Date dateTime, SocialSituation socialSituation, Mood.EmotionalState mood, double lat, double lon) {
         this.photoReference = photoReference;
         this.reason = reason;
         this.dateTime = dateTime;
         this.socialSituation = socialSituation;
         this.mood = mood;
+        this.latitude = lat;
+        this.longtitude = lon;
     }
 
     /**
@@ -148,30 +152,40 @@ public class MoodEvent {
      * @return         A MoodEvent object based on data stored in Firebase
      */
     public static MoodEvent getMoodEventFromFirebase(DocumentSnapshot document) {
+        String photoReference = safeGet(() -> document.getString("photoReference"));
+        String reason = safeGet(() -> document.getString("reason"));
+        Date date = safeGet(() -> document.getDate("date"));
+        SocialSituation situation = safeGet(() -> socialSituationFromFirebaseString(document.getString("socialSituation")));
+        Mood.EmotionalState mood = safeGet(() -> Mood.emotionalStateFromString(document.getString("mood")));
+        Double lat = safeGet(() -> document.getDouble("latitude"));
+        Double lon = safeGet(() -> document.getDouble("longtitude"));
         MoodEvent moodEvent = new MoodEvent(
-                document.getString("location"),
-                document.getString("photoReference"),
-                document.getString("reason"),
-                document.getDate("date"),
-                socialSituationFromFirebaseString(document.getString("socialSituation")),
-                Mood.emotionalStateFromString(document.getString("mood"))
+                photoReference,
+                reason,
+                date,
+                situation,
+                mood,
+                lat != null ? lat : Double.NaN,
+                lon != null ? lat : Double.NaN
         );
         moodEvent.setId(document.getId());
         return moodEvent;
     }
 
-    /**
-     * @return Where this event happened.
-     */
-    public String getLocation() {
-        return location;
-    }
 
     /**
-     * @param location Where this event happened.
+     *
+     * @param fs the getter function
+     * @param <T> the type
+     * @return the value of the getter function or null if a null pointer exception occured
      */
-    public void setLocation(String location) {
-        this.location = location;
+    private static<T> T safeGet(Supplier<T> fs){
+        try {
+            return fs.get();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /**
@@ -253,4 +267,21 @@ public class MoodEvent {
     public String toString() {
         return String.format("%s: (%s, %s, %s)", this.id, this.mood.toString(), this.dateTime.toString(), this.reason);
     }
+
+    public double getLongtitude() {
+        return longtitude;
+    }
+
+    public void setLongtitude(double longtitude) {
+        this.longtitude = longtitude;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
 }

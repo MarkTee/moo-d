@@ -11,6 +11,8 @@ import androidx.core.content.ContextCompat;
 
 import com.gittfo.moodtracker.mood.MoodEvent;
 
+import java.util.Arrays;
+
 /**
  * This class implements a filter dialog that can be used to filter MoodHistory by emotional state.
  */
@@ -18,6 +20,7 @@ public class FilterDialog {
     private AlertDialog filterDialog;
     private boolean[] filterState;
     Activity c;
+    int selectedCount = 0;
 
     /**
      * Create a new FilterDialog object
@@ -48,6 +51,16 @@ public class FilterDialog {
         filterDialog.findViewById(R.id.angry_mood_button).setOnClickListener(v -> this.selectMoodButton(v));
         filterDialog.findViewById(R.id.disgusted_mood_button).setOnClickListener(v -> this.selectMoodButton(v));
         filterDialog.findViewById(R.id.afraid_mood_button).setOnClickListener(v -> this.selectMoodButton(v));
+        this.selectedCount = 0;
+        for (int i = 0; i < 6; i++){
+            if (filterState[i]) {
+                this.selectedCount++;
+            }
+        }
+        if (selectedCount == 6) {
+            selectedCount = 0;
+        }
+
         updateFilterUI();
     }
 
@@ -64,9 +77,9 @@ public class FilterDialog {
         } else if (v.getId() == R.id.sad_mood_button) {
             index = MoodEvent.SAD_INDEX;
         } else if (v.getId() == R.id.angry_mood_button) {
-            index = MoodEvent.AFRAID_INDEX;
-        } else if (v.getId() == R.id.afraid_mood_button) {
             index = MoodEvent.ANGRY_INDEX;
+        } else if (v.getId() == R.id.afraid_mood_button) {
+            index = MoodEvent.AFRAID_INDEX;
         } else if (v.getId() == R.id.disgusted_mood_button) {
             index = MoodEvent.DISGUSTED_INDEX;
         } else if (v.getId() == R.id.surprised_mood_button) {
@@ -76,7 +89,21 @@ public class FilterDialog {
             Log.d("JUI", "Error, invalid view, assuming happy");
         }
         Log.d("JUI", "Picked a view: " + index);
-        filterState[index] ^= true;
+        if (isAllSet() && selectedCount == 0) {
+            selectedCount++;
+            for (int i = 0; i < 6; i++) {
+                filterState[i] = i == index;
+            }
+        } else {
+            selectedCount += filterState[index] ? -1 : 1;
+            filterState[index] ^= true;
+        }
+        if (isNoneSet()) {
+            for (int i = 0; i < 6; i++) {
+                filterState[i] = true;
+            }
+        }
+        Log.d("JUI", isNoneSet()+":"+Arrays.toString(filterState)+":"+isAllSet()+"sc="+selectedCount);
         updateFilterUI();
     }
 
@@ -90,24 +117,42 @@ public class FilterDialog {
                 filterDialog.findViewById(R.id.happy_mood_button),
                 filterDialog.findViewById(R.id.sad_mood_button),
                 filterDialog.findViewById(R.id.surprised_mood_button),
-                filterDialog.findViewById(R.id.angry_mood_button),
-                filterDialog.findViewById(R.id.disgusted_mood_button),
                 filterDialog.findViewById(R.id.afraid_mood_button),
+                filterDialog.findViewById(R.id.disgusted_mood_button),
+                filterDialog.findViewById(R.id.angry_mood_button),
         };
 
         ColorStateList[] tints = new ColorStateList[]{
                 ContextCompat.getColorStateList(c, R.color.colorHappy),
                 ContextCompat.getColorStateList(c, R.color.colorSad),
                 ContextCompat.getColorStateList(c, R.color.colorSurprised),
-                ContextCompat.getColorStateList(c, R.color.colorAngry),
+                ContextCompat.getColorStateList(c, R.color.colorAfraid),
                 ContextCompat.getColorStateList(c, R.color.colorDisgusted),
-                ContextCompat.getColorStateList(c, R.color.colorAfraid)
+                ContextCompat.getColorStateList(c, R.color.colorAngry)
         };
         ColorStateList notSelectedTint = ContextCompat.getColorStateList(c, R.color.design_default_color_background);
 
-        for (int i = 0; i < 6; i++){
-            buttons[i].setBackgroundTintList(filterState[i] ? tints[i] : notSelectedTint);
+        boolean allSet = isAllSet();
+        for (int i = 0; i < 6; i++) {
+            buttons[i].setBackgroundTintList(filterState[i] && (selectedCount == 6 || !allSet) ? tints[i] : notSelectedTint);
         }
+    }
+
+    public boolean isAllSet() {
+        boolean allSet = true;
+        for (int i = 0; i < 6; i++){
+            allSet &= filterState[i];
+        }
+        return allSet;
+    }
+
+    public boolean isNoneSet() {
+        for (int i = 0; i < 6; i++){
+            if (filterState[i]) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
@@ -125,5 +170,11 @@ public class FilterDialog {
      */
     public boolean isFiltered(int ordinal) {
         return this.filterState[ordinal];
+    }
+
+    public void setAllSet() {
+        for (int i = 0; i < 6; i++){
+            filterState[i] = true;
+        }
     }
 }
