@@ -301,10 +301,10 @@ public class MoodEvent {
     /**
      * Set the longitude this MoodEvent was created at.
      *
-     * @param longtitude The longitude this MoodEvent was created at
+     * @param longitude The longitude this MoodEvent was created at
      */
-    public void setLongitude(double longtitude) {
-        this.longitude = longtitude;
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 
     /**
