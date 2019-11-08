@@ -36,6 +36,7 @@
                 app:layout_constraintBottom_toTopOf="@id/mood_history_view"
                 app:layout_constraintStart_toEndOf="@id/filter_button"
                 android:layout_marginLeft="20dp"
+                android:onClick="showAllMoods"
 
                 android:text="Show all"/>
 

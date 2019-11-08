@@ -40,6 +40,16 @@ public class FilterDialog {
         filterDialog.findViewById(R.id.angry_mood_button).setOnClickListener(v -> this.selectMoodButton(v));
         filterDialog.findViewById(R.id.disgusted_mood_button).setOnClickListener(v -> this.selectMoodButton(v));
         filterDialog.findViewById(R.id.afraid_mood_button).setOnClickListener(v -> this.selectMoodButton(v));
+        this.selectedCount = 0;
+        for (int i = 0; i < 6; i++){
+            if (filterState[i]) {
+                this.selectedCount++;
+            }
+        }
+        if (selectedCount == 6) {
+            selectedCount = 0;
+        }
+
         updateFilterUI();
     }
 
@@ -132,5 +142,11 @@ public class FilterDialog {
 
     public boolean isFiltered(int ordinal) {
         return this.filterState[ordinal];
+    }
+
+    public void setAllSet() {
+        for (int i = 0; i < 6; i++){
+            filterState[i] = true;
+        }
     }
 }
