@@ -48,9 +48,9 @@ public class FilterDialog {
         } else if (v.getId() == R.id.sad_mood_button) {
             index = MoodEvent.SAD_INDEX;
         } else if (v.getId() == R.id.angry_mood_button) {
-            index = MoodEvent.AFRAID_INDEX;
-        } else if (v.getId() == R.id.afraid_mood_button) {
             index = MoodEvent.ANGRY_INDEX;
+        } else if (v.getId() == R.id.afraid_mood_button) {
+            index = MoodEvent.AFRAID_INDEX;
         } else if (v.getId() == R.id.disgusted_mood_button) {
             index = MoodEvent.DISGUSTED_INDEX;
         } else if (v.getId() == R.id.surprised_mood_button) {
