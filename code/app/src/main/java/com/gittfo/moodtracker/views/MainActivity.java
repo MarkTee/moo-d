@@ -75,6 +75,11 @@ public class MainActivity extends AppCompatActivity {
         filterDialog.cancel();
     }
 
+    public void showAllMoods(View v) {
+        filterDialog.setAllSet();
+        getFromDB();
+    }
+
     /**
      * Get all moods from the database, then update the RecyclerView in order to display them.
      */
