@@ -60,10 +60,13 @@ public class Mood {
 
     // Filename of emoticon representing this mood. Will save on memory by not storing a copy
     private String emoticon;
+
     // Enum holding the "emotional state" this mood represents
     private EmotionalState emotionalState;
+
     // A String containing the name of the mood
     private String name;
+
     // A color for the mood, stored as an int
     private int color;
 
@@ -83,6 +86,8 @@ public class Mood {
     }
 
     /**
+     * Return the filename for the icon representing this mood.
+     *
      * @return The filename for the icon representing this mood.
      */
     public String getEmoticon() {
@@ -90,6 +95,8 @@ public class Mood {
     }
 
     /**
+     * Return the valid emotional state that this mood represents.
+     *
      * @return An enum describing the emotional state of this mood.
      */
     public EmotionalState getEmotionalState() {
@@ -97,7 +104,9 @@ public class Mood {
     }
 
     /**
-     * @return A string containing the name of hte mood
+     * Return a textual description of this mood.
+     *
+     * @return A string containing the name of the mood
      */
     public String getName() {
         return name;
@@ -105,12 +114,14 @@ public class Mood {
 
     /**
      * Color is the android in for the color codes
+     *
      * @return the color
      */
     public int getColor() {
         return this.color;
     }
 
+    // Pre-defined mood objects
     public static Mood DEFAULT_HAPPY = new Mood("@drawable/ic_sentiment_very_happy_black_32dp", Mood.EmotionalState.HAPPY,
             "Happy", Color.parseColor("#81c784"));
     public static Mood DEFAULT_SAD = new Mood("@drawable/ic_sentiment_sad_black_32dp", EmotionalState.SAD,

@@ -125,7 +125,7 @@ public class Database {
 
     /**
      * Returns the userID of the current user (each user has a unique userID).
-     * 
+     *
      * @return The userID of the current user
      */
     public String currentUser() {
