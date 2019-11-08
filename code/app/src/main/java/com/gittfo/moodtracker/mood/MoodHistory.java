@@ -15,36 +15,22 @@ public class MoodHistory {
 
     // The list of moods in this history
     private ArrayList<MoodEvent> moodEvents;
-    private Context c;
 
-    // Custom ArrayAdapter
-    private MoodHistoryAdapter moodHistoryAdapter;
 
     /**
      * Create a new mood history with a given list of moods.
      *
      * @param moodEvents The list of moods to be held in this history.
      */
-    public MoodHistory(MoodHistoryAdapter mha, ArrayList<MoodEvent> moodEvents) {
+    public MoodHistory(ArrayList<MoodEvent> moodEvents) {
         this.moodEvents = moodEvents;
-        moodHistoryAdapter = mha;
     }
 
     /**
      * Create a new, empty mood history.
      */
-    public MoodHistory(MoodHistoryAdapter mha) {
-        this(mha, new ArrayList<>());
-    }
-
-    /**
-     * Set a new MoodHistory Adapter for this MoodHistory, which will be used to display its
-     * contents in a RecyclerView.
-     *
-     * @param moodHistoryAdapter The MoodHistoryAdapter for this MoodHistory
-     */
-    public void setMoodHistoryAdapter(MoodHistoryAdapter moodHistoryAdapter) {
-        this.moodHistoryAdapter = moodHistoryAdapter;
+    public MoodHistory() {
+        this(new ArrayList<>());
     }
 
     /**
@@ -82,36 +68,11 @@ public class MoodHistory {
     }
 
     /**
-     * Present this mood history visually in a RecyclerView. We might not actually need this.
-     *
-     * @param context Activity context to render in
-     * @param recyclerView View object to render with
-     *
-     *<pre>
-     *<code>
-     *         // in MainActivity Classs 
-     *         ListView historyView = findViewById(R.id.mood_history);
-     *         MoodHistory moodHistory = new MoodHistory();
-     *         moodHistory.render(this, historyView);
-     *</code>
-     *</pre>
-     *
-     */
-    public void render(Context context, RecyclerView recyclerView) {
-        // View object
-        recyclerView.setAdapter(moodHistoryAdapter);
-        c = context;
-    }
-
-    /**
      * Expose ArrayAdapter.notifyDataSetChanged() call.
      * do nothing if MoodHistory hasnt been rendered yet
      */
     public void notifyDataSetChanged(){
         this.moodEvents.sort((o1, o2) -> o2.getDate().compareTo(o1.getDate()));
-        if(moodHistoryAdapter != null) {
-            moodHistoryAdapter.notifyDataSetChanged();
-        }
     }
 
     /**
