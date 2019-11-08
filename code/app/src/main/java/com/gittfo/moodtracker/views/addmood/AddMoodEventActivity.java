@@ -327,6 +327,16 @@ public class AddMoodEventActivity extends AppCompatActivity  {
      */
     public void saveMoodEvent(View view) {
         reason = reasonEditText.getText().toString();
+        if (!validReadon(reason)){
+            new AlertDialog.Builder(AddMoodEventActivity.this)
+                    .setTitle("Invalid Reason")
+                    .setMessage("Reason for moods must have less than 20 characters and less than 3 words")
+                    .setPositiveButton(android.R.string.ok, null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+            return;
+        }
+
         if (editing) {
             // Update all of the selected MoodEvent's attributes so that they reflect any changes
             moodEvent.setMood(emotionalState);
@@ -348,6 +358,7 @@ public class AddMoodEventActivity extends AppCompatActivity  {
                 return;
             }
 
+
             // Ensure that the user has selected a social situation
             if (socialSituation == null) {
                 new AlertDialog.Builder(AddMoodEventActivity.this)
@@ -367,6 +378,15 @@ public class AddMoodEventActivity extends AppCompatActivity  {
             Database.get(this).addMoodEvent(moodEvent);
         }
         finish();
+    }
+
+    /**
+     * Validates that a string length is <= 20 chars and there are less than 3 words in the string
+     * @param text
+     * @return
+     */
+    private boolean validReadon(String text){
+        return (text.split("\\s+").length <= 3) && (text.length() <= 20);
     }
 
     /**
