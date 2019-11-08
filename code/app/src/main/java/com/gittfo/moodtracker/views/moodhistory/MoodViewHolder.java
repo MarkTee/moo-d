@@ -57,7 +57,7 @@ public class MoodViewHolder extends RecyclerView.ViewHolder {
 
         // Add the MoodEvent's location
         TextView eventLocation = container.findViewById(R.id.location_textView);
-        eventLocation.setText(moodEvent.getLocation());
+        eventLocation.setText(String.format("%f, %f", moodEvent.getLatitude(), moodEvent.getLongtitude()));
 
         // Add the MoodEvent's date/time
         TextView eventDate = container.findViewById(R.id.date_time_textView);
