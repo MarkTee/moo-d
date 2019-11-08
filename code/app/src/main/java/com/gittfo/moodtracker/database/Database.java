@@ -31,11 +31,22 @@ public class Database {
 
     private String userId;
 
+    /**
+     * Create a new database object and store the userID of the current user
+     *
+     * @param c Context in which the database is created
+     */
     private Database (Context c) {
         userId = c.getSharedPreferences(Database.PREFS, MODE_PRIVATE)
                 .getString("user", "");
     }
 
+    /**
+     * Get an instance of the database
+     *
+     * @param c Context in which the database is obtained
+     * @return An instance of the database object
+     */
     public static Database get(Context c) {
         return new Database(c);
     }
@@ -114,6 +125,7 @@ public class Database {
 
     /**
      * Returns the userID of the current user (each user has a unique userID).
+     * 
      * @return The userID of the current user
      */
     public String currentUser() {
