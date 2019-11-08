@@ -25,12 +25,16 @@ public class MoodEvent {
     public static final int CROWD_SOCIAL_INDEX = 3;
     public static final int NA_SOCIAL_INDEX = 4;
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
+    /**
+     * Used when querying the database for a mood,
+     * when only the id is used
+     * @param moodEventID the id of the moodEvent
+     * @return a new mood id
+     */
+    public static MoodEvent fromId(String moodEventID) {
+        MoodEvent me = new MoodEvent();
+        me.setId(moodEventID);
+        return me;
     }
 
     // Valid social situations for a MoodEvent
@@ -131,6 +135,11 @@ public class MoodEvent {
     public void setId(String id) {
         this.id = id;
     }
+
+    /**
+     * For internal use only
+     */
+    private MoodEvent() { }
 
     /**
      * Create a MoodEvent object based on data stored in Firebase.

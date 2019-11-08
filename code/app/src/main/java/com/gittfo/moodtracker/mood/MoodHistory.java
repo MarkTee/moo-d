@@ -1,12 +1,10 @@
 package com.gittfo.moodtracker.mood;
 
 import android.content.Context;
-import android.widget.ListView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 
 /**
  * Holds a list of moods. This list can be for a single user, or a collection of users (for
