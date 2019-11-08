@@ -18,6 +18,7 @@ import com.gittfo.moodtracker.mood.MoodHistory;
 import com.gittfo.moodtracker.mood.MoodHistoryAdapter;
 import com.gittfo.moodtracker.views.addmood.AddMoodEventActivity;
 import com.gittfo.moodtracker.views.addmood.InboxActivity;
+import com.gittfo.moodtracker.views.addmood.ProfileActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -110,6 +111,15 @@ public class MainActivity extends AppCompatActivity {
      */
     public void startInboxActivity(View view) {
         Intent i = new Intent(this, InboxActivity.class);
+        this.startActivity(i);
+    }
+
+    /**
+     * When the "profile" button is pressed, go to the profile-managing activity.
+     * @param view the Profile button.
+     */
+    public void startProfileActivity(View view){
+        Intent i = new Intent(this, ProfileActivity.class);
         this.startActivity(i);
     }
 }

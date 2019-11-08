@@ -10,6 +10,6 @@ import com.gittfo.moodtracker.views.R;
 public class InboxActivity extends AppCompatActivity {
 
     protected void onCreate(){
-        setContentView(R.layout.activity_add_mood_event);
+        setContentView(R.layout.user_inbox);
     }
 }
