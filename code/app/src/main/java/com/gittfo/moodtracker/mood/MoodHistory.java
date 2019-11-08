@@ -74,14 +74,5 @@ public class MoodHistory {
     public void notifyDataSetChanged(){
         this.moodEvents.sort((o1, o2) -> o2.getDate().compareTo(o1.getDate()));
     }
-
-    /**
-     * Get the context of this MoodHistory (i.e. the activity context that the MoodHistory has been
-     * rendered in).
-     *
-     * @return The activity context that the MoodHistory has been rendered in
-     */
-    public Context getContext() {
-        return c;
-    }
+    
 }
