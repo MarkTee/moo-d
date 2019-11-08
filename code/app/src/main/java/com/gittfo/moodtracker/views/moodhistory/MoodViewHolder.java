@@ -43,21 +43,27 @@ public class MoodViewHolder extends RecyclerView.ViewHolder {
     public void populateMoodEventContainer(MoodEvent moodEvent){
         this.moodEventID = moodEvent.getId();
 
+        // Add the MoodEvent's emotional state
         TextView eventMood = container.findViewById(R.id.user_mood_textView);
         eventMood.setText(moodEvent.getMood().toString());
 
-        TextView eventReason = container.findViewById(R.id.user_comment_textView);
+        // Add the MoodEvent's reason
+        TextView eventReason = container.findViewById(R.id.user_reason_textView);
         eventReason.setText(moodEvent.getReason());
 
+        // Add the MoodEvent's location
         TextView eventLocation = container.findViewById(R.id.location_textView);
         eventLocation.setText(moodEvent.getLocation());
 
+        // Add the MoodEvent's date/time
         TextView eventDate = container.findViewById(R.id.date_time_textView);
         eventDate.setText(moodEvent.getDate() != null ? moodEvent.getDate().toString() : "NULL");
 
+        // Add the MoodEvent's social situation
         TextView eventSocialSituation = container.findViewById(R.id.num_people_textView);
         eventSocialSituation.setText(moodEvent.getSocialSituation().toString().toLowerCase());
 
+        // Add the MoodEvent's mood emoticon
         ImageView eventIcon = container.findViewById(R.id.user_emotion_imageView);
         TextView eventColor = container.findViewById(R.id.user_mood_textView);
         ImageView eventEmoticon = container.findViewById(R.id.user_emotion_imageView);

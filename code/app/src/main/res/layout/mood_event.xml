@@ -202,7 +202,7 @@
         <!-- USER COMMENT -->
 
         <TextView
-            android:id="@+id/user_comment_textView"
+            android:id="@+id/user_reason_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
@@ -222,7 +222,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/edit_button"
-            app:layout_constraintBottom_toBottomOf="@id/user_comment_textView"
+            app:layout_constraintBottom_toBottomOf="@id/user_reason_textView"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="8dp"
             android:layout_marginLeft="24dp"
