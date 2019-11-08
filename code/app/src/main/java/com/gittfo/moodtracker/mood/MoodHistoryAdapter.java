@@ -17,20 +17,24 @@ import com.gittfo.moodtracker.views.R;
 import com.gittfo.moodtracker.views.addmood.AddMoodEventActivity;
 import com.gittfo.moodtracker.views.moodhistory.MoodViewHolder;
 
+import java.util.ArrayList;
+
 /**
  * This class serves as an adapter, allowing MoodEvents to be properly displayed in a RecyclerView.
  */
 public class MoodHistoryAdapter extends RecyclerView.Adapter<MoodViewHolder> {
 
-    private MoodHistory moodHistory;
+    private ArrayList<MoodEvent> moodHistory;
+    private Context context;
 
     /**
      * Create a new MoodHistoryAdapter.
      *
      * @param moodHistory The MoodHistory that this adapter will hold
      */
-    public MoodHistoryAdapter(MoodHistory moodHistory){
+    public MoodHistoryAdapter(Context context, ArrayList<MoodEvent> moodHistory){
         this.moodHistory = moodHistory;
+        this.context = context;
     }
 
     /**
@@ -62,19 +66,19 @@ public class MoodHistoryAdapter extends RecyclerView.Adapter<MoodViewHolder> {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         //holder.container.setText(mDataset[position]);
-        holder.populateMoodEventContainer(moodHistory.getMoodEvents().get(position));
+        holder.populateMoodEventContainer(moodHistory.get(position));
         holder.container.findViewById(R.id.edit_button).setOnClickListener(v -> {
-            Context c = moodHistory.getContext();
-            Intent i = new Intent(c, AddMoodEventActivity.class);
+            //Context c = moodHistory.getContext();
+            Intent i = new Intent(context, AddMoodEventActivity.class);
             i.putExtra(AddMoodEventActivity.EDIT_MOOD, holder.moodEventID);
-            c.startActivity(i);
+            context.startActivity(i);
         });
         holder.container.findViewById(R.id.delete_button).setOnClickListener(v -> {
-            new AlertDialog.Builder(moodHistory.getContext())
+            new AlertDialog.Builder(context)
                     .setTitle("Delete Mood")
                     .setMessage("Do you really want to delete this mood?")
                     .setIcon(android.R.drawable.ic_dialog_alert)
-                    .setPositiveButton(android.R.string.yes, (dialog, whichButton) -> Database.get(moodHistory.getContext()).deleteMoodEvent(MoodEvent.fromId(holder.moodEventID)))
+                    .setPositiveButton(android.R.string.yes, (dialog, whichButton) -> Database.get(context).deleteMoodEvent(MoodEvent.fromId(holder.moodEventID)))
                     .setNegativeButton(android.R.string.no, null).show();
         });
     }
@@ -86,6 +90,6 @@ public class MoodHistoryAdapter extends RecyclerView.Adapter<MoodViewHolder> {
      */
     @Override
     public int getItemCount() {
-        return moodHistory.getMoodEvents().size();
+        return moodHistory.size();
     }
 }
