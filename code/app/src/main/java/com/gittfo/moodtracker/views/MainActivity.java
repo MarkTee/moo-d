@@ -1,15 +1,15 @@
 package com.gittfo.moodtracker.views;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 
 import com.gittfo.moodtracker.database.Database;
@@ -23,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
     private MoodHistory moodHistory;
     private RecyclerView moodView;
     private MoodHistoryAdapter moodHistoryAdapter;
+    private FilterDialog filterDialog;
+
 
     /**
      * Each time the user returns to this activity, update the RecyclerView with moods from the
@@ -59,6 +61,15 @@ public class MainActivity extends AppCompatActivity {
         moodHistory.setMoodHistoryAdapter(moodHistoryAdapter);
         moodHistory.render(this, moodView);
 
+        filterDialog = new FilterDialog(this);
+        // TODO: put on an actual filter button
+        findViewById(R.id.timeline_menu_item).setOnClickListener(v -> filterDialog.show());
+    }
+
+
+    public void applyFilters(View v) {
+        getFromDB();
+        filterDialog.cancel();
     }
 
     /**
@@ -71,12 +82,12 @@ public class MainActivity extends AppCompatActivity {
             moodHistory.clear();
             for(MoodEvent ev : moods) {
                 // add events to the mood history
-                moodHistory.addMoodEvent(ev);
+                if (filterDialog.isFiltered(ev.getMood().ordinal()))
+                    moodHistory.addMoodEvent(ev);
                 Log.d("JDB", ev.toString());
             }
             // Update the RecyclerView so that any new moods can be displayed
             moodHistory.notifyDataSetChanged();
-
         });
         Log.d("JDB", "Got Moods");
     }
