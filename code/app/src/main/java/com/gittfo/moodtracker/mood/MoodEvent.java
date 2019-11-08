@@ -26,18 +26,6 @@ public class MoodEvent {
     public static final int CROWD_SOCIAL_INDEX = 3;
     public static final int NA_SOCIAL_INDEX = 4;
 
-    /**
-     * Used when querying the database for a mood,
-     * when only the id is used
-     * @param moodEventID the id of the moodEvent
-     * @return a new mood id
-     */
-    public static MoodEvent fromId(String moodEventID) {
-        MoodEvent me = new MoodEvent();
-        me.setId(moodEventID);
-        return me;
-    }
-
     // Valid social situations for a MoodEvent
     public enum SocialSituation {
         ZERO,
@@ -88,6 +76,18 @@ public class MoodEvent {
         this.mood = mood;
         this.latitude = lat;
         this.longtitude = lon;
+    }
+
+    /**
+     * Used when querying the database for a mood,
+     * when only the id is used
+     * @param moodEventID the id of the moodEvent
+     * @return a new mood id
+     */
+    public static MoodEvent fromId(String moodEventID) {
+        MoodEvent me = new MoodEvent();
+        me.setId(moodEventID);
+        return me;
     }
 
     /**
@@ -174,6 +174,7 @@ public class MoodEvent {
 
 
     /**
+     * Safely call a get function; if a NullPointerException is caught, a StackTrace will be printed
      *
      * @param fs the getter function
      * @param <T> the type
@@ -189,6 +190,8 @@ public class MoodEvent {
     }
 
     /**
+     * Get the path of a photo describing this MoodEvent
+     *
      * @return The filename of a photo for this event.
      */
     public String getPhotoReference() {
@@ -196,6 +199,8 @@ public class MoodEvent {
     }
 
     /**
+     * Set the path of a photo describing this MoodEvent
+     *
      * @param photoReference The filename of a photo for this event.
      */
     public void setPhotoReference(String photoReference) {
@@ -203,6 +208,8 @@ public class MoodEvent {
     }
 
     /**
+     * Get the reason for this MoodEvent
+     *
      * @return A description of the reason for this event.
      */
     public String getReason() {
@@ -210,6 +217,8 @@ public class MoodEvent {
     }
 
     /**
+     * Set the reason for this MoodEvent
+     *
      * @param reason A description of the reason for this event.
      */
     public void setReason(String reason) {
@@ -217,6 +226,8 @@ public class MoodEvent {
     }
 
     /**
+     * Get the date this MoodEvent was created
+     *
      * @return When the mood event was created
      */
     public Date getDate() {
@@ -224,6 +235,8 @@ public class MoodEvent {
     }
 
     /**
+     * Set the date this MoodEvent was created
+     *
      * @param date When the mood event was created
      */
     public void setDate(Date date) {
@@ -231,6 +244,8 @@ public class MoodEvent {
     }
 
     /**
+     * Get the social situation this MoodEvent was created in
+     *
      * @return The number of people around during this event.
      */
     public SocialSituation getSocialSituation() {
@@ -238,6 +253,8 @@ public class MoodEvent {
     }
 
     /**
+     * Set the social situation this MoodEvent was created in
+     *
      * @param socialSituation The number of people around during this event.
      */
     public void setSocialSituation(SocialSituation socialSituation) {
@@ -245,6 +262,8 @@ public class MoodEvent {
     }
 
     /**
+     * Get the EmotionalState of this MoodEvent.
+     *
      * @return The mood of this event.
      */
     public Mood.EmotionalState getMood() {
@@ -252,6 +271,8 @@ public class MoodEvent {
     }
 
     /**
+     * Set the EmotionalState of this MoodEvent.
+     *
      * @param mood The mood of this event.
      */
     public void setMood(Mood.EmotionalState mood) {
@@ -268,18 +289,38 @@ public class MoodEvent {
         return String.format("%s: (%s, %s, %s)", this.id, this.mood.toString(), this.dateTime.toString(), this.reason);
     }
 
+    /**
+     * Get the longitude this MoodEvent was created at.
+     *
+     * @return The longitude this MoodEvent was created at
+     */
     public double getLongtitude() {
         return longtitude;
     }
 
+    /**
+     * Set the longitude this MoodEvent was created at.
+     *
+     * @param longtitude The longitude this MoodEvent was created at
+     */
     public void setLongtitude(double longtitude) {
         this.longtitude = longtitude;
     }
 
+    /**
+     * Get the latitude this MoodEvent was created at.
+     *
+     * @return The latitude this MoodEvent was created at
+     */
     public double getLatitude() {
         return latitude;
     }
 
+    /**
+     * Set the latitude this MoodEvent was created at.
+     *
+     * @param latitude The latitude this MoodEvent was created at
+     */
     public void setLatitude(double latitude) {
         this.latitude = latitude;
     }

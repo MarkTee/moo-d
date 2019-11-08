@@ -64,7 +64,6 @@ public class Database {
         return mocked;
     }
 
-
     /**
      * Gets all the mood events for the signed in user
      *
