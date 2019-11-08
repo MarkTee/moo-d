@@ -18,12 +18,16 @@ import com.gittfo.moodtracker.mood.MoodHistory;
 import com.gittfo.moodtracker.mood.MoodHistoryAdapter;
 import com.gittfo.moodtracker.views.addmood.AddMoodEventActivity;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
-    private MoodHistory moodHistory;
+    //private MoodHistory moodHistory;
     private RecyclerView moodView;
     private MoodHistoryAdapter moodHistoryAdapter;
     private FilterDialog filterDialog;
+
+    private ArrayList<MoodEvent> moodHistory;
 
 
     /**
@@ -47,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // initialize the mood history
-        moodHistory = new MoodHistory(null);
+        moodHistory = new ArrayList<>();
 
         // setup the RecyclerView
         moodView = findViewById(R.id.mood_history_view);
@@ -56,10 +60,9 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         moodView.setLayoutManager(layoutManager);
 
-        moodHistoryAdapter = new MoodHistoryAdapter(moodHistory);
+        moodHistoryAdapter = new MoodHistoryAdapter(this, moodHistory);
         moodView.setAdapter(moodHistoryAdapter);
-        moodHistory.setMoodHistoryAdapter(moodHistoryAdapter);
-        moodHistory.render(this, moodView);
+        getFromDB();
 
         filterDialog = new FilterDialog(this);
         // TODO: put on an actual filter button
@@ -83,11 +86,11 @@ public class MainActivity extends AppCompatActivity {
             for(MoodEvent ev : moods) {
                 // add events to the mood history
                 if (filterDialog.isFiltered(ev.getMood().ordinal()))
-                    moodHistory.addMoodEvent(ev);
+                    moodHistory.add(ev);
                 Log.d("JDB", ev.toString());
             }
             // Update the RecyclerView so that any new moods can be displayed
-            moodHistory.notifyDataSetChanged();
+            moodHistoryAdapter.notifyDataSetChanged();
         });
         Log.d("JDB", "Got Moods");
     }
