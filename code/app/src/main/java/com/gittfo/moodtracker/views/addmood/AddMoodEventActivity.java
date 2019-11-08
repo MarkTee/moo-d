@@ -308,6 +308,7 @@ public class AddMoodEventActivity extends AppCompatActivity {
             moodEvent.setPhotoReference(photoReference);
             moodEvent.setLocation(location);
 
+            // Save any changes to the MoodEvent to the database
             Database.get(this).updateMoodEvent(moodEvent);
         } else {
             // Ensure that the user has selected an emotionalState
@@ -332,13 +333,11 @@ public class AddMoodEventActivity extends AppCompatActivity {
                 return;
             }
 
-
             // Create the MoodEvent object
             moodEvent = new MoodEvent(location, photoReference, reason, date, socialSituation, emotionalState);
 
-            // add the new mood event to the local mood history
+            // Add the new MoodEvent to the database
             Log.d("JDB", "Adding new mood of type " + moodEvent.getMood().toString() + " to mood history.");
-
             Database.get(this).addMoodEvent(moodEvent);
         }
         finish();

@@ -29,8 +29,8 @@ public class MoodAdapter extends RecyclerView.Adapter<MoodViewHolder> {
     /**
      * Create new views (invoked by the layout manager).
      *
-     * @param parent
-     * @param viewType
+     * @param parent The parent ViewGroup for this view
+     * @param viewType The type of view
      * @return a new MoodViewHolder
      */
     @Override
@@ -45,19 +45,17 @@ public class MoodAdapter extends RecyclerView.Adapter<MoodViewHolder> {
     /**
      * Replace the contents of a view (invoked by the layout manager)
      *
-     * @param holder
-     * @param position
+     * @param holder The holder for this View
+     * @param position The position of the MoodEvent in the holder
      */
     @Override
     public void onBindViewHolder(MoodViewHolder holder, int position) {
-        // - get element from your dataset at this position
-        // - replace the contents of the view with that element
-        //holder.container.setText(mDataset[position]);
+        // Get the MoodEvent at the given position, then populate its contents with data
         holder.populateMoodEventContainer(moodHistory.getMoodEvents().get(position));
     }
 
     /**
-     * Return the size of your dataset (invoked by the layout manager)
+     * Return the size of MoodHistory.
      * @return the size of our mood history.
      */
     @Override
