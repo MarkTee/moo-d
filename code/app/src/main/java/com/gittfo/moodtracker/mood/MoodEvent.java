@@ -52,7 +52,7 @@ public class MoodEvent {
 
     // The location the event was created
     private double latitude;
-    private double longtitude;
+    private double longitude;
 
     // ID used for Firebase
     @Exclude
@@ -75,7 +75,7 @@ public class MoodEvent {
         this.socialSituation = socialSituation;
         this.mood = mood;
         this.latitude = lat;
-        this.longtitude = lon;
+        this.longitude = lon;
     }
 
     /**
@@ -295,16 +295,16 @@ public class MoodEvent {
      * @return The longitude this MoodEvent was created at
      */
     public double getLongitude() {
-        return longtitude;
+        return longitude;
     }
 
     /**
      * Set the longitude this MoodEvent was created at.
      *
-     * @param longtitude The longitude this MoodEvent was created at
+     * @param longitude The longitude this MoodEvent was created at
      */
-    public void setLongitude(double longtitude) {
-        this.longtitude = longtitude;
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 
     /**
