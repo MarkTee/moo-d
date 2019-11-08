@@ -4,7 +4,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.gittfo.moodtracker.mood.Mood;
@@ -57,7 +56,7 @@ public class MoodViewHolder extends RecyclerView.ViewHolder {
 
         // Add the MoodEvent's location
         TextView eventLocation = container.findViewById(R.id.location_textView);
-        eventLocation.setText(String.format("%f, %f", moodEvent.getLatitude(), moodEvent.getLongtitude()));
+        eventLocation.setText(String.format("%f, %f", moodEvent.getLatitude(), moodEvent.getLongitude()));
 
         // Add the MoodEvent's date/time
         TextView eventDate = container.findViewById(R.id.date_time_textView);

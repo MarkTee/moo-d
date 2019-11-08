@@ -294,7 +294,7 @@ public class MoodEvent {
      *
      * @return The longitude this MoodEvent was created at
      */
-    public double getLongtitude() {
+    public double getLongitude() {
         return longtitude;
     }
 
@@ -303,7 +303,7 @@ public class MoodEvent {
      *
      * @param longtitude The longitude this MoodEvent was created at
      */
-    public void setLongtitude(double longtitude) {
+    public void setLongitude(double longtitude) {
         this.longtitude = longtitude;
     }
 
