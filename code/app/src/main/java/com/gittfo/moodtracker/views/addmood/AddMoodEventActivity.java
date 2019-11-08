@@ -327,10 +327,10 @@ public class AddMoodEventActivity extends AppCompatActivity  {
      */
     public void saveMoodEvent(View view) {
         reason = reasonEditText.getText().toString();
-        if (!validReadon(reason)){
+        if (!validReason(reason)){
             new AlertDialog.Builder(AddMoodEventActivity.this)
                     .setTitle("Invalid Reason")
-                    .setMessage("Reason for moods must have less than 20 characters and less than 3 words")
+                    .setMessage("Please ensure that your provided Reason is less than 20 characters and less than 3 words.")
                     .setPositiveButton(android.R.string.ok, null)
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();
@@ -381,12 +381,12 @@ public class AddMoodEventActivity extends AppCompatActivity  {
     }
 
     /**
-     * Validates that a string length is <= 20 chars and there are less than 3 words in the string
-     * @param text
-     * @return
+     * Validates that a user-provided reason is <= 20 chars and has <= 3 words
+     * @param reason The reason provided by the user
+     * @return Whether the user-provided reason is of valid length
      */
-    private boolean validReadon(String text){
-        return (text.split("\\s+").length <= 3) && (text.length() <= 20);
+    private boolean validReason(String reason){
+        return (reason.split("\\s+").length <= 3) && (reason.length() <= 20);
     }
 
     /**
