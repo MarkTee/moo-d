@@ -166,7 +166,7 @@ public class MoodEvent {
                 situation,
                 mood,
                 lat != null ? lat : Double.NaN,
-                lon != null ? lat : Double.NaN
+                lon != null ? lon : Double.NaN
         );
         moodEvent.setId(document.getId());
         return moodEvent;
