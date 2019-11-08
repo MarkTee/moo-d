@@ -138,6 +138,11 @@ public class FilterDialog {
         }
     }
 
+    /**
+     * Determine whether all mood buttons have been selected
+     *
+     * @return True if all mood buttons have been selected; otherwise False
+     */
     public boolean isAllSet() {
         boolean allSet = true;
         for (int i = 0; i < 6; i++){
@@ -146,6 +151,11 @@ public class FilterDialog {
         return allSet;
     }
 
+    /**
+     * Determine whether no mood buttons have been selected
+     *
+     * @return True if no mood buttons have been selected; otherwise False
+     */
     public boolean isNoneSet() {
         for (int i = 0; i < 6; i++){
             if (filterState[i]) {
