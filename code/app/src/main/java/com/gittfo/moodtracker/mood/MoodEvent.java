@@ -40,7 +40,7 @@ public class MoodEvent {
     // Last but not least, the actual Mood associated to this event
     private Mood.EmotionalState mood;
 
-    // ID used for firebase
+    // ID used for Firebase
     @Exclude
     private String id;
 
@@ -215,6 +215,12 @@ public class MoodEvent {
         this.mood = mood;
     }
 
+    /**
+     * Return a string representation of this mood event that describes some of its attributes
+     * (emotional state, date, and reason).
+     *
+     * @return A string representation of this mood event
+     */
     public String toString() {
         return String.format("%s: (%s, %s, %s)", this.id, this.mood.toString(), this.dateTime.toString(), this.reason);
     }
