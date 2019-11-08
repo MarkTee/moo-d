@@ -1,15 +1,18 @@
 package com.gittfo.moodtracker.mood;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.view.LayoutInflater;
 
 
+import com.gittfo.moodtracker.database.Database;
 import com.gittfo.moodtracker.views.R;
 import com.gittfo.moodtracker.views.addmood.AddMoodEventActivity;
 import com.gittfo.moodtracker.views.moodhistory.MoodViewHolder;
@@ -60,11 +63,19 @@ public class MoodHistoryAdapter extends RecyclerView.Adapter<MoodViewHolder> {
         // - replace the contents of the view with that element
         //holder.container.setText(mDataset[position]);
         holder.populateMoodEventContainer(moodHistory.getMoodEvents().get(position));
-        holder.container.setOnClickListener(v -> {
+        holder.container.findViewById(R.id.edit_button).setOnClickListener(v -> {
             Context c = moodHistory.getContext();
             Intent i = new Intent(c, AddMoodEventActivity.class);
             i.putExtra(AddMoodEventActivity.EDIT_MOOD, holder.moodEventID);
             c.startActivity(i);
+        });
+        holder.container.findViewById(R.id.delete_button).setOnClickListener(v -> {
+            new AlertDialog.Builder(moodHistory.getContext())
+                    .setTitle("Delete Mood")
+                    .setMessage("Do you really want to delete this mood?")
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setPositiveButton(android.R.string.yes, (dialog, whichButton) -> Database.get(moodHistory.getContext()).deleteMoodEvent(MoodEvent.fromId(holder.moodEventID)))
+                    .setNegativeButton(android.R.string.no, null).show();
         });
     }
 
