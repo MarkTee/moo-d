@@ -76,7 +76,7 @@ public class MoodHistoryAdapter extends RecyclerView.Adapter<MoodViewHolder> {
         holder.container.findViewById(R.id.delete_button).setOnClickListener(v -> {
             new AlertDialog.Builder(context)
                     .setTitle("Delete Mood")
-                    .setMessage("Do you really want to delete this mood?")
+                    .setMessage("Do you really want to delete this Mood Event?")
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .setPositiveButton(android.R.string.yes, (dialog, whichButton) -> {
                                 Database.get(context).deleteMoodEvent(MoodEvent.fromId(holder.moodEventID));

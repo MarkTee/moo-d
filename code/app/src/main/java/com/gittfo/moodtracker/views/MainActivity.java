@@ -17,15 +17,17 @@ import com.gittfo.moodtracker.views.addmood.AddMoodEventActivity;
 
 import java.util.ArrayList;
 
+/**
+ * The main activity of the app. In this activity, the user is able to see their MoodHistory, which
+ * includes all of the MoodEvents that they've created.
+ */
 public class MainActivity extends AppCompatActivity {
 
     //private MoodHistory moodHistory;
     private RecyclerView moodView;
     private MoodHistoryAdapter moodHistoryAdapter;
     private FilterDialog filterDialog;
-
     private ArrayList<MoodEvent> moodHistory;
-
 
     /**
      * Each time the user returns to this activity, update the RecyclerView with moods from the
@@ -66,12 +68,21 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.filter_button).setOnClickListener(v -> filterDialog.show());
     }
 
-
+    /**
+     * Apply any MoodHistory filters that the user has set
+     *
+     * @param v The view that the method has been called from
+     */
     public void applyFilters(View v) {
         getFromDB();
         filterDialog.cancel();
     }
 
+    /**
+     * Show all of the user's MoodEvents (i.e. clear any MoodHistory filters that the user has set)
+     *
+     * @param v The view that the method has been called from
+     */
     public void showAllMoods(View v) {
         filterDialog.setAllSet();
         getFromDB();
