@@ -17,19 +17,8 @@ public class MoodHistory {
     private ArrayList<MoodEvent> moodEvents;
     private Context c;
 
-    public void setMoodHistoryAdapter(MoodHistoryAdapter moodHistoryAdapter) {
-        this.moodHistoryAdapter = moodHistoryAdapter;
-    }
-
     // Custom ArrayAdapter
     private MoodHistoryAdapter moodHistoryAdapter;
-
-    /**
-     * Create a new, empty mood history.
-     */
-    public MoodHistory(MoodHistoryAdapter mha) {
-        this(mha, new ArrayList<>());
-    }
 
     /**
      * Create a new mood history with a given list of moods.
@@ -39,6 +28,23 @@ public class MoodHistory {
     public MoodHistory(MoodHistoryAdapter mha, ArrayList<MoodEvent> moodEvents) {
         this.moodEvents = moodEvents;
         moodHistoryAdapter = mha;
+    }
+
+    /**
+     * Create a new, empty mood history.
+     */
+    public MoodHistory(MoodHistoryAdapter mha) {
+        this(mha, new ArrayList<>());
+    }
+
+    /**
+     * Set a new MoodHistory Adapter for this MoodHistory, which will be used to display its
+     * contents in a RecyclerView.
+     *
+     * @param moodHistoryAdapter The MoodHistoryAdapter for this MoodHistory
+     */
+    public void setMoodHistoryAdapter(MoodHistoryAdapter moodHistoryAdapter) {
+        this.moodHistoryAdapter = moodHistoryAdapter;
     }
 
     /**
