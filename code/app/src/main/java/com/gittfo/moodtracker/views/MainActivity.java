@@ -1,20 +1,17 @@
 package com.gittfo.moodtracker.views;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
 import com.gittfo.moodtracker.database.Database;
 import com.gittfo.moodtracker.mood.MoodEvent;
-import com.gittfo.moodtracker.mood.MoodHistory;
 import com.gittfo.moodtracker.mood.MoodHistoryAdapter;
 import com.gittfo.moodtracker.views.addmood.AddMoodEventActivity;
 
@@ -94,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
                     moodHistory.add(ev);
                 Log.d("JDB", ev.toString());
             }
+            moodHistory.sort((b, a) -> a.getDate().compareTo(b.getDate()));
             // Update the RecyclerView so that any new moods can be displayed
             moodHistoryAdapter.notifyDataSetChanged();
         });
