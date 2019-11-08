@@ -31,14 +31,39 @@ public class Database {
 
     private String userId;
 
+    /**
+     * Create a new database object and store the userID of the current user
+     *
+     * @param c Context in which the database is created
+     */
     private Database (Context c) {
         userId = c.getSharedPreferences(Database.PREFS, MODE_PRIVATE)
                 .getString("user", "");
     }
 
+    /**
+     * Get an instance of the database
+     *
+     * @param c Context in which the database is obtained
+     * @return An instance of the database object
+     */
     public static Database get(Context c) {
         return new Database(c);
     }
+
+    /**
+     * Return an instance of the Database object with testymctestface301's
+     * user ID.
+     *
+     * @param c context
+     * @return instance of Database
+     */
+    public static Database getMock(Context c){
+        Database mocked  = new Database(c);
+        mocked.userId = "105648403813593449833";
+        return mocked;
+    }
+
 
     /**
      * Gets all the mood events for the signed in user
@@ -100,6 +125,7 @@ public class Database {
 
     /**
      * Returns the userID of the current user (each user has a unique userID).
+     *
      * @return The userID of the current user
      */
     public String currentUser() {

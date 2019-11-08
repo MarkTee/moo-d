@@ -24,6 +24,18 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import static com.gittfo.moodtracker.mood.MoodEvent.AFRAID_INDEX;
+import static com.gittfo.moodtracker.mood.MoodEvent.ANGRY_INDEX;
+import static com.gittfo.moodtracker.mood.MoodEvent.CROWD_SOCIAL_INDEX;
+import static com.gittfo.moodtracker.mood.MoodEvent.DISGUSTED_INDEX;
+import static com.gittfo.moodtracker.mood.MoodEvent.HAPPY_INDEX;
+import static com.gittfo.moodtracker.mood.MoodEvent.NA_SOCIAL_INDEX;
+import static com.gittfo.moodtracker.mood.MoodEvent.ONE_SOCIAL_INDEX;
+import static com.gittfo.moodtracker.mood.MoodEvent.SAD_INDEX;
+import static com.gittfo.moodtracker.mood.MoodEvent.SURPRISED_INDEX;
+import static com.gittfo.moodtracker.mood.MoodEvent.TWOPLUS_SOCIAL_INDEX;
+import static com.gittfo.moodtracker.mood.MoodEvent.ZERO_SOCIAL_INDEX;
+
 /**
  * Allows the user to create a new MoodEvent, or edit an existing one (by passing a MoodEvent
  * through an intent).
@@ -35,17 +47,6 @@ import java.util.List;
 public class AddMoodEventActivity extends AppCompatActivity {
 
     public static final String EDIT_MOOD = "EDIT THE MOODS";
-    private static final int HAPPY_INDEX = 0;
-    private static final int SAD_INDEX = 1;
-    private static final int SURPRISED_INDEX = 2;
-    private static final int AFRAID_INDEX = 3;
-    private static final int DISGUSTED_INDEX = 4;
-    private static final int ANGRY_INDEX = 5;
-    private static final int ZERO_SOCIAL_INDEX = 0;
-    private static final int ONE_SOCIAL_INDEX = 1;
-    private static final int TWOPLUS_SOCIAL_INDEX = 2;
-    private static final int CROWD_SOCIAL_INDEX = 3;
-    private static final int NA_SOCIAL_INDEX = 4;
 
     // Get the current date and time, which are used when creating a new Mood Event
     private Date date = new Date();
@@ -308,6 +309,7 @@ public class AddMoodEventActivity extends AppCompatActivity {
             moodEvent.setPhotoReference(photoReference);
             moodEvent.setLocation(location);
 
+            // Save any changes to the MoodEvent to the database
             Database.get(this).updateMoodEvent(moodEvent);
         } else {
             // Ensure that the user has selected an emotionalState
@@ -332,13 +334,11 @@ public class AddMoodEventActivity extends AppCompatActivity {
                 return;
             }
 
-
             // Create the MoodEvent object
             moodEvent = new MoodEvent(location, photoReference, reason, date, socialSituation, emotionalState);
 
-            // add the new mood event to the local mood history
+            // Add the new MoodEvent to the database
             Log.d("JDB", "Adding new mood of type " + moodEvent.getMood().toString() + " to mood history.");
-
             Database.get(this).addMoodEvent(moodEvent);
         }
         finish();
