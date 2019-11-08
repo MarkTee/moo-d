@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -24,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView moodView;
     private MoodHistoryAdapter moodHistoryAdapter;
     private FilterDialog filterDialog;
-
 
     /**
      * Each time the user returns to this activity, update the RecyclerView with moods from the
