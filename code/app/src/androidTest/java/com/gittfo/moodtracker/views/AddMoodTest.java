@@ -10,12 +10,15 @@ import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
 
+import com.gittfo.moodtracker.views.addmood.AddMoodEventActivity;
+
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.testng.reporters.jq.Main;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
@@ -33,20 +36,10 @@ import static org.hamcrest.Matchers.is;
 public class AddMoodTest {
 
     @Rule
-    public ActivityTestRule<SigninActivity> mActivityTestRule = new ActivityTestRule<>(SigninActivity.class);
+    public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class, true, true);
 
     @Test
     public void addMoodTest() {
-        ViewInteraction hz = onView(
-                allOf(withText("Sign In"),
-                        childAtPosition(
-                                allOf(withId(R.id.sign_in_button),
-                                        childAtPosition(
-                                                withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
-                                                0)),
-                                0),
-                        isDisplayed()));
-        hz.perform(click());
 
         ViewInteraction floatingActionButton = onView(
                 allOf(withId(R.id.fab),
