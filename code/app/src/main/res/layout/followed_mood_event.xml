@@ -177,10 +177,10 @@
             app:layout_constraintTop_toTopOf="@id/location_icon_imageView" />
 
 
-        <!-- USER COMMENT -->
+        <!-- USER REASON -->
 
         <TextView
-            android:id="@+id/user_comment_textView"
+            android:id="@+id/user_reason_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
@@ -200,7 +200,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/unfollow_button"
-            app:layout_constraintBottom_toBottomOf="@id/user_comment_textView"
+            app:layout_constraintBottom_toBottomOf="@id/user_reason_textView"
             app:layout_constraintStart_toEndOf="@id/location_textView"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="8dp"
