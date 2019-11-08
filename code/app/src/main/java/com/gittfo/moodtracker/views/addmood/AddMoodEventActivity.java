@@ -369,6 +369,9 @@ public class AddMoodEventActivity extends AppCompatActivity  {
         finish();
     }
 
+    /**
+     * Get the location of the user's device; this location will be added to the created MoodEvent
+     */
     private void getDeviceLocation() {
         fusedLocationClient.getLastLocation()
                 .addOnSuccessListener(this, location -> {
