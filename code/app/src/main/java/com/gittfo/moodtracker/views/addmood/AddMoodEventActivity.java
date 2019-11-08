@@ -3,9 +3,14 @@ package com.gittfo.moodtracker.views.addmood;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.content.DialogInterface;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +22,10 @@ import com.gittfo.moodtracker.database.Database;
 import com.gittfo.moodtracker.mood.Mood;
 import com.gittfo.moodtracker.mood.MoodEvent;
 import com.gittfo.moodtracker.views.R;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.text.Format;
 import java.text.SimpleDateFormat;
@@ -44,9 +53,13 @@ import static com.gittfo.moodtracker.mood.MoodEvent.ZERO_SOCIAL_INDEX;
  *
  * @author Mark Thomas
  */
-public class AddMoodEventActivity extends AppCompatActivity {
+public class AddMoodEventActivity extends AppCompatActivity  {
 
     public static final String EDIT_MOOD = "EDIT THE MOODS";
+
+    // For getting the location
+    private GoogleApiClient googleApiClient;
+    private FusedLocationProviderClient fusedLocationClient;
 
     // Get the current date and time, which are used when creating a new Mood Event
     private Date date = new Date();
@@ -55,7 +68,8 @@ public class AddMoodEventActivity extends AppCompatActivity {
     private String reason = "";
     private MoodEvent.SocialSituation socialSituation = null;
     private String photoReference = "";
-    private String location = "";
+    private double latitude;
+    private double longtitude;
     private MoodEvent moodEvent;
 
     // Buttons representing pre-defined moods and social situations that the user may choose from
@@ -66,6 +80,7 @@ public class AddMoodEventActivity extends AppCompatActivity {
     private EditText reasonEditText;
 
     private boolean editing = false;
+    private boolean addLocation = false;
 
     /**
      * In the oncreate method, dynamically update the layout as needed and initialize views.
@@ -103,6 +118,7 @@ public class AddMoodEventActivity extends AppCompatActivity {
         Button naButton = findViewById(R.id.social_button_na);
         socialSituationButtons = Arrays.asList(zeroButton, oneButton, twoPlusButton, crowdButton, naButton);
 
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         // If editing, obtain the MoodEvent from the database
         String isEdit = this.getIntent().getStringExtra(EDIT_MOOD);
         if (isEdit != null) {
@@ -112,6 +128,8 @@ public class AddMoodEventActivity extends AppCompatActivity {
                 populateEdit();
                 // TODO: Maybe show a loading wheel/spinner?
             });
+        } else {
+            getDeviceLocation(); // Gets the location
         }
         // If the user is editing an existing MoodEvent, carry out the appropriate actions
 
@@ -198,8 +216,6 @@ public class AddMoodEventActivity extends AppCompatActivity {
 
             //TODO: display current MoodEvent's photo
             photoReference = moodEvent.getPhotoReference();
-            //TODO: display current MoodEvent's location
-            location = moodEvent.getLocation();
         }
     }
 
@@ -258,7 +274,17 @@ public class AddMoodEventActivity extends AppCompatActivity {
      * @param view The view that caused the method to be called
      */
     public void getLocation(View view) {
-        ;
+        this.addLocation = true;
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,
+                            Manifest.permission.ACCESS_FINE_LOCATION}, 0);
+            getDeviceLocation();
+
+        }
+
+        Log.d("JLOC", "Using Location");
     }
 
     /**
@@ -307,7 +333,6 @@ public class AddMoodEventActivity extends AppCompatActivity {
             moodEvent.setReason(reason);
             moodEvent.setSocialSituation(socialSituation);
             moodEvent.setPhotoReference(photoReference);
-            moodEvent.setLocation(location);
 
             // Save any changes to the MoodEvent to the database
             Database.get(this).updateMoodEvent(moodEvent);
@@ -335,13 +360,27 @@ public class AddMoodEventActivity extends AppCompatActivity {
             }
 
             // Create the MoodEvent object
-            moodEvent = new MoodEvent(location, photoReference, reason, date, socialSituation, emotionalState);
+            moodEvent = new MoodEvent(photoReference, reason, date, socialSituation, emotionalState, addLocation ? latitude : Double.NaN, addLocation ? longtitude : Double.NaN);
 
             // Add the new MoodEvent to the database
             Log.d("JDB", "Adding new mood of type " + moodEvent.getMood().toString() + " to mood history.");
             Database.get(this).addMoodEvent(moodEvent);
         }
         finish();
+    }
+
+    private void getDeviceLocation() {
+        fusedLocationClient.getLastLocation()
+                .addOnSuccessListener(this, location -> {
+                    Log.d("JLOC", "Got a location Object");
+                    if (location != null) {
+                        // Store this location
+                        longtitude = location.getLongitude();
+                        latitude = location.getLatitude();
+                        Log.d("JLOC", longtitude + " : " + latitude);
+                    }
+                });
+        Log.d("JLOC", "Requesting Location");
     }
 
     /**
