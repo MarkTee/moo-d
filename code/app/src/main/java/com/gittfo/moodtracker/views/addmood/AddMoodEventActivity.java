@@ -118,6 +118,9 @@ public class AddMoodEventActivity extends AppCompatActivity  {
         Button naButton = findViewById(R.id.social_button_na);
         socialSituationButtons = Arrays.asList(zeroButton, oneButton, twoPlusButton, crowdButton, naButton);
 
+        naButton.setBackgroundColor(Color.parseColor("#008577"));
+        socialSituation = MoodEvent.SocialSituation.NA;
+
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         // If editing, obtain the MoodEvent from the database
         String isEdit = this.getIntent().getStringExtra(EDIT_MOOD);
