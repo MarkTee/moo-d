@@ -360,7 +360,7 @@ public class AddMoodEventActivity extends AppCompatActivity  {
             }
 
             // Create the MoodEvent object
-            moodEvent = new MoodEvent(photoReference, reason, date, socialSituation, emotionalState, latitude, longtitude);
+            moodEvent = new MoodEvent(photoReference, reason, date, socialSituation, emotionalState, addLocation ? latitude : Double.NaN, addLocation ? longtitude : Double.NaN);
 
             // Add the new MoodEvent to the database
             Log.d("JDB", "Adding new mood of type " + moodEvent.getMood().toString() + " to mood history.");
@@ -381,8 +381,6 @@ public class AddMoodEventActivity extends AppCompatActivity  {
                     }
                 });
         Log.d("JLOC", "Requesting Location");
-
-
     }
 
     /**
