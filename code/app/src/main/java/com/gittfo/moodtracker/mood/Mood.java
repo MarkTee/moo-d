@@ -16,10 +16,10 @@ public class Mood {
     public enum EmotionalState {
         HAPPY,
         SAD,
-        ANGRY,
-        DISGUSTED,
-        AFRAID,
         SURPRISED,
+        AFRAID,
+        DISGUSTED,
+        ANGRY,
     };
 
     /**

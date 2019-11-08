@@ -12,6 +12,18 @@ import java.util.Date;
  */
 public class MoodEvent {
 
+    public static final int HAPPY_INDEX = 0;
+    public static final int SAD_INDEX = 1;
+    public static final int SURPRISED_INDEX = 2;
+    public static final int AFRAID_INDEX = 3;
+    public static final int DISGUSTED_INDEX = 4;
+    public static final int ANGRY_INDEX = 5;
+    public static final int ZERO_SOCIAL_INDEX = 0;
+    public static final int ONE_SOCIAL_INDEX = 1;
+    public static final int TWOPLUS_SOCIAL_INDEX = 2;
+    public static final int CROWD_SOCIAL_INDEX = 3;
+    public static final int NA_SOCIAL_INDEX = 4;
+
     public String getId() {
         return id;
     }
