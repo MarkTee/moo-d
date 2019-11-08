@@ -125,7 +125,7 @@
                 android:layout_marginTop="10dp"
 
                 android:columnCount="2"
-                android:rowCount="4"
+                android:rowCount="3"
                 android:orientation="horizontal"
                 android:useDefaultMargins="true"
                 tools:context=".GridXMLActivity"

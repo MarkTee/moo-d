@@ -23,9 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView moodView;
     private MoodHistoryAdapter moodHistoryAdapter;
     private FilterDialog filterDialog;
-
     private ArrayList<MoodEvent> moodHistory;
-
 
     /**
      * Each time the user returns to this activity, update the RecyclerView with moods from the
