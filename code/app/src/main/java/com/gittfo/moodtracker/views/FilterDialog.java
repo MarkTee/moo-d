@@ -11,10 +11,13 @@ import androidx.core.content.ContextCompat;
 
 import com.gittfo.moodtracker.mood.MoodEvent;
 
+import java.util.Arrays;
+
 public class FilterDialog {
     private AlertDialog filterDialog;
     private boolean[] filterState;
     Activity c;
+    int selectedCount = 0;
 
     public FilterDialog(Activity c) {
         this.c = c;
@@ -60,7 +63,21 @@ public class FilterDialog {
             Log.d("JUI", "Error, invalid view, assuming happy");
         }
         Log.d("JUI", "Picked a view: " + index);
-        filterState[index] ^= true;
+        if (isAllSet() && selectedCount == 0) {
+            selectedCount++;
+            for (int i = 0; i < 6; i++) {
+                filterState[i] = i == index;
+            }
+        } else {
+            selectedCount += filterState[index] ? -1 : 1;
+            filterState[index] ^= true;
+        }
+        if (isNoneSet()) {
+            for (int i = 0; i < 6; i++) {
+                filterState[i] = true;
+            }
+        }
+        Log.d("JUI", isNoneSet()+":"+Arrays.toString(filterState)+":"+isAllSet()+"sc="+selectedCount);
         updateFilterUI();
     }
 
@@ -86,9 +103,27 @@ public class FilterDialog {
         };
         ColorStateList notSelectedTint = ContextCompat.getColorStateList(c, R.color.design_default_color_background);
 
-        for (int i = 0; i < 6; i++){
-            buttons[i].setBackgroundTintList(filterState[i] ? tints[i] : notSelectedTint);
+        boolean allSet = isAllSet();
+        for (int i = 0; i < 6; i++) {
+            buttons[i].setBackgroundTintList(filterState[i] && (selectedCount == 6 || !allSet) ? tints[i] : notSelectedTint);
         }
+    }
+
+    public boolean isAllSet() {
+        boolean allSet = true;
+        for (int i = 0; i < 6; i++){
+            allSet &= filterState[i];
+        }
+        return allSet;
+    }
+
+    public boolean isNoneSet() {
+        for (int i = 0; i < 6; i++){
+            if (filterState[i]) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public void cancel() {
