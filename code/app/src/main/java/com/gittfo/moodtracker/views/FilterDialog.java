@@ -11,11 +11,19 @@ import androidx.core.content.ContextCompat;
 
 import com.gittfo.moodtracker.mood.MoodEvent;
 
+/**
+ * This class implements a filter dialog that can be used to filter MoodHistory by emotional state.
+ */
 public class FilterDialog {
     private AlertDialog filterDialog;
     private boolean[] filterState;
     Activity c;
 
+    /**
+     * Create a new FilterDialog object
+     *
+     * @param c The activity context that the dialog will be created in
+     */
     public FilterDialog(Activity c) {
         this.c = c;
         filterState = new boolean[]{true, true, true, true, true, true};
@@ -29,6 +37,9 @@ public class FilterDialog {
         filterDialog = builder.create();
     }
 
+    /**
+     * Display the FilterDialog and set OnClickListeners for each of the mood buttons.
+     */
     public void show() {
         filterDialog.show();
         filterDialog.findViewById(R.id.happy_mood_button).setOnClickListener(v -> this.selectMoodButton(v));
@@ -40,6 +51,11 @@ public class FilterDialog {
         updateFilterUI();
     }
 
+    /**
+     * Handle mood button selection
+     *
+     * @param v The mood button that the user clicked
+     */
     public void selectMoodButton(View v) {
         Log.d("JUI", "Selected Button");
         int index;
@@ -64,6 +80,9 @@ public class FilterDialog {
         updateFilterUI();
     }
 
+    /**
+     * Update the filter dialog according to the buttons that have been selected.
+     */
     private void updateFilterUI() {
         // The order is important here. This isn't ideal, it needs
         // to reflect the MOOD_INDEX values in MoodEvent
@@ -91,10 +110,19 @@ public class FilterDialog {
         }
     }
 
+    /**
+     * Close the FilterDialog.
+     */
     public void cancel() {
         filterDialog.cancel();
     }
 
+    /**
+     * Returns true if the mood is currently selected.
+     *
+     * @param ordinal Int representing each of the mood buttons
+     * @return Whether or not the mood is currently selected
+     */
     public boolean isFiltered(int ordinal) {
         return this.filterState[ordinal];
     }
