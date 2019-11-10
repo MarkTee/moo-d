@@ -30,6 +30,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".addmood.InboxActivity" />
+        <activity android:name=".addmood.ProfileActivity" />
     </application>
 
 </manifest>

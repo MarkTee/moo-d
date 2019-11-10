@@ -14,6 +14,8 @@ import com.gittfo.moodtracker.database.Database;
 import com.gittfo.moodtracker.mood.MoodEvent;
 import com.gittfo.moodtracker.mood.MoodHistoryAdapter;
 import com.gittfo.moodtracker.views.addmood.AddMoodEventActivity;
+import com.gittfo.moodtracker.views.addmood.InboxActivity;
+import com.gittfo.moodtracker.views.addmood.ProfileActivity;
 
 import java.util.ArrayList;
 
@@ -117,6 +119,24 @@ public class MainActivity extends AppCompatActivity {
      */
     public void createMoodEvent(View view) {
         Intent i = new Intent(this, AddMoodEventActivity.class);
+        this.startActivity(i);
+    }
+
+    /**
+     * When the "inbox" button is pressed, go to the inbox-managing activity.
+     * @param view the Inbox button.
+     */
+    public void startInboxActivity(View view) {
+        Intent i = new Intent(this, InboxActivity.class);
+        this.startActivity(i);
+    }
+
+    /**
+     * When the "profile" button is pressed, go to the profile-managing activity.
+     * @param view the Profile button.
+     */
+    public void startProfileActivity(View view){
+        Intent i = new Intent(this, ProfileActivity.class);
         this.startActivity(i);
     }
 }

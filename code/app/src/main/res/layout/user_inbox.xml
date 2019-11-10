@@ -4,8 +4,4 @@
     android:layout_height="match_parent"
 
     android:requiresFadingEdge="vertical"
-    android:fillViewport="false">
-
-
-
-</ScrollView>
+    android:fillViewport="false"/>
