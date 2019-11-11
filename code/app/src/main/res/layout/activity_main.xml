@@ -23,7 +23,7 @@
             <include
                 android:id="@+id/tool_bar"
                 layout="@layout/profile_toolbar" />
-            
+
             <!-- RecyclerView starts here -->
 
             <androidx.recyclerview.widget.RecyclerView
