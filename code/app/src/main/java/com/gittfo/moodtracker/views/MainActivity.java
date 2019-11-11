@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
         filterDialog = new FilterDialog(this);
         // TODO: put on an actual filter button
-        findViewById(R.id.filter_button).setOnClickListener(v -> filterDialog.show());
+        findViewById(R.id.toolbar_filter_button).setOnClickListener(v -> filterDialog.show());
     }
 
     /**
