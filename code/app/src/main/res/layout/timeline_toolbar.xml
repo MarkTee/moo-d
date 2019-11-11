@@ -4,15 +4,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/profile_toolbar"
+        android:id="@+id/timeline_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
+        android:layout_gravity="center_horizontal"
         tools:layout_editor_absoluteY="1dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -27,8 +29,26 @@
 
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@id/follow_button"
+                android:layout_marginLeft="16dp"
                 android:text="FILTER"/>
+
+
+            <ImageButton
+                android:id="@+id/follow_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/toolbar_filter_button"
+                android:layout_marginRight="16dp"
+
+                android:background="#00000000"
+                android:src="@drawable/ic_person_add_black_32dp"
+                android:contentDescription="follow button"/>
+
 
 
             <TextView
@@ -45,7 +65,7 @@
                 android:textSize="20dp"
                 android:textStyle="bold"
                 android:textColor="@android:color/white"
-                android:text="Profile"/>
+                android:text="Timeline"/>
 
             <ImageButton
                 android:id="@+id/settings_button"
