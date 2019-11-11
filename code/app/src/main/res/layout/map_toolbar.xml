@@ -8,7 +8,7 @@
     android:layout_gravity="center_horizontal">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/inbox_toolbar"
+        android:id="@+id/maps_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
@@ -35,7 +35,7 @@
                 android:textSize="20dp"
                 android:textStyle="bold"
                 android:textColor="@android:color/white"
-                android:text="Inbox"/>
+                android:text="Maps"/>
 
             <ImageButton
                 android:id="@+id/settings_button"
