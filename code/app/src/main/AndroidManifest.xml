@@ -8,6 +8,7 @@
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
 
     <application
@@ -18,7 +19,7 @@
         android:supportsRtl="true"
 
         tools:ignore="GoogleAppIndexingWarning"
-        android:theme="@style/Theme.MaterialComponents.Light.NoActionBar">
+        android:theme="@style/AppTheme">
 
         <activity android:name=".MainActivity" android:screenOrientation="portrait" />
         <activity android:name=".addmood.AddMoodEventActivity" />

@@ -22,7 +22,8 @@
 
             <include
                 android:id="@+id/tool_bar"
-                layout="@layout/profile_toolbar" />
+                layout="@layout/profile_toolbar"
+                />
 
             <!-- RecyclerView starts here -->
 
@@ -46,7 +47,7 @@
             android:layout_height="wrap_content"
             android:paddingBottom="6dp"
             android:paddingTop="6dp"
-            app:backgroundTint="@color/colorPrimary"
+            app:backgroundTint="@color/colorBottomAppBar"
             android:layout_gravity="bottom"
             app:fabAlignmentMode="center"
             app:fabCradleMargin="6dp"
@@ -62,7 +63,7 @@
                     android:id="@+id/timeline_menu_item"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:background="@color/colorPrimary"
+                    android:background="#00000000"
                     android:scaleType="fitStart"
                     android:layout_marginLeft="8dp"
                     android:src="@drawable/ic_featured_play_list_white_32dp"
@@ -132,7 +133,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="5dp"
                     android:src="@drawable/ic_map_white_32dp"
-                    android:background="@color/colorPrimary"
+                    android:background="#00000000"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toTopOf="@+id/maps_textView"
                     app:layout_constraintEnd_toStartOf="@+id/profile_menu_item"
@@ -156,7 +157,7 @@
                     android:id="@+id/profile_menu_item"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:background="@color/colorPrimary"
+                    android:background="#00000000"
                     android:onClick="startProfileActivity"
                     android:src="@drawable/ic_person_white_32dp"
                     app:layout_constraintBottom_toTopOf="@+id/profile_textView"
@@ -183,6 +184,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_add_white_72dp"
+            android:background="#00000000"
+            app:backgroundTint="@color/colorFloatingActionButton"
             app:fabCustomSize="64dp"
             app:layout_anchor="@+id/bottom_app_bar"
             app:layout_anchorGravity="center_horizontal" />
