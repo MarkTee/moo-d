@@ -18,7 +18,7 @@
         android:supportsRtl="true"
 
         tools:ignore="GoogleAppIndexingWarning"
-        android:theme="@style/AppTheme">
+        android:theme="@style/Theme.MaterialComponents.Light.NoActionBar">
 
         <activity android:name=".MainActivity" android:screenOrientation="portrait" />
         <activity android:name=".addmood.AddMoodEventActivity" />
