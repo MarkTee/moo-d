@@ -9,6 +9,13 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 
+    <meta-data
+        android:name="com.google.android.gms.version"
+        android:value="@integer/google_play_services_version" />
+
+    <meta-data
+        android:name="com.google.android.geo.API_KEY"
+        android:value="@string/google_maps_key" />
 
     <application
         android:allowBackup="true"
@@ -23,6 +30,8 @@
 
         <activity android:name=".MainActivity" android:screenOrientation="portrait" />
         <activity android:name=".addmood.AddMoodEventActivity" />
+        <activity android:name=".addmood.InboxActivity" />
+        <activity android:name=".addmood.ProfileActivity" />
 
         <activity
             android:name=".SigninActivity">
@@ -31,8 +40,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".addmood.InboxActivity" />
-        <activity android:name=".addmood.ProfileActivity" />
     </application>
 
 </manifest>
