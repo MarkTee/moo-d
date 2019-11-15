@@ -32,6 +32,7 @@
         <activity android:name=".addmood.AddMoodEventActivity" />
         <activity android:name=".addmood.InboxActivity" />
         <activity android:name=".addmood.ProfileActivity" />
+        <activity android:name=".map.MapActivity" />
 
         <activity
             android:name=".SigninActivity">
