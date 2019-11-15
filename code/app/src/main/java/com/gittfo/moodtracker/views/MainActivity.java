@@ -7,17 +7,22 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
 
 import com.gittfo.moodtracker.database.Database;
+import com.gittfo.moodtracker.mood.Mood;
 import com.gittfo.moodtracker.mood.MoodEvent;
 import com.gittfo.moodtracker.mood.MoodHistoryAdapter;
 import com.gittfo.moodtracker.views.addmood.AddMoodEventActivity;
 import com.gittfo.moodtracker.views.addmood.InboxActivity;
 import com.gittfo.moodtracker.views.addmood.ProfileActivity;
+import com.google.android.gms.tasks.Task;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * The main activity of the app. In this activity, the user is able to see their MoodHistory, which
@@ -96,7 +101,11 @@ public class MainActivity extends AppCompatActivity {
     public void getFromDB() {
         // Get all moods from the database
         Log.d("JDB", "Getting Moods");
+        Task<List<MoodEvent>> task = Database.get(this).getMoods();
+        //List<MoodEvent> moodl = task.getResult();
+
         Database.get(this).getMoods().addOnSuccessListener(moods -> {
+            Log.d("JDB", "Success");
             moodHistory.clear();
             for(MoodEvent ev : moods) {
                 // add events to the mood history
@@ -136,6 +145,15 @@ public class MainActivity extends AppCompatActivity {
      * @param view the Profile button.
      */
     public void startProfileActivity(View view){
+        Intent i = new Intent(this, ProfileActivity.class);
+        this.startActivity(i);
+    }
+
+    /**
+     * When the "map" button is pressed, go the map-viewing activity.
+     * @param view the Map button.
+     */
+    public void startMapActivity(View view) {
         Intent i = new Intent(this, ProfileActivity.class);
         this.startActivity(i);
     }

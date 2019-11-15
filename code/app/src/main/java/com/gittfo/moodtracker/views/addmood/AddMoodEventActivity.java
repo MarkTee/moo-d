@@ -374,7 +374,14 @@ public class AddMoodEventActivity extends AppCompatActivity  {
             }
 
             // Create the MoodEvent object
-            moodEvent = new MoodEvent(photoReference, reason, date, socialSituation, emotionalState, addLocation ? latitude : Double.NaN, addLocation ? longtitude : Double.NaN);
+            moodEvent = new MoodEvent(
+                    photoReference,
+                    reason,
+                    date,
+                    socialSituation,
+                    emotionalState,
+                    addLocation ? latitude : -1,
+                    addLocation ? longtitude : -2);
 
             // Add the new MoodEvent to the database
             Log.d("JDB", "Adding new mood of type " + moodEvent.getMood().toString() + " to mood history.");

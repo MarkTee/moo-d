@@ -93,6 +93,7 @@ public class Database {
                     List<MoodEvent> me = new ArrayList<>();
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         MoodEvent v = MoodEvent.getMoodEventFromFirebase(document);
+                        Log.d(TAG, "Adding " + v.toString());
                         if (v != null) {
                             me.add(v);
                         }
