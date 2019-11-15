@@ -4,11 +4,12 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.gittfo.moodtracker.mood.Mood;
 import com.gittfo.moodtracker.mood.MoodEvent;
 import com.gittfo.moodtracker.views.R;
+import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * An activity where users can view the locations of a list of MoodEvents on a map. Can be used for
@@ -16,14 +17,18 @@ import java.util.List;
  */
 public class MapActivity extends AppCompatActivity {
 
-    // tag that goes along with the passed-in MoodEvent list.
-    public static final String MOOD_HISTORY = "MOOD_HISTORY";
-    private List<MoodEvent> moodEventList;
+    public static final String MOOD_HISTORY_WRAPPER = "MOOD_HISTORY_WRAPPER";
+    private ArrayList<MoodEvent> moodEvents;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onCreate(Bundle savedInstance) {
+        super.onCreate(savedInstance);
         setContentView(R.layout.activity_map);
 
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            MoodHistoryWrapper wrapper = bundle.getParcelable(MOOD_HISTORY_WRAPPER);
+            moodEvents = wrapper.getMoodEventList();
+        }
     }
 }
