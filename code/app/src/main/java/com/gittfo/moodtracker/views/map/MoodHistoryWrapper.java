@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 import com.gittfo.moodtracker.mood.MoodEvent;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,19 +16,35 @@ public class MoodHistoryWrapper implements Parcelable {
 
     // TODO implement reading / writing
 
-    private List<MoodEvent> moodEventList;
+    private ArrayList<MoodEvent> moodEventList;
 
-    public MoodHistoryWrapper(List<MoodEvent> moodEventList) {
+    public MoodHistoryWrapper(ArrayList<MoodEvent> moodEventList) {
         this.moodEventList = moodEventList;
     }
 
-    public List<MoodEvent> getMoodEventList() {
+    public MoodHistoryWrapper(Parcel source) {
+        this.moodEventList = source.readArrayList(MoodEvent.class.getClassLoader());
+    }
+
+    public static final Creator<MoodHistoryWrapper> CREATOR = new Creator<MoodHistoryWrapper>() {
+        @Override
+        public MoodHistoryWrapper createFromParcel(Parcel source) {
+            return new MoodHistoryWrapper(source);
+        }
+
+        @Override
+        public MoodHistoryWrapper[] newArray(int size) {
+            return new MoodHistoryWrapper[size];
+        }
+    };
+
+    public ArrayList<MoodEvent> getMoodEventList() {
         return moodEventList;
     }
 
     @Override
     public int describeContents() {
-        return 0;
+        return hashCode();
     }
 
     @Override

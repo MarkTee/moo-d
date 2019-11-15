@@ -3,6 +3,7 @@ package com.gittfo.moodtracker.mood;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Exclude;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.function.Supplier;
 
@@ -12,7 +13,7 @@ import java.util.function.Supplier;
  * an optional reason for that emotional state, an optional description of the Social Situation that
  * the User was in at time of entry, an optional picture, and an optional location.
  */
-public class MoodEvent {
+public class MoodEvent implements Serializable {
 
     public static final int HAPPY_INDEX = 0;
     public static final int SAD_INDEX = 1;

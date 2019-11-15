@@ -7,11 +7,13 @@ import androidx.annotation.DrawableRes;
 
 import com.gittfo.moodtracker.views.R;
 
+import java.io.Serializable;
+
 /**
  * Represents the notion of a 'Mood' for our mood tracker app. Stores both information related to
  * the state of a mood (i.e. emotion) and the representation of a mood (i.e. color, emoticon).
  */
-public class Mood {
+public class Mood implements Serializable {
 
     /**
      * The list of possible emotional states a user can choose for their moods.
