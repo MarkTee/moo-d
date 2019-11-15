@@ -4,4 +4,11 @@
     android:layout_height="match_parent"
 
     android:requiresFadingEdge="vertical"
-    android:fillViewport="false"/>
+    android:fillViewport="false">
+
+    <include
+        android:id="@+id/tool_bar"
+        layout="@layout/inbox_toolbar" />
+
+
+</ScrollView>

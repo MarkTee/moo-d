@@ -8,14 +8,19 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gittfo.moodtracker.database.Database;
@@ -27,6 +32,7 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+import java.io.IOException;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -79,6 +85,10 @@ public class AddMoodEventActivity extends AppCompatActivity  {
     // EditText that the user can optionally use to attach a reason to the MoodEvent
     private EditText reasonEditText;
 
+    // the following enables image adding functionality
+    private static final int PICK_IMAGE_REQ = 100;
+    private ImageView photoView;
+
     private boolean editing = false;
     private boolean addLocation = false;
 
@@ -109,6 +119,9 @@ public class AddMoodEventActivity extends AppCompatActivity  {
         moodButtons = Arrays.asList(happyButton, sadButton, surprisedButton, afraidButton, disgustedButton, angryButton);
 
         reasonEditText = findViewById(R.id.reason_entry);
+
+        // Initialize photo ImageView
+        photoView = (ImageView) findViewById(R.id.user_image);
 
         // Initialize Social Situation Buttons
         Button zeroButton = findViewById(R.id.social_button_zero);
@@ -319,9 +332,7 @@ public class AddMoodEventActivity extends AppCompatActivity  {
      *
      * @param view The view that caused the method to be called
      */
-    public void addPhoto(View view) {
-        ;
-    }
+
 
     /**
      * If all user input is valid, save the current MoodEvent and return to the previous screen.

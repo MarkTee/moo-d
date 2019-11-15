@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimary">#9E75FF</color>
     <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorAccent">#728EEB</color>
+
+
+    <color name="colorToolbar">#9973FF</color>
+    <color name="colorButton">#ED5AB4</color>
+    <color name="colorBottomAppBar">#9973FF</color>
+    <color name="colorFloatingActionButton">#51D6BB</color>
+    <color name="colorSecondary">#ED5AB4</color>
 
     <color name="colorHappy">#81c784</color>
     <color name="colorSad">#64b5f6</color>
