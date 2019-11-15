@@ -7,21 +7,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
 
 import com.gittfo.moodtracker.database.Database;
-import com.gittfo.moodtracker.mood.Mood;
 import com.gittfo.moodtracker.mood.MoodEvent;
 import com.gittfo.moodtracker.mood.MoodHistoryAdapter;
 import com.gittfo.moodtracker.views.addmood.AddMoodEventActivity;
 import com.gittfo.moodtracker.views.addmood.InboxActivity;
 import com.gittfo.moodtracker.views.addmood.ProfileActivity;
+import com.gittfo.moodtracker.views.map.MapActivity;
 import com.google.android.gms.tasks.Task;
 
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -155,6 +154,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void startMapActivity(View view) {
         Intent i = new Intent(this, ProfileActivity.class);
+        i.putExtra(MapActivity.MOOD_HISTORY, (Serializable) moodHistory);
         this.startActivity(i);
     }
 }
