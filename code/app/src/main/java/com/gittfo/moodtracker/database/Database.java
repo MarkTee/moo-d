@@ -179,4 +179,7 @@ public class Database {
                 .delete();
     }
 
+    public void getFolloweeMoods() {
+    }
+
 }
