@@ -5,6 +5,7 @@ import android.util.Log;
 
 
 import com.gittfo.moodtracker.mood.MoodEvent;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.CollectionReference;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.function.Consumer;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -28,6 +30,7 @@ public class Database {
     public static final String PREFS = "databasesharedprefereneces";
     private static final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private static final ExecutorService executor = Executors.newSingleThreadExecutor();
+    private static String username;
 
     private String userId;
 
@@ -179,4 +182,49 @@ public class Database {
                 .delete();
     }
 
+    public void setUserName(String username) {
+        db.collection("users")
+                .document(currentUser())
+                .update("username", username);
+        Database.username = username;
+    }
+
+
+    /**
+     * Gets the username syncronasly, returning null if the information is not yet available
+     * @return The username if available, or null
+     */
+    public String getUserName() {
+       return getUserName(null);
+    }
+
+    /**
+     * Returns the username syncronously
+     * Or null if the username is not yet queried
+     *
+     * @param callback an optional callback to be called when the data is available
+     * @return The username, or null if the username is not yet available
+     */
+    public String getUserName(Consumer<String> callback) {
+        db.collection("users")
+                .document(currentUser())
+                .get().addOnSuccessListener(documentSnapshot -> {
+                    String s = documentSnapshot.getString("username");
+                    if (s != null) {
+                        Database.username = s;
+                    }
+                    if (callback != null) {
+                        callback.accept(s);
+                    }
+                });
+
+        return username;
+    }
+
+    /**
+     * Initializes data in the database
+    */
+    public void init() {
+        getUserName();
+    }
 }

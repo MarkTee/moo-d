@@ -4,6 +4,7 @@ import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import com.gittfo.moodtracker.database.Database;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -102,6 +103,7 @@ public class SigninActivity extends AppCompatActivity {
                     .edit()
                     .putString("user", account.getId())
                     .apply();
+            Database.get(this).init();
 
             // Start main activity
             Intent startApp = new Intent(this, MainActivity.class);
