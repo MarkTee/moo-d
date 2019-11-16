@@ -158,7 +158,7 @@ public class MoodEvent {
         SocialSituation situation = safeGet(() -> socialSituationFromFirebaseString(document.getString("socialSituation")));
         Mood.EmotionalState mood = safeGet(() -> Mood.emotionalStateFromString(document.getString("mood")));
         Double lat = safeGet(() -> document.getDouble("latitude"));
-        Double lon = safeGet(() -> document.getDouble("longtitude"));
+        Double lon = safeGet(() -> document.getDouble("longitude"));
         MoodEvent moodEvent = new MoodEvent(
                 photoReference,
                 reason,
