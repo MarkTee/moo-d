@@ -75,7 +75,7 @@ public class AddMoodEventActivity extends AppCompatActivity  {
     private MoodEvent.SocialSituation socialSituation = null;
     private String photoReference = "";
     private double latitude;
-    private double longtitude;
+    private double longitude;
     private MoodEvent moodEvent;
 
     // Buttons representing pre-defined moods and social situations that the user may choose from
@@ -385,7 +385,7 @@ public class AddMoodEventActivity extends AppCompatActivity  {
             }
 
             // Create the MoodEvent object
-            moodEvent = new MoodEvent(photoReference, reason, date, socialSituation, emotionalState, addLocation ? latitude : Double.NaN, addLocation ? longtitude : Double.NaN);
+            moodEvent = new MoodEvent(photoReference, reason, date, socialSituation, emotionalState, addLocation ? latitude : Double.NaN, addLocation ? longitude : Double.NaN);
 
             // Add the new MoodEvent to the database
             Log.d("JDB", "Adding new mood of type " + moodEvent.getMood().toString() + " to mood history.");
@@ -412,9 +412,9 @@ public class AddMoodEventActivity extends AppCompatActivity  {
                     Log.d("JLOC", "Got a location Object");
                     if (location != null) {
                         // Store this location
-                        longtitude = location.getLongitude();
+                        longitude = location.getLongitude();
                         latitude = location.getLatitude();
-                        Log.d("JLOC", longtitude + " : " + latitude);
+                        Log.d("JLOC", longitude + " : " + latitude);
                     }
                 });
         Log.d("JLOC", "Requesting Location");
