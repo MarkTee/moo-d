@@ -4,6 +4,8 @@ import android.content.Context;
 import android.util.Log;
 
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
 import com.gittfo.moodtracker.mood.MoodEvent;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
@@ -28,6 +30,7 @@ public class Database {
     public static final String PREFS = "databasesharedprefereneces";
     private static final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private static final ExecutorService executor = Executors.newSingleThreadExecutor();
+    private static RequestQueue queue;
 
     private String userId;
 
@@ -39,6 +42,9 @@ public class Database {
     private Database (Context c) {
         userId = c.getSharedPreferences(Database.PREFS, MODE_PRIVATE)
                 .getString("user", "");
+        if (queue != null) {
+            queue = Volley.newRequestQueue(c);
+        }
     }
 
     /**
@@ -180,6 +186,16 @@ public class Database {
     }
 
     public void getFolloweeMoods() {
+    }
+
+    public void followUser(String otherId) {
+    }
+
+    public void unFollowUser(String otherId) {
+    }
+
+    private String callCloudFunctionSimple(String url) {
+        return "";
     }
 
 }
