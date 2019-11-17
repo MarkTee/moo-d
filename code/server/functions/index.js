@@ -10,7 +10,7 @@ const db = admin.firestore();
 
 
 exports.getFolloweeMoods = functions.https.onRequest(async (req, res) => {
-  const uid = "100131882670449060318";
+  const uid = req.query.uid;
 
   const data = await db.doc(`users/${uid}`).get();
   const user = data.data();
@@ -28,8 +28,8 @@ exports.getFolloweeMoods = functions.https.onRequest(async (req, res) => {
 });
 
 exports.followUser = functions.https.onRequest(async (req, res) => {
-  const uid = "100131882670449060318";
-  const otherId = "105648403813593449833";
+  const uid = req.query.uid;
+  const otherId = req.query.oid;
 
   const user = db.doc(`users/${uid}`);
   const userData = (await user.get()).data();
@@ -39,8 +39,8 @@ exports.followUser = functions.https.onRequest(async (req, res) => {
 })
 
 exports.unfollowUser = functions.https.onRequest(async (req, res) => {
-  const uid = "100131882670449060318";
-  const otherId = "105648403813593449833";
+  const uid = req.query.uid;
+  const otherId = req.query.oid;
 
   const user = db.doc(`users/${uid}`);
   const userData = (await user.get()).data();
@@ -55,3 +55,4 @@ exports.unfollowUser = functions.https.onRequest(async (req, res) => {
 
   res.send("Success\n");
 })
+
