@@ -1,6 +1,7 @@
 package com.gittfo.moodtracker.database;
 
 import android.content.Context;
+import android.util.JsonReader;
 import android.util.Log;
 
 
@@ -18,6 +19,10 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -210,9 +215,14 @@ public class Database {
         String url = buildCloudURL(String.format("getFolloweeMoods?uid=%s", userId));
         callCloudFunctionForString(url,
                 res -> {
-                    // TODO: parse json data to mood events
-                    // TODO: actually finish function
                     Log.v("JDBCLOUD", "Got data:\n" + res);
+                    JsonParser j = new JsonParser();
+                    JsonArray data = j.parse(res).getAsJsonArray();
+                    List<MoodEvent> moods = new ArrayList<>(data.size());
+                    for (JsonElement e : data) {
+                        moods.add(MoodEvent.getMoodEventFromJson(e.getAsJsonObject()));
+                    }
+                    callback.accept(moods);
                 });
         Log.v("JDBCLOUD", url);
     }

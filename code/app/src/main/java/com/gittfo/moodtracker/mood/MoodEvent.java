@@ -2,8 +2,11 @@ package com.gittfo.moodtracker.mood;
 
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Exclude;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 import java.util.Date;
+import java.util.Locale;
 import java.util.function.Supplier;
 
 
@@ -172,6 +175,28 @@ public class MoodEvent {
         return moodEvent;
     }
 
+    public static MoodEvent getMoodEventFromJson(JsonObject e) {
+        String photoReference = safeGet(() -> e.get("photoReference").getAsString());
+        String reason = safeGet(() -> e.get("reason").getAsString());
+        Date date = safeGet(() -> new Date(1000 * e.get("date").getAsJsonObject().get("_seconds").getAsLong()));
+        SocialSituation situation = safeGet(() -> socialSituationFromFirebaseString(e.get("socialSituation").getAsString()));
+        Mood.EmotionalState mood = safeGet(() -> Mood.emotionalStateFromString(e.get("mood").getAsString()));
+        Double lat = safeGet(() -> e.get("latitude").getAsDouble());
+        Double lon = safeGet(() -> e.get("longitude").getAsDouble());
+        String id = safeGet(() -> e.get("id").getAsString());
+        MoodEvent moodEvent = new MoodEvent(
+                photoReference,
+                reason,
+                date,
+                situation,
+                mood,
+                lat != null ? lat : Double.NaN,
+                lon != null ? lon : Double.NaN
+        );
+        moodEvent.setId(id);
+        return moodEvent;
+    }
+
 
     /**
      * Safely call a get function; if a NullPointerException is caught, a StackTrace will be printed
@@ -184,6 +209,8 @@ public class MoodEvent {
         try {
             return fs.get();
         } catch (NullPointerException e) {
+            e.printStackTrace();
+        } catch (UnsupportedOperationException e) {
             e.printStackTrace();
         }
         return null;
@@ -287,6 +314,19 @@ public class MoodEvent {
      */
     public String toString() {
         return String.format("%s: (%s, %s, %s)", this.id, this.mood.toString(), this.dateTime.toString(), this.reason);
+    }
+
+    /**
+     * Return a string representation of this mood event that describes all
+     * Useful for debugging
+     *
+     * @return A string representation of this mood event
+     */
+    public String toStringFull() {
+        return String.format(Locale.CANADA,
+                "%s: (%s, %s, %s)\nLoc: %f, %f\nID: %s\nPhoto: %s\nSocial: %s",
+                this.id, this.mood.toString(), this.dateTime.toString(), this.reason,
+                this.longitude, this.latitude, this.id, this.photoReference, this.socialSituation);
     }
 
     /**
