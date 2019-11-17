@@ -44,10 +44,10 @@ import static org.hamcrest.Matchers.not;
 public class AddMoodTest {
 
     @Rule
-    public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<MainActivity>(MainActivity.class, true, true){
+    public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<MainActivity>(MainActivity.class, true, true) {
 
         @Override
-        protected void beforeActivityLaunched(){
+        protected void beforeActivityLaunched() {
             InstrumentationRegistry.getInstrumentation().getTargetContext().getSharedPreferences(Database.PREFS, MODE_PRIVATE)
                     .edit()
                     .putString("user", "105648403813593449833")
@@ -161,7 +161,7 @@ public class AddMoodTest {
                 allOf(withId(R.id.user_mood_textView), withText("ANGRY"),
                         childAtPosition(
                                 childAtPosition(
-                                        IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class),
+                                        IsInstanceOf.instanceOf(android.widget.LinearLayout.class),
                                         0),
                                 3),
                         isDisplayed()));
@@ -169,7 +169,7 @@ public class AddMoodTest {
     }
 
     @Test
-    public void addMoodWithCommentTest(){
+    public void addMoodWithCommentTest() {
         ViewInteraction floatingActionButton = onView(
                 allOf(withId(R.id.fab),
                         childAtPosition(
@@ -221,7 +221,7 @@ public class AddMoodTest {
                 allOf(withId(R.id.user_reason_textView), withText("Test comment"),
                         childAtPosition(
                                 childAtPosition(
-                                        IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class),
+                                        IsInstanceOf.instanceOf(android.widget.LinearLayout.class),
                                         0),
                                 12),
                         isDisplayed()));
@@ -231,7 +231,7 @@ public class AddMoodTest {
                 allOf(withId(R.id.user_mood_textView), withText("HAPPY"),
                         childAtPosition(
                                 childAtPosition(
-                                        IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class),
+                                        IsInstanceOf.instanceOf(android.widget.LinearLayout.class),
                                         0),
                                 3),
                         isDisplayed()));
@@ -311,7 +311,7 @@ public class AddMoodTest {
                 allOf(withId(R.id.num_people_textView), withText("zero"),
                         childAtPosition(
                                 childAtPosition(
-                                        IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class),
+                                        IsInstanceOf.instanceOf(android.widget.LinearLayout.class),
                                         0),
                                 9),
                         isDisplayed()));
@@ -321,7 +321,7 @@ public class AddMoodTest {
                 allOf(withId(R.id.user_mood_textView), withText("SAD"),
                         childAtPosition(
                                 childAtPosition(
-                                        IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class),
+                                        IsInstanceOf.instanceOf(android.widget.LinearLayout.class),
                                         0),
                                 3),
                         isDisplayed()));
@@ -336,7 +336,7 @@ public class AddMoodTest {
 //    }
 
     @Test
-    public void addMoodWithLocation(){
+    public void addMoodWithLocation() {
         ViewInteraction floatingActionButton = onView(
                 allOf(withId(R.id.fab),
                         childAtPosition(
@@ -379,7 +379,7 @@ public class AddMoodTest {
                 allOf(withId(R.id.user_mood_textView), withText("SURPRISED"),
                         childAtPosition(
                                 childAtPosition(
-                                        IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class),
+                                        IsInstanceOf.instanceOf(android.widget.LinearLayout.class),
                                         0),
                                 3),
                         isDisplayed()));
@@ -389,7 +389,7 @@ public class AddMoodTest {
                 allOf(withId(R.id.location_textView), withText(not("NaN, NaN")),
                         childAtPosition(
                                 childAtPosition(
-                                        IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class),
+                                        IsInstanceOf.instanceOf(android.widget.LinearLayout.class),
                                         0),
                                 11),
                         isDisplayed()));
@@ -397,7 +397,7 @@ public class AddMoodTest {
     }
 
     @After
-    public void deleteMood(){
+    public void deleteMood() {
         ViewInteraction appCompatImageButton = onView(
                 allOf(withId(R.id.delete_button), withContentDescription("delete button"),
                         childAtPosition(
