@@ -255,10 +255,20 @@ public class Database {
         callCloudFunctionSimple(buildCloudURL(String.format("followUser?uid=%s&oid=%s", userId, otherId)), c);
     }
 
+    /**
+     * Creates the url for the cloud function
+     * @param end url stub to attach to prfix
+     * @return the completed ukl
+     */
     private String buildCloudURL(String end) {
         return String.format("%s/%s", cloudRoot, end);
     }
 
+    /**
+     * Makes a http request that either succeeds or fails, does not check the result
+     * @param url the url to make a get request on
+     * @param c the callback with the result of success or failure
+     */
     private void callCloudFunctionSimple(String url, Consumer<Boolean> c) {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 response -> {
@@ -270,16 +280,25 @@ public class Database {
         queue.add(stringRequest);
     }
 
+    /**
+     * Makes an http get request that returns a string
+     * @param url the url to get on
+     * @param c the callback on success
+     */
     private void callCloudFunctionForString(String url, Consumer<String> c) {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 response -> {
                     if (c != null) c.accept(response);
                 }, error -> {
-            Log.d("JDBCLOUD", "Failed request: " + url);
+                    Log.d("JDBCLOUD", "Failed request: " + url);
         });
         queue.add(stringRequest);
     }
 
+    /**
+     * Sets the username in firebase
+     * @param username the username to set to
+     */
     public void setUserName(String username) {
         db.collection("users")
                 .document(currentUser())
