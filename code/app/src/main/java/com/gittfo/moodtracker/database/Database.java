@@ -43,7 +43,7 @@ public class Database {
     private static RequestQueue queue;
     private static String username;
 
-    https://us-central1-moo-d-95679.cloudfunctions.net/moo-d-95679/us-central1/deleteAllMoods?uid=105648403813593449833
+    
 
     private String userId;
 
