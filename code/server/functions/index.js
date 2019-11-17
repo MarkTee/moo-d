@@ -1,38 +1,24 @@
 const functions = require('firebase-functions');
+const path = require('path');
+const Moods = require(path.resolve( __dirname, "./moods.js" ));
+
 
 // The Firebase Admin SDK to access the Firebase Realtime Database.
 const admin = require('firebase-admin');
 admin.initializeApp();
 const db = admin.firestore();
 
-// Test hello world function
-exports.helloWorld = functions.https.onRequest((req, res) => {
-  res.send("Test 2");
-});
-
-async function iterateThroughMoods(userId, callbackEachMood) {
-  console.log(`Getting moods for 'users/${userId}/moods'`)
-  const data = await db.collection(`users/${userId}/moods`).get();
-  const owner = (await db.doc(`users/${userId}`).get()).data();
-  data.forEach(d => {
-    console.log(`Got a mood for ${userId}: ${d.id}`);
-    let data = d.data();
-    data.owner = {
-      id: userId,
-      username: owner.username
-    }
-    callbackEachMood(data);
-  })
-}
 
 exports.getFolloweeMoods = functions.https.onRequest(async (req, res) => {
   const uid = "100131882670449060318";
+
   const data = await db.doc(`users/${uid}`).get();
   const user = data.data();
+  console.log(`Starting get Followee moods for user ${uid}`);
 
   const moods = [];
   if (user.following) {
-    let promises = user.following.map(uid => iterateThroughMoods(uid, (mood) => moods.push(mood)));
+    let promises = user.following.map(uid => Moods.iterateAllOfUser(db, uid, (mood) => moods.push(mood)));
     await Promise.all(promises);
   } else {
     console.log("No followees found");
@@ -41,3 +27,31 @@ exports.getFolloweeMoods = functions.https.onRequest(async (req, res) => {
   res.send(moods);
 });
 
+exports.followUser = functions.https.onRequest(async (req, res) => {
+  const uid = "100131882670449060318";
+  const otherId = "105648403813593449833";
+
+  const user = db.doc(`users/${uid}`);
+  const userData = (await user.get()).data();
+  userData.following = [...(new Set((userData.following || []).concat([otherId])))];
+  user.set(userData);
+  res.send("Success\n");
+})
+
+exports.unfollowUser = functions.https.onRequest(async (req, res) => {
+  const uid = "100131882670449060318";
+  const otherId = "105648403813593449833";
+
+  const user = db.doc(`users/${uid}`);
+  const userData = (await user.get()).data();
+
+  const f = new Set(userData.following || []);
+  if (f.has(otherId)) {
+    f.delete(otherId);
+  }
+
+  userData.following = [...f];
+  user.set(userData);
+
+  res.send("Success\n");
+})
