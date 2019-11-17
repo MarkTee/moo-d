@@ -22,6 +22,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gittfo.moodtracker.database.Database;
 import com.gittfo.moodtracker.mood.Mood;
@@ -31,7 +32,9 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.snackbar.Snackbar;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.Format;
 import java.text.SimpleDateFormat;
@@ -62,6 +65,8 @@ import static com.gittfo.moodtracker.mood.MoodEvent.ZERO_SOCIAL_INDEX;
 public class AddMoodEventActivity extends AppCompatActivity  {
 
     public static final String EDIT_MOOD = "EDIT THE MOODS";
+    private static final int RESULT_LOAD_IMG = 1;
+    private static final int IMAGE_HEIGHT = 75;
 
     // For getting the location
     private GoogleApiClient googleApiClient;
@@ -121,7 +126,7 @@ public class AddMoodEventActivity extends AppCompatActivity  {
         reasonEditText = findViewById(R.id.reason_entry);
 
         // Initialize photo ImageView
-        photoView = (ImageView) findViewById(R.id.user_image);
+        photoView = findViewById(R.id.add_photo_button);
 
         // Initialize Social Situation Buttons
         Button zeroButton = findViewById(R.id.social_button_zero);
@@ -232,6 +237,14 @@ public class AddMoodEventActivity extends AppCompatActivity  {
 
             //TODO: display current MoodEvent's photo
             photoReference = moodEvent.getPhotoReference();
+
+            Database.get(this).downloadImage(photoReference, bitmap -> {
+                final int scaledHeight = IMAGE_HEIGHT;
+                int scaledWidth = (int) (((double)scaledHeight) / ((double)bitmap.getHeight()) * ((double)bitmap.getWidth()));
+                photoView.setImageBitmap(
+                        Bitmap.createScaledBitmap(bitmap, scaledWidth, scaledHeight, false)
+                );
+            });
         }
     }
 
@@ -438,5 +451,47 @@ public class AddMoodEventActivity extends AppCompatActivity  {
                 .setNegativeButton(android.R.string.no, null)
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
+    }
+
+    public void addPhoto(View v) {
+        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+        photoPickerIntent.setType("image/*");
+        startActivityForResult(photoPickerIntent, RESULT_LOAD_IMG);
+    }
+
+    @Override
+    protected void onActivityResult(int reqCode, int resultCode, Intent data) {
+        super.onActivityResult(reqCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            try {
+                Uri selectedImage = data.getData();
+                try {
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
+                    Log.v("JUI", "Bitmap: " + selectedImage.toString() + ". Isnull?=" + (bitmap == null));
+                    final int scaledHeight = IMAGE_HEIGHT;
+                    int scaledWidth = (int) (((double)scaledHeight) / ((double)bitmap.getHeight()) * ((double)bitmap.getWidth()));
+                    photoView.setImageBitmap(
+                            Bitmap.createScaledBitmap(bitmap, scaledWidth, scaledHeight, false)
+                    );
+                    String s = Database.get(this).uploadImage(bitmap, didWork -> {
+                        if (didWork) {
+                            Log.i("JUI", "Upload Completed");
+                        } else {
+                            quickSnack("Failed to upload Image, please try again");
+                        }
+                    });
+                    this.photoReference = s;
+                } catch (IOException e) {
+                    Log.i("JUI", "Some exception " + e);
+                }
+            } catch (Exception e) {
+                quickSnack("Image not uploaded");
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void quickSnack(String msg) {
+        Snackbar.make(findViewById(R.id.add_mood_root), msg, Snackbar.LENGTH_SHORT).show();
     }
 }
