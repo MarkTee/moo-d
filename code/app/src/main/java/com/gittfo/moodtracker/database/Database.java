@@ -4,7 +4,13 @@ import android.content.Context;
 import android.util.Log;
 
 
+import androidx.core.util.Consumer;
+import androidx.core.util.Supplier;
+
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.gittfo.moodtracker.mood.MoodEvent;
 import com.google.android.gms.tasks.Task;
@@ -28,6 +34,7 @@ import static android.content.Context.MODE_PRIVATE;
 public class Database {
     private static final String TAG = "DB_INTERNAL";
     public static final String PREFS = "databasesharedprefereneces";
+    private static final String cloudRoot = "https://us-central1-moo-d-95679.cloudfunctions.net";
     private static final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private static final ExecutorService executor = Executors.newSingleThreadExecutor();
     private static RequestQueue queue;
@@ -39,10 +46,10 @@ public class Database {
      *
      * @param c Context in which the database is created
      */
-    private Database (Context c) {
+    private Database(Context c) {
         userId = c.getSharedPreferences(Database.PREFS, MODE_PRIVATE)
                 .getString("user", "");
-        if (queue != null) {
+        if (queue == null) {
             queue = Volley.newRequestQueue(c);
         }
     }
@@ -64,15 +71,15 @@ public class Database {
      * @param c context
      * @return instance of Database
      */
-    public static Database getMock(Context c){
-        Database mocked  = new Database(c);
+    public static Database getMock(Context c) {
+        Database mocked = new Database(c);
         mocked.userId = "105648403813593449833";
         return mocked;
     }
 
     /**
      * Gets all the mood events for the signed in user
-     *
+     * <p>
      * Usage:
      *
      * <pre>
@@ -110,7 +117,7 @@ public class Database {
 
     /**
      * Adds a new Mood Event to firebase for the current user
-     *
+     * <p>
      * Usage:
      * <pre><code>
      *  Database.get(this).addMoodEvent(new MoodEvent(
@@ -118,6 +125,7 @@ public class Database {
      *      new Date()
      *  ));
      *  </code></pre>
+     *
      * @param me the MoodEvent
      */
     public void addMoodEvent(MoodEvent me) {
@@ -188,14 +196,58 @@ public class Database {
     public void getFolloweeMoods() {
     }
 
-    public void followUser(String otherId) {
+
+    /**
+     * Follow a user
+     * Usage:
+     * <pre><code>
+     *   Database.get(this).followUser("", b -> {
+     *      // here, b is a boolean. It is true if the follow was successful,
+     *      // otherwise it is false. This value should be checked, and shown to the user
+     *      // Perhaps with a snackbar, or toast
+     *      Log.d("JDBCLOUD", "Attempted to follow" + b));
+     *   }
+     * </code></pre>
+     * @param otherId the user to follow
+     * @param c the callback function
+     */
+    public void followUser(String otherId, Consumer<Boolean> c) {
+        callCloudFunctionSimple(buildCloudURL(String.format("followUser?uid=%s&oid=%s", userId, otherId)), c);
     }
 
-    public void unFollowUser(String otherId) {
+
+    /**
+     * unfollow a user
+     * Usage:
+     * <pre><code>
+     *   Database.get(this).unfollowUser("", b -> {
+     *      // here, b is a boolean. It is true if the unfollow was successful,
+     *      // otherwise it is false. This value should be checked, and shown to the user
+     *      // Perhaps with a snackbar, or toast
+     *      Log.d("JDBCLOUD", "Attempted to follow" + b));
+     *   }
+     * </code></pre>
+     * @param otherId the user to follow
+     * @param c the callback function
+     */
+    public void unFollowUser(String otherId, Consumer<Boolean> c) {
+        callCloudFunctionSimple(buildCloudURL(String.format("followUser?uid=%s&oid=%s", userId, otherId)), c);
     }
 
-    private String callCloudFunctionSimple(String url) {
-        return "";
+    private String buildCloudURL(String end) {
+        return String.format("%s/end", cloudRoot, end);
+    }
+
+    private void callCloudFunctionSimple(String url, Consumer<Boolean> c) {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                response -> {
+                    if (c != null) c.accept(true);
+                }, error -> {
+                    if (c != null) c.accept(false);
+                    Log.d("JDBCLOUD", "Failed request: " + url);
+                });
+        queue.add(stringRequest);
     }
 
 }
+
