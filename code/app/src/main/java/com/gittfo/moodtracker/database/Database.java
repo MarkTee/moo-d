@@ -1,11 +1,13 @@
 package com.gittfo.moodtracker.database;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 
+import androidx.core.util.Consumer;
 
 import com.gittfo.moodtracker.mood.MoodEvent;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.CollectionReference;
@@ -13,12 +15,16 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.function.Consumer;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -29,6 +35,7 @@ public class Database {
     private static final String TAG = "DB_INTERNAL";
     public static final String PREFS = "databasesharedprefereneces";
     private static final FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private static final FirebaseStorage storage = FirebaseStorage.getInstance();
     private static final ExecutorService executor = Executors.newSingleThreadExecutor();
     private static String username;
 
@@ -219,6 +226,50 @@ public class Database {
                 });
 
         return username;
+    }
+
+
+    /**
+     * Uploads an image to firebase, callback for success result
+     * @param bitmap the bitmap to upload
+     * @param callback the success status
+     * @return the string at which the image can be found
+     */
+    public String uploadImage(Bitmap bitmap, Consumer<Boolean> callback) {
+        String name = UUID.randomUUID().toString();
+        StorageReference imageRef = storage.getReference().child(name);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] data = baos.toByteArray();
+
+        UploadTask uploadTask = imageRef.putBytes(data);
+        uploadTask.addOnFailureListener(exception -> {
+            if (callback != null)
+                callback.accept(true);
+        }).addOnSuccessListener(taskSnapshot -> {
+            if (callback != null)
+                callback.accept(false);
+        });
+
+        return name;
+    }
+
+    /**
+     * Gets the image from firebase
+     * @param loc The storage URL to get from
+     * @param callback a function that has the image in Bitmap form, or null if it could not get the image
+     */
+    public void downloadImage(String loc, Consumer<Bitmap> callback) {
+        StorageReference imageRef = storage.getReference().child(loc);
+
+        final long ONE_MEGABYTE = 1024 * 1024;
+        imageRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(bytes -> {
+            if (callback != null)
+                callback.accept(BitmapFactory.decodeByteArray(bytes, 0, bytes.length));
+        }).addOnFailureListener(exception -> {
+            if (callback != null)
+                callback.accept(null);
+        });
     }
 
     /**
