@@ -245,10 +245,10 @@ public class Database {
         UploadTask uploadTask = imageRef.putBytes(data);
         uploadTask.addOnFailureListener(exception -> {
             if (callback != null)
-                callback.accept(true);
+                callback.accept(false);
         }).addOnSuccessListener(taskSnapshot -> {
             if (callback != null)
-                callback.accept(false);
+                callback.accept(true);
         });
 
         return name;
