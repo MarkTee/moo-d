@@ -66,6 +66,7 @@ public class AddMoodEventActivity extends AppCompatActivity  {
 
     public static final String EDIT_MOOD = "EDIT THE MOODS";
     private static final int RESULT_LOAD_IMG = 1;
+    private static final int IMAGE_HEIGHT = 75;
 
     // For getting the location
     private GoogleApiClient googleApiClient;
@@ -236,6 +237,14 @@ public class AddMoodEventActivity extends AppCompatActivity  {
 
             //TODO: display current MoodEvent's photo
             photoReference = moodEvent.getPhotoReference();
+
+            Database.get(this).downloadImage(photoReference, bitmap -> {
+                final int scaledHeight = IMAGE_HEIGHT;
+                int scaledWidth = (int) (((double)scaledHeight) / ((double)bitmap.getHeight()) * ((double)bitmap.getWidth()));
+                photoView.setImageBitmap(
+                        Bitmap.createScaledBitmap(bitmap, scaledWidth, scaledHeight, false)
+                );
+            });
         }
     }
 
@@ -458,10 +467,12 @@ public class AddMoodEventActivity extends AppCompatActivity  {
                 Uri selectedImage = data.getData();
                 try {
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
-                    Log.d("JUI", "Bitmap: " + selectedImage.toString() + ". Isnull?=" + (bitmap == null));
-                    Log.d("JUI", "BitmapIsnull?=" + (bitmap == null));
-                    Log.d("JUI", "PhotoViewIsnull?=" + (photoView == null));
-                    photoView.setImageBitmap(bitmap);
+                    Log.v("JUI", "Bitmap: " + selectedImage.toString() + ". Isnull?=" + (bitmap == null));
+                    final int scaledHeight = IMAGE_HEIGHT;
+                    int scaledWidth = (int) (((double)scaledHeight) / ((double)bitmap.getHeight()) * ((double)bitmap.getWidth()));
+                    photoView.setImageBitmap(
+                            Bitmap.createScaledBitmap(bitmap, scaledWidth, scaledHeight, false)
+                    );
                     String s = Database.get(this).uploadImage(bitmap, didWork -> {
                         if (didWork) {
                             Log.i("JUI", "Upload Completed");

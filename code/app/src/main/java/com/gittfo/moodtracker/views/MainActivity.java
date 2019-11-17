@@ -100,8 +100,9 @@ public class MainActivity extends AppCompatActivity {
             moodHistory.clear();
             for(MoodEvent ev : moods) {
                 // add events to the mood history
-                if (filterDialog.isFiltered(ev.getMood().ordinal()))
+                if (filterDialog.isFiltered(ev.getMood().ordinal())) {
                     moodHistory.add(ev);
+                }
                 Log.d("JDB", ev.toString());
             }
             moodHistory.sort((b, a) -> a.getDate().compareTo(b.getDate()));

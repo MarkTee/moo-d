@@ -263,10 +263,11 @@ public class Database {
         StorageReference imageRef = storage.getReference().child(loc);
 
         final long ONE_MEGABYTE = 1024 * 1024;
-        imageRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(bytes -> {
+        imageRef.getBytes(10 * ONE_MEGABYTE).addOnSuccessListener(bytes -> {
             if (callback != null)
                 callback.accept(BitmapFactory.decodeByteArray(bytes, 0, bytes.length));
         }).addOnFailureListener(exception -> {
+            exception.printStackTrace();
             if (callback != null)
                 callback.accept(null);
         });
