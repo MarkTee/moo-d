@@ -3,3 +3,4 @@
 !*.secret
 code/app/google-services.json
 code/server/key.json
+firebase-debug.log*
