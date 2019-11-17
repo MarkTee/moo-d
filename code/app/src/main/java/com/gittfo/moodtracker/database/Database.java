@@ -5,11 +5,9 @@ import android.util.Log;
 
 
 import androidx.core.util.Consumer;
-import androidx.core.util.Supplier;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.gittfo.moodtracker.mood.MoodEvent;
@@ -38,6 +36,7 @@ public class Database {
     private static final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private static final ExecutorService executor = Executors.newSingleThreadExecutor();
     private static RequestQueue queue;
+    private static String username;
 
     private String userId;
 
@@ -79,7 +78,6 @@ public class Database {
 
     /**
      * Gets all the mood events for the signed in user
-     * <p>
      * Usage:
      *
      * <pre>
@@ -117,7 +115,7 @@ public class Database {
 
     /**
      * Adds a new Mood Event to firebase for the current user
-     * <p>
+     *
      * Usage:
      * <pre><code>
      *  Database.get(this).addMoodEvent(new MoodEvent(
@@ -282,5 +280,50 @@ public class Database {
         queue.add(stringRequest);
     }
 
+    public void setUserName(String username) {
+        db.collection("users")
+                .document(currentUser())
+                .update("username", username);
+        Database.username = username;
+    }
+
+
+    /**
+     * Gets the username syncronasly, returning null if the information is not yet available
+     * @return The username if available, or null
+     */
+    public String getUserName() {
+       return getUserName(null);
+    }
+
+    /**
+     * Returns the username syncronously
+     * Or null if the username is not yet queried
+     *
+     * @param callback an optional callback to be called when the data is available
+     * @return The username, or null if the username is not yet available
+     */
+    public String getUserName(Consumer<String> callback) {
+        db.collection("users")
+                .document(currentUser())
+                .get().addOnSuccessListener(documentSnapshot -> {
+                    String s = documentSnapshot.getString("username");
+                    if (s != null) {
+                        Database.username = s;
+                    }
+                    if (callback != null) {
+                        callback.accept(s);
+                    }
+                });
+
+        return username;
+    }
+
+    /**
+     * Initializes data in the database
+    */
+    public void init() {
+        getUserName();
+    }
 }
 

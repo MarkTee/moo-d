@@ -105,6 +105,7 @@ public class SigninActivity extends AppCompatActivity {
                     .edit()
                     .putString("user", account.getId())
                     .apply();
+            Database.get(this).init();
 
             // Start main activity
             Intent startApp = new Intent(this, MainActivity.class);
