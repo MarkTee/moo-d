@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.gittfo.moodtracker.database.Database;
+import com.gittfo.moodtracker.mood.Mood;
+import com.gittfo.moodtracker.mood.MoodEvent;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;

@@ -193,7 +193,30 @@ public class Database {
                 .delete();
     }
 
-    public void getFolloweeMoods() {
+    /**
+     * Gets all the moods of all the users the current user is following
+     * Usage:
+     * <pre><code>
+     *   Database.get(this).getFolloweeMoods("", moods -> {
+     *      // here, moods is a List<MoodEvent> containing all the moods
+     *      // These can be stuck in listview or something
+     *      for (MoodEvent me : moods) {
+     *          // Here me is each individual mood
+     *          Log.d("JDBCLOUD", me.toString());
+     *      }
+     *   }
+     * </code></pre>
+     * @param callback the callback function
+     */
+    public void getFolloweeMoods(Consumer<List<MoodEvent>> callback) {
+        String url = buildCloudURL(String.format("getFolloweeMoods?uid=%s", userId));
+        callCloudFunctionForString(url,
+                res -> {
+                    // TODO: parse json data to mood events
+                    // TODO: actually finish function
+                    Log.v("JDBCLOUD", "Got data:\n" + res);
+                });
+        Log.v("JDBCLOUD", url);
     }
 
 
@@ -235,7 +258,7 @@ public class Database {
     }
 
     private String buildCloudURL(String end) {
-        return String.format("%s/end", cloudRoot, end);
+        return String.format("%s/%s", cloudRoot, end);
     }
 
     private void callCloudFunctionSimple(String url, Consumer<Boolean> c) {
@@ -246,6 +269,16 @@ public class Database {
                     if (c != null) c.accept(false);
                     Log.d("JDBCLOUD", "Failed request: " + url);
                 });
+        queue.add(stringRequest);
+    }
+
+    private void callCloudFunctionForString(String url, Consumer<String> c) {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                response -> {
+                    if (c != null) c.accept(response);
+                }, error -> {
+            Log.d("JDBCLOUD", "Failed request: " + url);
+        });
         queue.add(stringRequest);
     }
 
