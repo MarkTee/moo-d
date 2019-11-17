@@ -106,13 +106,6 @@ public class SigninActivity extends AppCompatActivity {
                     .putString("user", account.getId())
                     .apply();
             Database.get(this).init();
-            Database.get(this).getFolloweeMoods(
-                    moods -> {
-                        for (MoodEvent me : moods){
-                            Log.d("JDBCLOUD", me.toStringFull());
-                        }
-                    }
-            );
 
             // Start main activity
             Intent startApp = new Intent(this, MainActivity.class);
