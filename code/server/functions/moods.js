@@ -12,6 +12,7 @@ async function iterateAllOfUser(db, userId, callbackEachMood) {
       id: userId,
       username: owner.username
     }
+    data.id = d.id;
     callbackEachMood(data);
   })
 }

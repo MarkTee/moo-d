@@ -56,3 +56,10 @@ exports.unfollowUser = functions.https.onRequest(async (req, res) => {
   res.send("Success\n");
 })
 
+exports.deleteAllMoods = functions.https.onRequest(async (req, res) => {
+  const uid = req.query.uid;
+  await Moods.iterateAllOfUser(db, uid, (mood) => {
+    db.collection('users').doc(uid).collection('moods').doc(mood.id).delete();
+  });
+  res.send("Success\n");
+})
