@@ -18,7 +18,6 @@ import android.view.LayoutInflater;
 import com.gittfo.moodtracker.database.Database;
 import com.gittfo.moodtracker.views.R;
 import com.gittfo.moodtracker.views.addmood.AddMoodEventActivity;
-import com.gittfo.moodtracker.views.moodhistory.MoodViewHolder;
 
 import java.util.ArrayList;
 
