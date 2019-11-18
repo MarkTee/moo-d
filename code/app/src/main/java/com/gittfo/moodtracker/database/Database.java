@@ -333,7 +333,7 @@ public class Database {
                     .update("username", username);
             Database.username = username;
         } else {
-            throw new UserNameExists("Username: " + username + " Already exists in the database");
+            throw new UserNameExists(username);
         }
     }
 
