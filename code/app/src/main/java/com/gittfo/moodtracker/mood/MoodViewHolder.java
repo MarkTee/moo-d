@@ -1,5 +1,7 @@
 package com.gittfo.moodtracker.mood;
 
+import android.graphics.Bitmap;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -7,6 +9,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.gittfo.moodtracker.database.Database;
 import com.gittfo.moodtracker.views.R;
 
 
@@ -69,6 +72,20 @@ public class MoodViewHolder extends RecyclerView.ViewHolder {
         ImageView eventEmoticon = container.findViewById(R.id.user_emotion_imageView);
         eventEmoticon.setImageResource(mood.getEmoticon());
         eventEmoticon.setColorFilter(mood.getColor());
+
+        // Set the MoodEvent's photo
+        if (moodEvent.getPhotoReference() != null && moodEvent.getPhotoReference() != "") {
+            Database.get(container.getContext()).downloadImage(moodEvent.getPhotoReference(), image -> {
+                Log.d("JUI", "Got an Image for mood: "+ moodEvent.toString());
+                if (image != null) {
+                    final int scaledHeight = 150;
+                    int scaledWidth = (int) (((double)scaledHeight) / ((double)image.getHeight()) * ((double)image.getWidth()));
+                    ((ImageView) container.findViewById(R.id.user_image)).setImageBitmap(
+                            Bitmap.createScaledBitmap(image, scaledWidth, scaledHeight, false)
+                    );
+                }
+            });
+        }
     }
 
 
