@@ -1,4 +1,4 @@
-package com.gittfo.moodtracker.views.moodhistory;
+package com.gittfo.moodtracker.mood;
 
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -6,8 +6,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.gittfo.moodtracker.mood.Mood;
-import com.gittfo.moodtracker.mood.MoodEvent;
+
 import com.gittfo.moodtracker.views.R;
 
 
