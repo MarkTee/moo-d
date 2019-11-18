@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.gittfo.moodtracker.database.Database;
+import com.gittfo.moodtracker.database.UserNameExists;
 import com.gittfo.moodtracker.views.R;
 
 /**
@@ -36,6 +37,11 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     public void updateUsername(View view){
-        Database.get(this).setUserName(usernameView.getText().toString());
+        try {
+            Database.get(this).setUserName(usernameView.getText().toString());
+        } catch (UserNameExists userNameExists) {
+            // TODO: notify user that name exists
+            userNameExists.printStackTrace();
+        }
     }
 }
