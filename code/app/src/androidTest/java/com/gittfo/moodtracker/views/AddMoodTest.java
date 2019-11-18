@@ -1,8 +1,6 @@
 package com.gittfo.moodtracker.views;
 
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -18,37 +16,38 @@ import com.gittfo.moodtracker.database.Database;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
-import org.junit.Before;
-import org.junit.BeforeClass;
+import org.hamcrest.core.IsInstanceOf;
+import org.junit.After;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.testng.reporters.jq.Main;
 
 import static android.content.Context.MODE_PRIVATE;
-import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
+import static androidx.test.espresso.action.ViewActions.pressImeActionButton;
+import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.action.ViewActions.scrollTo;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
-import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
 public class AddMoodTest {
 
-
     @Rule
-    public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<MainActivity>(MainActivity.class, true, true){
+    public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<MainActivity>(MainActivity.class, true, true) {
 
         @Override
-        protected void beforeActivityLaunched(){
+        protected void beforeActivityLaunched() {
             InstrumentationRegistry.getInstrumentation().getTargetContext().getSharedPreferences(Database.PREFS, MODE_PRIVATE)
                     .edit()
                     .putString("user", "105648403813593449833")
@@ -59,8 +58,7 @@ public class AddMoodTest {
     };
 
     @Test
-    public void addDeleteMoodTest() {
-
+    public void addMoodTest() {
 
         ViewInteraction floatingActionButton = onView(
                 allOf(withId(R.id.fab),
@@ -100,80 +98,307 @@ public class AddMoodTest {
                                 0)));
         materialButton3.perform(scrollTo(), click());
 
-        ViewInteraction appCompatImageButton = onView(
-                allOf(withId(R.id.exit_button), withContentDescription("Exit Button"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withClassName(is("android.widget.ScrollView")),
-                                        0),
-                                0)));
-        appCompatImageButton.perform(scrollTo(), click());
-
         ViewInteraction materialButton4 = onView(
-                allOf(withId(android.R.id.button2), withText("Cancel"),
+                allOf(withId(R.id.sad_mood_button), withText("SAD"),
                         childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.buttonPanel),
-                                        0),
-                                2)));
+                                allOf(withId(R.id.mood_selection_buttons),
+                                        childAtPosition(
+                                                withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
+                                                5)),
+                                1)));
         materialButton4.perform(scrollTo(), click());
 
         ViewInteraction materialButton5 = onView(
+                allOf(withId(R.id.afraid_mood_button), withText("AFRAID"),
+                        childAtPosition(
+                                allOf(withId(R.id.mood_selection_buttons),
+                                        childAtPosition(
+                                                withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
+                                                5)),
+                                3)));
+        materialButton5.perform(scrollTo(), click());
+
+        ViewInteraction materialButton6 = onView(
+                allOf(withId(R.id.surprised_mood_button), withText("SURPRISED"),
+                        childAtPosition(
+                                allOf(withId(R.id.mood_selection_buttons),
+                                        childAtPosition(
+                                                withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
+                                                5)),
+                                2)));
+        materialButton6.perform(scrollTo(), click());
+
+        ViewInteraction materialButton7 = onView(
+                allOf(withId(R.id.disgusted_mood_button), withText("DISGUSTED"),
+                        childAtPosition(
+                                allOf(withId(R.id.mood_selection_buttons),
+                                        childAtPosition(
+                                                withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
+                                                5)),
+                                4)));
+        materialButton7.perform(scrollTo(), click());
+
+        ViewInteraction materialButton8 = onView(
+                allOf(withId(R.id.angry_mood_button), withText("ANGRY"),
+                        childAtPosition(
+                                allOf(withId(R.id.mood_selection_buttons),
+                                        childAtPosition(
+                                                withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
+                                                5)),
+                                5)));
+        materialButton8.perform(scrollTo(), click());
+
+        ViewInteraction materialButton9 = onView(
                 allOf(withId(R.id.save_mood_event_button), withText("Save Mood Event"),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.ScrollView")),
                                         0),
                                 14)));
-        materialButton5.perform(scrollTo(), click());
+        materialButton9.perform(scrollTo(), click());
 
-        ViewInteraction materialButton6 = onView(
-                allOf(withId(android.R.id.button1), withText("OK"),
+        ViewInteraction textView = onView(
+                allOf(withId(R.id.user_mood_textView), withText("ANGRY"),
                         childAtPosition(
                                 childAtPosition(
-                                        withId(R.id.buttonPanel),
+                                        IsInstanceOf.instanceOf(android.widget.LinearLayout.class),
+                                        0),
+                                3),
+                        isDisplayed()));
+        textView.check(matches(withText("ANGRY")));
+    }
+
+    @Test
+    public void addMoodWithCommentTest() {
+        ViewInteraction floatingActionButton = onView(
+                allOf(withId(R.id.fab),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
+                                        0),
+                                2),
+                        isDisplayed()));
+        floatingActionButton.perform(click());
+
+        ViewInteraction materialButton = onView(
+                allOf(withId(R.id.happy_mood_button), withText("HAPPY"),
+                        childAtPosition(
+                                allOf(withId(R.id.mood_selection_buttons),
+                                        childAtPosition(
+                                                withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
+                                                5)),
+                                0)));
+        materialButton.perform(scrollTo(), click());
+
+        ViewInteraction appCompatEditText = onView(
+                allOf(withId(R.id.reason_entry),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("android.widget.ScrollView")),
+                                        0),
+                                7)));
+        appCompatEditText.perform(scrollTo(), replaceText("Test comment"), closeSoftKeyboard());
+
+        ViewInteraction appCompatEditText2 = onView(
+                allOf(withId(R.id.reason_entry), withText("Test comment"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("android.widget.ScrollView")),
+                                        0),
+                                7)));
+        appCompatEditText2.perform(pressImeActionButton());
+
+        ViewInteraction materialButton2 = onView(
+                allOf(withId(R.id.save_mood_event_button), withText("Save Mood Event"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("android.widget.ScrollView")),
+                                        0),
+                                14)));
+        materialButton2.perform(scrollTo(), click());
+
+        ViewInteraction textView = onView(
+                allOf(withId(R.id.user_reason_textView), withText("Test comment"),
+                        childAtPosition(
+                                childAtPosition(
+                                        IsInstanceOf.instanceOf(android.widget.LinearLayout.class),
+                                        0),
+                                12),
+                        isDisplayed()));
+        textView.check(matches(withText("Test comment")));
+
+        ViewInteraction textView2 = onView(
+                allOf(withId(R.id.user_mood_textView), withText("HAPPY"),
+                        childAtPosition(
+                                childAtPosition(
+                                        IsInstanceOf.instanceOf(android.widget.LinearLayout.class),
+                                        0),
+                                3),
+                        isDisplayed()));
+        textView2.check(matches(withText("HAPPY")));
+
+    }
+
+    @Test
+    public void addMoodWithZeroPeople() {
+
+        ViewInteraction floatingActionButton = onView(
+                allOf(withId(R.id.fab),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
+                                        0),
+                                2),
+                        isDisplayed()));
+        floatingActionButton.perform(click());
+
+        ViewInteraction materialButton = onView(
+                allOf(withId(R.id.sad_mood_button), withText("SAD"),
+                        childAtPosition(
+                                allOf(withId(R.id.mood_selection_buttons),
+                                        childAtPosition(
+                                                withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
+                                                5)),
+                                1)));
+        materialButton.perform(scrollTo(), click());
+
+        ViewInteraction materialButton2 = onView(
+                allOf(withId(R.id.social_button_crowd), withText("A Crowd"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.social_situation_buttons),
                                         0),
                                 3)));
-        materialButton6.perform(scrollTo(), click());
+        materialButton2.perform(scrollTo(), click());
 
-        ViewInteraction materialButton7 = onView(
+        ViewInteraction materialButton3 = onView(
+                allOf(withId(R.id.social_button_two_plus), withText("2+"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.social_situation_buttons),
+                                        0),
+                                2)));
+        materialButton3.perform(scrollTo(), click());
+
+        ViewInteraction materialButton4 = onView(
+                allOf(withId(R.id.social_button_one), withText("1"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.social_situation_buttons),
+                                        0),
+                                1)));
+        materialButton4.perform(scrollTo(), click());
+
+        ViewInteraction materialButton5 = onView(
                 allOf(withId(R.id.social_button_zero), withText("0"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.social_situation_buttons),
                                         0),
                                 0)));
-        materialButton7.perform(scrollTo(), click());
+        materialButton5.perform(scrollTo(), click());
 
-        ViewInteraction materialButton8 = onView(
+        ViewInteraction materialButton6 = onView(
                 allOf(withId(R.id.save_mood_event_button), withText("Save Mood Event"),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.ScrollView")),
                                         0),
                                 14)));
-        materialButton8.perform(scrollTo(), click());
+        materialButton6.perform(scrollTo(), click());
 
-        ViewInteraction delete_button = onView(
-                allOf(withId(R.id.delete_button), withContentDescription("delete button"),
+        ViewInteraction textView = onView(
+                allOf(withId(R.id.num_people_textView), withText("zero"),
                         childAtPosition(
                                 childAtPosition(
-                                        withClassName(is("android.widget.LinearLayout")),
+                                        IsInstanceOf.instanceOf(android.widget.LinearLayout.class),
                                         0),
-                                6),
+                                9),
                         isDisplayed()));
-        delete_button.perform(click());
+        textView.check(matches(withText("zero")));
 
-        ViewInteraction cancel_delete = onView(
-                allOf(withId(android.R.id.button2), withText("Cancel"),
+        ViewInteraction textView2 = onView(
+                allOf(withId(R.id.user_mood_textView), withText("SAD"),
                         childAtPosition(
                                 childAtPosition(
-                                        withId(R.id.buttonPanel),
+                                        IsInstanceOf.instanceOf(android.widget.LinearLayout.class),
                                         0),
+                                3),
+                        isDisplayed()));
+        textView2.check(matches(withText("SAD")));
+    }
+
+    // TODO
+    // select afraid emotion
+//    @Test
+//    public void addMoodWithPhotoTest(){
+//        assert true;
+//    }
+
+    @Test
+    public void addMoodWithLocation() {
+        ViewInteraction floatingActionButton = onView(
+                allOf(withId(R.id.fab),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
+                                        0),
+                                2),
+                        isDisplayed()));
+        floatingActionButton.perform(click());
+
+        ViewInteraction materialButton = onView(
+                allOf(withId(R.id.surprised_mood_button), withText("SURPRISED"),
+                        childAtPosition(
+                                allOf(withId(R.id.mood_selection_buttons),
+                                        childAtPosition(
+                                                withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
+                                                5)),
                                 2)));
-        cancel_delete.perform(scrollTo(), click());
+        materialButton.perform(scrollTo(), click());
 
-        ViewInteraction deleteButton = onView(
+        ViewInteraction materialButton2 = onView(
+                allOf(withId(R.id.location_button), withText("Use Location (optional)"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("android.widget.ScrollView")),
+                                        0),
+                                13)));
+        materialButton2.perform(scrollTo(), click());
+
+        ViewInteraction materialButton3 = onView(
+                allOf(withId(R.id.save_mood_event_button), withText("Save Mood Event"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("android.widget.ScrollView")),
+                                        0),
+                                14)));
+        materialButton3.perform(scrollTo(), click());
+
+        ViewInteraction textView = onView(
+                allOf(withId(R.id.user_mood_textView), withText("SURPRISED"),
+                        childAtPosition(
+                                childAtPosition(
+                                        IsInstanceOf.instanceOf(android.widget.LinearLayout.class),
+                                        0),
+                                3),
+                        isDisplayed()));
+        textView.check(matches(withText("SURPRISED")));
+
+        ViewInteraction textView2 = onView(
+                allOf(withId(R.id.location_textView), withText(not("NaN, NaN")),
+                        childAtPosition(
+                                childAtPosition(
+                                        IsInstanceOf.instanceOf(android.widget.LinearLayout.class),
+                                        0),
+                                11),
+                        isDisplayed()));
+        textView2.check(matches(not(withText("NaN, NaN"))));
+    }
+
+    @After
+    public void deleteMood() {
+        ViewInteraction appCompatImageButton = onView(
                 allOf(withId(R.id.delete_button), withContentDescription("delete button"),
                         childAtPosition(
                                 childAtPosition(
@@ -181,17 +406,16 @@ public class AddMoodTest {
                                         0),
                                 6),
                         isDisplayed()));
-        deleteButton.perform(click());
+        appCompatImageButton.perform(click());
 
-        ViewInteraction confirmDelete = onView(
+        ViewInteraction materialButton = onView(
                 allOf(withId(android.R.id.button1), withText("OK"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.buttonPanel),
                                         0),
                                 3)));
-        confirmDelete.perform(scrollTo(), click());
-
+        materialButton.perform(scrollTo(), click());
     }
 
     private static Matcher<View> childAtPosition(
