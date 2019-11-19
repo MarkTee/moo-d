@@ -2,6 +2,7 @@ package com.gittfo.moodtracker.views.addmood;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,6 +23,7 @@ public class ProfileActivity extends AppCompatActivity {
     private Button updateButton;
     private TextView welcomeBox;
 
+    private String initialUsername;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -30,9 +32,11 @@ public class ProfileActivity extends AppCompatActivity {
         usernameView = findViewById(R.id.username);
         updateButton = findViewById(R.id.update_username_button);
         welcomeBox = findViewById(R.id.welcome_message);
+        welcomeBox.setText("Set your username here");
 
 
         Database.get(this).getUserName(username -> {
+            initialUsername = username;
             if(username != null){
                 if (username.equals("")){
                     usernameView.setText("You must set an username");
@@ -59,7 +63,10 @@ public class ProfileActivity extends AppCompatActivity {
     public void updateUsername(View view){
         String name = usernameView.getText().toString();
         Database.get(this).isUniqueUsername(name, isUnique -> {
-            if (isUnique) {
+            Log.d("JDB", String.format("Is username: {%s} unique? = %b", name, isUnique));
+            if (name.equals(initialUsername)) {
+               startMain();
+            } else if (isUnique) {
                 Database.get(this).setUserName(name);
                 startMain();
             } else {
