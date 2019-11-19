@@ -2,6 +2,7 @@ package com.gittfo.moodtracker.views.addmood;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -59,6 +60,7 @@ public class ProfileActivity extends AppCompatActivity {
     public void updateUsername(View view){
         String name = usernameView.getText().toString();
         Database.get(this).isUniqueUsername(name, isUnique -> {
+            Log.d("JDB", String.format("Is username: {%s} unique? = %b", name, isUnique));
             if (isUnique) {
                 Database.get(this).setUserName(name);
                 startMain();

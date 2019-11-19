@@ -108,9 +108,11 @@ public class SigninActivity extends AppCompatActivity {
                     .apply();
             Database.get(this).init();
 
-            // Start main activity
-            Intent startApp = new Intent(this, ProfileActivity.class);
-            this.startActivity(startApp);
+            Database.get(this).getUserName(name -> {
+                // Start the actual app (possibly set a username first)
+                Intent startApp = new Intent(this, name != null ? MainActivity.class : ProfileActivity.class);
+                this.startActivity(startApp);
+            });
         } else {
             // TODO: Notify User
             this.recreate();

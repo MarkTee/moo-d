@@ -38,6 +38,7 @@ import com.google.gson.JsonParser;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ExecutorService;
@@ -330,7 +331,14 @@ public class Database {
         db.collection("users")
                 .document(currentUser())
                 .update("username", username);
+        db.collection("usernames")
+                .document(getUserName())
+                .delete();
         Database.username = username;
+        db.collection("usernames")
+                .document(username)
+                .set(new HashMap());
+
     }
 
 
@@ -371,7 +379,15 @@ public class Database {
      * @param cb the callback with the result
      */
     public void isUniqueUsername(String username, Consumer<Boolean> cb){
-        cb.accept(true);
+        db.collection("usernames")
+                .document(username)
+                .get()
+                .addOnSuccessListener(doc -> {
+                    Log.d("JDB", doc.toString());
+                    cb.accept(!doc.exists());
+                })
+                .addOnFailureListener(doc -> cb.accept(true));
+
     }
 
     /**
