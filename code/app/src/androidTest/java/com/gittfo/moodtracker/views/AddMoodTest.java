@@ -42,7 +42,7 @@ public class AddMoodTest {
     };
 
     @Before
-    public void setUp(){
+    public void setUp() {
         TestUtil.clickPlusButton();
     }
 
@@ -136,13 +136,13 @@ public class AddMoodTest {
     }
 
     @After
-    public void deleteMood(){
+    public void deleteMood() {
         TestUtil.deleteMood();
     }
 
     @BeforeClass
     @AfterClass
-    public static void cleanUp(){
+    public static void cleanUp() {
         TestUtil.cleanUp("addmoodtest");
     }
 

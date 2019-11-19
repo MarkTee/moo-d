@@ -1,7 +1,5 @@
 package com.gittfo.moodtracker.views;
 
-import android.os.SystemClock;
-
 import androidx.test.filters.LargeTest;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
@@ -10,17 +8,12 @@ import androidx.test.runner.AndroidJUnit4;
 import com.gittfo.moodtracker.database.Database;
 
 import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;;
-
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
+import org.junit.runners.MethodSorters;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -44,7 +37,7 @@ public class FilterMoodsTest {
     };
 
     @Test
-    public void AAA_setUp(){
+    public void AAA_setUp() {
         TestUtil.deleteExistingMoods();
 
         // create 21 moods
@@ -54,27 +47,27 @@ public class FilterMoodsTest {
         TestUtil.createSad();
         TestUtil.createSad();
 
-        for (int i=0; i<3; i+=1)
+        for (int i = 0; i < 3; i += 1)
             TestUtil.createAfraid();
 
-        for (int i=0; i<4; i+=1)
+        for (int i = 0; i < 4; i += 1)
             TestUtil.createSurprised();
 
-        for (int i=0; i<5; i+=1)
+        for (int i = 0; i < 5; i += 1)
             TestUtil.createDisgusted();
 
-        for (int i=0; i<6; i+=1)
+        for (int i = 0; i < 6; i += 1)
             TestUtil.createAngry();
 
     }
 
     @Test
-    public void all(){
+    public void all() {
         checkAllMoods();
     }
 
     @Test
-    public void selectAllTest(){
+    public void selectAllTest() {
         TestUtil.clickFilter();
         TestUtil.selectHappy();
         TestUtil.selectSad();
@@ -89,7 +82,7 @@ public class FilterMoodsTest {
     }
 
     @Test
-    public void filterHappyTest(){
+    public void filterHappyTest() {
         TestUtil.clickFilter();
         TestUtil.filterByHappy();
 
@@ -97,7 +90,7 @@ public class FilterMoodsTest {
     }
 
     @Test
-    public void filterSadTest(){
+    public void filterSadTest() {
         TestUtil.clickFilter();
         TestUtil.filterBySad();
 
@@ -106,44 +99,44 @@ public class FilterMoodsTest {
     }
 
     @Test
-    public void filterAfraidTest(){
+    public void filterAfraidTest() {
         TestUtil.clickFilter();
         TestUtil.filterByAfraid();
 
-        for (int i=0; i<3; i+=1)
+        for (int i = 0; i < 3; i += 1)
             TestUtil.checkAfraid(i);
     }
 
     @Test
-    public void filterSurprisedTest(){
+    public void filterSurprisedTest() {
         TestUtil.clickFilter();
         TestUtil.filterBySurprised();
 
-        for (int i=0; i<4; i+=1)
+        for (int i = 0; i < 4; i += 1)
             TestUtil.checkSurprised(i);
 
     }
 
     @Test
-    public void filterDisgustedTest(){
+    public void filterDisgustedTest() {
         TestUtil.clickFilter();
         TestUtil.filterByDisgusted();
 
-        for(int i=0; i< 5; i+=1)
+        for (int i = 0; i < 5; i += 1)
             TestUtil.checkDisgusted(i);
     }
 
     @Test
-    public void filterAngryTest(){
+    public void filterAngryTest() {
         TestUtil.clickFilter();
         TestUtil.filterByAngry();
 
-        for(int i=0; i<6; i+=1)
+        for (int i = 0; i < 6; i += 1)
             TestUtil.checkAngry(i);
     }
 
     @Test
-    public void combinationFilterTest(){
+    public void combinationFilterTest() {
         TestUtil.clickFilter();
 
         // testing 3 of the moods together
@@ -154,7 +147,7 @@ public class FilterMoodsTest {
 
         TestUtil.applyFilter();
 
-        for (int i=0; i<5; i+=1)
+        for (int i = 0; i < 5; i += 1)
             TestUtil.checkDisgusted(i);
 
         TestUtil.checkSad(5);
@@ -163,20 +156,20 @@ public class FilterMoodsTest {
         TestUtil.checkHappy(7);
     }
 
-    public void checkAllMoods(){
-        for (int i=0; i<6; i+=1)
+    public void checkAllMoods() {
+        for (int i = 0; i < 6; i += 1)
             TestUtil.checkAngry(i);
 
-        for (int i=6; i<11; i+=1)
+        for (int i = 6; i < 11; i += 1)
             TestUtil.checkDisgusted(i);
 
-        for (int i=11; i<15; i+=1)
+        for (int i = 11; i < 15; i += 1)
             TestUtil.checkSurprised(i);
 
-        for(int i=15; i<18; i+=1)
+        for (int i = 15; i < 18; i += 1)
             TestUtil.checkAfraid(i);
 
-        for(int i=18; i<20; i+=1)
+        for (int i = 18; i < 20; i += 1)
             TestUtil.checkSad(i);
 
         TestUtil.checkHappy(21);

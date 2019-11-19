@@ -23,51 +23,52 @@ import static org.hamcrest.Matchers.allOf;
 public class TestUtil {
 
 
-    public static void saveMoodEvent(){
+    public static void saveMoodEvent() {
         onView(allOf(
                 withId(R.id.save_mood_event_button),
                 withText("Save Mood Event"))
         ).perform(scrollTo(), click());
     }
 
-    public static void pressOkOnDialog(){
+    public static void pressOkOnDialog() {
         onView(allOf(
                 withId(android.R.id.button1),
                 withText("OK"))
         ).perform(scrollTo(), click());
     }
 
-    public static void selectMood(int id, String text){
+    public static void selectMood(int id, String text) {
         onView(allOf(
                 withId(id),
                 withText(text))
         ).perform(click());
     }
-    public static void selectHappy(){
+
+    public static void selectHappy() {
         selectMood(R.id.happy_mood_button, "HAPPY");
     }
 
-    public static void selectSad(){
+    public static void selectSad() {
         selectMood(R.id.sad_mood_button, "SAD");
     }
 
-    public static void selectAfraid(){
+    public static void selectAfraid() {
         selectMood(R.id.afraid_mood_button, "AFRAID");
     }
 
-    public static void selectSurprised(){
+    public static void selectSurprised() {
         selectMood(R.id.surprised_mood_button, "SURPRISED");
     }
 
-    public static void selectDisgusted(){
+    public static void selectDisgusted() {
         selectMood(R.id.disgusted_mood_button, "DISGUSTED");
     }
 
-    public static void selectAngry(){
+    public static void selectAngry() {
         selectMood(R.id.angry_mood_button, "ANGRY");
     }
 
-    public static void enterComment(String text){
+    public static void enterComment(String text) {
         onView(allOf(withId(R.id.reason_entry)))
                 .perform(scrollTo(), replaceText(text), closeSoftKeyboard());
     }
@@ -77,10 +78,11 @@ public class TestUtil {
         return new BaseMatcher<View>() {
 
             int counter = 0;
+
             @Override
             public boolean matches(final Object item) {
                 if (matcher.matches(item)) {
-                    if(counter == position) {
+                    if (counter == position) {
                         counter++;
                         return true;
                     }
@@ -91,20 +93,20 @@ public class TestUtil {
 
             @Override
             public void describeTo(final Description description) {
-                description.appendText("Element at hierarchy position "+position);
+                description.appendText("Element at hierarchy position " + position);
             }
         };
     }
 
-    public static void clickPlusButton(){
+    public static void clickPlusButton() {
         onView(withId(R.id.fab)).perform(click());
     }
 
-    public static void deleteExistingMoods(){
-        while(true){
-            try{
+    public static void deleteExistingMoods() {
+        while (true) {
+            try {
                 deleteMood();
-            } catch (Exception e){
+            } catch (Exception e) {
                 return;
             }
         }
@@ -134,43 +136,43 @@ public class TestUtil {
 
     }
 
-    public static void createHappy(){
+    public static void createHappy() {
         clickPlusButton();
         selectHappy();
         saveMoodEvent();
     }
 
-    public static void createSad(){
+    public static void createSad() {
         clickPlusButton();
         selectSad();
         saveMoodEvent();
     }
 
-    public static void createAfraid(){
+    public static void createAfraid() {
         clickPlusButton();
         selectAfraid();
         saveMoodEvent();
     }
 
-    public static void createSurprised(){
+    public static void createSurprised() {
         clickPlusButton();
         selectSurprised();
         saveMoodEvent();
     }
 
-    public static void createDisgusted(){
+    public static void createDisgusted() {
         clickPlusButton();
         selectDisgusted();
         saveMoodEvent();
     }
 
-    public static void createAngry(){
+    public static void createAngry() {
         clickPlusButton();
         selectAngry();
         saveMoodEvent();
     }
 
-    public static void checkMood(String mood, int position){
+    public static void checkMood(String mood, int position) {
         onView(
                 allOf(TestUtil.getElementFromMatchAtPosition(allOf(
                         withId(R.id.user_mood_textView),
@@ -179,70 +181,70 @@ public class TestUtil {
         );
     }
 
-    public static void checkHappy(int position){
+    public static void checkHappy(int position) {
         checkMood("HAPPY", position);
     }
 
-    public static void checkSad(int position){
+    public static void checkSad(int position) {
         checkMood("SAD", position);
     }
 
-    public static void checkAfraid(int position){
+    public static void checkAfraid(int position) {
         checkMood("AFRAID", position);
     }
 
-    public static void checkSurprised(int position){
+    public static void checkSurprised(int position) {
         checkMood("SURPRISED", position);
     }
 
-    public static void checkDisgusted(int position){
+    public static void checkDisgusted(int position) {
         checkMood("DISGUSTED", position);
     }
 
-    public static void checkAngry(int position){
+    public static void checkAngry(int position) {
         checkMood("ANGRY", position);
     }
 
-    public static void clickFilter(){
+    public static void clickFilter() {
         onView(allOf(
                 withId(R.id.toolbar_filter_button),
                 withText("FILTER"))
         ).perform(click());
     }
 
-    public static void applyFilter(){
+    public static void applyFilter() {
         onView(allOf(
                 withId(R.id.apply_filter_button),
                 withText("APPLY FILTER"))
         ).perform(click());
     }
 
-    public static void filterByHappy(){
+    public static void filterByHappy() {
         selectHappy();
         applyFilter();
     }
 
-    public static void filterBySad(){
+    public static void filterBySad() {
         selectSad();
         applyFilter();
     }
 
-    public static void filterByAfraid(){
+    public static void filterByAfraid() {
         selectAfraid();
         applyFilter();
     }
 
-    public static void filterBySurprised(){
+    public static void filterBySurprised() {
         selectSurprised();
         applyFilter();
     }
 
-    public static void filterByDisgusted(){
+    public static void filterByDisgusted() {
         selectDisgusted();
         applyFilter();
     }
 
-    public static void filterByAngry(){
+    public static void filterByAngry() {
         selectAfraid();
         applyFilter();
     }
