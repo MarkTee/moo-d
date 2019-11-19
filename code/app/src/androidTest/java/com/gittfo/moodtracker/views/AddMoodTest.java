@@ -1,5 +1,7 @@
 package com.gittfo.moodtracker.views;
 
+import android.view.View;
+
 import androidx.test.filters.LargeTest;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
@@ -7,6 +9,9 @@ import androidx.test.runner.AndroidJUnit4;
 
 import com.gittfo.moodtracker.database.Database;
 
+import org.hamcrest.BaseMatcher;
+import org.hamcrest.Description;
+import org.hamcrest.Matcher;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -14,13 +19,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static android.content.Context.MODE_PRIVATE;
-import static android.content.Context.POWER_SERVICE;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.action.ViewActions.scrollTo;
-import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
@@ -39,27 +42,31 @@ public class AddMoodTest {
         protected void beforeActivityLaunched() {
             InstrumentationRegistry.getInstrumentation().getTargetContext().getSharedPreferences(Database.PREFS, MODE_PRIVATE)
                     .edit()
-                    .putString("user", "105648403813593449833")
+                    .putString("user", "DELETEME")
                     .apply();
         }
     };
 
     @Before
+    public void setUp(){
+        deleteExistingMoods();
+        clickPlusButton();
+    }
+
     public void clickPlusButton(){
         onView(withId(R.id.fab)).perform(click());
     }
 
-//    @Before
-//    public void deleteExistingMoods(){
-//        while(true){
-//            try{
-//                deleteMood();
-//            } catch (Exception e){
-//                return;
-//            }
-//        }
-//    }
-    
+    public void deleteExistingMoods(){
+        while(true){
+            try{
+                deleteMood();
+            } catch (Exception e){
+                return;
+            }
+        }
+    }
+
     @Test
     public void addMoodTest() {
 
@@ -151,13 +158,15 @@ public class AddMoodTest {
 
     @After
     public void deleteMood() {
-        onView(allOf(
-                withId(R.id.delete_button),
-                withContentDescription("delete button"),
-                isDisplayed())
+        onView(
+                allOf(getElementFromMatchAtPosition(allOf(
+                    withId(R.id.delete_button),
+                    withContentDescription("delete button"),
+                isDisplayed()), 0))
         ).perform(click());
 
         pressOkOnDialog();
+
     }
 
     public void saveMoodEvent(){
@@ -207,5 +216,29 @@ public class AddMoodTest {
     public void enterComment(String text){
         onView(allOf(withId(R.id.reason_entry)))
                 .perform(scrollTo(), replaceText(text), closeSoftKeyboard());
+    }
+
+    // https://stackoverflow.com/questions/32387137/espresso-match-first-element-found-when-many-are-in-hierarchy
+    private static Matcher<View> getElementFromMatchAtPosition(final Matcher<View> matcher, final int position) {
+        return new BaseMatcher<View>() {
+
+            int counter = 0;
+            @Override
+            public boolean matches(final Object item) {
+                if (matcher.matches(item)) {
+                    if(counter == position) {
+                        counter++;
+                        return true;
+                    }
+                    counter++;
+                }
+                return false;
+            }
+
+            @Override
+            public void describeTo(final Description description) {
+                description.appendText("Element at hierarchy position "+position);
+            }
+        };
     }
 }
