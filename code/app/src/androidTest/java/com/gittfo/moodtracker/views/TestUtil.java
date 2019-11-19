@@ -6,6 +6,9 @@ import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 
+import java.io.IOException;
+import java.net.URL;
+
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
@@ -38,7 +41,7 @@ public class TestUtil {
         onView(allOf(
                 withId(id),
                 withText(text))
-        ).perform(scrollTo(), click());
+        ).perform(click());
     }
     public static void selectHappy(){
         selectMood(R.id.happy_mood_button, "HAPPY");
@@ -242,6 +245,15 @@ public class TestUtil {
     public static void filterByAngry(){
         selectAfraid();
         applyFilter();
+    }
+
+    public static void cleanUp(String user) {
+        try {
+            new URL("https://us-central1-moo-d-95679.cloudfunctions.net/deleteAllMoods?uid=" + user)
+                    .openConnection().getContent();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

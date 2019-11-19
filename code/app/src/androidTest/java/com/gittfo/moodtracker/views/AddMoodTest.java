@@ -8,7 +8,9 @@ import androidx.test.runner.AndroidJUnit4;
 import com.gittfo.moodtracker.database.Database;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -41,11 +43,8 @@ public class AddMoodTest {
 
     @Before
     public void setUp(){
-        TestUtil.deleteExistingMoods();
         TestUtil.clickPlusButton();
     }
-
-
 
     @Test
     public void addMoodTest() {
@@ -141,5 +140,10 @@ public class AddMoodTest {
         TestUtil.deleteMood();
     }
 
+    @BeforeClass
+    @AfterClass
+    public static void cleanUp(){
+        TestUtil.cleanUp("addmoodtest");
+    }
 
 }

@@ -1,5 +1,7 @@
 package com.gittfo.moodtracker.views;
 
+import android.os.SystemClock;
+
 import androidx.test.filters.LargeTest;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
@@ -9,15 +11,21 @@ import com.gittfo.moodtracker.database.Database;
 
 import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.FixMethodOrder;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.AfterTest;
+import org.junit.runners.MethodSorters;;
+
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import static android.content.Context.MODE_PRIVATE;
 
-
+// hack to run the setup and teardown methods which interact with the UI
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @LargeTest
 @RunWith(AndroidJUnit4.class)
 public class FilterMoodsTest {
@@ -31,42 +39,32 @@ public class FilterMoodsTest {
                     .edit()
                     .putString("user", "filtermoodstest")
                     .apply();
+            super.beforeActivityLaunched();
         }
     };
 
-    @Before
-    public void setUp(){
+    @Test
+    public void AAA_setUp(){
         TestUtil.deleteExistingMoods();
 
         // create 21 moods
-        // yes, there are multiple better ways to do this
 
         TestUtil.createHappy();
 
         TestUtil.createSad();
         TestUtil.createSad();
 
-        TestUtil.createAfraid();
-        TestUtil.createAfraid();
-        TestUtil.createAfraid();
+        for (int i=0; i<3; i+=1)
+            TestUtil.createAfraid();
 
-        TestUtil.createSurprised();
-        TestUtil.createSurprised();
-        TestUtil.createSurprised();
-        TestUtil.createSurprised();
+        for (int i=0; i<4; i+=1)
+            TestUtil.createSurprised();
 
-        TestUtil.createDisgusted();
-        TestUtil.createDisgusted();
-        TestUtil.createDisgusted();
-        TestUtil.createDisgusted();
-        TestUtil.createDisgusted();
+        for (int i=0; i<5; i+=1)
+            TestUtil.createDisgusted();
 
-        TestUtil.createAngry();
-        TestUtil.createAngry();
-        TestUtil.createAngry();
-        TestUtil.createAngry();
-        TestUtil.createAngry();
-        TestUtil.createAngry();
+        for (int i=0; i<6; i+=1)
+            TestUtil.createAngry();
 
     }
 
@@ -75,39 +73,120 @@ public class FilterMoodsTest {
         checkAllMoods();
     }
 
+    @Test
+    public void selectAllTest(){
+        TestUtil.clickFilter();
+        TestUtil.selectHappy();
+        TestUtil.selectSad();
+        TestUtil.selectAfraid();
+        TestUtil.selectSurprised();
+        TestUtil.selectDisgusted();
+        TestUtil.selectAngry();
 
+        TestUtil.applyFilter();
 
+        checkAllMoods();
+    }
+
+    @Test
+    public void filterHappyTest(){
+        TestUtil.clickFilter();
+        TestUtil.filterByHappy();
+
+        TestUtil.checkHappy(0);
+    }
+
+    @Test
+    public void filterSadTest(){
+        TestUtil.clickFilter();
+        TestUtil.filterBySad();
+
+        TestUtil.checkSad(0);
+        TestUtil.checkSad(1);
+    }
+
+    @Test
+    public void filterAfraidTest(){
+        TestUtil.clickFilter();
+        TestUtil.filterByAfraid();
+
+        for (int i=0; i<3; i+=1)
+            TestUtil.checkAfraid(i);
+    }
+
+    @Test
+    public void filterSurprisedTest(){
+        TestUtil.clickFilter();
+        TestUtil.filterBySurprised();
+
+        for (int i=0; i<4; i+=1)
+            TestUtil.checkSurprised(i);
+
+    }
+
+    @Test
+    public void filterDisgustedTest(){
+        TestUtil.clickFilter();
+        TestUtil.filterByDisgusted();
+
+        for(int i=0; i< 5; i+=1)
+            TestUtil.checkDisgusted(i);
+    }
+
+    @Test
+    public void filterAngryTest(){
+        TestUtil.clickFilter();
+        TestUtil.filterByAngry();
+
+        for(int i=0; i<6; i+=1)
+            TestUtil.checkAngry(i);
+    }
+
+    @Test
+    public void combinationFilterTest(){
+        TestUtil.clickFilter();
+
+        // testing 3 of the moods together
+        // randomly chosen by asking friends in other disciplines 😂
+        TestUtil.selectHappy();
+        TestUtil.selectSad();
+        TestUtil.selectDisgusted();
+
+        TestUtil.applyFilter();
+
+        for (int i=0; i<5; i+=1)
+            TestUtil.checkDisgusted(i);
+
+        TestUtil.checkSad(5);
+        TestUtil.checkSad(6);
+
+        TestUtil.checkHappy(7);
+    }
 
     public void checkAllMoods(){
-        for (int i=0; i<6; i+=1){
+        for (int i=0; i<6; i+=1)
             TestUtil.checkAngry(i);
-        }
 
-        for (int i=6; i<11; i+=1){
+        for (int i=6; i<11; i+=1)
             TestUtil.checkDisgusted(i);
-        }
 
-        for (int i=11; i<15; i+=1){
+        for (int i=11; i<15; i+=1)
             TestUtil.checkSurprised(i);
-        }
 
-        for(int i=15; i<18; i+=1){
+        for(int i=15; i<18; i+=1)
             TestUtil.checkAfraid(i);
-        }
 
-        for(int i=18; i<20; i+=1){
+        for(int i=18; i<20; i+=1)
             TestUtil.checkSad(i);
-        }
 
         TestUtil.checkHappy(21);
 
     }
 
+    @BeforeClass
     @AfterClass
-    public static void deleteMoods(){
-        for (int i=0; i<21; i+=1){
-            TestUtil.deleteMoodAtPosition(i);
-        }
+    public static void cleanUp() {
+        TestUtil.cleanUp("filtermoodstest");
     }
 
 
