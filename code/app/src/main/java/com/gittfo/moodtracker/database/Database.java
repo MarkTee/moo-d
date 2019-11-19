@@ -326,11 +326,15 @@ public class Database {
      * Sets the username in firebase
      * @param username the username to set to
      */
-    public void setUserName(String username) {
-        db.collection("users")
-                .document(currentUser())
-                .update("username", username);
-        Database.username = username;
+    public void setUserName(String username) throws UserNameExists {
+        if (isUniquUsername(username)) {
+            db.collection("users")
+                    .document(currentUser())
+                    .update("username", username);
+            Database.username = username;
+        } else {
+            throw new UserNameExists(username);
+        }
     }
 
 
@@ -365,6 +369,15 @@ public class Database {
         return username;
     }
 
+    /**
+     * Check if the given username is not in the database already
+     * @param username
+     * @return boolean
+     */
+    private boolean isUniquUsername(String username){
+        //TODO: database calls
+        return true;
+    }
 
     /**
      * Uploads an image to firebase, callback for success result
