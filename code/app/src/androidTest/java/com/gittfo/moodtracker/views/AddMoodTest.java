@@ -42,7 +42,7 @@ public class AddMoodTest {
         protected void beforeActivityLaunched() {
             InstrumentationRegistry.getInstrumentation().getTargetContext().getSharedPreferences(Database.PREFS, MODE_PRIVATE)
                     .edit()
-                    .putString("user", "DELETEME")
+                    .putString("user", "deleteme")
                     .apply();
         }
     };
