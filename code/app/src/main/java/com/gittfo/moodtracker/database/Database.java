@@ -38,6 +38,7 @@ import com.google.gson.JsonParser;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ExecutorService;
@@ -326,11 +327,18 @@ public class Database {
      * Sets the username in firebase
      * @param username the username to set to
      */
-    public void setUserName(String username) {
+    public void setUserName(String username)  {
         db.collection("users")
                 .document(currentUser())
                 .update("username", username);
+        db.collection("usernames")
+                .document(getUserName())
+                .delete();
         Database.username = username;
+        db.collection("usernames")
+                .document(username)
+                .set(new HashMap());
+
     }
 
 
@@ -365,6 +373,22 @@ public class Database {
         return username;
     }
 
+    /**
+     * Check if the given username is not in the database already
+     * @param username
+     * @param cb the callback with the result
+     */
+    public void isUniqueUsername(String username, Consumer<Boolean> cb){
+        db.collection("usernames")
+                .document(username)
+                .get()
+                .addOnSuccessListener(doc -> {
+                    Log.d("JDB", doc.toString());
+                    cb.accept(!doc.exists());
+                })
+                .addOnFailureListener(doc -> cb.accept(true));
+
+    }
 
     /**
      * Uploads an image to firebase, callback for success result

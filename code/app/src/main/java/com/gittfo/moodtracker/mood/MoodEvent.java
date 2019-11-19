@@ -184,6 +184,11 @@ public class MoodEvent {
         Double lat = safeGet(() -> e.get("latitude").getAsDouble());
         Double lon = safeGet(() -> e.get("longitude").getAsDouble());
         String id = safeGet(() -> e.get("id").getAsString());
+
+        JsonObject ownerInfo = safeGet(() -> e.get("owner").getAsJsonObject());
+        String ownerUsername = safeGet(() -> ownerInfo.get("username").getAsString());
+        String ownerId = safeGet(() -> ownerInfo.get("id").getAsString());
+
         MoodEvent moodEvent = new MoodEvent(
                 photoReference,
                 reason,
