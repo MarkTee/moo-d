@@ -9,6 +9,7 @@ import android.util.Log;
 import com.gittfo.moodtracker.database.Database;
 import com.gittfo.moodtracker.mood.Mood;
 import com.gittfo.moodtracker.mood.MoodEvent;
+import com.gittfo.moodtracker.views.addmood.ProfileActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -108,7 +109,7 @@ public class SigninActivity extends AppCompatActivity {
             Database.get(this).init();
 
             // Start main activity
-            Intent startApp = new Intent(this, MainActivity.class);
+            Intent startApp = new Intent(this, ProfileActivity.class);
             this.startActivity(startApp);
         } else {
             // TODO: Notify User
