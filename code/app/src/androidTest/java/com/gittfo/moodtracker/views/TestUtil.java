@@ -204,6 +204,44 @@ public class TestUtil {
         onView(allOf(
                 withId(R.id.toolbar_filter_button),
                 withText("FILTER"))
-        ).perform(scrollTo(), click());
+        ).perform(click());
     }
+
+    public static void applyFilter(){
+        onView(allOf(
+                withId(R.id.apply_filter_button),
+                withText("APPLY FILTER"))
+        ).perform(click());
+    }
+
+    public static void filterByHappy(){
+        selectHappy();
+        applyFilter();
+    }
+
+    public static void filterBySad(){
+        selectSad();
+        applyFilter();
+    }
+
+    public static void filterByAfraid(){
+        selectAfraid();
+        applyFilter();
+    }
+
+    public static void filterBySurprised(){
+        selectSurprised();
+        applyFilter();
+    }
+
+    public static void filterByDisgusted(){
+        selectDisgusted();
+        applyFilter();
+    }
+
+    public static void filterByAngry(){
+        selectAfraid();
+        applyFilter();
+    }
+
 }
