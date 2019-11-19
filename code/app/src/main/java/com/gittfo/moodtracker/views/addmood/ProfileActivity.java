@@ -23,6 +23,7 @@ public class ProfileActivity extends AppCompatActivity {
     private Button updateButton;
     private TextView welcomeBox;
 
+    private String initialUsername;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -35,6 +36,7 @@ public class ProfileActivity extends AppCompatActivity {
 
 
         Database.get(this).getUserName(username -> {
+            initialUsername = username;
             if(username != null){
                 if (username.equals("")){
                     usernameView.setText("You must set an username");
@@ -62,7 +64,9 @@ public class ProfileActivity extends AppCompatActivity {
         String name = usernameView.getText().toString();
         Database.get(this).isUniqueUsername(name, isUnique -> {
             Log.d("JDB", String.format("Is username: {%s} unique? = %b", name, isUnique));
-            if (isUnique) {
+            if (name.equals(initialUsername)) {
+               startMain();
+            } else if (isUnique) {
                 Database.get(this).setUserName(name);
                 startMain();
             } else {
