@@ -31,6 +31,7 @@ public class ProfileActivity extends AppCompatActivity {
         usernameView = findViewById(R.id.username);
         updateButton = findViewById(R.id.update_username_button);
         welcomeBox = findViewById(R.id.welcome_message);
+        welcomeBox.setText("Set your username here");
 
 
         Database.get(this).getUserName(username -> {
