@@ -1,6 +1,7 @@
 package com.gittfo.moodtracker.views.addmood;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.view.View;
@@ -13,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.gittfo.moodtracker.database.Database;
 import com.gittfo.moodtracker.database.UserNameExists;
+import com.gittfo.moodtracker.views.MainActivity;
 import com.gittfo.moodtracker.views.R;
 
 /**
@@ -21,16 +23,33 @@ import com.gittfo.moodtracker.views.R;
 public class ProfileActivity extends AppCompatActivity {
     private EditText usernameView;
     private Button updateButton;
+    private TextView welcomeBox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.placeholder_username); // Use a poorly made placeholder XML file
+        setContentView(R.layout.username_screen); // Use a poorly made placeholder XML file
 
         usernameView = findViewById(R.id.username);
         updateButton = findViewById(R.id.update_username_button);
+        welcomeBox = findViewById(R.id.welcome_message);
 
-        usernameView.setText(Database.get(this).getUserName());
+
+        Database.get(this).getUserName(username -> {
+            if(username != null){
+                if (username.equals("")){
+                    usernameView.setText("You must set an username");
+                    updateButton.setText("Update Username");
+                }else{
+                    updateButton.setText("Continue");
+                    usernameView.setText(username);
+                    welcomeBox.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
+
+
 
     }
 
@@ -43,6 +62,7 @@ public class ProfileActivity extends AppCompatActivity {
     public void updateUsername(View view){
         try {
             Database.get(this).setUserName(usernameView.getText().toString());
+            startMain();
         } catch (UserNameExists userNameExists) {
             // TODO: notify user that name exists
             new AlertDialog.Builder(this)
@@ -54,4 +74,12 @@ public class ProfileActivity extends AppCompatActivity {
             userNameExists.printStackTrace();
         }
     }
+
+
+    public void startMain(){
+        Intent i = new Intent(this, MainActivity.class);
+        this.startActivity(i);
+    }
+
+
 }
