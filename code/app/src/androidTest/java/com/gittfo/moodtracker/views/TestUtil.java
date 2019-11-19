@@ -119,6 +119,18 @@ public class TestUtil {
 
     }
 
+    public static void deleteMoodAtPosition(int position) {
+        onView(
+                allOf(TestUtil.getElementFromMatchAtPosition(allOf(
+                        withId(R.id.delete_button),
+                        withContentDescription("delete button"),
+                        isDisplayed()), position))
+        ).perform(click());
+
+        TestUtil.pressOkOnDialog();
+
+    }
+
     public static void createHappy(){
         clickPlusButton();
         selectHappy();
@@ -153,5 +165,45 @@ public class TestUtil {
         clickPlusButton();
         selectAngry();
         saveMoodEvent();
+    }
+
+    public static void checkMood(String mood, int position){
+        onView(
+                allOf(TestUtil.getElementFromMatchAtPosition(allOf(
+                        withId(R.id.user_mood_textView),
+                        withText(mood),
+                        isDisplayed()), position))
+        );
+    }
+
+    public static void checkHappy(int position){
+        checkMood("HAPPY", position);
+    }
+
+    public static void checkSad(int position){
+        checkMood("SAD", position);
+    }
+
+    public static void checkAfraid(int position){
+        checkMood("AFRAID", position);
+    }
+
+    public static void checkSurprised(int position){
+        checkMood("SURPRISED", position);
+    }
+
+    public static void checkDisgusted(int position){
+        checkMood("DISGUSTED", position);
+    }
+
+    public static void checkAngry(int position){
+        checkMood("ANGRY", position);
+    }
+
+    public static void clickFilter(){
+        onView(allOf(
+                withId(R.id.toolbar_filter_button),
+                withText("FILTER"))
+        ).perform(scrollTo(), click());
     }
 }
