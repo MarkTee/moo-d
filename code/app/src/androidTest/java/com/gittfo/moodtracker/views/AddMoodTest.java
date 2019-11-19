@@ -1,7 +1,5 @@
 package com.gittfo.moodtracker.views;
 
-import android.view.View;
-
 import androidx.test.filters.LargeTest;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
@@ -9,9 +7,6 @@ import androidx.test.runner.AndroidJUnit4;
 
 import com.gittfo.moodtracker.database.Database;
 
-import org.hamcrest.BaseMatcher;
-import org.hamcrest.Description;
-import org.hamcrest.Matcher;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -21,11 +16,8 @@ import org.junit.runner.RunWith;
 import static android.content.Context.MODE_PRIVATE;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
-import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
@@ -42,65 +34,53 @@ public class AddMoodTest {
         protected void beforeActivityLaunched() {
             InstrumentationRegistry.getInstrumentation().getTargetContext().getSharedPreferences(Database.PREFS, MODE_PRIVATE)
                     .edit()
-                    .putString("user", "deleteme")
+                    .putString("user", "addmoodtest")
                     .apply();
         }
     };
 
     @Before
     public void setUp(){
-        deleteExistingMoods();
-        clickPlusButton();
+        TestUtil.deleteExistingMoods();
+        TestUtil.clickPlusButton();
     }
 
-    public void clickPlusButton(){
-        onView(withId(R.id.fab)).perform(click());
-    }
 
-    public void deleteExistingMoods(){
-        while(true){
-            try{
-                deleteMood();
-            } catch (Exception e){
-                return;
-            }
-        }
-    }
 
     @Test
     public void addMoodTest() {
 
-        saveMoodEvent();
+        TestUtil.saveMoodEvent();
 
-        pressOkOnDialog();
+        TestUtil.pressOkOnDialog();
 
-        selectHappy();
+        TestUtil.selectHappy();
 
-        selectSad();
+        TestUtil.selectSad();
 
-        selectAfraid();
+        TestUtil.selectAfraid();
 
-        selectSurprised();
+        TestUtil.selectSurprised();
 
-        selectDisgusted();
+        TestUtil.selectDisgusted();
 
-        selectAngry();
+        TestUtil.selectAngry();
 
-        saveMoodEvent();
+        TestUtil.saveMoodEvent();
 
         // TODO check position in RecyclerView
         // https://developer.android.com/reference/android/support/test/espresso/contrib/RecyclerViewActions
-       onView(allOf(withId(R.id.user_mood_textView), withText("ANGRY"), isDisplayed()));
+        onView(allOf(withId(R.id.user_mood_textView), withText("ANGRY"), isDisplayed()));
     }
 
     @Test
     public void addMoodWithCommentTest() {
 
-        selectHappy();
+        TestUtil.selectHappy();
 
-        enterComment("Test Comment");
+        TestUtil.enterComment("Test Comment");
 
-        saveMoodEvent();
+        TestUtil.saveMoodEvent();
 
         // TODO check position in RecyclerView
         // https://developer.android.com/reference/android/support/test/espresso/contrib/RecyclerViewActions
@@ -111,7 +91,7 @@ public class AddMoodTest {
     @Test
     public void addMoodWithZeroPeople() {
 
-        selectSad();
+        TestUtil.selectSad();
 
         // click the other buttons
         onView(allOf(withId(R.id.social_button_zero), withText("0"))).perform(scrollTo(), click());
@@ -122,7 +102,7 @@ public class AddMoodTest {
 
         onView(allOf(withId(R.id.social_button_zero), withText("0"))).perform(scrollTo(), click());
 
-        saveMoodEvent();
+        TestUtil.saveMoodEvent();
 
         // TODO check position in RecyclerView
         // https://developer.android.com/reference/android/support/test/espresso/contrib/RecyclerViewActions
@@ -141,14 +121,14 @@ public class AddMoodTest {
     @Test
     public void addMoodWithLocation() {
 
-        selectSurprised();
+        TestUtil.selectSurprised();
 
         onView(allOf(
                 withId(R.id.location_button),
                 withText("Use Location (optional)"))
         ).perform(scrollTo(), click());
 
-        saveMoodEvent();
+        TestUtil.saveMoodEvent();
 
         // TODO check position in RecyclerView
         // https://developer.android.com/reference/android/support/test/espresso/contrib/RecyclerViewActions
@@ -157,88 +137,9 @@ public class AddMoodTest {
     }
 
     @After
-    public void deleteMood() {
-        onView(
-                allOf(getElementFromMatchAtPosition(allOf(
-                    withId(R.id.delete_button),
-                    withContentDescription("delete button"),
-                isDisplayed()), 0))
-        ).perform(click());
-
-        pressOkOnDialog();
-
+    public void deleteMood(){
+        TestUtil.deleteMood();
     }
 
-    public void saveMoodEvent(){
-        onView(allOf(
-                withId(R.id.save_mood_event_button),
-                withText("Save Mood Event"))
-        ).perform(scrollTo(), click());
-    }
 
-    public void pressOkOnDialog(){
-        onView(allOf(
-                withId(android.R.id.button1),
-                withText("OK"))
-        ).perform(scrollTo(), click());
-    }
-
-    public void selectMood(int id, String text){
-        onView(allOf(
-                withId(id),
-                withText(text))
-        ).perform(scrollTo(), click());
-    }
-    public void selectHappy(){
-        selectMood(R.id.happy_mood_button, "HAPPY");
-    }
-
-    public void selectSad(){
-      selectMood(R.id.sad_mood_button, "SAD");
-    }
-
-    public void selectAfraid(){
-        selectMood(R.id.afraid_mood_button, "AFRAID");
-    }
-
-    public void selectSurprised(){
-        selectMood(R.id.surprised_mood_button, "SURPRISED");
-    }
-
-    public void selectDisgusted(){
-        selectMood(R.id.disgusted_mood_button, "DISGUSTED");
-    }
-
-    public void selectAngry(){
-        selectMood(R.id.angry_mood_button, "ANGRY");
-    }
-
-    public void enterComment(String text){
-        onView(allOf(withId(R.id.reason_entry)))
-                .perform(scrollTo(), replaceText(text), closeSoftKeyboard());
-    }
-
-    // https://stackoverflow.com/questions/32387137/espresso-match-first-element-found-when-many-are-in-hierarchy
-    private static Matcher<View> getElementFromMatchAtPosition(final Matcher<View> matcher, final int position) {
-        return new BaseMatcher<View>() {
-
-            int counter = 0;
-            @Override
-            public boolean matches(final Object item) {
-                if (matcher.matches(item)) {
-                    if(counter == position) {
-                        counter++;
-                        return true;
-                    }
-                    counter++;
-                }
-                return false;
-            }
-
-            @Override
-            public void describeTo(final Description description) {
-                description.appendText("Element at hierarchy position "+position);
-            }
-        };
-    }
 }
