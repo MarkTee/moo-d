@@ -70,7 +70,7 @@ public class TestUtil {
     }
 
     // https://stackoverflow.com/questions/32387137/espresso-match-first-element-found-when-many-are-in-hierarchy
-    private static Matcher<View> getElementFromMatchAtPosition(final Matcher<View> matcher, final int position) {
+    public static Matcher<View> getElementFromMatchAtPosition(final Matcher<View> matcher, final int position) {
         return new BaseMatcher<View>() {
 
             int counter = 0;
@@ -117,5 +117,41 @@ public class TestUtil {
 
         TestUtil.pressOkOnDialog();
 
+    }
+
+    public static void createHappy(){
+        clickPlusButton();
+        selectHappy();
+        saveMoodEvent();
+    }
+
+    public static void createSad(){
+        clickPlusButton();
+        selectSad();
+        saveMoodEvent();
+    }
+
+    public static void createAfraid(){
+        clickPlusButton();
+        selectAfraid();
+        saveMoodEvent();
+    }
+
+    public static void createSurprised(){
+        clickPlusButton();
+        selectSurprised();
+        saveMoodEvent();
+    }
+
+    public static void createDisgusted(){
+        clickPlusButton();
+        selectDisgusted();
+        saveMoodEvent();
+    }
+
+    public static void createAngry(){
+        clickPlusButton();
+        selectAngry();
+        saveMoodEvent();
     }
 }
