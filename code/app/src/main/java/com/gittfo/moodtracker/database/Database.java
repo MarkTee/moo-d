@@ -245,7 +245,6 @@ public class Database {
         Log.v("JDBCLOUD", url);
     }
 
-
     /**
      * Follow a user
      * Usage:
@@ -263,7 +262,6 @@ public class Database {
     public void followUser(String otherId, Consumer<Boolean> c) {
         callCloudFunctionSimple(buildCloudURL(String.format("followUser?uid=%s&oid=%s", userId, otherId)), c);
     }
-
 
     /**
      * unfollow a user
@@ -342,7 +340,6 @@ public class Database {
                 .set(new HashMap());
 
     }
-
 
     /**
      * Gets the username synchronously, returning null if the information is not yet available

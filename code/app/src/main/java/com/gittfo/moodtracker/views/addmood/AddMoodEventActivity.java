@@ -458,6 +458,13 @@ public class AddMoodEventActivity extends AppCompatActivity  {
         startActivityForResult(photoPickerIntent, RESULT_LOAD_IMG);
     }
 
+    /**
+     * This method is used to ensure that user photos have been properly uploaded to the database.
+     *
+     * @param reqCode    The request code that was passed to startActivityForResult()
+     * @param resultCode The result code specified by the second activity
+     * @param data       The result data
+     */
     @Override
     protected void onActivityResult(int reqCode, int resultCode, Intent data) {
         super.onActivityResult(reqCode, resultCode, data);
@@ -490,6 +497,10 @@ public class AddMoodEventActivity extends AppCompatActivity  {
         }
     }
 
+    /**
+     * Display a message using one of Android's snackbars
+     * @param msg The message that should be displayed in the Snackbar
+     */
     private void quickSnack(String msg) {
         Snackbar.make(findViewById(R.id.add_mood_root), msg, Snackbar.LENGTH_SHORT).show();
     }
