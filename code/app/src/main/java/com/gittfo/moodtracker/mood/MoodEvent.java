@@ -175,6 +175,12 @@ public class MoodEvent {
         return moodEvent;
     }
 
+    /**
+     * Create a MoodEvent object from a JsonObject
+     *
+     * @param e A JsonObject containing data describing a MoodEvent
+     * @return  A MoodEvent object based on data stored in a  JsonObject
+     */
     public static MoodEvent getMoodEventFromJson(JsonObject e) {
         String photoReference = safeGet(() -> e.get("photoReference").getAsString());
         String reason = safeGet(() -> e.get("reason").getAsString());
@@ -201,8 +207,7 @@ public class MoodEvent {
         moodEvent.setId(id);
         return moodEvent;
     }
-
-
+    
     /**
      * Safely call a get function; if a NullPointerException is caught, a StackTrace will be printed
      *
