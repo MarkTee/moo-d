@@ -39,7 +39,7 @@ public class ProfileActivity extends AppCompatActivity {
             initialUsername = username;
             if(username != null){
                 if (username.equals("")){
-                    usernameView.setText("You must set an username");
+                    usernameView.setText("You must set a username");
                     updateButton.setText("Update Username");
                 }else{
                     updateButton.setText("Continue");
