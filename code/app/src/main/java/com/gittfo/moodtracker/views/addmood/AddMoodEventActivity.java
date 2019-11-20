@@ -235,7 +235,7 @@ public class AddMoodEventActivity extends AppCompatActivity  {
                     break;
             }
 
-            //TODO: display current MoodEvent's photo
+            // display current MoodEvent's photo
             photoReference = moodEvent.getPhotoReference();
 
             Database.get(this).downloadImage(photoReference, bitmap -> {
@@ -338,14 +338,6 @@ public class AddMoodEventActivity extends AppCompatActivity  {
         int selectedColor = Color.parseColor("#008577");
         view.setBackgroundColor(selectedColor);
     }
-
-    /**
-     * When implemented, this method will allow the user to optionally attach a photo to the current
-     * mood event.
-     *
-     * @param view The view that caused the method to be called
-     */
-
 
     /**
      * If all user input is valid, save the current MoodEvent and return to the previous screen.
@@ -453,7 +445,14 @@ public class AddMoodEventActivity extends AppCompatActivity  {
                 .show();
     }
 
+    /**
+     * When implemented, this method will allow the user to (optionally) attach a photo to the
+     * current mood event.
+     *
+     * @param v The view that caused the method to be called
+     */
     public void addPhoto(View v) {
+        // use Android's photoPicker UI
         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
         photoPickerIntent.setType("image/*");
         startActivityForResult(photoPickerIntent, RESULT_LOAD_IMG);
