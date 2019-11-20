@@ -2,7 +2,6 @@ package com.gittfo.moodtracker.mood;
 
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Exclude;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import java.util.Date;

@@ -5,11 +5,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
-import android.util.JsonReader;
-
 import android.util.Log;
-
-import androidx.core.util.Consumer;
 
 import androidx.core.util.Consumer;
 
@@ -32,7 +28,6 @@ import com.google.firebase.storage.UploadTask;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 
