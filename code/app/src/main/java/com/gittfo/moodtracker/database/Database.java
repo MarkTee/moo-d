@@ -345,7 +345,7 @@ public class Database {
 
 
     /**
-     * Gets the username syncronasly, returning null if the information is not yet available
+     * Gets the username synchronously, returning null if the information is not yet available
      * @return The username if available, or null
      */
     public String getUserName() {
@@ -353,7 +353,7 @@ public class Database {
     }
 
     /**
-     * Returns the username syncronously
+     * Returns the username synchronously
      * Or null if the username is not yet queried
      *
      * @param callback an optional callback to be called when the data is available
