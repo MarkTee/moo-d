@@ -331,9 +331,11 @@ public class Database {
         db.collection("users")
                 .document(currentUser())
                 .update("username", username);
-        db.collection("usernames")
-                .document(getUserName())
-                .delete();
+        if (getUserName() != null) {
+            db.collection("usernames")
+                    .document(getUserName())
+                    .delete();
+        }
         Database.username = username;
         db.collection("usernames")
                 .document(username)
@@ -421,6 +423,11 @@ public class Database {
      * @param callback a function that has the image in Bitmap form, or null if it could not get the image
      */
     public void downloadImage(String loc, Consumer<Bitmap> callback) {
+        if (loc == null || loc.isEmpty()) {
+            // TODO: maybe do an error?
+            return;
+        }
+
         StorageReference imageRef = storage.getReference().child(loc);
 
         final long ONE_MEGABYTE = 1024 * 1024;
