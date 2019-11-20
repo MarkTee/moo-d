@@ -36,7 +36,7 @@ public class MoodEvent {
         TWOPLUS,
         CROWD,
         NA
-    };
+    }
 
     // The name of a photograph corresponding to this event
     private String photoReference;

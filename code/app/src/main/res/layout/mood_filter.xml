@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
 
     <!-- Filter TextView -->
@@ -21,12 +20,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
+        android:layout_gravity="center"
         android:columnCount="2"
-        android:rowCount="3"
         android:orientation="horizontal"
+        android:rowCount="3"
         android:useDefaultMargins="true"
-        tools:context=".GridXMLActivity"
-        android:layout_gravity="center" >
+        tools:context=".GridXMLActivity">
 
         <Button
             android:id="@+id/happy_mood_button"
@@ -91,13 +90,14 @@
     </GridLayout>
 
     <Button
+        android:id="@+id/apply_filter_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+
         android:layout_marginTop="20dp"
         android:backgroundTint="@color/colorSecondary"
-
-        android:text="Apply Filter"
         android:onClick="applyFilters"
-        android:layout_gravity="center" />
+        android:text="Apply Filter" />
 
 </LinearLayout>

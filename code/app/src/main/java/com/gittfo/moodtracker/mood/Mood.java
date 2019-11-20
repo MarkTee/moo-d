@@ -24,7 +24,7 @@ public class Mood {
         AFRAID,
         DISGUSTED,
         ANGRY,
-    };
+    }
 
     // Filename of emoticon representing this mood
     private @DrawableRes int emoticon;
