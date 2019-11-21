@@ -25,7 +25,6 @@ import java.util.ArrayList;
  */
 public class MainActivity extends AppCompatActivity {
 
-    //private MoodHistory moodHistory;
     private RecyclerView moodView;
     private MoodHistoryAdapter moodHistoryAdapter;
     private FilterDialog filterDialog;

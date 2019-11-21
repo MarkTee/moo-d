@@ -12,7 +12,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -22,7 +21,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.gittfo.moodtracker.database.Database;
 import com.gittfo.moodtracker.mood.Mood;
@@ -31,10 +29,8 @@ import com.gittfo.moodtracker.views.R;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.Format;
 import java.text.SimpleDateFormat;
@@ -235,7 +231,7 @@ public class AddMoodEventActivity extends AppCompatActivity  {
                     break;
             }
 
-            //TODO: display current MoodEvent's photo
+            // display current MoodEvent's photo
             photoReference = moodEvent.getPhotoReference();
 
             Database.get(this).downloadImage(photoReference, bitmap -> {
@@ -338,14 +334,6 @@ public class AddMoodEventActivity extends AppCompatActivity  {
         int selectedColor = Color.parseColor("#008577");
         view.setBackgroundColor(selectedColor);
     }
-
-    /**
-     * When implemented, this method will allow the user to optionally attach a photo to the current
-     * mood event.
-     *
-     * @param view The view that caused the method to be called
-     */
-
 
     /**
      * If all user input is valid, save the current MoodEvent and return to the previous screen.
@@ -453,12 +441,26 @@ public class AddMoodEventActivity extends AppCompatActivity  {
                 .show();
     }
 
+    /**
+     * When implemented, this method will allow the user to (optionally) attach a photo to the
+     * current mood event.
+     *
+     * @param v The view that caused the method to be called
+     */
     public void addPhoto(View v) {
+        // use Android's photoPicker UI
         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
         photoPickerIntent.setType("image/*");
         startActivityForResult(photoPickerIntent, RESULT_LOAD_IMG);
     }
 
+    /**
+     * This method is used to ensure that user photos have been properly uploaded to the database.
+     *
+     * @param reqCode    The request code that was passed to startActivityForResult()
+     * @param resultCode The result code specified by the second activity
+     * @param data       The result data
+     */
     @Override
     protected void onActivityResult(int reqCode, int resultCode, Intent data) {
         super.onActivityResult(reqCode, resultCode, data);
@@ -491,6 +493,10 @@ public class AddMoodEventActivity extends AppCompatActivity  {
         }
     }
 
+    /**
+     * Display a message using one of Android's snackbars
+     * @param msg The message that should be displayed in the Snackbar
+     */
     private void quickSnack(String msg) {
         Snackbar.make(findViewById(R.id.add_mood_root), msg, Snackbar.LENGTH_SHORT).show();
     }

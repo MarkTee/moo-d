@@ -24,6 +24,13 @@ public class ProfileActivity extends AppCompatActivity {
     private TextView welcomeBox;
 
     private String initialUsername;
+
+    /**
+     * In the onCreate method, determine whether the user has chosen a username. If not, prompt them
+     * to set one before allowing them to see the rest of the app.
+     *
+     * @param savedInstanceState Reference to the Bundle object passed into the activity
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -39,7 +46,7 @@ public class ProfileActivity extends AppCompatActivity {
             initialUsername = username;
             if(username != null){
                 if (username.equals("")){
-                    usernameView.setText("You must set an username");
+                    usernameView.setText("You must set a username");
                     updateButton.setText("Update Username");
                 }else{
                     updateButton.setText("Continue");
@@ -48,16 +55,13 @@ public class ProfileActivity extends AppCompatActivity {
                 }
             }
         });
-
-
-
-
     }
 
     /**
      * called by onClick of update_user_button Button.
      * Pushes the username from the EditText to the database.
      * Potentially notifies the user if that username already exists.
+     *
      * @param view
      */
     public void updateUsername(View view){
@@ -81,7 +85,9 @@ public class ProfileActivity extends AppCompatActivity {
         });
     }
 
-
+    /**
+     * Start MainActivity
+     */
     public void startMain(){
         Intent i = new Intent(this, MainActivity.class);
         this.startActivity(i);
