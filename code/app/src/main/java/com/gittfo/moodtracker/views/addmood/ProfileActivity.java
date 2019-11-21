@@ -23,7 +23,7 @@ public class ProfileActivity extends AppCompatActivity {
     private Button updateButton;
     private TextView welcomeBox;
 
-    private String initialUsername;
+    private String initialUsername = "";
 
     /**
      * In the onCreate method, determine whether the user has chosen a username. If not, prompt them
@@ -43,11 +43,11 @@ public class ProfileActivity extends AppCompatActivity {
 
 
         Database.get(this).getUserName(username -> {
-            initialUsername = username;
             if(username == null){
                 usernameView.setHint("You must set a username");
                 updateButton.setText("Update Username");
             } else {
+                initialUsername = username;
                 updateButton.setText("Continue");
                 usernameView.setText(username);
                 welcomeBox.setVisibility(View.VISIBLE);
@@ -64,6 +64,18 @@ public class ProfileActivity extends AppCompatActivity {
      */
     public void updateUsername(View view){
         String name = usernameView.getText().toString();
+
+        // protect against empty input
+        if (name.equals("")) {
+            new AlertDialog.Builder(this)
+                    .setTitle("Invalid Username")
+                    .setMessage("Please enter a username.")
+                    .setPositiveButton(android.R.string.ok, null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+            return;
+        }
+
         Database.get(this).isUniqueUsername(name, isUnique -> {
             Log.d("JDB", String.format("Is username: {%s} unique? = %b", name, isUnique));
             if (name.equals(initialUsername)) {
@@ -72,7 +84,6 @@ public class ProfileActivity extends AppCompatActivity {
                 Database.get(this).setUserName(name);
                 startMain();
             } else {
-                // TODO: notify user that name exists
                 new AlertDialog.Builder(this)
                         .setTitle("Invalid Username")
                         .setMessage("Someone already uses that username, please come up with a new one.")
