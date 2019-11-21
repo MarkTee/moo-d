@@ -65,12 +65,9 @@ public class MoodHistoryAdapter extends RecyclerView.Adapter<MoodViewHolder> {
      */
     @Override
     public void onBindViewHolder(final MoodViewHolder holder, int position) {
-        // - get element from your dataset at this position
-        // - replace the contents of the view with that element
-        //holder.container.setText(mDataset[position]);
         MoodEvent current = moodHistory.get(position);
         holder.populateMoodEventContainer(current);
-        if (current.getPhotoReference() != null && current.getPhotoReference() != "") {
+        if (current.getPhotoReference() != null && !current.getPhotoReference().equals("")) {
             Database.get(holder.container.getContext()).downloadImage(current.getPhotoReference(), image -> {
                 Log.d("JUI", "Got an Image for mood: "+ current.toString());
                 if (image != null) {
