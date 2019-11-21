@@ -54,7 +54,7 @@
 
             app:layout_constraintStart_toEndOf="@id/map_emoticon"
             app:layout_constraintBottom_toBottomOf="@id/map_emoticon"
-            app:layout_constraintTop_toTopOf="map_emoticon"
+            app:layout_constraintTop_toTopOf="@id/map_emoticon"
             app:layout_constraintEnd_toStartOf="@id/map_location_icon"
             android:layout_marginStart="10dp"
             android:layout_marginBottom="3dp"
