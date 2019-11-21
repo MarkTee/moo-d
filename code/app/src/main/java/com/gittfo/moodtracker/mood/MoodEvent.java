@@ -2,9 +2,11 @@ package com.gittfo.moodtracker.mood;
 
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Exclude;
+import com.google.gson.JsonObject;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Locale;
 import java.util.function.Supplier;
 
 
@@ -34,7 +36,7 @@ public class MoodEvent implements Serializable {
         TWOPLUS,
         CROWD,
         NA
-    };
+    }
 
     // The name of a photograph corresponding to this event
     private String photoReference;
@@ -159,7 +161,7 @@ public class MoodEvent implements Serializable {
         SocialSituation situation = safeGet(() -> socialSituationFromFirebaseString(document.getString("socialSituation")));
         Mood.EmotionalState mood = safeGet(() -> Mood.emotionalStateFromString(document.getString("mood")));
         Double lat = safeGet(() -> document.getDouble("latitude"));
-        Double lon = safeGet(() -> document.getDouble("longtitude"));
+        Double lon = safeGet(() -> document.getDouble("longitude"));
         MoodEvent moodEvent = new MoodEvent(
                 photoReference,
                 reason,
@@ -173,7 +175,39 @@ public class MoodEvent implements Serializable {
         return moodEvent;
     }
 
+    /**
+     * Create a MoodEvent object from a JsonObject
+     *
+     * @param e A JsonObject containing data describing a MoodEvent
+     * @return  A MoodEvent object based on data stored in a  JsonObject
+     */
+    public static MoodEvent getMoodEventFromJson(JsonObject e) {
+        String photoReference = safeGet(() -> e.get("photoReference").getAsString());
+        String reason = safeGet(() -> e.get("reason").getAsString());
+        Date date = safeGet(() -> new Date(1000 * e.get("date").getAsJsonObject().get("_seconds").getAsLong()));
+        SocialSituation situation = safeGet(() -> socialSituationFromFirebaseString(e.get("socialSituation").getAsString()));
+        Mood.EmotionalState mood = safeGet(() -> Mood.emotionalStateFromString(e.get("mood").getAsString()));
+        Double lat = safeGet(() -> e.get("latitude").getAsDouble());
+        Double lon = safeGet(() -> e.get("longitude").getAsDouble());
+        String id = safeGet(() -> e.get("id").getAsString());
 
+        JsonObject ownerInfo = safeGet(() -> e.get("owner").getAsJsonObject());
+        String ownerUsername = safeGet(() -> ownerInfo.get("username").getAsString());
+        String ownerId = safeGet(() -> ownerInfo.get("id").getAsString());
+
+        MoodEvent moodEvent = new MoodEvent(
+                photoReference,
+                reason,
+                date,
+                situation,
+                mood,
+                lat != null ? lat : Double.NaN,
+                lon != null ? lon : Double.NaN
+        );
+        moodEvent.setId(id);
+        return moodEvent;
+    }
+    
     /**
      * Safely call a get function; if a NullPointerException is caught, a StackTrace will be printed
      *
@@ -185,6 +219,8 @@ public class MoodEvent implements Serializable {
         try {
             return fs.get();
         } catch (NullPointerException e) {
+            e.printStackTrace();
+        } catch (UnsupportedOperationException e) {
             e.printStackTrace();
         }
         return null;
@@ -288,6 +324,19 @@ public class MoodEvent implements Serializable {
      */
     public String toString() {
         return String.format("%s: (%s, %s, %s)", this.id, this.mood.toString(), this.dateTime.toString(), this.reason);
+    }
+
+    /**
+     * Return a string representation of this mood event that describes all
+     * Useful for debugging
+     *
+     * @return A string representation of this mood event
+     */
+    public String toStringFull() {
+        return String.format(Locale.CANADA,
+                "%s: (%s, %s, %s)\nLoc: %f, %f\nID: %s\nPhoto: %s\nSocial: %s",
+                this.id, this.mood.toString(), this.dateTime.toString(), this.reason,
+                this.longitude, this.latitude, this.id, this.photoReference, this.socialSituation);
     }
 
     /**

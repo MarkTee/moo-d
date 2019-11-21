@@ -12,7 +12,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -30,7 +29,7 @@ import com.gittfo.moodtracker.views.R;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.io.IOException;
 import java.text.Format;
@@ -62,6 +61,8 @@ import static com.gittfo.moodtracker.mood.MoodEvent.ZERO_SOCIAL_INDEX;
 public class AddMoodEventActivity extends AppCompatActivity  {
 
     public static final String EDIT_MOOD = "EDIT THE MOODS";
+    private static final int RESULT_LOAD_IMG = 1;
+    private static final int IMAGE_HEIGHT = 75;
 
     // For getting the location
     private GoogleApiClient googleApiClient;
@@ -75,7 +76,7 @@ public class AddMoodEventActivity extends AppCompatActivity  {
     private MoodEvent.SocialSituation socialSituation = null;
     private String photoReference = "";
     private double latitude;
-    private double longtitude;
+    private double longitude;
     private MoodEvent moodEvent;
 
     // Buttons representing pre-defined moods and social situations that the user may choose from
@@ -121,7 +122,7 @@ public class AddMoodEventActivity extends AppCompatActivity  {
         reasonEditText = findViewById(R.id.reason_entry);
 
         // Initialize photo ImageView
-        photoView = (ImageView) findViewById(R.id.user_image);
+        photoView = findViewById(R.id.add_photo_button);
 
         // Initialize Social Situation Buttons
         Button zeroButton = findViewById(R.id.social_button_zero);
@@ -230,8 +231,16 @@ public class AddMoodEventActivity extends AppCompatActivity  {
                     break;
             }
 
-            //TODO: display current MoodEvent's photo
+            // display current MoodEvent's photo
             photoReference = moodEvent.getPhotoReference();
+
+            Database.get(this).downloadImage(photoReference, bitmap -> {
+                final int scaledHeight = IMAGE_HEIGHT;
+                int scaledWidth = (int) (((double)scaledHeight) / ((double)bitmap.getHeight()) * ((double)bitmap.getWidth()));
+                photoView.setImageBitmap(
+                        Bitmap.createScaledBitmap(bitmap, scaledWidth, scaledHeight, false)
+                );
+            });
         }
     }
 
@@ -327,14 +336,6 @@ public class AddMoodEventActivity extends AppCompatActivity  {
     }
 
     /**
-     * When implemented, this method will allow the user to optionally attach a photo to the current
-     * mood event.
-     *
-     * @param view The view that caused the method to be called
-     */
-
-
-    /**
      * If all user input is valid, save the current MoodEvent and return to the previous screen.
      *
      * @param view The view that caused the method to be called
@@ -385,14 +386,7 @@ public class AddMoodEventActivity extends AppCompatActivity  {
             }
 
             // Create the MoodEvent object
-            moodEvent = new MoodEvent(
-                    photoReference,
-                    reason,
-                    date,
-                    socialSituation,
-                    emotionalState,
-                    addLocation ? latitude : -1,
-                    addLocation ? longtitude : -2);
+            moodEvent = new MoodEvent(photoReference, reason, date, socialSituation, emotionalState, addLocation ? latitude : Double.NaN, addLocation ? longitude : Double.NaN);
 
             // Add the new MoodEvent to the database
             Log.d("JDB", "Adding new mood of type " + moodEvent.getMood().toString() + " to mood history.");
@@ -419,9 +413,9 @@ public class AddMoodEventActivity extends AppCompatActivity  {
                     Log.d("JLOC", "Got a location Object");
                     if (location != null) {
                         // Store this location
-                        longtitude = location.getLongitude();
+                        longitude = location.getLongitude();
                         latitude = location.getLatitude();
-                        Log.d("JLOC", longtitude + " : " + latitude);
+                        Log.d("JLOC", longitude + " : " + latitude);
                     }
                 });
         Log.d("JLOC", "Requesting Location");
@@ -445,5 +439,65 @@ public class AddMoodEventActivity extends AppCompatActivity  {
                 .setNegativeButton(android.R.string.no, null)
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
+    }
+
+    /**
+     * When implemented, this method will allow the user to (optionally) attach a photo to the
+     * current mood event.
+     *
+     * @param v The view that caused the method to be called
+     */
+    public void addPhoto(View v) {
+        // use Android's photoPicker UI
+        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+        photoPickerIntent.setType("image/*");
+        startActivityForResult(photoPickerIntent, RESULT_LOAD_IMG);
+    }
+
+    /**
+     * This method is used to ensure that user photos have been properly uploaded to the database.
+     *
+     * @param reqCode    The request code that was passed to startActivityForResult()
+     * @param resultCode The result code specified by the second activity
+     * @param data       The result data
+     */
+    @Override
+    protected void onActivityResult(int reqCode, int resultCode, Intent data) {
+        super.onActivityResult(reqCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            try {
+                Uri selectedImage = data.getData();
+                try {
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
+                    Log.v("JUI", "Bitmap: " + selectedImage.toString() + ". Isnull?=" + (bitmap == null));
+                    final int scaledHeight = IMAGE_HEIGHT;
+                    int scaledWidth = (int) (((double)scaledHeight) / ((double)bitmap.getHeight()) * ((double)bitmap.getWidth()));
+                    photoView.setImageBitmap(
+                            Bitmap.createScaledBitmap(bitmap, scaledWidth, scaledHeight, false)
+                    );
+                    String s = Database.get(this).uploadImage(bitmap, didWork -> {
+                        if (didWork) {
+                            Log.i("JUI", "Upload Completed");
+                        } else {
+                            quickSnack("Failed to upload Image, please try again");
+                        }
+                    });
+                    this.photoReference = s;
+                } catch (IOException e) {
+                    Log.i("JUI", "Some exception " + e);
+                }
+            } catch (Exception e) {
+                quickSnack("Image not uploaded");
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * Display a message using one of Android's snackbars
+     * @param msg The message that should be displayed in the Snackbar
+     */
+    private void quickSnack(String msg) {
+        Snackbar.make(findViewById(R.id.add_mood_root), msg, Snackbar.LENGTH_SHORT).show();
     }
 }

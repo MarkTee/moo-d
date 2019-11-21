@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.gittfo.moodtracker.database.Database;
 import com.gittfo.moodtracker.mood.Mood;
 import com.gittfo.moodtracker.mood.MoodEvent;
 import com.gittfo.moodtracker.views.R;
@@ -65,6 +66,13 @@ public class MoodViewHolder extends RecyclerView.ViewHolder {
         // Add the MoodEvent's social situation
         TextView eventSocialSituation = container.findViewById(R.id.num_people_textView);
         eventSocialSituation.setText(moodEvent.getSocialSituation().toString().toLowerCase());
+
+        // Update the username of the mood event
+        TextView usernameView = container.findViewById(R.id.user_name_textView);
+        String username = Database.get(container.getContext()).getUserName();
+        if (username != null){
+            usernameView.setText(Database.get(container.getContext()).getUserName());
+        }
 
         // Add the MoodEvent's mood emoticon (with the appropriate colour)
         ImageView eventEmoticon = container.findViewById(R.id.user_emotion_imageView);

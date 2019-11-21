@@ -30,7 +30,6 @@ import java.util.List;
  */
 public class MainActivity extends AppCompatActivity {
 
-    //private MoodHistory moodHistory;
     private RecyclerView moodView;
     private MoodHistoryAdapter moodHistoryAdapter;
     private FilterDialog filterDialog;
@@ -56,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        getSupportActionBar().hide();
+
         // initialize the mood history
         moodHistory = new ArrayList<>();
 
@@ -69,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
         moodHistoryAdapter = new MoodHistoryAdapter(this, moodHistory);
         moodView.setAdapter(moodHistoryAdapter);
         getFromDB();
+
 
         filterDialog = new FilterDialog(this);
         // TODO: put on an actual filter button
@@ -109,8 +111,9 @@ public class MainActivity extends AppCompatActivity {
             moodHistory.clear();
             for(MoodEvent ev : moods) {
                 // add events to the mood history
-                if (filterDialog.isFiltered(ev.getMood().ordinal()))
+                if (filterDialog.isFiltered(ev.getMood().ordinal())) {
                     moodHistory.add(ev);
+                }
                 Log.d("JDB", ev.toString());
             }
             moodHistory.sort((b, a) -> a.getDate().compareTo(b.getDate()));

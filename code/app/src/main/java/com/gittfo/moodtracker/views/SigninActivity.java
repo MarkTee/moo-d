@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.gittfo.moodtracker.database.Database;
+import com.gittfo.moodtracker.views.addmood.ProfileActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -23,7 +24,7 @@ public class SigninActivity extends AppCompatActivity {
     GoogleSignInClient mGoogleSignInClient;
 
     /**
-     * In the oncreate method, create the signin client
+     * In the onCreate method, create the signin client
      *
      * @param savedInstanceState
      */
@@ -102,10 +103,13 @@ public class SigninActivity extends AppCompatActivity {
                     .edit()
                     .putString("user", account.getId())
                     .apply();
+            Database.get(this).init();
 
-            // Start main activity
-            Intent startApp = new Intent(this, MainActivity.class);
-            this.startActivity(startApp);
+            Database.get(this).getUserName(name -> {
+                // Start the actual app (possibly set a username first)
+                Intent startApp = new Intent(this, name != null ? MainActivity.class : ProfileActivity.class);
+                this.startActivity(startApp);
+            });
         } else {
             // TODO: Notify User
             this.recreate();

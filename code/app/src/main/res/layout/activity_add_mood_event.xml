@@ -8,8 +8,10 @@
     android:requiresFadingEdge="vertical"
     android:fadingEdgeLength="30dp"
 
+    android:id="@+id/add_mood_root"
     android:fillViewport="false"
     xmlns:android="http://schemas.android.com/apk/res/android" >
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

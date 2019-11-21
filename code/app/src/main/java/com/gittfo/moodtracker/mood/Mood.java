@@ -26,7 +26,7 @@ public class Mood implements Serializable {
         AFRAID,
         DISGUSTED,
         ANGRY,
-    };
+    }
 
     // Filename of emoticon representing this mood
     private @DrawableRes int emoticon;

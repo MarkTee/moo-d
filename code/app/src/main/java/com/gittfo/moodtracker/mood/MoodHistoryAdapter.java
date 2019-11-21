@@ -5,9 +5,11 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.util.Log;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.view.LayoutInflater;
 
@@ -66,7 +68,20 @@ public class MoodHistoryAdapter extends RecyclerView.Adapter<MoodViewHolder> {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         //holder.container.setText(mDataset[position]);
-        holder.populateMoodEventContainer(moodHistory.get(position));
+        MoodEvent current = moodHistory.get(position);
+        holder.populateMoodEventContainer(current);
+        if (current.getPhotoReference() != null && current.getPhotoReference() != "") {
+            Database.get(holder.container.getContext()).downloadImage(current.getPhotoReference(), image -> {
+                Log.d("JUI", "Got an Image for mood: "+ current.toString());
+                if (image != null) {
+                    final int scaledHeight = 150;
+                    int scaledWidth = (int) (((double)scaledHeight) / ((double)image.getHeight()) * ((double)image.getWidth()));
+                    ((ImageView) holder.container.findViewById(R.id.user_image)).setImageBitmap(
+                            Bitmap.createScaledBitmap(image, scaledWidth, scaledHeight, false)
+                    );
+                }
+            });
+        }
         holder.container.findViewById(R.id.edit_button).setOnClickListener(v -> {
             //Context c = moodHistory.getContext();
             Intent i = new Intent(context, AddMoodEventActivity.class);
