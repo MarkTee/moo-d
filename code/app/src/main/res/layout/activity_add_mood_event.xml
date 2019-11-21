@@ -363,6 +363,8 @@
 
                 android:layout_marginTop="16dp"
 
+                android:onClick="addPhoto"
+
                 android:text="Add a photo (optional)"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -390,7 +392,7 @@
                 app:layout_constraintEnd_toEndOf="@id/additional_info_message"
                 app:layout_constraintBottom_toTopOf="@id/location_button">
 
-                <ImageButton
+                <ImageView
                     android:id="@+id/user_photo_preview"
                     android:contentDescription="User Provided Photograph"
 
