@@ -44,15 +44,13 @@ public class ProfileActivity extends AppCompatActivity {
 
         Database.get(this).getUserName(username -> {
             initialUsername = username;
-            if(username != null){
-                if (username.equals("")){
-                    usernameView.setText("You must set a username");
-                    updateButton.setText("Update Username");
-                }else{
-                    updateButton.setText("Continue");
-                    usernameView.setText(username);
-                    welcomeBox.setVisibility(View.VISIBLE);
-                }
+            if(username == null){
+                usernameView.setHint("You must set a username");
+                updateButton.setText("Update Username");
+            } else {
+                updateButton.setText("Continue");
+                usernameView.setText(username);
+                welcomeBox.setVisibility(View.VISIBLE);
             }
         });
     }

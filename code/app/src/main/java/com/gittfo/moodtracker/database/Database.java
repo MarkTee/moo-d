@@ -330,10 +330,11 @@ public class Database {
                     .delete();
         }
         Database.username = username;
+        HashMap<String, Object> initialData = new HashMap<>();
+        initialData.put("id", userId);
         db.collection("usernames")
                 .document(username)
-                .set(new HashMap());
-
+                .set(initialData);
     }
 
     /**
@@ -431,6 +432,23 @@ public class Database {
             if (callback != null)
                 callback.accept(null);
         });
+    }
+
+    /**
+     * Gets the userid for following and unfollowing by username
+     * @param username the username to get the id for
+     * @param callback a callback that will pass through the userid when it finds it, otherwise it will pass through null
+     */
+    public void getUserIdFromUsername(String username, Consumer<String> callback) {
+        db.collection("usernames")
+                .document(username)
+                .get().addOnSuccessListener(doc -> {
+                    if (doc.exists()) {
+                        callback.accept(doc.getString("name"));
+                    } else {
+                        callback.accept(null);
+                    }
+                });
     }
 
     /**
