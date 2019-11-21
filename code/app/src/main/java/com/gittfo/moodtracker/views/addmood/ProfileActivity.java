@@ -1,9 +1,5 @@
 package com.gittfo.moodtracker.views.addmood;
 
-<<<<<<< HEAD
-import android.os.Bundle;
-
-=======
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,7 +9,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
->>>>>>> 8456a87c6bc3f8139ea95cf035ca0467d873282b
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.gittfo.moodtracker.database.Database;
