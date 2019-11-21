@@ -46,11 +46,6 @@
             app:layout_constraintEnd_toEndOf="parent">
 
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="placeholder"/>
-
         </LinearLayout>
 
         <LinearLayout
@@ -64,10 +59,12 @@
             app:layout_constraintEnd_toEndOf="parent">
 
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="test"/>
+            <!-- Set visibility to visible to see user mood at a given location. -->
+            <include
+                android:id="@id/map_mood_item"
+                layout="@layout/map_mood_item"
+                android:visibility="invisible"/>
+
         </LinearLayout>
 
 
