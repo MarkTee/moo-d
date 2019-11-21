@@ -374,7 +374,7 @@
                 app:layout_constraintEnd_toEndOf="@id/additional_info_message"
                 app:layout_constraintBottom_toTopOf="@id/photo_info"/>
 
-            <!-- USER PHOTO PREVIEW (dynamically uses user_photo_preview.xml) -->
+            <!-- USER PHOTO PREVIEW -->
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/photo_info"
 
