@@ -7,7 +7,9 @@
     android:paddingTop="16dp"
     android:paddingBottom="16dp"
     android:paddingLeft="32dp"
-    android:paddingRight="32dp">
+    android:paddingRight="32dp"
+
+    android:background="@drawable/border">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
