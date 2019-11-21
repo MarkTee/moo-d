@@ -50,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        getSupportActionBar().hide();
+
         // initialize the mood history
         moodHistory = new ArrayList<>();
 
@@ -63,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
         moodHistoryAdapter = new MoodHistoryAdapter(this, moodHistory);
         moodView.setAdapter(moodHistoryAdapter);
         getFromDB();
+
 
         filterDialog = new FilterDialog(this);
         // TODO: put on an actual filter button
