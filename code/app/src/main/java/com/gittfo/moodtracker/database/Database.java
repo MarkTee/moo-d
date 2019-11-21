@@ -5,11 +5,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
-import android.util.JsonReader;
-
 import android.util.Log;
-
-import androidx.core.util.Consumer;
 
 import androidx.core.util.Consumer;
 
@@ -32,7 +28,6 @@ import com.google.firebase.storage.UploadTask;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 
@@ -245,7 +240,6 @@ public class Database {
         Log.v("JDBCLOUD", url);
     }
 
-
     /**
      * Follow a user
      * Usage:
@@ -263,7 +257,6 @@ public class Database {
     public void followUser(String otherId, Consumer<Boolean> c) {
         callCloudFunctionSimple(buildCloudURL(String.format("followUser?uid=%s&oid=%s", userId, otherId)), c);
     }
-
 
     /**
      * unfollow a user
@@ -344,9 +337,8 @@ public class Database {
                 .set(initialData);
     }
 
-
     /**
-     * Gets the username syncronasly, returning null if the information is not yet available
+     * Gets the username synchronously, returning null if the information is not yet available
      * @return The username if available, or null
      */
     public String getUserName() {
@@ -354,7 +346,7 @@ public class Database {
     }
 
     /**
-     * Returns the username syncronously
+     * Returns the username synchronously
      * Or null if the username is not yet queried
      *
      * @param callback an optional callback to be called when the data is available

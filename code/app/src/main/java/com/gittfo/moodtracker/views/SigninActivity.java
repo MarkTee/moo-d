@@ -4,11 +4,8 @@ import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.util.Log;
 
 import com.gittfo.moodtracker.database.Database;
-import com.gittfo.moodtracker.mood.Mood;
-import com.gittfo.moodtracker.mood.MoodEvent;
 import com.gittfo.moodtracker.views.addmood.ProfileActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -27,7 +24,7 @@ public class SigninActivity extends AppCompatActivity {
     GoogleSignInClient mGoogleSignInClient;
 
     /**
-     * In the oncreate method, create the signin client
+     * In the onCreate method, create the signin client
      *
      * @param savedInstanceState
      */
