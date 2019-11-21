@@ -447,8 +447,7 @@ public class AddMoodEventActivity extends AppCompatActivity  {
     }
 
     /**
-     * When implemented, this method will allow the user to (optionally) attach a photo to the
-     * current mood event.
+     * This method allows the user to (optionally) attach a photo to the current mood event.
      *
      * @param v The view that caused the method to be called
      */
@@ -457,6 +456,17 @@ public class AddMoodEventActivity extends AppCompatActivity  {
         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
         photoPickerIntent.setType("image/*");
         startActivityForResult(photoPickerIntent, RESULT_LOAD_IMG);
+    }
+
+    /**
+     * This method allows the user to remove the photo attached to the current mood event.
+     *
+     * @param v The view that caused the method to be called
+     */
+    public void removePhoto(View v) {
+        photoReference = "";
+        photoView.setImageResource(android.R.color.transparent);
+        photoInfo.setVisibility(View.GONE);
     }
 
     /**

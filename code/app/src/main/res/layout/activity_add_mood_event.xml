@@ -366,8 +366,6 @@
                 android:onClick="addPhoto"
 
                 android:text="Add a photo (optional)"
-                android:textSize="18sp"
-                android:textStyle="bold"
 
                 android:drawableRight="@drawable/ic_image_black_24dp"
 
@@ -404,6 +402,8 @@
 
                 <Button
                     android:id="@+id/remove_photo_button"
+
+                    android:onClick="removePhoto"
 
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
