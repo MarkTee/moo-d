@@ -67,18 +67,26 @@ public class MoodHistoryAdapter extends RecyclerView.Adapter<MoodViewHolder> {
     public void onBindViewHolder(final MoodViewHolder holder, int position) {
         MoodEvent current = moodHistory.get(position);
         holder.populateMoodEventContainer(current);
+
+        ImageView moodEventImage = holder.container.findViewById(R.id.user_image);
         if (current.getPhotoReference() != null && !current.getPhotoReference().equals("")) {
             Database.get(holder.container.getContext()).downloadImage(current.getPhotoReference(), image -> {
-                Log.d("JUI", "Got an Image for mood: "+ current.toString());
                 if (image != null) {
+                    // If the MoodEvent has a user-provided photo
+                    Log.d("JUI", "Got an Image for mood: "+ current.toString());
                     final int scaledHeight = 150;
                     int scaledWidth = (int) (((double)scaledHeight) / ((double)image.getHeight()) * ((double)image.getWidth()));
-                    ((ImageView) holder.container.findViewById(R.id.user_image)).setImageBitmap(
+                    moodEventImage.setImageBitmap(
                             Bitmap.createScaledBitmap(image, scaledWidth, scaledHeight, false)
                     );
+
                 }
             });
+        } else {
+            // If the MoodEvent doesn't have a user-provided photo
+            moodEventImage.setImageResource(android.R.color.transparent);
         }
+
         holder.container.findViewById(R.id.edit_button).setOnClickListener(v -> {
             //Context c = moodHistory.getContext();
             Intent i = new Intent(context, AddMoodEventActivity.class);
