@@ -92,6 +92,7 @@ public class AddMoodEventActivity extends AppCompatActivity  {
     private static final int PICK_IMAGE_REQ = 100;
     private ImageView photoView;
     private LinearLayoutCompat photoInfo;
+    private Button addPhotoButton;
 
     private boolean editing = false;
     private boolean addLocation = false;
@@ -127,6 +128,7 @@ public class AddMoodEventActivity extends AppCompatActivity  {
         // Initialize photo ImageView
         photoView = findViewById(R.id.user_photo_preview);
         photoInfo = findViewById(R.id.photo_info);
+        addPhotoButton = findViewById(R.id.add_photo_button);
 
         // Initialize Social Situation Buttons
         Button zeroButton = findViewById(R.id.social_button_zero);
@@ -245,6 +247,7 @@ public class AddMoodEventActivity extends AppCompatActivity  {
                         Bitmap.createScaledBitmap(bitmap, scaledWidth, scaledHeight, false)
                 );
                 photoInfo.setVisibility(View.VISIBLE);
+                addPhotoButton.setText("Choose a Different Photo");
             });
         }
     }
@@ -467,6 +470,7 @@ public class AddMoodEventActivity extends AppCompatActivity  {
         photoReference = "";
         photoView.setImageResource(android.R.color.transparent);
         photoInfo.setVisibility(View.GONE);
+        addPhotoButton.setText("Add a Photo (optional)");
     }
 
     /**
@@ -490,6 +494,7 @@ public class AddMoodEventActivity extends AppCompatActivity  {
                     photoView.setImageBitmap(
                             Bitmap.createScaledBitmap(bitmap, scaledWidth, scaledHeight, false)
                     );
+                    addPhotoButton.setText("Choose a Different Photo");
                     photoInfo.setVisibility(View.VISIBLE);
                     String s = Database.get(this).uploadImage(bitmap, didWork -> {
                         if (didWork) {

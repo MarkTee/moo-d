@@ -365,7 +365,7 @@
 
                 android:onClick="addPhoto"
 
-                android:text="Add a photo (optional)"
+                android:text="Add a Photo (optional)"
 
                 android:drawableRight="@drawable/ic_image_black_24dp"
 
