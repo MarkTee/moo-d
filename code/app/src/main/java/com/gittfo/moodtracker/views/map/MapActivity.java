@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.DrawFilter;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
@@ -79,7 +80,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     }
 
 
-    private BitmapDescriptor fromDrawable(int id) {
+    private BitmapDescriptor fromDrawable(int id, int color) {
         Drawable drawable = ContextCompat.getDrawable(this, id);
         drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
         Bitmap bitmap = Bitmap.createBitmap(
@@ -87,6 +88,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 drawable.getIntrinsicHeight(),
                 Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
+        drawable.setColorFilter(color, PorterDuff.Mode.DST);
         drawable.draw(canvas);
         return BitmapDescriptorFactory.fromBitmap(bitmap);
     }
@@ -102,7 +104,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             mo.position(new LatLng(me.getLatitude(), me.getLongitude()));
             Mood mood = Mood.moodFromEmotionalState(me.getMood());
 
-            mo.icon(fromDrawable(mood.getEmoticon()));
+            mo.icon(fromDrawable(mood.getEmoticon(), mood.getColor()));
 
             googleMap.addMarker(mo);
             last = moodLocation;
