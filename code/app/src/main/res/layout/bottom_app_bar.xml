@@ -156,5 +156,5 @@
         app:fabCustomSize="64dp"
         app:layout_anchor="@+id/bottom_app_bar"
         app:layout_anchorGravity="center_horizontal" />
-    
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

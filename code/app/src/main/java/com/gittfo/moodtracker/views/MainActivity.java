@@ -130,7 +130,8 @@ public class MainActivity extends AppCompatActivity {
      * @param view the Inbox button.
      */
     public void startInboxActivity(View view) {
-        Intent i = new Intent(this, InboxActivity.class);
+        // don't animate transition between activities
+        Intent i = new Intent(this, InboxActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         this.startActivity(i);
     }
 
