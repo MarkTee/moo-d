@@ -17,7 +17,6 @@ import android.view.LayoutInflater;
 import com.gittfo.moodtracker.database.Database;
 import com.gittfo.moodtracker.views.R;
 import com.gittfo.moodtracker.views.addmood.AddMoodEventActivity;
-import com.gittfo.moodtracker.views.moodhistory.MoodViewHolder;
 
 import java.util.ArrayList;
 
@@ -86,7 +85,7 @@ public class MoodHistoryAdapter extends RecyclerView.Adapter<MoodViewHolder> {
             // If the MoodEvent doesn't have a user-provided photo
             moodEventImage.setImageResource(android.R.color.transparent);
         }
-
+        
         holder.container.findViewById(R.id.edit_button).setOnClickListener(v -> {
             //Context c = moodHistory.getContext();
             Intent i = new Intent(context, AddMoodEventActivity.class);
