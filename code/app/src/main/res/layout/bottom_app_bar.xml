@@ -1,9 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
+     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_constraintBottom_toBottomOf="parent">
+    android:id="@+id/bottom_app_bar_layout">
 
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/bottom_app_bar"
@@ -145,15 +146,15 @@
     </com.google.android.material.bottomappbar.BottomAppBar>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-    android:id="@+id/fab"
-    android:onClick="createMoodEvent"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:src="@drawable/ic_add_white_72dp"
-    android:background="#00000000"
-    app:backgroundTint="@color/colorFloatingActionButton"
-    app:fabCustomSize="64dp"
-    app:layout_anchor="@+id/bottom_app_bar"
-    app:layout_anchorGravity="center_horizontal" />
+        android:id="@+id/fab"
+        android:onClick="createMoodEvent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_add_white_72dp"
+        android:background="#00000000"
+        app:backgroundTint="@color/colorFloatingActionButton"
+        app:fabCustomSize="64dp"
+        app:layout_anchor="@+id/bottom_app_bar"
+        app:layout_anchorGravity="center_horizontal" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

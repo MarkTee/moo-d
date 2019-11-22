@@ -44,7 +44,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         Database.get(this).getUserName(username -> {
             if(username == null){
-                usernameView.setHint("You must set a username");
+                usernameView.setHint("Please set a username.");
                 updateButton.setText("Update Username");
             } else {
                 initialUsername = username;
