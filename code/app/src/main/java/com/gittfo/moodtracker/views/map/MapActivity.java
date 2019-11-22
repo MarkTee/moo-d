@@ -36,11 +36,11 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     @Override
     protected void onCreate(Bundle savedInstance) {
         super.onCreate(savedInstance);
-        setContentView(R.layout.activity_map_test);
+        setContentView(R.layout.maps_screen);
 
         // we use fragments for now, not a full on map view
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-            .findFragmentById(R.id.map);
+            .findFragmentById(R.id.mood_map);
         mapFragment.getMapAsync(this);
 
         // get the mood history
