@@ -3,6 +3,7 @@ package com.gittfo.moodtracker.views.addmood;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -20,6 +21,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gittfo.moodtracker.database.Database;
@@ -62,7 +64,7 @@ public class AddMoodEventActivity extends AppCompatActivity  {
 
     public static final String EDIT_MOOD = "EDIT THE MOODS";
     private static final int RESULT_LOAD_IMG = 1;
-    private static final int IMAGE_HEIGHT = 75;
+    private static final int IMAGE_HEIGHT = 150;
 
     // For getting the location
     private GoogleApiClient googleApiClient;
@@ -89,6 +91,8 @@ public class AddMoodEventActivity extends AppCompatActivity  {
     // the following enables image adding functionality
     private static final int PICK_IMAGE_REQ = 100;
     private ImageView photoView;
+    private LinearLayoutCompat photoInfo;
+    private Button addPhotoButton;
 
     private boolean editing = false;
     private boolean addLocation = false;
@@ -122,7 +126,9 @@ public class AddMoodEventActivity extends AppCompatActivity  {
         reasonEditText = findViewById(R.id.reason_entry);
 
         // Initialize photo ImageView
-        photoView = findViewById(R.id.add_photo_button);
+        photoView = findViewById(R.id.user_photo_preview);
+        photoInfo = findViewById(R.id.photo_info);
+        addPhotoButton = findViewById(R.id.add_photo_button);
 
         // Initialize Social Situation Buttons
         Button zeroButton = findViewById(R.id.social_button_zero);
@@ -240,6 +246,8 @@ public class AddMoodEventActivity extends AppCompatActivity  {
                 photoView.setImageBitmap(
                         Bitmap.createScaledBitmap(bitmap, scaledWidth, scaledHeight, false)
                 );
+                photoInfo.setVisibility(View.VISIBLE);
+                addPhotoButton.setText("Choose a Different Photo");
             });
         }
     }
@@ -442,8 +450,7 @@ public class AddMoodEventActivity extends AppCompatActivity  {
     }
 
     /**
-     * When implemented, this method will allow the user to (optionally) attach a photo to the
-     * current mood event.
+     * This method allows the user to (optionally) attach a photo to the current mood event.
      *
      * @param v The view that caused the method to be called
      */
@@ -452,6 +459,18 @@ public class AddMoodEventActivity extends AppCompatActivity  {
         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
         photoPickerIntent.setType("image/*");
         startActivityForResult(photoPickerIntent, RESULT_LOAD_IMG);
+    }
+
+    /**
+     * This method allows the user to remove the photo attached to the current mood event.
+     *
+     * @param v The view that caused the method to be called
+     */
+    public void removePhoto(View v) {
+        photoReference = "";
+        photoView.setImageResource(android.R.color.transparent);
+        photoInfo.setVisibility(View.GONE);
+        addPhotoButton.setText("Add a Photo (optional)");
     }
 
     /**
@@ -475,6 +494,8 @@ public class AddMoodEventActivity extends AppCompatActivity  {
                     photoView.setImageBitmap(
                             Bitmap.createScaledBitmap(bitmap, scaledWidth, scaledHeight, false)
                     );
+                    addPhotoButton.setText("Choose a Different Photo");
+                    photoInfo.setVisibility(View.VISIBLE);
                     String s = Database.get(this).uploadImage(bitmap, didWork -> {
                         if (didWork) {
                             Log.i("JUI", "Upload Completed");

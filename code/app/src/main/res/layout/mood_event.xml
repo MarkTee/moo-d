@@ -105,7 +105,7 @@
             app:layout_constraintStart_toEndOf="@id/delete_button"
             app:layout_constraintTop_toTopOf="@id/delete_button"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/user_image"
+            app:layout_constraintBottom_toBottomOf="@id/delete_button"
             android:layout_marginLeft="5dp"
 
             android:contentDescription="edit mood button"
@@ -221,11 +221,12 @@
             android:id="@+id/user_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/edit_button"
-            app:layout_constraintBottom_toBottomOf="@id/user_reason_textView"
+            app:layout_constraintTop_toBottomOf="@id/delete_button"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="8dp"
-            android:layout_marginLeft="24dp"
+            android:layout_marginEnd="10dp"
+            android:layout_gravity="center"
 
             android:contentDescription="user image"
             android:src="@drawable/ic_image_black_64dp"/>
