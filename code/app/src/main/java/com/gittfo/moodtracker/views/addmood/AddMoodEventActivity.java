@@ -313,6 +313,7 @@ public class AddMoodEventActivity extends AppCompatActivity  {
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,
                             Manifest.permission.ACCESS_FINE_LOCATION}, 0);
+            findViewById(R.id.save_mood_event_button).setEnabled(false);
             getDeviceLocation();
 
         }
@@ -425,6 +426,7 @@ public class AddMoodEventActivity extends AppCompatActivity  {
                         latitude = location.getLatitude();
                         Log.d("JLOC", longitude + " : " + latitude);
                     }
+                    findViewById(R.id.save_mood_event_button).setEnabled(true);
                 });
         Log.d("JLOC", "Requesting Location");
     }
