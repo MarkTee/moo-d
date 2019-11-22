@@ -16,6 +16,8 @@
             android:id="@+id/tool_bar"
             layout="@layout/map_toolbar" />
 
+        <!-- "My Locations" button -->
+
         <Button
             android:id="@+id/my_locations_button"
             android:layout_width="wrap_content"
@@ -28,6 +30,8 @@
 
             android:layout_marginBottom="15dp"/>
 
+        <!-- "Followed User Locations" button -->
+
         <Button
             android:id="@+id/followed_locations_button"
             android:layout_width="wrap_content"
@@ -38,6 +42,7 @@
             android:text="Followed User Locations"
             app:layout_constraintStart_toEndOf="@id/my_locations_button" />
 
+        <!-- Container for the map, has a border -->
 
         <LinearLayout
             android:id="@+id/map_linear_layout"
@@ -56,6 +61,8 @@
 
             android:background="@drawable/border">
 
+            <!-- Placeholder for map item, replace with map -->
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -64,6 +71,8 @@
 
 
         </LinearLayout>
+
+        <!-- Mood item corresponding to a given location on the map -->
 
         <LinearLayout
             android:id="@+id/mood_item_layout"
@@ -77,7 +86,7 @@
             app:layout_constraintEnd_toEndOf="parent">
 
 
-            <!-- Set visibility to visible to see user mood at a given location. -->
+            <!-- Set this to invisible by default. -->
             <include
                 android:id="@id/map_mood_item"
                 layout="@layout/map_mood_item"
