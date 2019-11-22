@@ -1,19 +1,33 @@
 package com.gittfo.moodtracker.views.map;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.DrawFilter;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
+import com.gittfo.moodtracker.mood.Mood;
 import com.gittfo.moodtracker.mood.MoodEvent;
 import com.gittfo.moodtracker.views.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.internal.IGoogleMapDelegate;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * An activity where users can view the locations of a list of MoodEvents on a map. Can be used for
@@ -26,6 +40,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     // list of mood events to show on the map. source-agnostic, so we can use this for a personal
     // history, or a friend's history, or whatever
     private ArrayList<MoodEvent> moodEvents;
+
+    private GoogleMap googleMap;
 
     /**
      * Create a new map activity, set the view to the map view and call for a new map to populate
@@ -58,12 +74,37 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        this.googleMap = googleMap;
+        showMoodEvents(moodEvents);
+    }
 
+
+    private BitmapDescriptor fromDrawable(int id) {
+        Drawable drawable = ContextCompat.getDrawable(this, id);
+        drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+        Bitmap bitmap = Bitmap.createBitmap(
+                drawable.getIntrinsicWidth(),
+                drawable.getIntrinsicHeight(),
+                Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        drawable.draw(canvas);
+        return BitmapDescriptorFactory.fromBitmap(bitmap);
+    }
+
+
+    public void showMoodEvents(List<MoodEvent> moodEventList) {
         // for aesthetics, move the camera to the most recent mood event
         LatLng last = null;
-        for (MoodEvent me : moodEvents) {
+        for (MoodEvent me : moodEventList) {
             LatLng moodLocation = new LatLng(me.getLatitude(), me.getLongitude());
-            googleMap.addMarker(new MarkerOptions().position(moodLocation).title(me.getReason()));
+            MarkerOptions mo = new MarkerOptions();
+            mo.title(me.getReason());
+            mo.position(new LatLng(me.getLatitude(), me.getLongitude()));
+            Mood mood = Mood.moodFromEmotionalState(me.getMood());
+
+            mo.icon(fromDrawable(mood.getEmoticon()));
+
+            googleMap.addMarker(mo);
             last = moodLocation;
         }
         if (last != null) {
