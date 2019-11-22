@@ -74,7 +74,7 @@ public class AddMoodEventActivity extends AppCompatActivity  {
     private Date date = new Date();
     // Use user input to create a new Mood Event
     private Mood.EmotionalState emotionalState = null;
-    private String reason = "";
+    //private String reason = "";
     private MoodEvent.SocialSituation socialSituation = null;
     private String photoReference = "";
     private double latitude;
@@ -355,7 +355,7 @@ public class AddMoodEventActivity extends AppCompatActivity  {
      */
     private boolean failedMoodEventChecks(){
         // Validate reason
-        if (!validReason(reason)){
+        if (!validReason(this.moodEvent.getReason())){
             new AlertDialog.Builder(AddMoodEventActivity.this)
                     .setTitle("Invalid Reason")
                     .setMessage("Please ensure that your provided Reason is less than 20 characters and less than 3 words.")
@@ -397,7 +397,7 @@ public class AddMoodEventActivity extends AppCompatActivity  {
      * @param view The view that caused the method to be called
      */
     public void saveMoodEvent(View view) {
-        reason = reasonEditText.getText().toString();
+        moodEvent.setReason(reasonEditText.getText().toString());
 
         if(failedMoodEventChecks()){
             return;
@@ -405,12 +405,10 @@ public class AddMoodEventActivity extends AppCompatActivity  {
 
         // Update all of the selected MoodEvent's attributes so that they reflect any changes
         moodEvent.setMood(emotionalState);
-        moodEvent.setReason(reason);
         moodEvent.setSocialSituation(socialSituation);
         moodEvent.setPhotoReference(photoReference);
 
         moodEvent.setDate(this.date);
-        moodEvent.setReason(reason);
         moodEvent.setLatitude(addLocation ? latitude : Double.NaN);
         moodEvent.setLongitude(addLocation ? longitude : Double.NaN);
 
