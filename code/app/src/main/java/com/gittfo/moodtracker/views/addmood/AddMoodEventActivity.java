@@ -403,19 +403,22 @@ public class AddMoodEventActivity extends AppCompatActivity  {
             return;
         }
 
-        if (editing) {
-            // Update all of the selected MoodEvent's attributes so that they reflect any changes
-            moodEvent.setMood(emotionalState);
-            moodEvent.setReason(reason);
-            moodEvent.setSocialSituation(socialSituation);
-            moodEvent.setPhotoReference(photoReference);
+        // Update all of the selected MoodEvent's attributes so that they reflect any changes
+        moodEvent.setMood(emotionalState);
+        moodEvent.setReason(reason);
+        moodEvent.setSocialSituation(socialSituation);
+        moodEvent.setPhotoReference(photoReference);
 
+        moodEvent.setDate(this.date);
+        moodEvent.setReason(reason);
+        moodEvent.setLatitude(addLocation ? latitude : Double.NaN);
+        moodEvent.setLongitude(addLocation ? longitude : Double.NaN);
+
+        if (editing) {
             // Save any changes to the MoodEvent to the database
             Database.get(this).updateMoodEvent(moodEvent);
         } else {
             // Create the MoodEvent object
-            moodEvent = new MoodEvent(photoReference, reason, date, socialSituation, emotionalState, addLocation ? latitude : Double.NaN, addLocation ? longitude : Double.NaN);
-            // Add the new MoodEvent to the database
             Log.d("JDB", "Adding new mood of type " + moodEvent.getMood().toString() + " to mood history.");
             Database.get(this).addMoodEvent(moodEvent);
         }
