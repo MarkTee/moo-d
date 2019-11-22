@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
 
 
 
@@ -19,18 +21,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/tool_bar"
+            app:layout_constraintBottom_toTopOf="@id/map_linear_layout"
             android:text="My Locations"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/followed_locations_button"/>
+            app:layout_constraintEnd_toStartOf="@id/followed_locations_button"
+
+            android:layout_marginBottom="15dp"/>
 
         <Button
             android:id="@+id/followed_locations_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/tool_bar"
+            app:layout_constraintTop_toTopOf="@id/my_locations_button"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/my_locations_button"
             android:text="Followed User Locations"
-            app:layout_constraintStart_toEndOf="@id/my_locations_button"/>
+            app:layout_constraintStart_toEndOf="@id/my_locations_button" />
 
 
         <LinearLayout
@@ -39,16 +45,28 @@
             android:layout_height="400dp"
             android:orientation="vertical"
             android:gravity="center_horizontal"
-            android:layout_marginTop="8dp"
+
+            android:layout_marginRight="30dp"
+            android:layout_marginLeft="30dp"
+            app:layout_goneMarginTop="30dp"
             app:layout_constraintTop_toBottomOf="@id/followed_locations_button"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintBottom_toTopOf="@id/mood_item_layout"
+            app:layout_constraintEnd_toEndOf="parent"
+
+            android:background="@drawable/border">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="map placeholder"/>
 
 
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/mood_item_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
@@ -63,10 +81,11 @@
             <include
                 android:id="@id/map_mood_item"
                 layout="@layout/map_mood_item"
-                android:visibility="invisible"/>
+                android:visibility="visible"/>
+
+
 
         </LinearLayout>
-
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -79,4 +98,5 @@
 
 
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</LinearLayout>
