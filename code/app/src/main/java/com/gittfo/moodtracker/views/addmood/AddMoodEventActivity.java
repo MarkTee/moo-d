@@ -76,7 +76,6 @@ public class AddMoodEventActivity extends AppCompatActivity  {
     private Mood.EmotionalState emotionalState = null;
     //private String reason = "";
     private MoodEvent.SocialSituation socialSituation = null;
-    private String photoReference = "";
     private double latitude;
     private double longitude;
     private MoodEvent moodEvent;
@@ -242,9 +241,8 @@ public class AddMoodEventActivity extends AppCompatActivity  {
             }
 
             // display current MoodEvent's photo
-            photoReference = moodEvent.getPhotoReference();
 
-            Database.get(this).downloadImage(photoReference, bitmap -> {
+            Database.get(this).downloadImage(this.moodEvent.getPhotoReference(), bitmap -> {
                 final int scaledHeight = IMAGE_HEIGHT;
                 int scaledWidth = (int) (((double)scaledHeight) / ((double)bitmap.getHeight()) * ((double)bitmap.getWidth()));
                 photoView.setImageBitmap(
@@ -406,7 +404,7 @@ public class AddMoodEventActivity extends AppCompatActivity  {
         // Update all of the selected MoodEvent's attributes so that they reflect any changes
         moodEvent.setMood(emotionalState);
         moodEvent.setSocialSituation(socialSituation);
-        moodEvent.setPhotoReference(photoReference);
+        moodEvent.setPhotoReference(this.moodEvent.getPhotoReference());
 
         moodEvent.setDate(this.date);
         moodEvent.setLatitude(addLocation ? latitude : Double.NaN);
@@ -488,7 +486,7 @@ public class AddMoodEventActivity extends AppCompatActivity  {
      * @param v The view that caused the method to be called
      */
     public void removePhoto(View v) {
-        photoReference = "";
+        this.moodEvent.setPhotoReference("");
         photoView.setImageResource(android.R.color.transparent);
         photoInfo.setVisibility(View.GONE);
         addPhotoButton.setText("Add a Photo (optional)");
@@ -524,7 +522,7 @@ public class AddMoodEventActivity extends AppCompatActivity  {
                             quickSnack("Failed to upload Image, please try again");
                         }
                     });
-                    this.photoReference = s;
+                    this.moodEvent.setPhotoReference(s);
                 } catch (IOException e) {
                     Log.i("JUI", "Some exception " + e);
                 }
