@@ -361,6 +361,28 @@ public class AddMoodEventActivity extends AppCompatActivity  {
             return;
         }
 
+        // Ensure that the user has selected an emotionalState
+        if (emotionalState == null) {
+            new AlertDialog.Builder(AddMoodEventActivity.this)
+                    .setTitle("Missing Information")
+                    .setMessage("Please select a mood.")
+                    .setPositiveButton(android.R.string.ok, null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+            return;
+        }
+
+        // Ensure that the user has selected a social situation
+        if (socialSituation == null) {
+            new AlertDialog.Builder(AddMoodEventActivity.this)
+                    .setTitle("Missing Information")
+                    .setMessage("Please select a social situation.")
+                    .setPositiveButton(android.R.string.ok, null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+            return;
+        }
+
         if (editing) {
             // Update all of the selected MoodEvent's attributes so that they reflect any changes
             moodEvent.setMood(emotionalState);
@@ -371,29 +393,6 @@ public class AddMoodEventActivity extends AppCompatActivity  {
             // Save any changes to the MoodEvent to the database
             Database.get(this).updateMoodEvent(moodEvent);
         } else {
-            // Ensure that the user has selected an emotionalState
-            if (emotionalState == null) {
-                new AlertDialog.Builder(AddMoodEventActivity.this)
-                        .setTitle("Missing Information")
-                        .setMessage("Please select a mood.")
-                        .setPositiveButton(android.R.string.ok, null)
-                        .setIcon(android.R.drawable.ic_dialog_alert)
-                        .show();
-                return;
-            }
-
-
-            // Ensure that the user has selected a social situation
-            if (socialSituation == null) {
-                new AlertDialog.Builder(AddMoodEventActivity.this)
-                        .setTitle("Missing Information")
-                        .setMessage("Please select a social situation.")
-                        .setPositiveButton(android.R.string.ok, null)
-                        .setIcon(android.R.drawable.ic_dialog_alert)
-                        .show();
-                return;
-            }
-
             // Create the MoodEvent object
             moodEvent = new MoodEvent(photoReference, reason, date, socialSituation, emotionalState, addLocation ? latitude : Double.NaN, addLocation ? longitude : Double.NaN);
 
