@@ -5,9 +5,9 @@
     <color name="colorAccent">#728EEB</color>
 
 
-    <color name="colorToolbar">#9973FF</color>
-    <color name="colorButton">#ED5AB4</color>
-    <color name="colorBottomAppBar">#9973FF</color>
+    <color name="colorToolbar">#3F98C0</color>
+    <color name="colorButton">#9973FF</color>
+    <color name="colorBottomAppBar">#3F98C0</color>
     <color name="colorFloatingActionButton">#51D6BB</color>
     <color name="colorSecondary">#ED5AB4</color>
 

@@ -3,6 +3,7 @@ package com.gittfo.moodtracker.views.addmood;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -12,7 +13,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -21,8 +21,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.gittfo.moodtracker.database.Database;
 import com.gittfo.moodtracker.mood.Mood;
@@ -31,10 +31,8 @@ import com.gittfo.moodtracker.views.R;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.Format;
 import java.text.SimpleDateFormat;
@@ -66,7 +64,7 @@ public class AddMoodEventActivity extends AppCompatActivity  {
 
     public static final String EDIT_MOOD = "EDIT THE MOODS";
     private static final int RESULT_LOAD_IMG = 1;
-    private static final int IMAGE_HEIGHT = 75;
+    private static final int IMAGE_HEIGHT = 150;
 
     // For getting the location
     private GoogleApiClient googleApiClient;
@@ -93,6 +91,8 @@ public class AddMoodEventActivity extends AppCompatActivity  {
     // the following enables image adding functionality
     private static final int PICK_IMAGE_REQ = 100;
     private ImageView photoView;
+    private LinearLayoutCompat photoInfo;
+    private Button addPhotoButton;
 
     private boolean editing = false;
     private boolean addLocation = false;
@@ -126,7 +126,9 @@ public class AddMoodEventActivity extends AppCompatActivity  {
         reasonEditText = findViewById(R.id.reason_entry);
 
         // Initialize photo ImageView
-        photoView = findViewById(R.id.add_photo_button);
+        photoView = findViewById(R.id.user_photo_preview);
+        photoInfo = findViewById(R.id.photo_info);
+        addPhotoButton = findViewById(R.id.add_photo_button);
 
         // Initialize Social Situation Buttons
         Button zeroButton = findViewById(R.id.social_button_zero);
@@ -235,7 +237,7 @@ public class AddMoodEventActivity extends AppCompatActivity  {
                     break;
             }
 
-            //TODO: display current MoodEvent's photo
+            // display current MoodEvent's photo
             photoReference = moodEvent.getPhotoReference();
 
             Database.get(this).downloadImage(photoReference, bitmap -> {
@@ -244,6 +246,8 @@ public class AddMoodEventActivity extends AppCompatActivity  {
                 photoView.setImageBitmap(
                         Bitmap.createScaledBitmap(bitmap, scaledWidth, scaledHeight, false)
                 );
+                photoInfo.setVisibility(View.VISIBLE);
+                addPhotoButton.setText("Choose a Different Photo");
             });
         }
     }
@@ -338,14 +342,6 @@ public class AddMoodEventActivity extends AppCompatActivity  {
         int selectedColor = Color.parseColor("#008577");
         view.setBackgroundColor(selectedColor);
     }
-
-    /**
-     * When implemented, this method will allow the user to optionally attach a photo to the current
-     * mood event.
-     *
-     * @param view The view that caused the method to be called
-     */
-
 
     /**
      * If all user input is valid, save the current MoodEvent and return to the previous screen.
@@ -453,12 +449,37 @@ public class AddMoodEventActivity extends AppCompatActivity  {
                 .show();
     }
 
+    /**
+     * This method allows the user to (optionally) attach a photo to the current mood event.
+     *
+     * @param v The view that caused the method to be called
+     */
     public void addPhoto(View v) {
+        // use Android's photoPicker UI
         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
         photoPickerIntent.setType("image/*");
         startActivityForResult(photoPickerIntent, RESULT_LOAD_IMG);
     }
 
+    /**
+     * This method allows the user to remove the photo attached to the current mood event.
+     *
+     * @param v The view that caused the method to be called
+     */
+    public void removePhoto(View v) {
+        photoReference = "";
+        photoView.setImageResource(android.R.color.transparent);
+        photoInfo.setVisibility(View.GONE);
+        addPhotoButton.setText("Add a Photo (optional)");
+    }
+
+    /**
+     * This method is used to ensure that user photos have been properly uploaded to the database.
+     *
+     * @param reqCode    The request code that was passed to startActivityForResult()
+     * @param resultCode The result code specified by the second activity
+     * @param data       The result data
+     */
     @Override
     protected void onActivityResult(int reqCode, int resultCode, Intent data) {
         super.onActivityResult(reqCode, resultCode, data);
@@ -473,6 +494,8 @@ public class AddMoodEventActivity extends AppCompatActivity  {
                     photoView.setImageBitmap(
                             Bitmap.createScaledBitmap(bitmap, scaledWidth, scaledHeight, false)
                     );
+                    addPhotoButton.setText("Choose a Different Photo");
+                    photoInfo.setVisibility(View.VISIBLE);
                     String s = Database.get(this).uploadImage(bitmap, didWork -> {
                         if (didWork) {
                             Log.i("JUI", "Upload Completed");
@@ -491,6 +514,10 @@ public class AddMoodEventActivity extends AppCompatActivity  {
         }
     }
 
+    /**
+     * Display a message using one of Android's snackbars
+     * @param msg The message that should be displayed in the Snackbar
+     */
     private void quickSnack(String msg) {
         Snackbar.make(findViewById(R.id.add_mood_root), msg, Snackbar.LENGTH_SHORT).show();
     }

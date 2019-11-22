@@ -76,7 +76,6 @@ public class MoodViewHolder extends RecyclerView.ViewHolder {
             usernameView.setText(Database.get(container.getContext()).getUserName());
         }
 
-
         // Add the MoodEvent's mood emoticon (with the appropriate colour)
         ImageView eventEmoticon = container.findViewById(R.id.user_emotion_imageView);
         eventEmoticon.setImageResource(mood.getEmoticon());

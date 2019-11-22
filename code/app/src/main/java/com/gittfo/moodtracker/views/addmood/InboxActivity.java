@@ -1,5 +1,8 @@
 package com.gittfo.moodtracker.views.addmood;
 
+import android.os.Bundle;
+
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.gittfo.moodtracker.views.R;
@@ -9,7 +12,10 @@ import com.gittfo.moodtracker.views.R;
  */
 public class InboxActivity extends AppCompatActivity {
 
-    protected void onCreate(){
-        setContentView(R.layout.user_inbox);
+    protected void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_inbox);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
     }
 }

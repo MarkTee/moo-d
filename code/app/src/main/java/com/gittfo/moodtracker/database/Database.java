@@ -5,11 +5,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
-import android.util.JsonReader;
-
 import android.util.Log;
-
-import androidx.core.util.Consumer;
 
 import androidx.core.util.Consumer;
 
@@ -32,7 +28,6 @@ import com.google.firebase.storage.UploadTask;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 
@@ -245,7 +240,6 @@ public class Database {
         Log.v("JDBCLOUD", url);
     }
 
-
     /**
      * Follow a user
      * Usage:
@@ -263,7 +257,6 @@ public class Database {
     public void followUser(String otherId, Consumer<Boolean> c) {
         callCloudFunctionSimple(buildCloudURL(String.format("followUser?uid=%s&oid=%s", userId, otherId)), c);
     }
-
 
     /**
      * unfollow a user
@@ -331,19 +324,21 @@ public class Database {
         db.collection("users")
                 .document(currentUser())
                 .update("username", username);
-        db.collection("usernames")
-                .document(getUserName())
-                .delete();
+        if (getUserName() != null) {
+            db.collection("usernames")
+                    .document(getUserName())
+                    .delete();
+        }
         Database.username = username;
+        HashMap<String, Object> initialData = new HashMap<>();
+        initialData.put("id", userId);
         db.collection("usernames")
                 .document(username)
-                .set(new HashMap());
-
+                .set(initialData);
     }
 
-
     /**
-     * Gets the username syncronasly, returning null if the information is not yet available
+     * Gets the username synchronously, returning null if the information is not yet available
      * @return The username if available, or null
      */
     public String getUserName() {
@@ -351,7 +346,7 @@ public class Database {
     }
 
     /**
-     * Returns the username syncronously
+     * Returns the username synchronously
      * Or null if the username is not yet queried
      *
      * @param callback an optional callback to be called when the data is available
@@ -421,6 +416,11 @@ public class Database {
      * @param callback a function that has the image in Bitmap form, or null if it could not get the image
      */
     public void downloadImage(String loc, Consumer<Bitmap> callback) {
+        if (loc == null || loc.isEmpty()) {
+            // TODO: maybe do an error?
+            return;
+        }
+
         StorageReference imageRef = storage.getReference().child(loc);
 
         final long ONE_MEGABYTE = 1024 * 1024;
@@ -432,6 +432,23 @@ public class Database {
             if (callback != null)
                 callback.accept(null);
         });
+    }
+
+    /**
+     * Gets the userid for following and unfollowing by username
+     * @param username the username to get the id for
+     * @param callback a callback that will pass through the userid when it finds it, otherwise it will pass through null
+     */
+    public void getUserIdFromUsername(String username, Consumer<String> callback) {
+        db.collection("usernames")
+                .document(username)
+                .get().addOnSuccessListener(doc -> {
+                    if (doc.exists()) {
+                        callback.accept(doc.getString("name"));
+                    } else {
+                        callback.accept(null);
+                    }
+                });
     }
 
     /**
