@@ -142,6 +142,10 @@ public class AddMoodEventActivity extends AppCompatActivity  {
         socialSituation = MoodEvent.SocialSituation.NA;
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+
+        // make an empty mood event
+        this.moodEvent = new MoodEvent();
+
         // If editing, obtain the MoodEvent from the database
         String isEdit = this.getIntent().getStringExtra(EDIT_MOOD);
         if (isEdit != null) {
@@ -345,12 +349,12 @@ public class AddMoodEventActivity extends AppCompatActivity  {
     }
 
     /**
-     * If all user input is valid, save the current MoodEvent and return to the previous screen.
-     *
-     * @param view The view that caused the method to be called
+     * Applies a series of checks to the currently entered mood Event.
+     * If a check fail, an error dialog is raised, and returns false
+     * @return boolean if moodEvent isn't finished
      */
-    public void saveMoodEvent(View view) {
-        reason = reasonEditText.getText().toString();
+    private boolean failedMoodEventChecks(){
+        // Validate reason
         if (!validReason(reason)){
             new AlertDialog.Builder(AddMoodEventActivity.this)
                     .setTitle("Invalid Reason")
@@ -358,7 +362,7 @@ public class AddMoodEventActivity extends AppCompatActivity  {
                     .setPositiveButton(android.R.string.ok, null)
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();
-            return;
+            return true;
         }
 
         // Ensure that the user has selected an emotionalState
@@ -369,7 +373,7 @@ public class AddMoodEventActivity extends AppCompatActivity  {
                     .setPositiveButton(android.R.string.ok, null)
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();
-            return;
+            return true;
         }
 
         // Ensure that the user has selected a social situation
@@ -380,6 +384,22 @@ public class AddMoodEventActivity extends AppCompatActivity  {
                     .setPositiveButton(android.R.string.ok, null)
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();
+            return true;
+        }
+
+        // All checks passed
+        return false;
+    }
+
+    /**
+     * If all user input is valid, save the current MoodEvent and return to the previous screen.
+     *
+     * @param view The view that caused the method to be called
+     */
+    public void saveMoodEvent(View view) {
+        reason = reasonEditText.getText().toString();
+
+        if(failedMoodEventChecks()){
             return;
         }
 
@@ -395,7 +415,6 @@ public class AddMoodEventActivity extends AppCompatActivity  {
         } else {
             // Create the MoodEvent object
             moodEvent = new MoodEvent(photoReference, reason, date, socialSituation, emotionalState, addLocation ? latitude : Double.NaN, addLocation ? longitude : Double.NaN);
-
             // Add the new MoodEvent to the database
             Log.d("JDB", "Adding new mood of type " + moodEvent.getMood().toString() + " to mood history.");
             Database.get(this).addMoodEvent(moodEvent);
