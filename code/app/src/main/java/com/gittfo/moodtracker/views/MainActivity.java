@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Hide ActionBar
         getSupportActionBar().hide();
 
         // initialize the mood history
@@ -73,7 +74,6 @@ public class MainActivity extends AppCompatActivity {
 
 
         filterDialog = new FilterDialog(this);
-        // TODO: put on an actual filter button
         findViewById(R.id.toolbar_filter_button).setOnClickListener(v -> filterDialog.show());
     }
 
@@ -139,7 +139,8 @@ public class MainActivity extends AppCompatActivity {
      * @param view the Inbox button.
      */
     public void startInboxActivity(View view) {
-        Intent i = new Intent(this, InboxActivity.class);
+        // don't animate transition between activities
+        Intent i = new Intent(this, InboxActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         this.startActivity(i);
     }
 
