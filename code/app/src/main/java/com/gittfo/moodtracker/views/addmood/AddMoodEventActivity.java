@@ -75,7 +75,7 @@ public class AddMoodEventActivity extends AppCompatActivity  {
     // Use user input to create a new Mood Event
     private Mood.EmotionalState emotionalState = null;
     //private String reason = "";
-    private MoodEvent.SocialSituation socialSituation = null;
+
     private double latitude;
     private double longitude;
     private MoodEvent moodEvent;
@@ -138,12 +138,12 @@ public class AddMoodEventActivity extends AppCompatActivity  {
         socialSituationButtons = Arrays.asList(zeroButton, oneButton, twoPlusButton, crowdButton, naButton);
 
         naButton.setBackgroundColor(Color.parseColor("#008577"));
-        socialSituation = MoodEvent.SocialSituation.NA;
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         // make an empty mood event
         this.moodEvent = new MoodEvent();
+        moodEvent.setSocialSituation(MoodEvent.SocialSituation.NA);
 
         // If editing, obtain the MoodEvent from the database
         String isEdit = this.getIntent().getStringExtra(EDIT_MOOD);
@@ -217,8 +217,7 @@ public class AddMoodEventActivity extends AppCompatActivity  {
             reasonEditText.setText(moodEvent.getReason());
 
             // Display current MoodEvent's social situation
-            socialSituation = moodEvent.getSocialSituation();
-            switch (socialSituation) {
+            switch (moodEvent.getSocialSituation()) {
                 case ZERO:
                     socialSituationButtons.get(ZERO_SOCIAL_INDEX).performClick();
                     break;
@@ -339,7 +338,9 @@ public class AddMoodEventActivity extends AppCompatActivity  {
 
         // Get the selected social situation
         String selectedSocialSituationString = ((TextView) view).getText().toString();
-        socialSituation = MoodEvent.socialSituationFromString(selectedSocialSituationString);
+        this.moodEvent.setSocialSituation(
+                MoodEvent.socialSituationFromString(selectedSocialSituationString)
+        );
 
         // Add colour to the button that was just clicked
         int selectedColor = Color.parseColor("#008577");
@@ -375,7 +376,7 @@ public class AddMoodEventActivity extends AppCompatActivity  {
         }
 
         // Ensure that the user has selected a social situation
-        if (socialSituation == null) {
+        if (this.moodEvent.getSocialSituation() == null) {
             new AlertDialog.Builder(AddMoodEventActivity.this)
                     .setTitle("Missing Information")
                     .setMessage("Please select a social situation.")
@@ -403,7 +404,6 @@ public class AddMoodEventActivity extends AppCompatActivity  {
 
         // Update all of the selected MoodEvent's attributes so that they reflect any changes
         moodEvent.setMood(emotionalState);
-        moodEvent.setSocialSituation(socialSituation);
         moodEvent.setPhotoReference(this.moodEvent.getPhotoReference());
 
         moodEvent.setDate(new Date());
