@@ -70,14 +70,8 @@ public class AddMoodEventActivity extends AppCompatActivity  {
     private GoogleApiClient googleApiClient;
     private FusedLocationProviderClient fusedLocationClient;
 
-    // Get the current date and time, which are used when creating a new Mood Event
-    //private Date date = new Date();
-    // Use user input to create a new Mood Event
+    // Mood Event being edited 
     private Mood.EmotionalState emotionalState = null;
-    //private String reason = "";
-
-    //private double latitude;
-    //private double longitude;
     private MoodEvent moodEvent;
 
     // Buttons representing pre-defined moods and social situations that the user may choose from
