@@ -144,8 +144,9 @@ public class MoodEvent {
 
     /**
      * For internal use only
+     * no it isn't
      */
-    private MoodEvent() { }
+    public MoodEvent() { }
 
     /**
      * Create a MoodEvent object based on data stored in Firebase.
