@@ -398,8 +398,6 @@ public class AddMoodEventActivity extends AppCompatActivity  {
 
         // Update all of the selected MoodEvent's attributes so that they reflect any changes
         moodEvent.setMood(emotionalState);
-        moodEvent.setPhotoReference(this.moodEvent.getPhotoReference());
-
         moodEvent.setDate(new Date());
         moodEvent.setLatitude(addLocation ? this.moodEvent.getLatitude() : Double.NaN);
         moodEvent.setLongitude(addLocation ? this.moodEvent.getLongitude() : Double.NaN);
