@@ -76,8 +76,8 @@ public class AddMoodEventActivity extends AppCompatActivity  {
     private Mood.EmotionalState emotionalState = null;
     //private String reason = "";
 
-    private double latitude;
-    private double longitude;
+    //private double latitude;
+    //private double longitude;
     private MoodEvent moodEvent;
 
     // Buttons representing pre-defined moods and social situations that the user may choose from
@@ -407,8 +407,8 @@ public class AddMoodEventActivity extends AppCompatActivity  {
         moodEvent.setPhotoReference(this.moodEvent.getPhotoReference());
 
         moodEvent.setDate(new Date());
-        moodEvent.setLatitude(addLocation ? latitude : Double.NaN);
-        moodEvent.setLongitude(addLocation ? longitude : Double.NaN);
+        moodEvent.setLatitude(addLocation ? this.moodEvent.getLatitude() : Double.NaN);
+        moodEvent.setLongitude(addLocation ? this.moodEvent.getLongitude() : Double.NaN);
 
         if (editing) {
             // Save any changes to the MoodEvent to the database
@@ -439,9 +439,9 @@ public class AddMoodEventActivity extends AppCompatActivity  {
                     Log.d("JLOC", "Got a location Object");
                     if (location != null) {
                         // Store this location
-                        longitude = location.getLongitude();
-                        latitude = location.getLatitude();
-                        Log.d("JLOC", longitude + " : " + latitude);
+                        this.moodEvent.setLongitude(location.getLongitude());
+                        this.moodEvent.setLatitude(location.getLatitude());
+                        Log.d("JLOC", this.moodEvent.getLongitude() + " : " + this.moodEvent.getLatitude());
                     }
                     findViewById(R.id.save_mood_event_button).setEnabled(true);
                 });
