@@ -71,7 +71,7 @@ public class AddMoodEventActivity extends AppCompatActivity  {
     private FusedLocationProviderClient fusedLocationClient;
 
     // Get the current date and time, which are used when creating a new Mood Event
-    private Date date = new Date();
+    //private Date date = new Date();
     // Use user input to create a new Mood Event
     private Mood.EmotionalState emotionalState = null;
     //private String reason = "";
@@ -161,9 +161,9 @@ public class AddMoodEventActivity extends AppCompatActivity  {
 
         // Format date and time for display
         Format dateFormat = new SimpleDateFormat("MMMM dd, yyyy");
-        String mDate = dateFormat.format(date);
+        String mDate = dateFormat.format(new Date());
         Format timeFormat = new SimpleDateFormat("h:mm a");
-        String mTime = timeFormat.format(date);
+        String mTime = timeFormat.format(new Date());
 
         // Display date and time. If creating a new mood event, the current date and time will be
         // shown. If editing an existing mood event, its date and time will be shown.
@@ -183,7 +183,7 @@ public class AddMoodEventActivity extends AppCompatActivity  {
             deleteButton.setVisibility(View.VISIBLE);
 
             // Display current MoodEvent's date/time
-            date = moodEvent.getDate();
+            //date = moodEvent.getDate();
 
             // Display current MoodEvent's emotional state
             emotionalState = moodEvent.getMood();
@@ -406,7 +406,7 @@ public class AddMoodEventActivity extends AppCompatActivity  {
         moodEvent.setSocialSituation(socialSituation);
         moodEvent.setPhotoReference(this.moodEvent.getPhotoReference());
 
-        moodEvent.setDate(this.date);
+        moodEvent.setDate(new Date());
         moodEvent.setLatitude(addLocation ? latitude : Double.NaN);
         moodEvent.setLongitude(addLocation ? longitude : Double.NaN);
 
