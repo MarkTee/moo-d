@@ -385,23 +385,21 @@ public class AddMoodEventActivity extends AppCompatActivity  {
     }
 
     /**
-     * If all user input is valid, save the current MoodEvent and return to the previous screen.
-     *
-     * @param view The view that caused the method to be called
+     * Update this class' moodEvent with all values from the GUI if applicable
      */
-    public void saveMoodEvent(View view) {
+    private void syncMoodEventWithGUI(){
         moodEvent.setReason(reasonEditText.getText().toString());
-
-        if(failedMoodEventChecks()){
-            return;
-        }
-
-        // Update all of the selected MoodEvent's attributes so that they reflect any changes
         moodEvent.setMood(emotionalState);
         moodEvent.setDate(new Date());
         moodEvent.setLatitude(addLocation ? this.moodEvent.getLatitude() : Double.NaN);
         moodEvent.setLongitude(addLocation ? this.moodEvent.getLongitude() : Double.NaN);
+    }
 
+    /**
+     * Add moodEvent to the database or update a moodEvent in the database
+     * depending if this activity is updating or creating a mood Event
+     */
+    private void pushMoodEventToDatabase(){
         if (editing) {
             // Save any changes to the MoodEvent to the database
             Database.get(this).updateMoodEvent(moodEvent);
@@ -410,6 +408,19 @@ public class AddMoodEventActivity extends AppCompatActivity  {
             Log.d("JDB", "Adding new mood of type " + moodEvent.getMood().toString() + " to mood history.");
             Database.get(this).addMoodEvent(moodEvent);
         }
+    }
+
+    /**
+     * If all user input is valid, save the current MoodEvent and return to the previous screen.
+     *
+     * @param view The view that caused the method to be called
+     */
+    public void saveMoodEvent(View view) {
+        syncMoodEventWithGUI();
+        if(failedMoodEventChecks()){
+            return;
+        }
+        pushMoodEventToDatabase();
         finish();
     }
 
