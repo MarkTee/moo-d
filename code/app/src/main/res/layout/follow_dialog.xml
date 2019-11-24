@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp">
+
+
+    <!-- CANCEL BUTTON -->
+
+    <ImageButton
+        android:id="@+id/cancel_permission_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/follow_someone_textView"
+
+        android:background="#00000000"
+        android:contentDescription="cancel button"
+        android:src="@drawable/ic_cancel_grey_24dp"/>
+
+    <!-- Follow request instruction text -->
+
+    <TextView
+        android:id="@+id/follow_someone_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintTop_toBottomOf="@id/cancel_permission_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"
+
+
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:textColor="#000000"
+        android:text="Follow Someone New"/>
+
+
+    <TextView
+        android:id="@+id/follow_instruction_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintTop_toBottomOf="@id/follow_someone_textView"
+        app:layout_constraintStart_toStartOf="@id/follow_someone_textView"
+        app:layout_constraintEnd_toEndOf="@id/follow_someone_textView"
+        android:layout_marginTop="8dp"
+
+        android:textColor="#000000"
+        android:text="Enter the username of the person\nyou'd like to follow."
+        android:gravity="center_horizontal"/>
+
+
+    <!-- Follow request EditText, takes username of another user -->
+
+
+    <EditText
+        android:id="@+id/user_follow_editText"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintTop_toBottomOf="@id/follow_instruction_textView"
+        app:layout_constraintStart_toStartOf="@id/follow_someone_textView"
+        app:layout_constraintEnd_toEndOf="@id/follow_someone_textView"
+        android:layout_marginTop="20dp"
+
+        android:hint="Username"/>
+
+
+    <!-- send request button -->
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintTop_toBottomOf="@id/user_follow_editText"
+        app:layout_constraintStart_toStartOf="@id/follow_someone_textView"
+        app:layout_constraintEnd_toEndOf="@id/follow_someone_textView"
+        android:layout_marginTop="20dp"
+
+        android:text="Send Request"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
