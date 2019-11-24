@@ -87,7 +87,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         showMoodEvents(moodEvents);
     }
 
-    private void onMyLocations(View view) {
+    public void onMyLocations(View view) {
         Database.get(this).getMoods().addOnSuccessListener(moods -> {
             moodEvents.clear();
             for(MoodEvent ev : moods) {
@@ -99,7 +99,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         });
     }
 
-    private void onFolloweeLocations(View view) {
+    public void onFolloweeLocations(View view) {
         Database.get(this).getFolloweeMoods(
                 moods -> {
                     moodEvents.clear();

@@ -20,13 +20,14 @@
             android:id="@+id/my_locations_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/tool_bar"
-            app:layout_constraintBottom_toTopOf="@id/map_linear_layout"
+            android:layout_marginBottom="15dp"
+            android:onClick="onMyLocations"
             android:text="My Locations"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/map_linear_layout"
             app:layout_constraintEnd_toStartOf="@id/followed_locations_button"
 
-            android:layout_marginBottom="15dp"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tool_bar" />
 
         <!-- "Followed User Locations" button -->
 
@@ -34,11 +35,12 @@
             android:id="@+id/followed_locations_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="@id/my_locations_button"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="@id/my_locations_button"
+            android:onClick="onFolloweeLocations"
             android:text="Followed User Locations"
-            app:layout_constraintStart_toEndOf="@id/my_locations_button" />
+            app:layout_constraintBottom_toBottomOf="@id/my_locations_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/my_locations_button"
+            app:layout_constraintTop_toTopOf="@id/my_locations_button" />
 
         <!-- Container for the map, has a border -->
 
