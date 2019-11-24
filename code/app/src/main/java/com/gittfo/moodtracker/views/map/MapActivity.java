@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -96,6 +97,18 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
             moodEvents.sort((b, a) -> a.getDate().compareTo(b.getDate()));
             showMoodEvents(moodEvents);
         });
+    }
+
+    private void onFolloweeLocations(View view) {
+        Database.get(this).getFolloweeMoods(
+                moods -> {
+                    moodEvents.clear();
+                    for (MoodEvent me : moods) {
+                        moodEvents.add(me);
+                    }
+                    showMoodEvents(moodEvents);
+                }
+        );
     }
 
     private BitmapDescriptor fromDrawable(int id, int color) {
