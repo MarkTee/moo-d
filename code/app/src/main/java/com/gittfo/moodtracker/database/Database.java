@@ -322,9 +322,11 @@ public class Database {
      * @param username the username to set to
      */
     public void setUserName(String username)  {
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("username", username);
         db.collection("users")
                 .document(currentUser())
-                .update("username", username);
+                .set(data);
         if (getUserName() != null) {
             db.collection("usernames")
                     .document(getUserName())
