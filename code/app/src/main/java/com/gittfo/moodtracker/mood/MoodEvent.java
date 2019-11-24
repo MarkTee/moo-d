@@ -87,7 +87,15 @@ public class MoodEvent {
      * @return a new mood id
      */
     public static MoodEvent fromId(String moodEventID) {
-        MoodEvent me = new MoodEvent();
+        MoodEvent me = new MoodEvent(
+                null,
+                null,
+                null,
+                null,
+                null,
+                Double.NaN,
+                Double.NaN
+        );
         me.setId(moodEventID);
         return me;
     }
@@ -141,12 +149,7 @@ public class MoodEvent {
     public void setId(String id) {
         this.id = id;
     }
-
-    /**
-     * For internal use only
-     * no it isn't
-     */
-    public MoodEvent() { }
+    
 
     /**
      * Create a MoodEvent object based on data stored in Firebase.

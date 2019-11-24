@@ -136,9 +136,15 @@ public class AddMoodEventActivity extends AppCompatActivity  {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         // make an empty mood event
-        this.moodEvent = new MoodEvent();
-        moodEvent.setDate(new Date());
-        moodEvent.setSocialSituation(MoodEvent.SocialSituation.NA);
+        this.moodEvent = new MoodEvent(
+                null,
+                null,
+                new Date(),
+                MoodEvent.SocialSituation.NA,
+                null,
+                Double.NaN,
+                Double.NaN
+        );
 
         // If editing, obtain the MoodEvent from the database
         String isEdit = this.getIntent().getStringExtra(EDIT_MOOD);
