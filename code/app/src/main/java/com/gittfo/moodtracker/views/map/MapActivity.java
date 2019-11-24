@@ -87,18 +87,30 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         showMoodEvents(moodEvents);
     }
 
+    /**
+     * When the "My Locations" button is pressed, get all of this user's moods, and show them.
+     * @param view The "My Locations" button.
+     */
     public void onMyLocations(View view) {
+        // call the database to get our moods
         Database.get(this).getMoods().addOnSuccessListener(moods -> {
+            // clear out current moods
             moodEvents.clear();
             for(MoodEvent ev : moods) {
                 // add events to the mood history
                 moodEvents.add(ev);
             }
             moodEvents.sort((b, a) -> a.getDate().compareTo(b.getDate()));
+            // show moods on the map
             showMoodEvents(moodEvents);
         });
     }
 
+    /**
+     * When the "Followed User Locations" button is pressed, get all of our followee's moods, and
+     * show them.
+     * @param view The "Followed User Locations" button.
+     */
     public void onFolloweeLocations(View view) {
         Database.get(this).getFolloweeMoods(
                 moods -> {
@@ -111,13 +123,23 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         );
     }
 
+    /**
+     * Turn a drawable into a bitmap, so that it can be displayed on a google maps marker.
+     * This is used to draw mood icons onto the map.
+     * @param id id of the drawable.
+     * @param color color to tint the drawable.
+     * @return a BitmapDescriptor for the new bitmap.
+     */
     private BitmapDescriptor fromDrawable(int id, int color) {
+        // use the id to get the drawable
         Drawable drawable = ContextCompat.getDrawable(this, id);
         drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+        // make a new bitmap
         Bitmap bitmap = Bitmap.createBitmap(
                 drawable.getIntrinsicWidth(),
                 drawable.getIntrinsicHeight(),
                 Bitmap.Config.ARGB_8888);
+        // draw the drawable onto the bitmap
         Canvas canvas = new Canvas(bitmap);
         drawable.setTint(color);
         //drawable.setColorFilter(color, PorterDuff.Mode.MULTIPLY);
@@ -125,7 +147,10 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         return BitmapDescriptorFactory.fromBitmap(bitmap);
     }
 
-
+    /**
+     * Display a list of mood events as markers on the google map.
+     * @param moodEventList a List of MoodEvents to display.
+     */
     public void showMoodEvents(List<MoodEvent> moodEventList) {
         // clear out the current markers
         for (Marker m : markers) {
@@ -158,6 +183,11 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         }
     }
 
+    /**
+     * Turn a LatLng into a short readable string.
+     * @param pos the LatLng to convert.
+     * @return a short string representation of the LatLng.
+     */
     public String posToString(LatLng pos) {
         double lat = pos.latitude;
         double lon = pos.longitude;
@@ -165,6 +195,11 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         return String.format("%.2f, %.2f", lat, lon);
     }
 
+    /**
+     * When a marker is clicked, update the info box and zoom in.
+     * @param marker the Marker that was clicked.
+     * @return 
+     */
     public boolean onMarkerClick(final Marker marker) {
 
         MoodEvent moodEvent = (MoodEvent) marker.getTag();
