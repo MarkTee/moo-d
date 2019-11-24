@@ -42,7 +42,8 @@ public class TimelineActivity extends AppCompatActivity {
      * @param view the Profile button.
      */
     public void startProfileActivity(View view){
-        Intent i = new Intent(this, ProfileActivity.class);
+        // don't animate transition between activities
+        Intent i = new Intent(this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         this.startActivity(i);
     }
 }
