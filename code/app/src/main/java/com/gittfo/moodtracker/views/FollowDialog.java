@@ -3,6 +3,8 @@ package com.gittfo.moodtracker.views;
 import android.app.Activity;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ImageButton;
 
 import androidx.appcompat.app.AlertDialog;
 
@@ -23,8 +25,16 @@ public class FollowDialog {
         this.c = c;
         AlertDialog.Builder builder = new AlertDialog.Builder(c);
         LayoutInflater inflater = c.getLayoutInflater();
+        View layout = inflater.inflate(R.layout.follow_dialog, null);
 
-        builder.setView(inflater.inflate(R.layout.follow_dialog, null));
+        builder.setView(layout);
+        ImageButton exit_button = layout.findViewById(R.id.exit_button);
+        exit_button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                followDialog.dismiss();
+            }
+        });
+
         Log.d("JUI", "Making builder");
         followDialog = builder.create();
     }
