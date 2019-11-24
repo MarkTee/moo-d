@@ -5,12 +5,14 @@ import android.graphics.Canvas;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
+import com.gittfo.moodtracker.database.Database;
 import com.gittfo.moodtracker.mood.Mood;
 import com.gittfo.moodtracker.mood.MoodEvent;
 import com.gittfo.moodtracker.views.R;
@@ -84,6 +86,17 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         showMoodEvents(moodEvents);
     }
 
+    private void onMyLocations(View view) {
+        Database.get(this).getMoods().addOnSuccessListener(moods -> {
+            moodEvents.clear();
+            for(MoodEvent ev : moods) {
+                // add events to the mood history
+                moodEvents.add(ev);
+            }
+            moodEvents.sort((b, a) -> a.getDate().compareTo(b.getDate()));
+            showMoodEvents(moodEvents);
+        });
+    }
 
     private BitmapDescriptor fromDrawable(int id, int color) {
         Drawable drawable = ContextCompat.getDrawable(this, id);
@@ -113,7 +126,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
             LatLng moodLocation = new LatLng(moodEvent.getLatitude(), moodEvent.getLongitude());
             MarkerOptions markerOptions = new MarkerOptions();
 
-            markerOptions.title("username");
+            markerOptions.title("title");
 
             markerOptions.position(new LatLng(moodEvent.getLatitude(), moodEvent.getLongitude()));
             Mood mood = Mood.moodFromEmotionalState(moodEvent.getMood());
@@ -144,8 +157,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         MoodEvent moodEvent = (MoodEvent) marker.getTag();
 
         TextView usernameView = findViewById(R.id.map_user_name);
-        usernameView.setText("username");
-        // todo add username to moodevent
+        usernameView.setText(Database.get(this).getUserName());
 
         TextView location = findViewById(R.id.map_location_text);
         location.setText(posToString(marker.getPosition()));
