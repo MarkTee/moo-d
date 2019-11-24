@@ -144,11 +144,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * When the "profile" button is pressed, go to the profile activity.
-     * @param view the Profile button.
+     * When the "profile" button is pressed, don't do anything (since we're already in MainActivity)
+     * @param view the Inbox button.
      */
     public void startProfileActivity(View view){
-        Intent i = new Intent(this, ProfileActivity.class);
-        this.startActivity(i);
+        ;
     }
 }
