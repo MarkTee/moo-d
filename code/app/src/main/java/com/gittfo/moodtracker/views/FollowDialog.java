@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -17,6 +18,7 @@ import androidx.appcompat.app.AlertDialog;
 public class FollowDialog {
     private AlertDialog followDialog;
     private EditText userFollowEditText;
+    private Button sendRequestButton;
     Activity c;
 
     /**
@@ -31,12 +33,19 @@ public class FollowDialog {
         View layout = inflater.inflate(R.layout.follow_dialog, null);
         builder.setView(layout);
 
-        ImageButton exit_button = layout.findViewById(R.id.exit_button);
+        ImageButton exitButton = layout.findViewById(R.id.exit_button);
         userFollowEditText = layout.findViewById(R.id.user_follow_editText);
+        sendRequestButton = layout.findViewById(R.id.send_request_button);
 
-        exit_button.setOnClickListener(new View.OnClickListener() {
+        exitButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 followDialog.dismiss();
+            }
+        });
+
+        sendRequestButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                sendRequest(userFollowEditText.getText().toString());
             }
         });
 
@@ -49,5 +58,15 @@ public class FollowDialog {
      */
     public void show() {
         followDialog.show();
+    }
+
+    /**
+     * When the user clicks the "Send Request" button, send a Follow Request to the user whose
+     * username has been entered into the username field.
+     *
+     * @param username The name of the user who will receive a Follow Request
+     */
+    public void sendRequest(String username) {
+        Log.d("JDB", String.format("Attempting to send Follow Request to: {%s}", username));
     }
 }
