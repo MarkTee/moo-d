@@ -39,10 +39,12 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     // list of mood events to show on the map. source-agnostic, so we can use this for a personal
     // history, or a friend's history, or whatever
     private ArrayList<MoodEvent> moodEvents;
-
+    // level to zoom to once marker is clicked
     private float ONCLICK_ZOOMLVL = 15; // about usual map height
-
+    // our instamce of the googlemap
     private GoogleMap googleMap;
+    // keep track of placed markers, since google maps doesn't, and we need to be able to clear them
+    private ArrayList<Marker> markers;
 
     /**
      * Create a new map activity, set the view to the map view and call for a new map to populate
@@ -66,6 +68,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
             MoodHistoryWrapper wrapper = bundle.getParcelable(MOOD_HISTORY_WRAPPER);
             moodEvents = wrapper.getMoodEventList();
         }
+
+        markers = new ArrayList<>();
     }
 
     /**
@@ -97,6 +101,12 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
 
     public void showMoodEvents(List<MoodEvent> moodEventList) {
+        // clear out the current markers
+        for (Marker m : markers) {
+            m.remove();
+        }
+        markers.clear();
+
         // for aesthetics, move the camera to the most recent mood event
         LatLng last = null;
         for (MoodEvent moodEvent : moodEventList) {
@@ -112,6 +122,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
             Marker marker = googleMap.addMarker(markerOptions);
             marker.setTag(moodEvent);
+
+            markers.add(marker);
 
             last = moodLocation;
         }
