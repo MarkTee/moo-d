@@ -43,7 +43,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     // history, or a friend's history, or whatever
     private ArrayList<MoodEvent> moodEvents;
     // level to zoom to once marker is clicked
-    private float ONCLICK_ZOOMLVL = 15; // about usual map height
+    private float ONCLICK_ZOOMLVL = 22; // about usual map height
     // our instamce of the googlemap
     private GoogleMap googleMap;
     // keep track of placed markers, since google maps doesn't, and we need to be able to clear them
@@ -84,7 +84,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     public void onMapReady(GoogleMap googleMap) {
         this.googleMap = googleMap;
         googleMap.setOnMarkerClickListener(this);
-        showMoodEvents(moodEvents);
+        onMyLocations(null);
     }
 
     /**
@@ -100,7 +100,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                 // add events to the mood history
                 moodEvents.add(ev);
             }
-            moodEvents.sort((b, a) -> a.getDate().compareTo(b.getDate()));
+            moodEvents.sort((a, b) -> a.getDate().compareTo(b.getDate()));
             // show moods on the map
             showMoodEvents(moodEvents);
         });
@@ -159,8 +159,14 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         markers.clear();
 
         // for aesthetics, move the camera to the most recent mood event
-        LatLng last = null;
+        LatLng lastPos = null;
         for (MoodEvent moodEvent : moodEventList) {
+
+            if (moodEvent.getLatitude() == Double.NaN || moodEvent.getLongitude() == Double.NaN) {
+                // this mood doesn't have a valid location
+                continue;
+            }
+
             LatLng moodLocation = new LatLng(moodEvent.getLatitude(), moodEvent.getLongitude());
             MarkerOptions markerOptions = new MarkerOptions();
 
@@ -176,10 +182,12 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
             markers.add(marker);
 
-            last = moodLocation;
+            updateInfoBox(moodEvent, moodLocation);
+
+            lastPos = moodLocation;
         }
-        if (last != null) {
-            googleMap.moveCamera(CameraUpdateFactory.newLatLng(last));
+        if (lastPos != null) {
+            googleMap.moveCamera(CameraUpdateFactory.newLatLng(lastPos));
         }
     }
 
@@ -198,17 +206,32 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     /**
      * When a marker is clicked, update the info box and zoom in.
      * @param marker the Marker that was clicked.
-     * @return 
+     * @return
      */
     public boolean onMarkerClick(final Marker marker) {
 
+        // show the mood info
         MoodEvent moodEvent = (MoodEvent) marker.getTag();
+        updateInfoBox(moodEvent, marker.getPosition());
 
+        // zoom in
+        googleMap.animateCamera(
+                CameraUpdateFactory.newLatLngZoom(marker.getPosition(), ONCLICK_ZOOMLVL));
+
+        return true;
+    }
+
+    /**
+     * Update the little mood info display with information.
+     * @param moodEvent the MoodEvent whose information will be presented.
+     * @param pos the LatLng of this MoodEvent
+     */
+    private void updateInfoBox(MoodEvent moodEvent, LatLng pos) {
         TextView usernameView = findViewById(R.id.map_user_name);
         usernameView.setText(Database.get(this).getUserName());
 
         TextView location = findViewById(R.id.map_location_text);
-        location.setText(posToString(marker.getPosition()));
+        location.setText(posToString(pos));
 
         ImageView emoticonView = findViewById(R.id.map_emoticon);
 
@@ -219,10 +242,5 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         TextView moodText = findViewById(R.id.map_mood_text);
         moodText.setTextColor(mood.getColor());
         moodText.setText(moodEvent.getMood().toString().toLowerCase());
-
-        googleMap.animateCamera(
-                CameraUpdateFactory.newLatLngZoom(marker.getPosition(), ONCLICK_ZOOMLVL));
-
-        return true;
     }
 }
