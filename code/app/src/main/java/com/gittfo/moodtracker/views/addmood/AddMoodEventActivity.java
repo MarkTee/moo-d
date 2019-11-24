@@ -137,6 +137,7 @@ public class AddMoodEventActivity extends AppCompatActivity  {
 
         // make an empty mood event
         this.moodEvent = new MoodEvent();
+        moodEvent.setDate(new Date());
         moodEvent.setSocialSituation(MoodEvent.SocialSituation.NA);
 
         // If editing, obtain the MoodEvent from the database
@@ -155,9 +156,9 @@ public class AddMoodEventActivity extends AppCompatActivity  {
 
         // Format date and time for display
         Format dateFormat = new SimpleDateFormat("MMMM dd, yyyy");
-        String mDate = dateFormat.format(new Date());
+        String mDate = dateFormat.format(moodEvent.getDate());
         Format timeFormat = new SimpleDateFormat("h:mm a");
-        String mTime = timeFormat.format(new Date());
+        String mTime = timeFormat.format(moodEvent.getDate());
 
         // Display date and time. If creating a new mood event, the current date and time will be
         // shown. If editing an existing mood event, its date and time will be shown.
