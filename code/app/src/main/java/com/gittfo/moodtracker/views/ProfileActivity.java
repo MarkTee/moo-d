@@ -1,4 +1,4 @@
-package com.gittfo.moodtracker.views.addmood;
+package com.gittfo.moodtracker.views;
 
 import android.content.Intent;
 import android.os.Bundle;
