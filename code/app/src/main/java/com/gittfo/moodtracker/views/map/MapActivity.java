@@ -43,7 +43,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     // history, or a friend's history, or whatever
     private ArrayList<MoodEvent> moodEvents;
     // level to zoom to once marker is clicked
-    private float ONCLICK_ZOOMLVL = 22; // about usual map height
+    private float ONCLICK_ZOOMLVL = 17; // about usual map height
     // our instamce of the googlemap
     private GoogleMap googleMap;
     // keep track of placed markers, since google maps doesn't, and we need to be able to clear them
@@ -158,6 +158,12 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         }
         markers.clear();
 
+        // nothing to show
+        if (moodEvents.isEmpty()) {
+            clearInfoBox();
+            return;
+        }
+
         // for aesthetics, move the camera to the most recent mood event
         LatLng lastPos = null;
         for (MoodEvent moodEvent : moodEventList) {
@@ -242,5 +248,24 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         TextView moodText = findViewById(R.id.map_mood_text);
         moodText.setTextColor(mood.getColor());
         moodText.setText(moodEvent.getMood().toString().toLowerCase());
+    }
+
+    /**
+     * Clear out the mood information box.
+     * Used, for instance, when the user attempts to display an empty mood list.
+     */
+    public void clearInfoBox() {
+        TextView usernameView = findViewById(R.id.map_user_name);
+        usernameView.setText("Nothing to display.");
+
+        TextView location = findViewById(R.id.map_location_text);
+        location.setText("");
+
+        ImageView emoticonView = findViewById(R.id.map_emoticon);
+
+        emoticonView.setImageResource(android.R.color.transparent);
+
+        TextView moodText = findViewById(R.id.map_mood_text);
+        moodText.setText("");
     }
 }
