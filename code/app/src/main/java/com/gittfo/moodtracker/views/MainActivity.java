@@ -21,6 +21,7 @@ import com.gittfo.moodtracker.mood.MoodHistoryAdapter;
 import com.gittfo.moodtracker.views.addmood.AddMoodEventActivity;
 import com.gittfo.moodtracker.views.addmood.InboxActivity;
 import com.gittfo.moodtracker.views.addmood.ProfileActivity;
+import com.google.firebase.firestore.auth.FirebaseAuthCredentialsProvider;
 
 import java.util.ArrayList;
 
@@ -154,6 +155,12 @@ public class MainActivity extends AppCompatActivity {
         this.startActivity(i);
     }
 
+    public void startSigninActivity(View view){
+        Intent i = new Intent(this, SigninActivity.class);
+        this.startActivity(i);
+
+    }
+
     public void dropdownPressed(View view){
         dropDownButton = (ImageButton) findViewById(R.id.settings_button);
         dropDownButton.setOnClickListener(new View.OnClickListener() {
@@ -169,11 +176,23 @@ public class MainActivity extends AppCompatActivity {
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem menuItem) {
-                        //TODO: Make this do something useful
-                        Toast.makeText(
-                                MainActivity.this,
-                                "You clicked: " + menuItem.getTitle(),
-                                Toast.LENGTH_SHORT).show();
+                        switch(menuItem.getItemId()) {
+                            case (R.id.dropdown_one):
+                                // change username
+                                startProfileActivity(view);
+                                break;
+                            case (R.id.dropdown_two):
+                                // change color scheme
+                                //TODO: color scheme change functionality
+                                Toast.makeText(MainActivity.this,
+                                        "Coming soon!",
+                                        Toast.LENGTH_SHORT).show();
+                                break;
+                            case (R.id.dropdown_three):
+                                //TODO: fix log out functionality
+                                startSigninActivity(view);
+                                break;
+                        }
                         return true;
                     }
                 });

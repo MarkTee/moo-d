@@ -1,5 +1,6 @@
 package com.gittfo.moodtracker.views.addmood;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,6 +12,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.gittfo.moodtracker.views.R;
+import com.gittfo.moodtracker.views.SigninActivity;
 
 /**
  * This is an activity for users to manage their inbox, containing things like follow requests.
@@ -24,6 +26,17 @@ public class InboxActivity extends AppCompatActivity {
         setContentView(R.layout.activity_inbox);
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
+    }
+
+    public void startProfileActivity(View view){
+        Intent i = new Intent(this, ProfileActivity.class);
+        this.startActivity(i);
+    }
+
+    public void startSigninActivity(View view){
+        Intent i = new Intent(this, SigninActivity.class);
+        this.startActivity(i);
+
     }
 
     public void dropdownPressed(View view){
@@ -41,11 +54,23 @@ public class InboxActivity extends AppCompatActivity {
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem menuItem) {
-                        //TODO: Make this do something useful
-                        Toast.makeText(
-                                InboxActivity.this,
-                                "You clicked: " + menuItem.getTitle(),
-                                Toast.LENGTH_SHORT).show();
+                        switch(menuItem.getItemId()) {
+                            case (R.id.dropdown_one):
+                                // change username
+                                startProfileActivity(view);
+                                break;
+                            case (R.id.dropdown_two):
+                                // change color scheme
+                                //TODO: color scheme change functionality
+                                Toast.makeText(InboxActivity.this,
+                                        "Coming soon!",
+                                        Toast.LENGTH_SHORT).show();
+                                break;
+                            case (R.id.dropdown_three):
+                                //TODO: allow for proper log out?
+                                startSigninActivity(view);
+                                break;
+                        }
                         return true;
                     }
                 });

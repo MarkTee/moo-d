@@ -6,11 +6,11 @@
         android:title="Change username"/>
 
     <item
-        android:id="@+id/two"
+        android:id="@+id/dropdown_two"
         android:title="Change color scheme"/>
 
     <item
-        android:id="@+id/three"
+        android:id="@+id/dropdown_three"
         android:title="Sign out"/>
 
 </menu>
