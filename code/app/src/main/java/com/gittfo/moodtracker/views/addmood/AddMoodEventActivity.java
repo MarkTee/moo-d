@@ -21,14 +21,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gittfo.moodtracker.database.Database;
 import com.gittfo.moodtracker.mood.Mood;
 import com.gittfo.moodtracker.mood.MoodEvent;
 import com.gittfo.moodtracker.views.R;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.material.snackbar.Snackbar;
@@ -67,11 +65,14 @@ public class AddMoodEventActivity extends AppCompatActivity  {
     private static final int IMAGE_HEIGHT = 150;
 
     // For getting the location
-    private GoogleApiClient googleApiClient;
     private FusedLocationProviderClient fusedLocationClient;
 
-    // Mood Event being edited 
     private Mood.EmotionalState emotionalState = null;
+
+    // Get the current date and time, which are used when creating a new MoodEvent
+    private Date date = new Date();
+
+    // The Mood Event that's currently being changed
     private MoodEvent moodEvent;
 
     // Buttons representing pre-defined moods and social situations that the user may choose from
@@ -139,7 +140,7 @@ public class AddMoodEventActivity extends AppCompatActivity  {
         this.moodEvent = new MoodEvent(
                 null,
                 null,
-                new Date(),
+                date,
                 MoodEvent.SocialSituation.NA,
                 null,
                 Double.NaN,
@@ -158,13 +159,12 @@ public class AddMoodEventActivity extends AppCompatActivity  {
         } else {
             getDeviceLocation(); // Gets the location
         }
-        // If the user is editing an existing MoodEvent, carry out the appropriate actions
 
         // Format date and time for display
         Format dateFormat = new SimpleDateFormat("MMMM dd, yyyy");
-        String mDate = dateFormat.format(moodEvent.getDate());
+        String mDate = dateFormat.format(date);
         Format timeFormat = new SimpleDateFormat("h:mm a");
-        String mTime = timeFormat.format(moodEvent.getDate());
+        String mTime = timeFormat.format(date);
 
         // Display date and time. If creating a new mood event, the current date and time will be
         // shown. If editing an existing mood event, its date and time will be shown.
@@ -184,7 +184,22 @@ public class AddMoodEventActivity extends AppCompatActivity  {
             deleteButton.setVisibility(View.VISIBLE);
 
             // Display current MoodEvent's date/time
-            //date = moodEvent.getDate();
+            date = moodEvent.getDate();
+
+            // Reuse this code here to catch any delay when fetching a MoodEvent from the database
+            // Format date and time for display
+            Format dateFormat = new SimpleDateFormat("MMMM dd, yyyy");
+            String mDate = dateFormat.format(date);
+            Format timeFormat = new SimpleDateFormat("h:mm a");
+            String mTime = timeFormat.format(date);
+
+            // Display date and time. If creating a new mood event, the current date and time will be
+            // shown. If editing an existing mood event, its date and time will be shown.
+            TextView dateDisplay = findViewById(R.id.date_display);
+            dateDisplay.setText(mDate);
+            TextView timeDisplay = findViewById(R.id.time_display);
+            timeDisplay.setText(mTime);
+
 
             // Display current MoodEvent's emotional state
             emotionalState = moodEvent.getMood();
@@ -397,7 +412,6 @@ public class AddMoodEventActivity extends AppCompatActivity  {
     private void syncMoodEventWithGUI(){
         moodEvent.setReason(reasonEditText.getText().toString());
         moodEvent.setMood(emotionalState);
-        moodEvent.setDate(new Date());
         moodEvent.setLatitude(addLocation ? this.moodEvent.getLatitude() : Double.NaN);
         moodEvent.setLongitude(addLocation ? this.moodEvent.getLongitude() : Double.NaN);
     }
