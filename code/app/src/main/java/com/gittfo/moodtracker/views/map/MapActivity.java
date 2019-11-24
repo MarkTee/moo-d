@@ -1,13 +1,12 @@
 package com.gittfo.moodtracker.views.map;
 
-import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.DrawFilter;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
@@ -19,7 +18,6 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.internal.IGoogleMapDelegate;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
@@ -34,13 +32,15 @@ import java.util.List;
  * An activity where users can view the locations of a list of MoodEvents on a map. Can be used for
  * an individual's history, complete or filtered, as well as their friends'.
  */
-public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     // tag for passing in a mood history wrapper through intent extras
     public static final String MOOD_HISTORY_WRAPPER = "MOOD_HISTORY_WRAPPER";
     // list of mood events to show on the map. source-agnostic, so we can use this for a personal
     // history, or a friend's history, or whatever
     private ArrayList<MoodEvent> moodEvents;
+
+    private float ONCLICK_ZOOMLVL = 15; // about usual map height
 
     private GoogleMap googleMap;
 
@@ -76,6 +76,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         this.googleMap = googleMap;
+        googleMap.setOnMarkerClickListener(this);
         showMoodEvents(moodEvents);
     }
 
@@ -88,7 +89,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 drawable.getIntrinsicHeight(),
                 Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
-        drawable.setColorFilter(color, PorterDuff.Mode.DST);
+        drawable.setTint(color);
+        //drawable.setColorFilter(color, PorterDuff.Mode.MULTIPLY);
         drawable.draw(canvas);
         return BitmapDescriptorFactory.fromBitmap(bitmap);
     }
@@ -97,20 +99,58 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     public void showMoodEvents(List<MoodEvent> moodEventList) {
         // for aesthetics, move the camera to the most recent mood event
         LatLng last = null;
-        for (MoodEvent me : moodEventList) {
-            LatLng moodLocation = new LatLng(me.getLatitude(), me.getLongitude());
-            MarkerOptions mo = new MarkerOptions();
-            mo.title(me.getReason());
-            mo.position(new LatLng(me.getLatitude(), me.getLongitude()));
-            Mood mood = Mood.moodFromEmotionalState(me.getMood());
+        for (MoodEvent moodEvent : moodEventList) {
+            LatLng moodLocation = new LatLng(moodEvent.getLatitude(), moodEvent.getLongitude());
+            MarkerOptions markerOptions = new MarkerOptions();
 
-            mo.icon(fromDrawable(mood.getEmoticon(), mood.getColor()));
+            markerOptions.title("username");
 
-            googleMap.addMarker(mo);
+            markerOptions.position(new LatLng(moodEvent.getLatitude(), moodEvent.getLongitude()));
+            Mood mood = Mood.moodFromEmotionalState(moodEvent.getMood());
+
+            markerOptions.icon(fromDrawable(mood.getEmoticon(), mood.getColor()));
+
+            Marker marker = googleMap.addMarker(markerOptions);
+            marker.setTag(moodEvent);
+
             last = moodLocation;
         }
         if (last != null) {
             googleMap.moveCamera(CameraUpdateFactory.newLatLng(last));
         }
+    }
+
+    public String posToString(LatLng pos) {
+        double lat = pos.latitude;
+        double lon = pos.longitude;
+
+        return String.format("%.2f, %.2f", lat, lon);
+    }
+
+    public boolean onMarkerClick(final Marker marker) {
+
+        MoodEvent moodEvent = (MoodEvent) marker.getTag();
+
+        TextView usernameView = findViewById(R.id.map_user_name);
+        usernameView.setText("username");
+        // todo add username to moodevent
+
+        TextView location = findViewById(R.id.map_location_text);
+        location.setText(posToString(marker.getPosition()));
+
+        ImageView emoticonView = findViewById(R.id.map_emoticon);
+
+        Mood mood = Mood.moodFromEmotionalState(moodEvent.getMood());
+        emoticonView.setImageResource(mood.getEmoticon());
+        emoticonView.setColorFilter(mood.getColor());
+
+        TextView moodText = findViewById(R.id.map_mood_text);
+        moodText.setTextColor(mood.getColor());
+        moodText.setText(moodEvent.getMood().toString().toLowerCase());
+
+        googleMap.animateCamera(
+                CameraUpdateFactory.newLatLngZoom(marker.getPosition(), ONCLICK_ZOOMLVL));
+
+        return true;
     }
 }
