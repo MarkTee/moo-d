@@ -14,8 +14,6 @@ import com.gittfo.moodtracker.database.Database;
 import com.gittfo.moodtracker.mood.MoodEvent;
 import com.gittfo.moodtracker.mood.MoodHistoryAdapter;
 import com.gittfo.moodtracker.views.addmood.AddMoodEventActivity;
-import com.gittfo.moodtracker.views.addmood.InboxActivity;
-import com.gittfo.moodtracker.views.addmood.ProfileActivity;
 import com.gittfo.moodtracker.views.map.MapActivity;
 import com.gittfo.moodtracker.views.map.MoodHistoryWrapper;
 import com.google.android.gms.tasks.Task;
