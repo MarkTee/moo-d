@@ -261,7 +261,7 @@ public class MainActivity extends AppCompatActivity {
             DEFAULT_THEME_ID = R.style.PastelTheme;
         }
 
-        filterDialog.cancel();
+        colorDialog.cancel();
         applyToAllActivities();
         validateNewTheme();
     }
@@ -270,7 +270,6 @@ public class MainActivity extends AppCompatActivity {
         InboxActivity.setDefaultTheme(DEFAULT_THEME_ID);
         TimelineActivity.setDefaultTheme(DEFAULT_THEME_ID);
         MapActivity.setDefaultTheme(DEFAULT_THEME_ID);
-
     }
 
     public static void setDefaultTheme(int THEME_ID) {
