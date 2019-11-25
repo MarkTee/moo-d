@@ -41,6 +41,11 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton dropDownButton;
     private ColorSchemeDialog colorDialog;
 
+    private static int DEFAULT_THEME_ID = R.style.AppTheme;
+
+
+
+
 
     /**
      * Each time the user returns to this activity, update the RecyclerView with moods from the
@@ -59,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(DEFAULT_THEME_ID);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -82,6 +88,9 @@ public class MainActivity extends AppCompatActivity {
 
         filterDialog = new FilterDialog(this);
         findViewById(R.id.toolbar_filter_button).setOnClickListener(v -> filterDialog.show());
+
+        colorDialog = new ColorSchemeDialog(this);
+
 
 
     }
@@ -230,9 +239,35 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onChangeColorSchemePressed(){
-        colorDialog = new ColorSchemeDialog(this);
         colorDialog.show();
+    }
 
+    public void validateNewTheme(){
+        Intent i = new Intent(this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        this.startActivity(i);
+    }
+
+    public void applyColorScheme(View v) {
+        int selectedButton = colorDialog.getSelectedNum();
+        Log.d("Selected", Integer.toString(selectedButton));
+
+        if (selectedButton == 0) {
+            DEFAULT_THEME_ID = R.style.AppTheme;
+            filterDialog.cancel();
+            validateNewTheme();
+        } else if (selectedButton == 1) {
+            DEFAULT_THEME_ID = R.style.NeonTheme;
+            filterDialog.cancel();
+            validateNewTheme();
+        } else if (selectedButton == 2) {
+            DEFAULT_THEME_ID = R.style.MonochromeTheme;
+            filterDialog.cancel();
+            validateNewTheme();
+        } else if (selectedButton == 3) {
+            DEFAULT_THEME_ID = R.style.PastelTheme;
+            filterDialog.cancel();
+            validateNewTheme();
+        }
     }
 
     /**

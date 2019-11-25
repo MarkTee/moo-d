@@ -64,9 +64,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
 
+        android:onClick="applyColorScheme"
+
         android:layout_marginTop="20dp"
         android:backgroundTint="@color/colorSecondary"
-        android:onClick="setColorScheme"
         android:text="Set Color Scheme" />
 
 </LinearLayout>
