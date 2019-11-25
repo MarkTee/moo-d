@@ -71,10 +71,15 @@ public class MoodViewHolder extends RecyclerView.ViewHolder {
 
         // Update the username of the mood event
         TextView usernameView = container.findViewById(R.id.user_name_textView);
-        String username = Database.get(container.getContext()).getUserName();
-        if (username != null){
-            usernameView.setText(Database.get(container.getContext()).getUserName());
+
+        String username = moodEvent.getUsername();
+
+        // i.e. if the MoodEvent belongs to the user/is located on the Profile screen
+        if (username == null){
+            username = Database.get(container.getContext()).getUserName();
         }
+
+        usernameView.setText(username);
 
         // Add the MoodEvent's mood emoticon (with the appropriate colour)
         ImageView eventEmoticon = container.findViewById(R.id.user_emotion_imageView);
