@@ -7,8 +7,12 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
@@ -17,9 +21,12 @@ import androidx.fragment.app.FragmentActivity;
 import com.gittfo.moodtracker.database.Database;
 import com.gittfo.moodtracker.mood.Mood;
 import com.gittfo.moodtracker.mood.MoodEvent;
+import com.gittfo.moodtracker.views.ChangeUsernameActivity;
+import com.gittfo.moodtracker.views.ColorSchemeDialog;
 import com.gittfo.moodtracker.views.InboxActivity;
 import com.gittfo.moodtracker.views.MainActivity;
 import com.gittfo.moodtracker.views.R;
+import com.gittfo.moodtracker.views.SigninActivity;
 import com.gittfo.moodtracker.views.TimelineActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -53,6 +60,10 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     // keep track of placed markers, since google maps doesn't, and we need to be able to clear them
     private ArrayList<Marker> markers;
 
+    private static int DEFAULT_THEME_ID = R.style.AppTheme;
+    private ColorSchemeDialog colorDialog;
+    private ImageButton dropDownButton;
+
     /**
      * Create a new map activity, set the view to the map view and call for a new map to populate
      * it. If we were passed a MoodHistoryWrapper, unwrap it and save the history for displaying.
@@ -61,6 +72,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
      */
     @Override
     protected void onCreate(Bundle savedInstance) {
+        setTheme(DEFAULT_THEME_ID);
         super.onCreate(savedInstance);
         setContentView(R.layout.maps_screen);
 
@@ -79,6 +91,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         }
 
         markers = new ArrayList<>();
+
+        colorDialog = new ColorSchemeDialog(this);
     }
 
     /**
@@ -311,6 +325,92 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         // don't animate transition between activities
         Intent i = new Intent(this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         this.startActivity(i);
+    }
+
+    public void onChangeColorSchemePressed(){
+        colorDialog.show();
+    }
+
+    public void validateNewTheme(){
+        Intent i = new Intent(this, MapActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        this.startActivity(i);
+    }
+
+    public void applyColorScheme(View v) {
+        int selectedButton = colorDialog.getSelectedNum();
+        Log.d("Selected", Integer.toString(selectedButton));
+
+        if (selectedButton == 0) {
+            DEFAULT_THEME_ID = R.style.AppTheme;
+        } else if (selectedButton == 1) {
+            DEFAULT_THEME_ID = R.style.NeonTheme;
+        } else if (selectedButton == 2) {
+            DEFAULT_THEME_ID = R.style.MonochromeTheme;
+        } else if (selectedButton == 3) {
+            DEFAULT_THEME_ID = R.style.PastelTheme;
+        }
+
+        colorDialog.cancel();
+        applyToAllActivities();
+        validateNewTheme();
+    }
+
+    public void applyToAllActivities() {
+        InboxActivity.setDefaultTheme(DEFAULT_THEME_ID);
+        MainActivity.setDefaultTheme(DEFAULT_THEME_ID);
+        TimelineActivity.setDefaultTheme(DEFAULT_THEME_ID);
+    }
+
+    public void startUsernameActivity(View view) {
+        Intent i = new Intent(this, ChangeUsernameActivity.class);
+        this.startActivity(i);
+    }
+
+    public void startSigninActivity(View view){
+        Intent i = new Intent(this, SigninActivity.class);
+        this.startActivity(i);
+    }
+
+    public void dropdownPressed(View view) {
+        dropDownButton = (ImageButton) findViewById(R.id.settings_button);
+        dropDownButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // create a PopupMenu
+                PopupMenu popup = new PopupMenu(MapActivity.this, dropDownButton);
+                // inflate the popup via xml file
+                popup.getMenuInflater()
+                        .inflate(R.menu.dropdown_menu, popup.getMenu());
+
+                // tie popup to OnMenuItemClickListener
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem menuItem) {
+                        switch(menuItem.getItemId()) {
+                            case (R.id.dropdown_one):
+                                // change username
+                                startUsernameActivity(view);
+                                break;
+                            case (R.id.dropdown_two):
+                                // change color scheme
+                                onChangeColorSchemePressed();
+                                break;
+                            case (R.id.dropdown_three):
+                                //TODO: allow for proper log out?
+                                startSigninActivity(view);
+                                break;
+                        }
+                        return true;
+                    }
+                });
+                popup.show(); // show popup menu
+            }
+        }); // close setOnClickListener method
+    }
+
+
+    public static void setDefaultTheme(int THEME_ID) {
+        DEFAULT_THEME_ID = THEME_ID;
     }
 
     /**

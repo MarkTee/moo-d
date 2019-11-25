@@ -2,6 +2,7 @@ package com.gittfo.moodtracker.views;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -20,13 +21,18 @@ import com.gittfo.moodtracker.views.map.MoodHistoryWrapper;
 public class InboxActivity extends AppCompatActivity {
 
     private ImageButton dropDownButton;
+    private ColorSchemeDialog colorDialog;
+    private static int DEFAULT_THEME_ID = R.style.AppTheme;
 
     protected void onCreate(Bundle savedInstanceState){
+        setTheme(DEFAULT_THEME_ID);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inbox);
 
         // Hide the ActionBar
         getSupportActionBar().hide();
+
+        colorDialog = new ColorSchemeDialog(this);
     }
 
     public void startSigninActivity(View view){
@@ -61,10 +67,7 @@ public class InboxActivity extends AppCompatActivity {
                                 break;
                             case (R.id.dropdown_two):
                                 // change color scheme
-                                //TODO: color scheme change functionality
-                                Toast.makeText(com.gittfo.moodtracker.views.InboxActivity.this,
-                                        "Coming soon!",
-                                        Toast.LENGTH_SHORT).show();
+                                onChangeColorSchemePressed();
                                 break;
                             case (R.id.dropdown_three):
                                 //TODO: allow for proper log out?
@@ -125,6 +128,44 @@ public class InboxActivity extends AppCompatActivity {
     public void startMapActivity(View view) {
         Intent i = new Intent(this, MapActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         this.startActivity(i);
+    }
+
+    public void onChangeColorSchemePressed(){
+        colorDialog.show();
+    }
+
+    public void validateNewTheme(){
+        Intent i = new Intent(this, MapActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        this.startActivity(i);
+    }
+
+    public void applyColorScheme(View v) {
+        int selectedButton = colorDialog.getSelectedNum();
+        Log.d("Selected", Integer.toString(selectedButton));
+
+        if (selectedButton == 0) {
+            DEFAULT_THEME_ID = R.style.AppTheme;
+        } else if (selectedButton == 1) {
+            DEFAULT_THEME_ID = R.style.NeonTheme;
+        } else if (selectedButton == 2) {
+            DEFAULT_THEME_ID = R.style.MonochromeTheme;
+        } else if (selectedButton == 3) {
+            DEFAULT_THEME_ID = R.style.PastelTheme;
+        }
+
+        colorDialog.cancel();
+        applyToAllActivities();
+        validateNewTheme();
+    }
+
+    public void applyToAllActivities() {
+        MapActivity.setDefaultTheme(DEFAULT_THEME_ID);
+        MainActivity.setDefaultTheme(DEFAULT_THEME_ID);
+        TimelineActivity.setDefaultTheme(DEFAULT_THEME_ID);
+    }
+
+    public static void setDefaultTheme(int THEME_ID) {
+        DEFAULT_THEME_ID = THEME_ID;
     }
 
     /**

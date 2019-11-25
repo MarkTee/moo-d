@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:paddingBottom="6dp"
         android:paddingTop="6dp"
-        app:backgroundTint="@color/colorBottomAppBar"
+        app:backgroundTint="?attr/colorBottomAppBar"
         android:layout_gravity="bottom"
         app:fabAlignmentMode="center"
         app:fabCradleMargin="6dp"
@@ -157,7 +157,7 @@
         android:layout_height="wrap_content"
         android:src="@drawable/ic_add_white_72dp"
         android:background="#00000000"
-        app:backgroundTint="@color/colorFloatingActionButton"
+        app:backgroundTint="?attr/colorFloatingActionButton"
         app:fabCustomSize="64dp"
         app:layout_anchor="@+id/bottom_app_bar"
         app:layout_anchorGravity="center_horizontal" />
