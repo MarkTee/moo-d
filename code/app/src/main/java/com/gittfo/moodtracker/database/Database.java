@@ -234,7 +234,8 @@ public class Database {
                     JsonArray data = j.parse(res).getAsJsonArray();
                     List<MoodEvent> moods = new ArrayList<>(data.size());
                     for (JsonElement e : data) {
-                        moods.add(MoodEvent.getMoodEventFromJson(e.getAsJsonObject()));
+                        MoodEvent me = MoodEvent.getMoodEventFromJson(e.getAsJsonObject());
+                        moods.add(me);
                     }
                     callback.accept(moods);
                 });

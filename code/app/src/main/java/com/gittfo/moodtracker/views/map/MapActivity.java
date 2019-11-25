@@ -234,7 +234,14 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
      */
     private void updateInfoBox(MoodEvent moodEvent, LatLng pos) {
         TextView usernameView = findViewById(R.id.map_user_name);
-        usernameView.setText(Database.get(this).getUserName());
+
+        String username = moodEvent.getUsername();
+        if (username == null) {
+            // mood event had null username, so it wasn't pulled from the followee list, so it's
+            // the local user.
+            username = Database.get(this).getUserName();
+        }
+        usernameView.setText(username);
 
         TextView location = findViewById(R.id.map_location_text);
         location.setText(posToString(pos));

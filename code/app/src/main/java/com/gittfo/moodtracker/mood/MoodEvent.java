@@ -57,6 +57,9 @@ public class MoodEvent implements Serializable {
     private double latitude;
     private double longitude;
 
+    // an optional field, when we get "folowee" moods from the database, store the username here
+    private String username;
+
     // ID used for Firebase
     @Exclude
     private String id;
@@ -205,6 +208,8 @@ public class MoodEvent implements Serializable {
                 lon != null ? lon : Double.NaN
         );
         moodEvent.setId(id);
+
+        moodEvent.setUsername(ownerUsername); // store username for later display on the map
         return moodEvent;
     }
     
@@ -375,4 +380,19 @@ public class MoodEvent implements Serializable {
         this.latitude = latitude;
     }
 
+
+    /**
+     * Set the name of the user who created this mood.
+     * @param username the User's name.
+     */
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    /**
+     * @return the username of the user who created this mood.
+     */
+    public String getUsername() {
+        return username;
+    }
 }
