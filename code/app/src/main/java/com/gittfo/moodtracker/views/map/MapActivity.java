@@ -115,9 +115,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         Database.get(this).getFolloweeMoods(
                 moods -> {
                     moodEvents.clear();
-                    for (MoodEvent me : moods) {
-                        moodEvents.add(me);
-                    }
+                    moodEvents.addAll(moods);
                     showMoodEvents(moodEvents);
                 }
         );
@@ -158,8 +156,11 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         }
         markers.clear();
 
-        // nothing to show
-        if (moodEvents.isEmpty()) {
+        // if there's no mood events with a valid location, don't show anything
+        if (!moodEventList
+                .stream()
+                .anyMatch(m -> !(Double.isNaN(m.getLatitude()) || Double.isNaN(m.getLongitude()))))
+        {
             clearInfoBox();
             return;
         }
@@ -168,7 +169,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         LatLng lastPos = null;
         for (MoodEvent moodEvent : moodEventList) {
 
-            if (moodEvent.getLatitude() == Double.NaN || moodEvent.getLongitude() == Double.NaN) {
+            if (Double.isNaN(moodEvent.getLatitude()) || Double.isNaN(moodEvent.getLongitude())) {
                 // this mood doesn't have a valid location
                 continue;
             }
