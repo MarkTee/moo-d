@@ -47,7 +47,8 @@ public class FollowDialog {
 
         sendRequestButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                sendRequest(userFollowEditText.getText().toString());
+                String followee = userFollowEditText.getText().toString();
+                sendRequest(followee);
             }
         });
 
