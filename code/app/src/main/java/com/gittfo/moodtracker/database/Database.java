@@ -122,6 +122,7 @@ public class Database {
                     List<MoodEvent> me = new ArrayList<>();
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         MoodEvent v = MoodEvent.getMoodEventFromFirebase(document);
+                        Log.d(TAG, "Adding " + v.toString());
                         if (v != null) {
                             me.add(v);
                         }
@@ -233,7 +234,8 @@ public class Database {
                     JsonArray data = j.parse(res).getAsJsonArray();
                     List<MoodEvent> moods = new ArrayList<>(data.size());
                     for (JsonElement e : data) {
-                        moods.add(MoodEvent.getMoodEventFromJson(e.getAsJsonObject()));
+                        MoodEvent me = MoodEvent.getMoodEventFromJson(e.getAsJsonObject());
+                        moods.add(me);
                     }
                     callback.accept(moods);
                 });

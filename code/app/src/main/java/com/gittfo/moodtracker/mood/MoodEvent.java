@@ -4,6 +4,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Exclude;
 import com.google.gson.JsonObject;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Locale;
 import java.util.function.Supplier;
@@ -14,7 +15,7 @@ import java.util.function.Supplier;
  * an optional reason for that emotional state, an optional description of the Social Situation that
  * the User was in at time of entry, an optional picture, and an optional location.
  */
-public class MoodEvent {
+public class MoodEvent implements Serializable {
 
     public static final int HAPPY_INDEX = 0;
     public static final int SAD_INDEX = 1;
@@ -55,6 +56,9 @@ public class MoodEvent {
     // The location the event was created
     private double latitude;
     private double longitude;
+
+    // an optional field, when we get "folowee" moods from the database, store the username here
+    private String username;
 
     // ID used for Firebase
     @Exclude
@@ -204,6 +208,8 @@ public class MoodEvent {
                 lon != null ? lon : Double.NaN
         );
         moodEvent.setId(id);
+
+        moodEvent.setUsername(ownerUsername); // store username for later display on the map
         return moodEvent;
     }
     
@@ -374,4 +380,19 @@ public class MoodEvent {
         this.latitude = latitude;
     }
 
+
+    /**
+     * Set the name of the user who created this mood.
+     * @param username the User's name.
+     */
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    /**
+     * @return the username of the user who created this mood.
+     */
+    public String getUsername() {
+        return username;
+    }
 }

@@ -102,12 +102,13 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="5dp"
-                android:src="@drawable/ic_map_white_32dp"
                 android:background="#00000000"
-                app:layout_constraintTop_toTopOf="parent"
+                android:onClick="startMapActivity"
+                android:src="@drawable/ic_map_white_32dp"
                 app:layout_constraintBottom_toTopOf="@+id/maps_textView"
                 app:layout_constraintEnd_toStartOf="@+id/profile_menu_item"
-                app:layout_constraintStart_toEndOf="@+id/placeholder" />
+                app:layout_constraintStart_toEndOf="@+id/placeholder"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/maps_textView"
