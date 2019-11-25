@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.Toast;
@@ -19,9 +18,6 @@ import com.gittfo.moodtracker.database.Database;
 import com.gittfo.moodtracker.mood.MoodEvent;
 import com.gittfo.moodtracker.mood.MoodHistoryAdapter;
 import com.gittfo.moodtracker.views.addmood.AddMoodEventActivity;
-import com.gittfo.moodtracker.views.addmood.InboxActivity;
-import com.gittfo.moodtracker.views.ProfileActivity;
-import com.google.firebase.firestore.auth.FirebaseAuthCredentialsProvider;
 
 import java.util.ArrayList;
 
