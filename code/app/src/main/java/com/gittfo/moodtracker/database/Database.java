@@ -446,7 +446,7 @@ public class Database {
                 .document(username)
                 .get().addOnSuccessListener(doc -> {
                     if (doc.exists()) {
-                        callback.accept(doc.getString("name"));
+                        callback.accept(doc.getString("id"));
                     } else {
                         callback.accept(null);
                     }
