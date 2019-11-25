@@ -74,6 +74,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         if (bundle != null) {
             MoodHistoryWrapper wrapper = bundle.getParcelable(MOOD_HISTORY_WRAPPER);
             moodEvents = wrapper.getMoodEventList();
+        } else {
+            moodEvents = new ArrayList<MoodEvent>();
         }
 
         markers = new ArrayList<>();
