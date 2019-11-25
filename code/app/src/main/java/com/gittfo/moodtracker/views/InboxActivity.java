@@ -10,6 +10,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.gittfo.moodtracker.views.addmood.AddMoodEventActivity;
+
 /**
  * This is an activity for users to manage their inbox, containing things like follow requests.
  */
@@ -69,6 +71,17 @@ public class InboxActivity extends AppCompatActivity {
             }
         }); // close setOnClickListener method
 
+    }
+
+    /**
+     * When the New MoodEvent Button (the '+' icon in the bottom-middle of the screen) is clicked,
+     * pass the user through to AddMoodEventActivity.
+     *
+     * @param view The New MoodEvent Button
+     */
+    public void createMoodEvent(View view) {
+        Intent i = new Intent(this, AddMoodEventActivity.class);
+        this.startActivity(i);
     }
 
     /**

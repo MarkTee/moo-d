@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.gittfo.moodtracker.database.Database;
 import com.gittfo.moodtracker.mood.MoodEvent;
 import com.gittfo.moodtracker.mood.MoodHistoryAdapter;
+import com.gittfo.moodtracker.views.addmood.AddMoodEventActivity;
 
 import java.util.ArrayList;
 
@@ -110,6 +111,17 @@ public class TimelineActivity extends AppCompatActivity {
     public void sendFollowRequest(View view) {
         FollowDialog followDialog = new FollowDialog(this);
         followDialog.show();
+    }
+
+    /**
+     * When the New MoodEvent Button (the '+' icon in the bottom-middle of the screen) is clicked,
+     * pass the user through to AddMoodEventActivity.
+     *
+     * @param view The New MoodEvent Button
+     */
+    public void createMoodEvent(View view) {
+        Intent i = new Intent(this, AddMoodEventActivity.class);
+        this.startActivity(i);
     }
 
     /**
