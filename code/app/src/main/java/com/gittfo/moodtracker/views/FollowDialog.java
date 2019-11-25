@@ -69,8 +69,17 @@ public class FollowDialog {
      * @param username The name of the user who will receive a Follow Request
      */
     public void sendRequest(String username) {
-        Database.get(this.c).followUser(username, b -> {
-            Log.d("JDBCLOUD", String.format("Attempted to follow {%s} - {%s}", username, b));
+        Database.get(this.c).getUserIdFromUsername(username, userId -> {
+            Log.d("JDBCLOUD", String.format("Retrieved {%s}'s userid: {%s}", username, userId));
+
+            if (userId == null) {
+                Log.d("JDBCLOUD", String.format("{%s} does not exist. Unable to follow.", username, userId));
+                return;
+            }
+
+            Database.get(this.c).followUser(userId, b -> {
+                Log.d("JDBCLOUD", String.format("Attempted to follow {%s} - {%s}", username, b));
+            });
         });
     }
 }
