@@ -33,7 +33,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".InboxActivity" />
-        <activity android:name=".ProfileActivity" />
+        <activity android:name=".ChangeUsernameActivity" />
         <activity android:name=".TimelineActivity" />
     </application>
 

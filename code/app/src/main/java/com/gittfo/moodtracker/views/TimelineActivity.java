@@ -17,6 +17,14 @@ public class TimelineActivity extends AppCompatActivity {
 
         // Hide the ActionBar
         getSupportActionBar().hide();
+
+        // Handle Follow Button
+        findViewById(R.id.follow_button).setOnClickListener(v -> following(v));
+    }
+
+    public void following(View view) {
+        FollowDialog followDialog = new FollowDialog(this);
+        followDialog.show();
     }
 
     /**

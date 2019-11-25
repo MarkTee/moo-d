@@ -34,7 +34,7 @@ public class FilterDialog {
         LayoutInflater inflater = c.getLayoutInflater();
 
 
-        builder.setView(inflater.inflate(R.layout.mood_filter, null));
+        builder.setView(inflater.inflate(R.layout.filter_dialog, null));
         builder.setTitle("Filter Moods");
         Log.d("JUI", "Making builder");
         filterDialog = builder.create();
