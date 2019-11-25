@@ -167,7 +167,6 @@ public class MainActivity extends AppCompatActivity {
      * @param view the Inbox button.
      */
     public void startProfileActivity(View view){
-        ;
     }
 
     /**

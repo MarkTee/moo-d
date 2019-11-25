@@ -38,7 +38,6 @@ public class TimelineActivity extends AppCompatActivity {
      * @param view the Inbox button.
      */
     public void startTimelineActivity(View view) {
-        ;
     }
 
     /**
@@ -55,23 +54,23 @@ public class TimelineActivity extends AppCompatActivity {
      * When the "profile" button is pressed, go to the profile activity.
      * @param view the Profile button.
      */
-    public void startProfileActivity(View view){
+    public void startProfileActivity(View view) {
         // don't animate transition between activities
         Intent i = new Intent(this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         this.startActivity(i);
     }
 
-    public void startSigninActivity(View view){
+    public void startSigninActivity(View view) {
         Intent i = new Intent(this, SigninActivity.class);
         this.startActivity(i);
     }
 
-    public void startUsernameActivity(View view){
+    public void startUsernameActivity(View view) {
         Intent i = new Intent(this, ChangeUsernameActivity.class);
         this.startActivity(i);
     }
 
-    public void dropdownPressed(View view){
+    public void dropdownPressed(View view) {
         dropDownButton = (ImageButton) findViewById(R.id.settings_button);
         dropDownButton.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -91,7 +91,6 @@ public class InboxActivity extends AppCompatActivity {
      * @param view the Inbox button.
      */
     public void startInboxActivity(View view) {
-        ;
     }
 
     /**
