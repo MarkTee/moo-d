@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<MoodEvent> moodHistory;
 
     private ImageButton dropDownButton;
+    private ColorSchemeDialog colorDialog;
 
 
     /**
@@ -58,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.MonochromeTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -214,10 +214,7 @@ public class MainActivity extends AppCompatActivity {
                                 break;
                             case (R.id.dropdown_two):
                                 // change color scheme
-                                //TODO: color scheme change functionality
-                                Toast.makeText(MainActivity.this,
-                                        "Coming soon!",
-                                        Toast.LENGTH_SHORT).show();
+                                onChangeColorSchemePressed();
                                 break;
                             case (R.id.dropdown_three):
                                 //TODO: fix log out functionality
@@ -230,6 +227,12 @@ public class MainActivity extends AppCompatActivity {
                 popup.show(); // show popup menu
             }
         }); // close setOnClickListener method
+    }
+
+    public void onChangeColorSchemePressed(){
+        colorDialog = new ColorSchemeDialog(this);
+        colorDialog.show();
+
     }
 
     /**

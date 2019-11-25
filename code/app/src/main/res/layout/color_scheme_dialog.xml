@@ -21,38 +21,38 @@
         tools:context=".GridXMLActivity">
 
         <Button
-            android:id="@+id/happy_mood_button"
+            android:id="@+id/default_theme_button"
             android:layout_row="0"
             android:layout_column="0"
             android:layout_gravity="fill"
-            android:backgroundTint="#3F98C0"
+            android:backgroundTint="@color/design_default_color_background"
             android:text="Default Theme"
             android:textColor="#000000" />
 
         <Button
-            android:id="@+id/sad_mood_button"
+            android:id="@+id/neon_theme_button"
             android:layout_row="0"
             android:layout_column="1"
             android:layout_gravity="fill"
-            android:backgroundTint="#13CA91"
+            android:backgroundTint="@color/design_default_color_background"
             android:text="Neon"
             android:textColor="#000000" />
 
         <Button
-            android:id="@+id/surprised_mood_button"
+            android:id="@+id/pastel_theme_button"
             android:layout_row="1"
             android:layout_column="1"
             android:layout_gravity="fill"
-            android:backgroundTint="#9BA3A7"
+            android:backgroundTint="@color/design_default_color_background"
             android:text="Monochrome"
             android:textColor="#000000" />
 
         <Button
-            android:id="@+id/afraid_mood_button"
+            android:id="@+id/monochrome_theme_button"
             android:layout_row="1"
             android:layout_column="0"
             android:layout_gravity="fill"
-            android:backgroundTint="#A2D1F1"
+            android:backgroundTint="@color/design_default_color_background"
             android:text="Pastel"
             android:textColor="#000000" />
 
