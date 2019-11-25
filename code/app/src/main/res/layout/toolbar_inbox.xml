@@ -4,8 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="?attr/actionBarSize"
-    android:layout_gravity="center_horizontal">
+    android:layout_height="match_parent">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/inbox_toolbar"
@@ -13,9 +12,7 @@
         android:layout_height="wrap_content"
         android:background="@color/colorToolbar"
         android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        android:layout_gravity="center_horizontal"
-        tools:layout_editor_absoluteY="1dp">
+        android:theme="?attr/actionBarTheme">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

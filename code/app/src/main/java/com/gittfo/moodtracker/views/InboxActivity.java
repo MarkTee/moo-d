@@ -11,6 +11,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.gittfo.moodtracker.views.addmood.AddMoodEventActivity;
+import com.gittfo.moodtracker.views.map.MapActivity;
+import com.gittfo.moodtracker.views.map.MoodHistoryWrapper;
 
 /**
  * This is an activity for users to manage their inbox, containing things like follow requests.
@@ -113,6 +115,15 @@ public class InboxActivity extends AppCompatActivity {
     public void startProfileActivity(View view){
         // don't animate transition between activities
         Intent i = new Intent(this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        this.startActivity(i);
+    }
+
+    /**
+     * When the "map" button is pressed, go the map-viewing activity.
+     * @param view the Map button.
+     */
+    public void startMapActivity(View view) {
+        Intent i = new Intent(this, MapActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         this.startActivity(i);
     }
 
