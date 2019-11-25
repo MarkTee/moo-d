@@ -20,7 +20,7 @@ import com.gittfo.moodtracker.mood.MoodEvent;
 import com.gittfo.moodtracker.mood.MoodHistoryAdapter;
 import com.gittfo.moodtracker.views.addmood.AddMoodEventActivity;
 import com.gittfo.moodtracker.views.addmood.InboxActivity;
-import com.gittfo.moodtracker.views.addmood.ProfileActivity;
+import com.gittfo.moodtracker.views.ProfileActivity;
 import com.google.firebase.firestore.auth.FirebaseAuthCredentialsProvider;
 
 import java.util.ArrayList;
@@ -137,7 +137,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * When the "inbox" button is pressed, go to the inbox-managing activity.
+     * When the "timeline" button is pressed, go to the inbox-managing activity.
+     * @param view the Inbox button.
+     */
+    public void startTimelineActivity(View view) {
+        // don't animate transition between activities
+        Intent i = new Intent(this, TimelineActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        this.startActivity(i);
+    }
+
+    /**
+     * When the "inbox" button is pressed, go to the inbox activity.
      * @param view the Inbox button.
      */
     public void startInboxActivity(View view) {
@@ -147,12 +157,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * When the "profile" button is pressed, go to the profile-managing activity.
-     * @param view the Profile button.
+     * When the "profile" button is pressed, don't do anything (since we're already in MainActivity)
+     * @param view the Inbox button.
      */
     public void startProfileActivity(View view){
-        Intent i = new Intent(this, ProfileActivity.class);
-        this.startActivity(i);
+        ;
     }
 
     public void startSigninActivity(View view){

@@ -32,8 +32,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".addmood.InboxActivity" />
-        <activity android:name=".addmood.ProfileActivity" />
+        <activity android:name=".InboxActivity" />
+        <activity android:name=".ProfileActivity" />
+        <activity android:name=".TimelineActivity" />
     </application>
 
 </manifest>
