@@ -58,7 +58,6 @@ public class TimelineActivity extends AppCompatActivity {
         moodView.setAdapter(moodHistoryAdapter);
         getFromDB();
 
-
         filterDialog = new FilterDialog(this);
         findViewById(R.id.toolbar_filter_button).setOnClickListener(v -> filterDialog.show());
     }
