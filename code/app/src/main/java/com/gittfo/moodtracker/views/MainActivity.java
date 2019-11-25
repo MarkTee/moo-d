@@ -167,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void dropdownPressed(View view){
-        dropDownButton = (ImageButton) findViewById(R.id.settings_button);
+        dropDownButton = findViewById(R.id.settings_button);
         dropDownButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -204,6 +204,14 @@ public class MainActivity extends AppCompatActivity {
                 popup.show(); // show popup menu
             }
         }); // close setOnClickListener method
+    }
 
+    /**
+     * For smoother transitions between activities, disable animations when the back button is pressed.
+     */
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(0, 0);
     }
 }

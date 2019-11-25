@@ -98,4 +98,13 @@ public class InboxActivity extends AppCompatActivity {
         Intent i = new Intent(this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         this.startActivity(i);
     }
+
+    /**
+     * For smoother transitions between activities, disable animations when the back button is pressed.
+     */
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(0, 0);
+    }
 }
