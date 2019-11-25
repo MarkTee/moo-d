@@ -51,6 +51,23 @@
         <item name="colorImageButtonTint">#FFFFFF</item>
     </style>
 
+    <!-- Monochrome application theme. -->
+    <style name="MonochromeTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">#9E75FF</item>
+        <item name="colorPrimaryDark">#00574B</item>
+        <item name="colorSecondary">#ED5AB4</item>
+        <item name="colorAccent">#728EEB</item>
+
+        <item name="colorToolbar">#495054</item>
+        <item name="colorButton">#9ba8ae</item>
+        <item name="colorBottomAppBar">#495054</item>
+        <item name="colorFloatingActionButton">#707a7e</item>
+
+        <item name="colorDominantText">#FFFFFF</item>
+        <item name="colorImageButtonTint">#FFFFFF</item>
+    </style>
+
 
 
 </resources>
