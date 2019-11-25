@@ -167,7 +167,6 @@ public class MainActivity extends AppCompatActivity {
      * @param view the Inbox button.
      */
     public void startProfileActivity(View view){
-        ;
     }
 
     /**
@@ -175,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
      * @param view the Map button.
      */
     public void startMapActivity(View view) {
-        Intent i = new Intent(this, MapActivity.class);
+        Intent i = new Intent(this, MapActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         MoodHistoryWrapper wrapper = new MoodHistoryWrapper(moodHistory);
         i.putExtra(MapActivity.MOOD_HISTORY_WRAPPER, wrapper);
         this.startActivity(i);
@@ -193,7 +192,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void dropdownPressed(View view){
-        dropDownButton = (ImageButton) findViewById(R.id.settings_button);
+        dropDownButton = findViewById(R.id.settings_button);
         dropDownButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -230,5 +229,14 @@ public class MainActivity extends AppCompatActivity {
                 popup.show(); // show popup menu
             }
         }); // close setOnClickListener method
+    }
+
+    /**
+     * For smoother transitions between activities, disable animations when the back button is pressed.
+     */
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(0, 0);
     }
 }

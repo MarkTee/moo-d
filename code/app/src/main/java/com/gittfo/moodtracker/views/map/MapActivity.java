@@ -1,5 +1,6 @@
 package com.gittfo.moodtracker.views.map;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.PorterDuff;
@@ -16,7 +17,10 @@ import androidx.fragment.app.FragmentActivity;
 import com.gittfo.moodtracker.database.Database;
 import com.gittfo.moodtracker.mood.Mood;
 import com.gittfo.moodtracker.mood.MoodEvent;
+import com.gittfo.moodtracker.views.InboxActivity;
+import com.gittfo.moodtracker.views.MainActivity;
 import com.gittfo.moodtracker.views.R;
+import com.gittfo.moodtracker.views.TimelineActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -70,6 +74,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         if (bundle != null) {
             MoodHistoryWrapper wrapper = bundle.getParcelable(MOOD_HISTORY_WRAPPER);
             moodEvents = wrapper.getMoodEventList();
+        } else {
+            moodEvents = new ArrayList<MoodEvent>();
         }
 
         markers = new ArrayList<>();
@@ -275,5 +281,42 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
         TextView moodText = findViewById(R.id.map_mood_text);
         moodText.setText("");
+    }
+
+    /**
+     * When the "timeline" button is pressed, go to the inbox-managing activity.
+     * @param view the Inbox button.
+     */
+    public void startTimelineActivity(View view) {
+        // don't animate transition between activities
+        Intent i = new Intent(this, TimelineActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        this.startActivity(i);
+    }
+
+    /**
+     * When the "inbox" button is pressed, go to the inbox activity.
+     * @param view the Inbox button.
+     */
+    public void startInboxActivity(View view) {
+        // don't animate transition between activities
+        Intent i = new Intent(this, InboxActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        this.startActivity(i);
+    }
+
+    /**
+     * When the "profile" button is pressed, go to the inbox activity.
+     * @param view the Inbox button.
+     */
+    public void startProfileActivity(View view){
+        // don't animate transition between activities
+        Intent i = new Intent(this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        this.startActivity(i);
+    }
+
+    /**
+     * When the "map" button is pressed,  don't do anything (since we're already in MapActivity)
+     * @param view the Map button.
+     */
+    public void startMapActivity(View view) {
     }
 }

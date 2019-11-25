@@ -2,11 +2,11 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="?attr/actionBarSize">
+    android:layout_height="match_parent">
 
     <include
         android:id="@+id/tool_bar"
-        layout="@layout/inbox_toolbar" />
+        layout="@layout/toolbar_inbox" />
 
     <include
         android:id="@id/bottom_app_bar_layout"
