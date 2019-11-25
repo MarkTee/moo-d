@@ -6,7 +6,7 @@
 
     <include
         android:id="@+id/tool_bar"
-        layout="@layout/inbox_toolbar" />
+        layout="@layout/toolbar_inbox" />
 
     <include
         android:id="@id/bottom_app_bar_layout"

@@ -10,7 +10,7 @@
     <!-- Include Profile toolbar -->
     <include
         android:id="@+id/tool_bar"
-        layout="@layout/timeline_toolbar" />
+        layout="@layout/toolbar_timeline" />
 
     <!-- Followed Users' MoodEvents RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView

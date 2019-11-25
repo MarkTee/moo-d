@@ -7,7 +7,7 @@
 
     <include
         android:id="@+id/tool_bar"
-        layout="@layout/map_toolbar"
+        layout="@layout/toolbar_map"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
