@@ -174,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
      * @param view the Map button.
      */
     public void startMapActivity(View view) {
-        Intent i = new Intent(this, MapActivity.class);
+        Intent i = new Intent(this, MapActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         MoodHistoryWrapper wrapper = new MoodHistoryWrapper(moodHistory);
         i.putExtra(MapActivity.MOOD_HISTORY_WRAPPER, wrapper);
         this.startActivity(i);
