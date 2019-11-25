@@ -70,7 +70,7 @@ public class AddMoodEventActivity extends AppCompatActivity  {
     private Mood.EmotionalState emotionalState = null;
 
     // Get the current date and time, which are used when creating a new MoodEvent
-    private Date date = new Date();
+    //
 
     // The Mood Event that's currently being changed
     private MoodEvent moodEvent;
@@ -140,7 +140,7 @@ public class AddMoodEventActivity extends AppCompatActivity  {
         this.moodEvent = new MoodEvent(
                 null,
                 null,
-                date,
+                new Date(),
                 MoodEvent.SocialSituation.NA,
                 null,
                 Double.NaN,
@@ -162,9 +162,9 @@ public class AddMoodEventActivity extends AppCompatActivity  {
 
         // Format date and time for display
         Format dateFormat = new SimpleDateFormat("MMMM dd, yyyy");
-        String mDate = dateFormat.format(date);
+        String mDate = dateFormat.format(moodEvent.getDate());
         Format timeFormat = new SimpleDateFormat("h:mm a");
-        String mTime = timeFormat.format(date);
+        String mTime = timeFormat.format(moodEvent.getDate());
 
         // Display date and time. If creating a new mood event, the current date and time will be
         // shown. If editing an existing mood event, its date and time will be shown.
@@ -183,15 +183,12 @@ public class AddMoodEventActivity extends AppCompatActivity  {
             Button deleteButton = findViewById(R.id.delete_mood_event_button);
             deleteButton.setVisibility(View.VISIBLE);
 
-            // Display current MoodEvent's date/time
-            date = moodEvent.getDate();
-
             // Reuse this code here to catch any delay when fetching a MoodEvent from the database
             // Format date and time for display
             Format dateFormat = new SimpleDateFormat("MMMM dd, yyyy");
-            String mDate = dateFormat.format(date);
+            String mDate = dateFormat.format(moodEvent.getDate());
             Format timeFormat = new SimpleDateFormat("h:mm a");
-            String mTime = timeFormat.format(date);
+            String mTime = timeFormat.format(moodEvent.getDate());
 
             // Display date and time. If creating a new mood event, the current date and time will be
             // shown. If editing an existing mood event, its date and time will be shown.
