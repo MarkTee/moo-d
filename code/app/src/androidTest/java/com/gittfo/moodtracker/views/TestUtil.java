@@ -19,9 +19,9 @@ import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
+import static org.testng.Assert.fail;
 
 public class TestUtil {
-
 
     public static void saveMoodEvent() {
         onView(allOf(
@@ -124,6 +124,36 @@ public class TestUtil {
 
     }
 
+    public static void clickEdit(int position){
+        onView(
+                allOf(TestUtil.getElementFromMatchAtPosition(allOf(
+                        withId(R.id.edit_button),
+                        withContentDescription("edit mood button"),
+                        isDisplayed()), position))
+        ).perform(click());
+    }
+
+    public static void editMood(int position, String mood) {
+        clickEdit(position);
+
+        if (mood == "HAPPY")
+            selectHappy();
+        else if (mood == "SAD")
+            selectSad();
+        else if (mood == "AFRAID")
+            selectAfraid();
+        else if (mood == "SURPRISED")
+            selectSurprised();
+        else if (mood == "DISGUSTED")
+            selectDisgusted();
+        else if (mood == "ANGRY")
+            selectAngry();
+        else fail();
+
+        checkMood(mood, position);
+
+    }
+
     public static void deleteMoodAtPosition(int position) {
         onView(
                 allOf(TestUtil.getElementFromMatchAtPosition(allOf(
@@ -170,6 +200,24 @@ public class TestUtil {
         clickPlusButton();
         selectAngry();
         saveMoodEvent();
+    }
+
+    public static void checkCommentAtPosition(String comment, int position){
+        onView(
+                allOf(TestUtil.getElementFromMatchAtPosition(allOf(
+                        withId(R.id.user_reason_textView),
+                        withText(comment),
+                        isDisplayed()), position))
+        );
+    }
+
+    public static void checkPeopleAtPosition(String num, int position){
+        onView(
+                allOf(TestUtil.getElementFromMatchAtPosition(allOf(
+                        withId(R.id.num_people_textView),
+                        withText(num),
+                        isDisplayed()), position))
+        );
     }
 
     public static void checkMood(String mood, int position) {
