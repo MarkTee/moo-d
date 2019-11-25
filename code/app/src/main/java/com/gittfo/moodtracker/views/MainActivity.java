@@ -18,8 +18,14 @@ import com.gittfo.moodtracker.database.Database;
 import com.gittfo.moodtracker.mood.MoodEvent;
 import com.gittfo.moodtracker.mood.MoodHistoryAdapter;
 import com.gittfo.moodtracker.views.addmood.AddMoodEventActivity;
+import com.gittfo.moodtracker.views.map.MapActivity;
+import com.gittfo.moodtracker.views.map.MoodHistoryWrapper;
+import com.google.android.gms.tasks.Task;
 
+
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The main activity of the app. In this activity, the user is able to see their MoodHistory, which
@@ -105,7 +111,11 @@ public class MainActivity extends AppCompatActivity {
     public void getFromDB() {
         // Get all moods from the database
         Log.d("JDB", "Getting Moods");
+        Task<List<MoodEvent>> task = Database.get(this).getMoods();
+        //List<MoodEvent> moodl = task.getResult();
+
         Database.get(this).getMoods().addOnSuccessListener(moods -> {
+            Log.d("JDB", "Success");
             moodHistory.clear();
             for(MoodEvent ev : moods) {
                 // add events to the mood history
@@ -160,6 +170,17 @@ public class MainActivity extends AppCompatActivity {
         ;
     }
 
+    /**
+     * When the "map" button is pressed, go the map-viewing activity.
+     * @param view the Map button.
+     */
+    public void startMapActivity(View view) {
+        Intent i = new Intent(this, MapActivity.class);
+        MoodHistoryWrapper wrapper = new MoodHistoryWrapper(moodHistory);
+        i.putExtra(MapActivity.MOOD_HISTORY_WRAPPER, wrapper);
+        this.startActivity(i);
+    }
+
     public void startSigninActivity(View view){
         Intent i = new Intent(this, SigninActivity.class);
         this.startActivity(i);
@@ -209,6 +230,5 @@ public class MainActivity extends AppCompatActivity {
                 popup.show(); // show popup menu
             }
         }); // close setOnClickListener method
-
     }
 }
