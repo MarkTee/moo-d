@@ -10,6 +10,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.gittfo.moodtracker.views.addmood.AddMoodEventActivity;
+
 /**
  * This is an activity for users to manage their inbox, containing things like follow requests.
  */
@@ -77,6 +79,17 @@ public class InboxActivity extends AppCompatActivity {
     }
 
     /**
+     * When the New MoodEvent Button (the '+' icon in the bottom-middle of the screen) is clicked,
+     * pass the user through to AddMoodEventActivity.
+     *
+     * @param view The New MoodEvent Button
+     */
+    public void createMoodEvent(View view) {
+        Intent i = new Intent(this, AddMoodEventActivity.class);
+        this.startActivity(i);
+    }
+
+    /**
      * When the "inbox" button is pressed, don't do anything (since we're already in InboxActivity)
      * @param view the Inbox button.
      */
@@ -101,5 +114,14 @@ public class InboxActivity extends AppCompatActivity {
         // don't animate transition between activities
         Intent i = new Intent(this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         this.startActivity(i);
+    }
+
+    /**
+     * For smoother transitions between activities, disable animations when the back button is pressed.
+     */
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(0, 0);
     }
 }

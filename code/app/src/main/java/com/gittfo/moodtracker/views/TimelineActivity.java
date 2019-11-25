@@ -2,6 +2,7 @@ package com.gittfo.moodtracker.views;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -9,12 +10,26 @@ import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.gittfo.moodtracker.database.Database;
+import com.gittfo.moodtracker.mood.MoodEvent;
+import com.gittfo.moodtracker.mood.MoodHistoryAdapter;
+import com.gittfo.moodtracker.views.addmood.AddMoodEventActivity;
+
+import java.util.ArrayList;
 
 /**
  * Contains the most recent MoodEvents of a user's followed users
  */
 public class TimelineActivity extends AppCompatActivity {
 
+    private RecyclerView moodView;
+    private MoodHistoryAdapter moodHistoryAdapter;
+    private FilterDialog filterDialog;
+    private ArrayList<MoodEvent> followeesMoods;
     private ImageButton dropDownButton;
 
     protected void onCreate(Bundle savedInstanceState){
@@ -25,12 +40,91 @@ public class TimelineActivity extends AppCompatActivity {
         getSupportActionBar().hide();
 
         // Handle Follow Button
-        findViewById(R.id.follow_button).setOnClickListener(v -> following(v));
+        findViewById(R.id.follow_button).setOnClickListener(v -> sendFollowRequest(v));
+
+        // initialize the mood history
+        followeesMoods = new ArrayList<>();
+
+        // setup the RecyclerView
+        moodView = findViewById(R.id.followed_moodevents_view);
+        moodView.addItemDecoration(new DividerItemDecoration(moodView.getContext(), DividerItemDecoration.VERTICAL));
+        // use a linear layout manager
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        moodView.setLayoutManager(layoutManager);
+
+        moodHistoryAdapter = new MoodHistoryAdapter(this, followeesMoods);
+        moodView.setAdapter(moodHistoryAdapter);
+        getFromDB();
+
+
+        filterDialog = new FilterDialog(this);
+        findViewById(R.id.toolbar_filter_button).setOnClickListener(v -> filterDialog.show());
     }
 
-    public void following(View view) {
+    /**
+     * Apply any MoodHistory filters that the user has set
+     *
+     * @param v The view that the method has been called from
+     */
+    public void applyFilters(View v) {
+//        getFromDB();
+        filterDialog.cancel();
+    }
+
+    /**
+     * Show all of the user's MoodEvents (i.e. clear any MoodHistory filters that the user has set)
+     *
+     * @param v The view that the method has been called from
+     */
+    public void showAllMoods(View v) {
+        filterDialog.setAllSet();
+//        getFromDB();
+    }
+
+    /**
+     * Get all moods from the database, then update the RecyclerView in order to display them.
+     */
+    public void getFromDB() {
+        // Get all followee's most recent moods from the database
+        Log.d("JDB", "Getting Followee's Most Recent Moods");
+        Database.get(this).getFolloweeMoods(moods -> {
+            for(MoodEvent ev : moods) {
+                // add events to the mood history
+                if (filterDialog.isFiltered(ev.getMood().ordinal())) {
+                    followeesMoods.add(ev);
+                }
+                Log.d("JDB", ev.toString());
+            }
+            followeesMoods.sort((b, a) -> a.getDate().compareTo(b.getDate()));
+            // Update the RecyclerView so that any new moods can be displayed
+            moodHistoryAdapter.notifyDataSetChanged();
+        });
+    }
+
+    /**
+     * Each time the user returns to this activity, update the RecyclerView with moods from the
+     * database.
+     */
+    @Override
+    protected void onResume() {
+        super.onResume();
+//        getFromDB();
+    }
+
+    public void sendFollowRequest(View view) {
         FollowDialog followDialog = new FollowDialog(this);
         followDialog.show();
+    }
+
+    /**
+     * When the New MoodEvent Button (the '+' icon in the bottom-middle of the screen) is clicked,
+     * pass the user through to AddMoodEventActivity.
+     *
+     * @param view The New MoodEvent Button
+     */
+    public void createMoodEvent(View view) {
+        Intent i = new Intent(this, AddMoodEventActivity.class);
+        this.startActivity(i);
     }
 
     /**
@@ -60,7 +154,17 @@ public class TimelineActivity extends AppCompatActivity {
         this.startActivity(i);
     }
 
-    public void startSigninActivity(View view) {
+
+    /**
+     * For smoother transitions between activities, disable animations when the back button is pressed.
+     */
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(0, 0);
+    }
+
+    public void startSigninActivity(View view){
         Intent i = new Intent(this, SigninActivity.class);
         this.startActivity(i);
     }
@@ -108,6 +212,5 @@ public class TimelineActivity extends AppCompatActivity {
                 popup.show(); // show popup menu
             }
         }); // close setOnClickListener method
-
     }
 }
