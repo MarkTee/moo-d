@@ -7,17 +7,12 @@ import com.gittfo.moodtracker.mood.MoodEvent;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonArray;
-import com.google.firebase.firestore.DocumentSnapshot; 
 import com.google.gson.*;
 
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import static org.mockito.Mockito.*;
-import org.mockito.*;
 
 import java.util.Date;
 import java.util.Locale;
-import java.util.function.Supplier;
 
 import static com.gittfo.moodtracker.mood.MoodEvent.socialSituationFromFirebaseString;
 import static com.gittfo.moodtracker.mood.MoodEvent.socialSituationFromString;
@@ -33,39 +28,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
  */
 public class MoodEventTest {
 
-    private Date date = new Date();
-    /**
-     * a mocked out Firebase docuemnt with some populated MoodEvent fields
-     * @return mocked Firebase DocumentSnapshot
-     */
-    public DocumentSnapshot getMocDoc(){
-        DocumentSnapshot mocDoc = mock(DocumentSnapshot.class);
-        when(mocDoc.getString("photoReference")).thenReturn("test_photo_ref");
-        when(mocDoc.getString("reason")).thenReturn("test_reason");
-        when(mocDoc.getDate("date")).thenReturn(this.date);
-        when(mocDoc.getString("socialSituation")).thenReturn("NA");
-        when(mocDoc.getString("mood")).thenReturn("ANGRY");
-        when(mocDoc.getDouble("latitude")).thenReturn(1.1);
-        when(mocDoc.getDouble("longitude")).thenReturn(2.2);
-        return mocDoc;
-    }
-
-    /**
-     * Return a default constructed mood event,
-     * also sets the date of the test suite
-     * @return a constructed mood event
-     */
-    public MoodEvent defaultMoodEvent(){
-        return new MoodEvent(
-                "test_photo_ref",
-                "test_reason",
-                date,
-                MoodEvent.SocialSituation.NA,
-                Mood.EmotionalState.ANGRY,
-                1.1,
-                2.2
-        );
-    }
+    private Date date;
 
     /**
      * Test socialSituationFromFirebaseString method, which is used to translate string
@@ -100,7 +63,23 @@ public class MoodEventTest {
     }
 
 
-
+    /**
+     * Return a default constructed mood event,
+     * also sets the date of the test suite
+     * @return a constructed mood event
+     */
+    public MoodEvent defaultMoodEvent(){
+        this.date = new Date();
+        return new MoodEvent(
+                "test_photo_ref",
+                "test_reason",
+                date,
+                MoodEvent.SocialSituation.NA,
+                null,
+                1.1,
+                2.2
+        );
+    }
 
     // Test MoodEvent's basic getters and setters
     @Test
@@ -124,7 +103,7 @@ public class MoodEventTest {
         assertEquals(test.getPhotoReference(), "test photo ref 2");
 
         //mood
-        assertEquals(test.getMood(), Mood.emotionalStateFromString("ANGRY"));
+        assertNull(test.getMood());
         test.setMood(Mood.EmotionalState.ANGRY);
         assertEquals(test.getMood(), Mood.EmotionalState.ANGRY);
 
@@ -193,8 +172,6 @@ public class MoodEventTest {
 
     }
 
-    
-     
     // test getMoodEventFromJson
     @Test
     public void jsonConverstionTest(){
@@ -216,31 +193,4 @@ public class MoodEventTest {
         expected.setUsername("colter");
         assertEquals(parsed.toStringFull(), expected.toStringFull());
     }
-
-
-    // Implicitly call safeGet function and assert the returned result is null
-    @Test
-    public void flowThroughSafeGet(){
-        String j  = "{}";
-        JsonElement jsonElement = new JsonParser().parse(j);
-        JsonObject jsonObject = jsonElement.getAsJsonObject();
-        MoodEvent parsed = MoodEvent.getMoodEventFromJson(jsonObject);
-        assertNull(parsed.getPhotoReference());
-
-        DocumentSnapshot mocDoc = getMocDoc();
-        when(mocDoc.getString("photoReference")).thenThrow(new UnsupportedOperationException());
-        MoodEvent exception = MoodEvent.getMoodEventFromFirebase(mocDoc);
-        assertNull(exception.getPhotoReference());
-    }
-
-
-    @Test
-    public void testy(){
-        DocumentSnapshot mocDoc = getMocDoc();
-        MoodEvent test = MoodEvent.getMoodEventFromFirebase(mocDoc);
-        assertEquals(test.toStringFull(), defaultMoodEvent().toStringFull());
-
-
-    }
-
 }
