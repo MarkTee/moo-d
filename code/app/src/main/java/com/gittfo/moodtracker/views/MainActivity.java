@@ -253,21 +253,28 @@ public class MainActivity extends AppCompatActivity {
 
         if (selectedButton == 0) {
             DEFAULT_THEME_ID = R.style.AppTheme;
-            filterDialog.cancel();
-            validateNewTheme();
         } else if (selectedButton == 1) {
             DEFAULT_THEME_ID = R.style.NeonTheme;
-            filterDialog.cancel();
-            validateNewTheme();
         } else if (selectedButton == 2) {
             DEFAULT_THEME_ID = R.style.MonochromeTheme;
-            filterDialog.cancel();
-            validateNewTheme();
         } else if (selectedButton == 3) {
             DEFAULT_THEME_ID = R.style.PastelTheme;
-            filterDialog.cancel();
-            validateNewTheme();
         }
+
+        filterDialog.cancel();
+        applyToAllActivities();
+        validateNewTheme();
+    }
+
+    public void applyToAllActivities() {
+        InboxActivity.setDefaultTheme(DEFAULT_THEME_ID);
+        TimelineActivity.setDefaultTheme(DEFAULT_THEME_ID);
+        MapActivity.setDefaultTheme(DEFAULT_THEME_ID);
+
+    }
+
+    public static void setDefaultTheme(int THEME_ID) {
+        DEFAULT_THEME_ID = THEME_ID;
     }
 
     /**

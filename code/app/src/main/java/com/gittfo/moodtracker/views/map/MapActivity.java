@@ -53,6 +53,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     // keep track of placed markers, since google maps doesn't, and we need to be able to clear them
     private ArrayList<Marker> markers;
 
+    private static int DEFAULT_THEME_ID = R.style.AppTheme;
+
     /**
      * Create a new map activity, set the view to the map view and call for a new map to populate
      * it. If we were passed a MoodHistoryWrapper, unwrap it and save the history for displaying.
@@ -61,6 +63,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
      */
     @Override
     protected void onCreate(Bundle savedInstance) {
+        setTheme(DEFAULT_THEME_ID);
         super.onCreate(savedInstance);
         setContentView(R.layout.maps_screen);
 
@@ -311,6 +314,10 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         // don't animate transition between activities
         Intent i = new Intent(this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         this.startActivity(i);
+    }
+
+    public static void setDefaultTheme(int THEME_ID) {
+        DEFAULT_THEME_ID = THEME_ID;
     }
 
     /**

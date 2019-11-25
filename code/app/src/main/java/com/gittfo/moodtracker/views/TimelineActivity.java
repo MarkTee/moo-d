@@ -34,7 +34,10 @@ public class TimelineActivity extends AppCompatActivity {
     private ArrayList<MoodEvent> followeesMoods;
     private ImageButton dropDownButton;
 
+    private static int DEFAULT_THEME_ID = R.style.AppTheme;
+
     protected void onCreate(Bundle savedInstanceState){
+        setTheme(DEFAULT_THEME_ID);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
 
@@ -162,6 +165,10 @@ public class TimelineActivity extends AppCompatActivity {
     public void startMapActivity(View view) {
         Intent i = new Intent(this, MapActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         this.startActivity(i);
+    }
+
+    public static void setDefaultTheme(int THEME_ID) {
+        DEFAULT_THEME_ID = THEME_ID;
     }
 
 
