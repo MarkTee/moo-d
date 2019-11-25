@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 
+import com.gittfo.moodtracker.database.Database;
+
 /**
  * This class implements a dialog that can be used to allow a user to follow another user, in order
  * to stay up to date with their most recent MoodEvent.
@@ -19,7 +21,7 @@ public class FollowDialog {
     private AlertDialog followDialog;
     private EditText userFollowEditText;
     private Button sendRequestButton;
-    Activity c;
+    private Activity c;
 
     /**
      * Create a new FollowDialog object
@@ -67,6 +69,8 @@ public class FollowDialog {
      * @param username The name of the user who will receive a Follow Request
      */
     public void sendRequest(String username) {
-        Log.d("JDB", String.format("Attempting to send Follow Request to: {%s}", username));
+        Database.get(this.c).followUser(username, b -> {
+            Log.d("JDBCLOUD", String.format("Attempted to follow {%s} - {%s}", username, b));
+        });
     }
 }
