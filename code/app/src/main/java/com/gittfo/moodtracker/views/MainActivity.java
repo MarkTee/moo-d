@@ -166,6 +166,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void startUsernameActivity(View view) {
+        Intent i = new Intent(this, ChangeUsernameActivity.class);
+        this.startActivity(i);
+    }
+
     public void dropdownPressed(View view){
         dropDownButton = (ImageButton) findViewById(R.id.settings_button);
         dropDownButton.setOnClickListener(new View.OnClickListener() {
@@ -184,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
                         switch(menuItem.getItemId()) {
                             case (R.id.dropdown_one):
                                 // change username
-                                startProfileActivity(view);
+                                startUsernameActivity(view);
                                 break;
                             case (R.id.dropdown_two):
                                 // change color scheme
