@@ -21,14 +21,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gittfo.moodtracker.database.Database;
 import com.gittfo.moodtracker.mood.Mood;
 import com.gittfo.moodtracker.mood.MoodEvent;
 import com.gittfo.moodtracker.views.R;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.material.snackbar.Snackbar;
@@ -67,18 +65,14 @@ public class AddMoodEventActivity extends AppCompatActivity  {
     private static final int IMAGE_HEIGHT = 150;
 
     // For getting the location
-    private GoogleApiClient googleApiClient;
     private FusedLocationProviderClient fusedLocationClient;
 
-    // Get the current date and time, which are used when creating a new Mood Event
-    private Date date = new Date();
-    // Use user input to create a new Mood Event
     private Mood.EmotionalState emotionalState = null;
-    private String reason = "";
-    private MoodEvent.SocialSituation socialSituation = null;
-    private String photoReference = "";
-    private double latitude;
-    private double longitude;
+
+    // Get the current date and time, which are used when creating a new MoodEvent
+    private Date date = new Date();
+
+    // The Mood Event that's currently being changed
     private MoodEvent moodEvent;
 
     // Buttons representing pre-defined moods and social situations that the user may choose from
@@ -139,9 +133,20 @@ public class AddMoodEventActivity extends AppCompatActivity  {
         socialSituationButtons = Arrays.asList(zeroButton, oneButton, twoPlusButton, crowdButton, naButton);
 
         naButton.setBackgroundColor(Color.parseColor("#008577"));
-        socialSituation = MoodEvent.SocialSituation.NA;
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+
+        // make an empty mood event
+        this.moodEvent = new MoodEvent(
+                null,
+                null,
+                date,
+                MoodEvent.SocialSituation.NA,
+                null,
+                Double.NaN,
+                Double.NaN
+        );
+
         // If editing, obtain the MoodEvent from the database
         String isEdit = this.getIntent().getStringExtra(EDIT_MOOD);
         if (isEdit != null) {
@@ -154,7 +159,6 @@ public class AddMoodEventActivity extends AppCompatActivity  {
         } else {
             getDeviceLocation(); // Gets the location
         }
-        // If the user is editing an existing MoodEvent, carry out the appropriate actions
 
         // Format date and time for display
         Format dateFormat = new SimpleDateFormat("MMMM dd, yyyy");
@@ -181,6 +185,21 @@ public class AddMoodEventActivity extends AppCompatActivity  {
 
             // Display current MoodEvent's date/time
             date = moodEvent.getDate();
+
+            // Reuse this code here to catch any delay when fetching a MoodEvent from the database
+            // Format date and time for display
+            Format dateFormat = new SimpleDateFormat("MMMM dd, yyyy");
+            String mDate = dateFormat.format(date);
+            Format timeFormat = new SimpleDateFormat("h:mm a");
+            String mTime = timeFormat.format(date);
+
+            // Display date and time. If creating a new mood event, the current date and time will be
+            // shown. If editing an existing mood event, its date and time will be shown.
+            TextView dateDisplay = findViewById(R.id.date_display);
+            dateDisplay.setText(mDate);
+            TextView timeDisplay = findViewById(R.id.time_display);
+            timeDisplay.setText(mTime);
+
 
             // Display current MoodEvent's emotional state
             emotionalState = moodEvent.getMood();
@@ -214,8 +233,7 @@ public class AddMoodEventActivity extends AppCompatActivity  {
             reasonEditText.setText(moodEvent.getReason());
 
             // Display current MoodEvent's social situation
-            socialSituation = moodEvent.getSocialSituation();
-            switch (socialSituation) {
+            switch (moodEvent.getSocialSituation()) {
                 case ZERO:
                     socialSituationButtons.get(ZERO_SOCIAL_INDEX).performClick();
                     break;
@@ -238,9 +256,8 @@ public class AddMoodEventActivity extends AppCompatActivity  {
             }
 
             // display current MoodEvent's photo
-            photoReference = moodEvent.getPhotoReference();
 
-            Database.get(this).downloadImage(photoReference, bitmap -> {
+            Database.get(this).downloadImage(this.moodEvent.getPhotoReference(), bitmap -> {
                 final int scaledHeight = IMAGE_HEIGHT;
                 int scaledWidth = (int) (((double)scaledHeight) / ((double)bitmap.getHeight()) * ((double)bitmap.getWidth()));
                 photoView.setImageBitmap(
@@ -313,6 +330,7 @@ public class AddMoodEventActivity extends AppCompatActivity  {
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,
                             Manifest.permission.ACCESS_FINE_LOCATION}, 0);
+            findViewById(R.id.save_mood_event_button).setEnabled(false);
             getDeviceLocation();
 
         }
@@ -336,11 +354,81 @@ public class AddMoodEventActivity extends AppCompatActivity  {
 
         // Get the selected social situation
         String selectedSocialSituationString = ((TextView) view).getText().toString();
-        socialSituation = MoodEvent.socialSituationFromString(selectedSocialSituationString);
+        this.moodEvent.setSocialSituation(
+                MoodEvent.socialSituationFromString(selectedSocialSituationString)
+        );
 
         // Add colour to the button that was just clicked
         int selectedColor = Color.parseColor("#008577");
         view.setBackgroundColor(selectedColor);
+    }
+
+    /**
+     * Applies a series of checks to the currently entered mood Event.
+     * If a check fail, an error dialog is raised, and returns false
+     * @return boolean if moodEvent isn't finished
+     */
+    private boolean failedMoodEventChecks(){
+        // Validate reason
+        if (!validReason(this.moodEvent.getReason())){
+            new AlertDialog.Builder(AddMoodEventActivity.this)
+                    .setTitle("Invalid Reason")
+                    .setMessage("Please ensure that your provided Reason is less than 20 characters and less than 3 words.")
+                    .setPositiveButton(android.R.string.ok, null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+            return true;
+        }
+
+        // Ensure that the user has selected an emotionalState
+        if (emotionalState == null) {
+            new AlertDialog.Builder(AddMoodEventActivity.this)
+                    .setTitle("Missing Information")
+                    .setMessage("Please select a mood.")
+                    .setPositiveButton(android.R.string.ok, null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+            return true;
+        }
+
+        // Ensure that the user has selected a social situation
+        if (this.moodEvent.getSocialSituation() == null) {
+            new AlertDialog.Builder(AddMoodEventActivity.this)
+                    .setTitle("Missing Information")
+                    .setMessage("Please select a social situation.")
+                    .setPositiveButton(android.R.string.ok, null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+            return true;
+        }
+
+        // All checks passed
+        return false;
+    }
+
+    /**
+     * Update this class' moodEvent with all values from the GUI if applicable
+     */
+    private void syncMoodEventWithGUI(){
+        moodEvent.setReason(reasonEditText.getText().toString());
+        moodEvent.setMood(emotionalState);
+        moodEvent.setLatitude(addLocation ? this.moodEvent.getLatitude() : Double.NaN);
+        moodEvent.setLongitude(addLocation ? this.moodEvent.getLongitude() : Double.NaN);
+    }
+
+    /**
+     * Add moodEvent to the database or update a moodEvent in the database
+     * depending if this activity is updating or creating a mood Event
+     */
+    private void pushMoodEventToDatabase(){
+        if (editing) {
+            // Save any changes to the MoodEvent to the database
+            Database.get(this).updateMoodEvent(moodEvent);
+        } else {
+            // Create the MoodEvent object
+            Log.d("JDB", "Adding new mood of type " + moodEvent.getMood().toString() + " to mood history.");
+            Database.get(this).addMoodEvent(moodEvent);
+        }
     }
 
     /**
@@ -349,57 +437,11 @@ public class AddMoodEventActivity extends AppCompatActivity  {
      * @param view The view that caused the method to be called
      */
     public void saveMoodEvent(View view) {
-        reason = reasonEditText.getText().toString();
-        if (!validReason(reason)){
-            new AlertDialog.Builder(AddMoodEventActivity.this)
-                    .setTitle("Invalid Reason")
-                    .setMessage("Please ensure that your provided Reason is less than 20 characters and less than 3 words.")
-                    .setPositiveButton(android.R.string.ok, null)
-                    .setIcon(android.R.drawable.ic_dialog_alert)
-                    .show();
+        syncMoodEventWithGUI();
+        if(failedMoodEventChecks()){
             return;
         }
-
-        if (editing) {
-            // Update all of the selected MoodEvent's attributes so that they reflect any changes
-            moodEvent.setMood(emotionalState);
-            moodEvent.setReason(reason);
-            moodEvent.setSocialSituation(socialSituation);
-            moodEvent.setPhotoReference(photoReference);
-
-            // Save any changes to the MoodEvent to the database
-            Database.get(this).updateMoodEvent(moodEvent);
-        } else {
-            // Ensure that the user has selected an emotionalState
-            if (emotionalState == null) {
-                new AlertDialog.Builder(AddMoodEventActivity.this)
-                        .setTitle("Missing Information")
-                        .setMessage("Please select a mood.")
-                        .setPositiveButton(android.R.string.ok, null)
-                        .setIcon(android.R.drawable.ic_dialog_alert)
-                        .show();
-                return;
-            }
-
-
-            // Ensure that the user has selected a social situation
-            if (socialSituation == null) {
-                new AlertDialog.Builder(AddMoodEventActivity.this)
-                        .setTitle("Missing Information")
-                        .setMessage("Please select a social situation.")
-                        .setPositiveButton(android.R.string.ok, null)
-                        .setIcon(android.R.drawable.ic_dialog_alert)
-                        .show();
-                return;
-            }
-
-            // Create the MoodEvent object
-            moodEvent = new MoodEvent(photoReference, reason, date, socialSituation, emotionalState, addLocation ? latitude : Double.NaN, addLocation ? longitude : Double.NaN);
-
-            // Add the new MoodEvent to the database
-            Log.d("JDB", "Adding new mood of type " + moodEvent.getMood().toString() + " to mood history.");
-            Database.get(this).addMoodEvent(moodEvent);
-        }
+        pushMoodEventToDatabase();
         finish();
     }
 
@@ -421,10 +463,11 @@ public class AddMoodEventActivity extends AppCompatActivity  {
                     Log.d("JLOC", "Got a location Object");
                     if (location != null) {
                         // Store this location
-                        longitude = location.getLongitude();
-                        latitude = location.getLatitude();
-                        Log.d("JLOC", longitude + " : " + latitude);
+                        this.moodEvent.setLongitude(location.getLongitude());
+                        this.moodEvent.setLatitude(location.getLatitude());
+                        Log.d("JLOC", this.moodEvent.getLongitude() + " : " + this.moodEvent.getLatitude());
                     }
+                    findViewById(R.id.save_mood_event_button).setEnabled(true);
                 });
         Log.d("JLOC", "Requesting Location");
     }
@@ -467,7 +510,7 @@ public class AddMoodEventActivity extends AppCompatActivity  {
      * @param v The view that caused the method to be called
      */
     public void removePhoto(View v) {
-        photoReference = "";
+        this.moodEvent.setPhotoReference("");
         photoView.setImageResource(android.R.color.transparent);
         photoInfo.setVisibility(View.GONE);
         addPhotoButton.setText("Add a Photo (optional)");
@@ -503,7 +546,7 @@ public class AddMoodEventActivity extends AppCompatActivity  {
                             quickSnack("Failed to upload Image, please try again");
                         }
                     });
-                    this.photoReference = s;
+                    this.moodEvent.setPhotoReference(s);
                 } catch (IOException e) {
                     Log.i("JUI", "Some exception " + e);
                 }
