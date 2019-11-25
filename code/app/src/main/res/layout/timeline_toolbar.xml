@@ -75,6 +75,8 @@
                 android:contentDescription="menu button"
                 android:src="@drawable/ic_menu_black_32dp"
 
+                android:onClick="dropdownPressed"
+
                 android:layout_marginRight="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"

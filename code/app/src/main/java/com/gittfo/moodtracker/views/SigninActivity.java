@@ -106,7 +106,7 @@ public class SigninActivity extends AppCompatActivity {
 
             Database.get(this).getUserName(name -> {
                 // Start the actual app (possibly set a username first)
-                Intent startApp = new Intent(this, name != null ? MainActivity.class : ProfileActivity.class);
+                Intent startApp = new Intent(this, name != null ? MainActivity.class : ChangeUsernameActivity.class);
                 this.startActivity(startApp);
             });
         } else {

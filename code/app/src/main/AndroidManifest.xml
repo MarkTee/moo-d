@@ -28,8 +28,6 @@
 
         <activity android:name=".MainActivity" android:screenOrientation="portrait" />
         <activity android:name=".addmood.AddMoodEventActivity" />
-        <activity android:name=".addmood.InboxActivity" />
-        <activity android:name=".addmood.ProfileActivity" />
         <activity android:name=".map.MapActivity" />
 
         <activity
@@ -39,10 +37,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-      
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
+
+        <activity android:name=".InboxActivity" />
+        <activity android:name=".ChangeUsernameActivity" />
+        <activity android:name=".TimelineActivity" />
     </application>
 
 </manifest>

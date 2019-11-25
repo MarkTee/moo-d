@@ -12,13 +12,11 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.gittfo.moodtracker.database.Database;
-import com.gittfo.moodtracker.views.MainActivity;
-import com.gittfo.moodtracker.views.R;
 
 /**
  * An activity for managing a user's profile.
  */
-public class ProfileActivity extends AppCompatActivity {
+public class ChangeUsernameActivity extends AppCompatActivity {
     private EditText usernameView;
     private Button updateButton;
     private TextView welcomeBox;
@@ -34,7 +32,7 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.username_screen); // Use a poorly made placeholder XML file
+        setContentView(R.layout.activity_change_username); // Use a poorly made placeholder XML file
 
         usernameView = findViewById(R.id.username);
         updateButton = findViewById(R.id.update_username_button);
