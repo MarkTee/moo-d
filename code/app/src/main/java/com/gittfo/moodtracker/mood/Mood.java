@@ -32,7 +32,7 @@ public class Mood implements Serializable {
     private @DrawableRes int emoticon;
 
     // Enum holding the "emotional state" this mood represents
-    private EmotionalState emotionalState;
+    //private EmotionalState emotionalState;
 
     // A String containing the name of the mood
     private String name;
@@ -50,7 +50,7 @@ public class Mood implements Serializable {
      */
     public Mood(@DrawableRes int emoticon, EmotionalState emotionalState, String name, int color) {
         this.emoticon = emoticon;
-        this.emotionalState = emotionalState;
+        //this.emotionalState = emotionalState;
         this.name = name;
         this.color = color;
     }
@@ -81,14 +81,13 @@ public class Mood implements Serializable {
      */
     public static Mood moodFromEmotionalState(EmotionalState emotionalState) {
         switch (emotionalState) {
-            case HAPPY: return DEFAULT_HAPPY;
             case SAD: return DEFAULT_SAD;
             case ANGRY: return DEFAULT_ANGRY;
             case AFRAID: return DEFAULT_AFRAID;
             case DISGUSTED: return DEFAULT_DISGUSTED;
             case SURPRISED: return DEFAULT_SURPRISED;
+            default: return DEFAULT_HAPPY;
         }
-        return null;
     }
 
     /**
@@ -105,9 +104,9 @@ public class Mood implements Serializable {
      *
      * @return An enum describing the emotional state of this mood.
      */
-    public EmotionalState getEmotionalState() {
-        return emotionalState;
-    }
+    //public EmotionalState getEmotionalState() {
+    //    return emotionalState;
+    //}
 
     /**
      * Return a textual description of this mood.
