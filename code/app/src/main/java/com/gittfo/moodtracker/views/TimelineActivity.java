@@ -62,7 +62,7 @@ public class TimelineActivity extends AppCompatActivity {
      * @param v The view that the method has been called from
      */
     public void applyFilters(View v) {
-        getFromDB();
+//        getFromDB();
         filterDialog.cancel();
     }
 
@@ -73,17 +73,16 @@ public class TimelineActivity extends AppCompatActivity {
      */
     public void showAllMoods(View v) {
         filterDialog.setAllSet();
-        getFromDB();
+//        getFromDB();
     }
 
     /**
      * Get all moods from the database, then update the RecyclerView in order to display them.
      */
     public void getFromDB() {
-        // Get all moods from the database
-        Log.d("JDB", "Getting Moods");
-        Database.get(this).getMoods().addOnSuccessListener(moods -> {
-            followeesMoods.clear();
+        // Get all followee's most recent moods from the database
+        Log.d("JDB", "Getting Followee's Most Recent Moods");
+        Database.get(this).getFolloweeMoods(moods -> {
             for(MoodEvent ev : moods) {
                 // add events to the mood history
                 if (filterDialog.isFiltered(ev.getMood().ordinal())) {
@@ -95,7 +94,6 @@ public class TimelineActivity extends AppCompatActivity {
             // Update the RecyclerView so that any new moods can be displayed
             moodHistoryAdapter.notifyDataSetChanged();
         });
-        Log.d("JDB", "Got Moods");
     }
 
     /**
@@ -105,7 +103,7 @@ public class TimelineActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        getFromDB();
+//        getFromDB();
     }
 
     public void sendFollowRequest(View view) {
