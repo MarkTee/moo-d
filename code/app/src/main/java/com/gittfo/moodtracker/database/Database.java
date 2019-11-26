@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 import android.util.Log;
+import android.util.Pair;
 
 import androidx.core.util.Consumer;
 
@@ -14,6 +15,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.gittfo.moodtracker.mood.MoodEvent;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.CollectionReference;
@@ -22,12 +24,14 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 
@@ -35,6 +39,7 @@ import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -365,7 +370,7 @@ public class Database {
                         Database.username = s;
                     }
                     if (callback != null) {
-                        callback.accept(s);
+                        callback.accept(s.trim());
                     }
                 });
 
@@ -456,10 +461,55 @@ public class Database {
     }
 
     /**
+     * Gets the username from the users id
+     * @param username the username to get the id for
+     * @param callback a callback that will pass through the userid when it finds it, otherwise it will pass through null
+     */
+    public void getUsernameFromUserId(String username, Consumer<String> callback) {
+        db.collection("users")
+                .document(username)
+                .get().addOnSuccessListener(doc -> {
+            if (doc.exists()) {
+                callback.accept(doc.getString("username"));
+            } else {
+                callback.accept(null);
+            }
+        });
+    }
+
+
+    public void getFollowRequests(Consumer<List<String>> callback) {
+        DocumentReference reqs = db.collection("requests")
+                .document(currentUser());
+
+        reqs.get().addOnSuccessListener(docs -> {
+            Log.d(TAG, "Found the requests");
+
+            List<String> requestInfo = new ArrayList<>();
+            Map<String, Object> items = docs.getData();
+            if (items != null) {
+                for (String obj : (ArrayList<String>) items.get("following")) {
+                    requestInfo.add(obj);
+                }
+            }
+
+            callback.accept(requestInfo);
+        });
+    }
+
+    public void completeFollowRequest(String usrid, boolean b) {
+        if (b)
+            callCloudFunctionSimple(buildCloudURL(String.format("confirmFollowUser?uid=%s&oid=%s", userId, usrid)), null);
+        else
+            callCloudFunctionSimple(buildCloudURL(String.format("denyFollowUser?uid=%s&oid=%s", userId, usrid)), null);
+    }
+
+    /**
      * Initializes data in the database
     */
     public void init() {
         getUserName();
     }
+
 }
 
