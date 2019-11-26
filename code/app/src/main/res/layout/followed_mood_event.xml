@@ -116,6 +116,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="3dp"
             android:layout_marginTop="5dp"
+
+            android:textColor="?attr/colorSecondaryText"
             android:text="November 02, 2019 at 1:22 PM"
             android:textSize="12dp"
 

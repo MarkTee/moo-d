@@ -12,5 +12,6 @@
     <attr name="colorDefaultText" format="reference|color"/>
     <attr name="colorDefaultBackground" format="reference|color"/>
     <attr name="colorContainerImageButton" format="reference|color"/>
+    <attr name="colorSecondaryText" format="reference|color"/>
 
 </resources>

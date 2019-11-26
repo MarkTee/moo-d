@@ -18,6 +18,7 @@
         <item name="colorDefaultText">#000000</item>
         <item name="colorDefaultBackground">#FFFFFF</item>
         <item name="colorContainerImageButton">#495054</item>
+        <item name="colorSecondaryText">#585858</item>
     </style>
 
     <!-- Neon application theme. -->
@@ -38,6 +39,7 @@
         <item name="colorDefaultText">#000000</item>
         <item name="colorDefaultBackground">#FFFFFF</item>
         <item name="colorContainerImageButton">#495054</item>
+        <item name="colorSecondaryText">#585858</item>
     </style>
 
     <!-- Pastel application theme. -->
@@ -58,6 +60,7 @@
         <item name="colorDefaultText">#000000</item>
         <item name="colorDefaultBackground">#FFFFFF</item>
         <item name="colorContainerImageButton">#495054</item>
+        <item name="colorSecondaryText">#585858</item>
     </style>
 
     <!-- Monochrome application theme. -->
@@ -75,9 +78,11 @@
 
         <item name="colorDominantText">#FFFFFF</item>
         <item name="colorImageButtonTint">#FFFFFF</item>
-        <item name="colorDefaultText">#000000</item>
-        <item name="colorDefaultBackground">#FFFFFF</item>
-        <item name="colorContainerImageButton">#495054</item>
+        <item name="colorDefaultText">#E7EBEB</item>
+        <item name="colorDefaultBackground">#3C3F44</item>
+        <item name="colorContainerImageButton">#9FA7AC</item>
+        <item name="colorSecondaryText">#BDBBBB</item>
+
     </style>
 
     <!-- Dark application theme. -->
