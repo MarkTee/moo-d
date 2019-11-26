@@ -21,7 +21,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
 
-        android:background="#00000000"
+        android:background="?attr/colorDefaultBackground"
+        android:tint="?attr/colorContainerImageButton"
         android:contentDescription="cancel button"
         android:src="@drawable/ic_cancel_grey_24dp"/>
 
@@ -40,7 +41,7 @@
 
         android:textStyle="bold"
         android:textSize="20sp"
-        android:textColor="#000000"
+        android:textColor="?attr/colorDefaultText"
         android:text="Follow Someone New"/>
 
 
@@ -54,7 +55,7 @@
         app:layout_constraintEnd_toEndOf="@id/follow_someone_textView"
         android:layout_marginTop="8dp"
 
-        android:textColor="#000000"
+        android:textColor="?attr/colorDefaultText"
         android:text="Enter the username of the\nperson you'd like to follow."
         android:gravity="center_horizontal"/>
 
@@ -72,7 +73,8 @@
         app:layout_constraintEnd_toEndOf="@id/follow_someone_textView"
         android:layout_marginTop="20dp"
 
-        android:hint="Username"/>
+        android:hint="Username"
+        android:textColorHint="?attr/colorSecondaryText"/>
 
 
     <!-- send request button -->

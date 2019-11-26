@@ -266,6 +266,8 @@ public class MainActivity extends AppCompatActivity {
         InboxActivity.setDefaultTheme(DEFAULT_THEME_ID);
         TimelineActivity.setDefaultTheme(DEFAULT_THEME_ID);
         MapActivity.setDefaultTheme(DEFAULT_THEME_ID);
+        AddMoodEventActivity.setDefaultTheme(DEFAULT_THEME_ID);
+        SigninActivity.setDefaultTheme(DEFAULT_THEME_ID);
     }
 
     public static void setDefaultTheme(int THEME_ID) {

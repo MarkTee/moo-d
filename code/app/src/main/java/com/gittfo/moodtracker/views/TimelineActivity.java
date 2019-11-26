@@ -202,6 +202,8 @@ public class TimelineActivity extends AppCompatActivity {
         InboxActivity.setDefaultTheme(DEFAULT_THEME_ID);
         MainActivity.setDefaultTheme(DEFAULT_THEME_ID);
         MapActivity.setDefaultTheme(DEFAULT_THEME_ID);
+        AddMoodEventActivity.setDefaultTheme(DEFAULT_THEME_ID);
+        SigninActivity.setDefaultTheme(DEFAULT_THEME_ID);
     }
 
     public static void setDefaultTheme(int THEME_ID) {

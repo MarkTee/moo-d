@@ -86,7 +86,7 @@
             app:layout_constraintEnd_toEndOf="@id/follow_event_title"
             android:layout_marginStart="5dp"
 
-            android:textColor="?attr/colorDefaultBackground"
+            android:textColor="?attr/colorDefaultText"
             android:text="to view your"/>
 
         <TextView

@@ -17,7 +17,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:backgroundTint="?attr/colorDefaultBackground">
 
 
             <!-- EXIT BUTTON -->
@@ -48,6 +49,7 @@
 
                 android:layout_marginTop="26dp"
 
+                android:textColor="?attr/colorSecondaryText"
                 android:text="How are you feeling today?"
                 android:textSize="24sp"
                 android:textStyle="bold"
@@ -114,6 +116,7 @@
 
                 android:layout_marginTop="12dp"
 
+                android:textColor="?attr/colorSecondaryText"
                 android:text="What kind of mood are you in?"
                 android:textSize="24sp"
                 android:textStyle="bold"
@@ -220,6 +223,7 @@
                 android:layout_height="wrap_content"
 
                 android:layout_marginTop="12dp"
+                android:textColor="?attr/colorSecondaryText"
 
                 android:text="Anything else you'd like to add?"
                 android:textSize="24sp"
@@ -239,8 +243,10 @@
                 android:layout_height="wrap_content"
 
                 android:layout_marginTop="16dp"
+                android:textColor="?attr/colorSecondaryText"
 
                 android:hint="Reason for your mood (optional)"
+                android:textColorHint="?attr/colorSecondaryText"
                 android:inputType="text"
 
                 app:layout_constraintTop_toBottomOf="@id/additional_info_message"
@@ -258,6 +264,7 @@
                 android:layout_height="wrap_content"
 
                 android:layout_marginTop="16dp"
+                android:textColor="?attr/colorSecondaryText"
 
                 android:text="Right now, I'm with this many people:"
                 android:textSize="18sp"
