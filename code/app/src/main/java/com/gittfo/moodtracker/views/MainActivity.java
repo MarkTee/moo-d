@@ -192,6 +192,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void startSigninActivity(View view){
         Intent i = new Intent(this, SigninActivity.class);
+        i.putExtra("sign out?", true);
         this.startActivity(i);
 
     }
@@ -226,7 +227,6 @@ public class MainActivity extends AppCompatActivity {
                                 onChangeColorSchemePressed();
                                 break;
                             case (R.id.dropdown_three):
-                                //TODO: fix log out functionality
                                 startSigninActivity(view);
                                 break;
                         }
