@@ -3,23 +3,35 @@ package com.gittfo.moodtracker.views;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.PopupMenu;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.gittfo.moodtracker.database.Database;
 import com.gittfo.moodtracker.views.addmood.AddMoodEventActivity;
 import com.gittfo.moodtracker.views.map.MapActivity;
 import com.gittfo.moodtracker.views.map.MoodHistoryWrapper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This is an activity for users to manage their inbox, containing things like follow requests.
  */
 public class InboxActivity extends AppCompatActivity {
 
+    private RecyclerView inboxViews;
+    private List<String> inboxItems;
     private ImageButton dropDownButton;
     private ColorSchemeDialog colorDialog;
     private static int DEFAULT_THEME_ID = R.style.AppTheme;
@@ -33,6 +45,19 @@ public class InboxActivity extends AppCompatActivity {
         getSupportActionBar().hide();
 
         colorDialog = new ColorSchemeDialog(this);
+
+        inboxItems = new ArrayList<>();
+        inboxViews = findViewById(R.id.inbox_items_view);
+        inboxViews.setAdapter(new InboxRCAdapter(inboxItems));
+
+        Database.get(this).getFollowRequests(followRequests -> {
+            for (String fromUserId : followRequests) {
+                Database.get(this).getUserIdFromUsername(fromUserId, username -> {
+                    inboxItems.add(username);
+                    inboxViews.getAdapter().notifyDataSetChanged();
+                });
+            }
+        });
     }
 
     public void startSigninActivity(View view){
@@ -175,5 +200,47 @@ public class InboxActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         overridePendingTransition(0, 0);
+    }
+}
+
+class InboxRCViewHolder extends RecyclerView.ViewHolder {
+
+    View layout;
+    public InboxRCViewHolder(@NonNull View itemView) {
+        super(itemView);
+        this.layout = itemView;
+    }
+
+    public View getLayout() {
+        return layout;
+    }
+}
+class InboxRCAdapter extends RecyclerView.Adapter<InboxRCViewHolder> {
+
+    private final List<String> items;
+
+    InboxRCAdapter(List<String> items) {
+        this.items = items;
+
+    }
+
+    @NonNull
+    @Override
+    public InboxRCViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        LinearLayout v = (LinearLayout) LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.user_inbox_notification, parent, false);
+        return new InboxRCViewHolder(v);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull InboxRCViewHolder holder, int position) {
+        View layout = holder.getLayout();
+        TextView usr = layout.findViewById(R.id.follow_request_username);
+        usr.setText(items.get(position));
+    }
+
+    @Override
+    public int getItemCount() {
+        return items.size();
     }
 }

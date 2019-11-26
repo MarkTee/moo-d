@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 import android.util.Log;
+import android.util.Pair;
 
 import androidx.core.util.Consumer;
 
@@ -14,6 +15,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.gittfo.moodtracker.mood.MoodEvent;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.CollectionReference;
@@ -22,6 +24,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -454,6 +457,24 @@ public class Database {
                     }
                 });
     }
+
+
+    public void getFollowRequests(Consumer<List<String>> callback) {
+        CollectionReference reqs = db.collection("requests")
+                .document(currentUser())
+                .collection("requests");
+
+        reqs.get().addOnSuccessListener(docs -> {
+            Log.d(TAG, "Found a request");
+            List<String> requestInfo = new ArrayList<>();
+            for (DocumentSnapshot document : docs.getDocuments()) {
+                requestInfo.add(document.getString("from"));
+            }
+
+            callback.accept(requestInfo);
+        });
+    }
+
 
     /**
      * Initializes data in the database
