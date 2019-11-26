@@ -362,6 +362,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         TimelineActivity.setDefaultTheme(DEFAULT_THEME_ID);
         AddMoodEventActivity.setDefaultTheme(DEFAULT_THEME_ID);
         SigninActivity.setDefaultTheme(DEFAULT_THEME_ID);
+        ChangeUsernameActivity.setDefaultTheme(DEFAULT_THEME_ID);
     }
 
     public void startUsernameActivity(View view) {
