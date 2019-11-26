@@ -31,9 +31,32 @@ exports.followUser = functions.https.onRequest(async (req, res) => {
   const uid = req.query.uid;
   const otherId = req.query.oid;
 
+  const user = db.doc(`requests/${otherId}`);
+  let userDataRef = await user.get();
+  if (!userDataRef.exists) {
+    await user.set({
+      following: []
+    });
+    userDataRef = await user.get();
+  }
+  const userData = userDataRef.data();
+  userData.following = [...(new Set((userData.following || []).concat([uid])))];
+  user.set(userData);
+  res.send("Success\n");
+})
+
+exports.confirmFollowUser = functions.https.onRequest(async (req, res) => {
+  const uid = req.query.uid;
+  const otherId = req.query.oid;
+
   const user = db.doc(`users/${uid}`);
   const userData = (await user.get()).data();
   userData.following = [...(new Set((userData.following || []).concat([otherId])))];
+
+  const user = db.doc(`requests/${otherId}`);
+  let userDataRef = await user.get();
+  await userDataRef.delete();
+
   user.set(userData);
   res.send("Success\n");
 })
