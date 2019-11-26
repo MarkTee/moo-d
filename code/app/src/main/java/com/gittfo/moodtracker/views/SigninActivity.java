@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.gittfo.moodtracker.database.Database;
+
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -33,6 +34,7 @@ public class SigninActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(DEFAULT_THEME_ID);
+
         Log.d("Aout", "Hit on create");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signin);

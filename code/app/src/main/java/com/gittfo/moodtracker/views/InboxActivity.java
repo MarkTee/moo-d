@@ -91,6 +91,7 @@ public class InboxActivity extends AppCompatActivity {
         // tie popup to OnMenuItemClickListener
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
+
             public boolean onMenuItemClick(MenuItem menuItem) {
                 switch(menuItem.getItemId()) {
                     case (R.id.dropdown_one):
