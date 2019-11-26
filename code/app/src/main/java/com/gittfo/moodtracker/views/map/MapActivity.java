@@ -372,6 +372,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
     public void startSigninActivity(View view){
         Intent i = new Intent(this, SigninActivity.class);
+        i.putExtra("sign out?", true);
         this.startActivity(i);
     }
 

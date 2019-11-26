@@ -223,6 +223,7 @@ public class TimelineActivity extends AppCompatActivity {
 
     public void startSigninActivity(View view){
         Intent i = new Intent(this, SigninActivity.class);
+        i.putExtra("sign out?", true);
         this.startActivity(i);
     }
 
