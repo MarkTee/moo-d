@@ -1,5 +1,6 @@
 package com.gittfo.moodtracker.views;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -7,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
@@ -14,7 +16,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.gittfo.moodtracker.database.Database;
@@ -48,11 +53,16 @@ public class InboxActivity extends AppCompatActivity {
 
         inboxItems = new ArrayList<>();
         inboxViews = findViewById(R.id.inbox_items_view);
+        inboxViews.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        inboxViews.setLayoutManager(new LinearLayoutManager(this));
         inboxViews.setAdapter(new InboxRCAdapter(inboxItems));
 
         Database.get(this).getFollowRequests(followRequests -> {
+            Log.d("JDB", "Got all requests");
             for (String fromUserId : followRequests) {
+                Log.d("JDB", "Found a request: " + fromUserId);
                 Database.get(this).getUserIdFromUsername(fromUserId, username -> {
+                    Log.d("JDB", "This person wants to follow you: " + username);
                     inboxItems.add(username);
                     inboxViews.getAdapter().notifyDataSetChanged();
                 });
@@ -202,7 +212,38 @@ public class InboxActivity extends AppCompatActivity {
         overridePendingTransition(0, 0);
     }
 }
+class ResponseDialog {
+    private Activity c;
+    private String usrname;
+    private String usrid;
 
+    public ResponseDialog(Activity c, String usrname, String usrid) {
+        this.c = c;
+        this.usrname = usrname;
+        this.usrid = usrid;
+    }
+
+    public void open() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(c);
+        LayoutInflater inflater = c.getLayoutInflater();
+        View layout = inflater.inflate(R.layout.mood_following_permission, null);
+        builder.setView(layout);
+
+
+        AlertDialog ad = builder.create();
+
+        layout.findViewById(R.id.cancel_permission_button).setOnClickListener(v -> ad.cancel());
+
+        layout.findViewById(R.id.allow_button).setOnClickListener(v ->
+            Database.get(c).completeFollowRequest(usrid, true)
+        );
+        layout.findViewById(R.id.deny_button).setOnClickListener(v ->
+            Database.get(c).completeFollowRequest(usrid, false)
+        );
+
+        ad.show();
+    }
+}
 class InboxRCViewHolder extends RecyclerView.ViewHolder {
 
     View layout;
@@ -234,9 +275,10 @@ class InboxRCAdapter extends RecyclerView.Adapter<InboxRCViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull InboxRCViewHolder holder, int position) {
-        View layout = holder.getLayout();
-        TextView usr = layout.findViewById(R.id.follow_request_username);
+        Log.d("JUI", "Setting inbox for loc: " + position);
+        TextView usr = holder.getLayout().findViewById(R.id.follow_request_username);
         usr.setText(items.get(position));
+        holder.getLayout().setOnClickListener(v -> {});
     }
 
     @Override

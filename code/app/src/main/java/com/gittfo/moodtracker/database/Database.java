@@ -31,6 +31,7 @@ import com.google.firebase.storage.UploadTask;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 
@@ -460,21 +461,27 @@ public class Database {
 
 
     public void getFollowRequests(Consumer<List<String>> callback) {
-        CollectionReference reqs = db.collection("requests")
-                .document(currentUser())
-                .collection("requests");
+        DocumentReference reqs = db.collection("requests")
+                .document(currentUser());
 
         reqs.get().addOnSuccessListener(docs -> {
-            Log.d(TAG, "Found a request");
+            Log.d(TAG, "Found the requests");
+
             List<String> requestInfo = new ArrayList<>();
-            for (DocumentSnapshot document : docs.getDocuments()) {
-                requestInfo.add(document.getString("from"));
+            for (String obj : (ArrayList<String>)docs.getData().get("following")) {
+                requestInfo.add(obj);
             }
 
             callback.accept(requestInfo);
         });
     }
 
+    public void completeFollowRequest(String usrid, boolean b) {
+        if (b)
+            callCloudFunctionSimple(buildCloudURL(String.format("confirmFollowUser?uid=%s&oid=%s", userId, usrid)), null);
+        else
+            callCloudFunctionSimple(buildCloudURL(String.format("denyFollowUser?uid=%s&oid=%s", userId, usrid)), null);
+    }
 
     /**
      * Initializes data in the database
@@ -482,5 +489,6 @@ public class Database {
     public void init() {
         getUserName();
     }
+
 }
 
