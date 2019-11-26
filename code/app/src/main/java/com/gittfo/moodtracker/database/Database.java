@@ -499,9 +499,9 @@ public class Database {
 
     public void completeFollowRequest(String usrid, boolean b) {
         if (b)
-            callCloudFunctionSimple(buildCloudURL(String.format("confirmFollowUser?uid=%s&oid=%s", userId, usrid)), null);
+            callCloudFunctionSimple(buildCloudURL(String.format("confirmFollowUser?oid=%s&uid=%s", userId, usrid)), null);
         else
-            callCloudFunctionSimple(buildCloudURL(String.format("denyFollowUser?uid=%s&oid=%s", userId, usrid)), null);
+            callCloudFunctionSimple(buildCloudURL(String.format("denyFollowUser?oid=%s&uid=%s", userId, usrid)), null);
     }
 
     /**
