@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 
@@ -80,7 +81,11 @@ public class FollowDialog {
 
             Database.get(this.c).followUser(userId, b -> {
                 Log.d("JDBCLOUD", String.format("Attempted to follow {%s} - {%s}", username, b));
-                followDialog.cancel();
+                if (b) {
+                    followDialog.cancel();
+                } else {
+                    Toast.makeText(c, "Unable to follow user. Try again later", Toast.LENGTH_LONG);
+                }
             });
         });
     }
