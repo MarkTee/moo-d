@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="?attr/colorDefaultBackground">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -23,7 +24,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@id/follow_event_title"
 
-            android:background="#00000000"
+            android:background="?attr/colorDefaultBackground"
+            android:tint="?attr/colorContainerImageButton"
             android:contentDescription="cancel button"
             android:src="@drawable/ic_cancel_grey_24dp"/>
 
@@ -42,7 +44,7 @@
 
             android:textStyle="bold"
             android:textSize="20sp"
-            android:textColor="#000000"
+            android:textColor="?attr/colorDefaultText"
             android:text="New follow request"/>
 
         <TextView
@@ -55,7 +57,7 @@
             app:layout_constraintEnd_toStartOf="@id/requesting_username"
             android:layout_marginTop="12dp"
 
-            android:textColor="#000000"
+            android:textColor="?attr/colorDefaultText"
             android:text="Allow"/>
 
         <TextView
@@ -84,7 +86,7 @@
             app:layout_constraintEnd_toEndOf="@id/follow_event_title"
             android:layout_marginStart="5dp"
 
-            android:textColor="#000000"
+            android:textColor="?attr/colorDefaultBackground"
             android:text="to view your"/>
 
         <TextView
@@ -97,7 +99,7 @@
             app:layout_constraintEnd_toEndOf="@id/follow_event_title"
             android:layout_marginTop="8dp"
 
-            android:textColor="#000000"
+            android:textColor="?attr/colorDefaultText"
             android:text="current and future posts?"/>
 
 
@@ -140,7 +142,7 @@
             android:layout_marginTop="18dp"
 
             android:textSize="13sp"
-            android:textColor="#000000"
+            android:textColor="?attr/colorDefaultText"
             android:text="(We won't tell them if you deny.)"/>
 
 

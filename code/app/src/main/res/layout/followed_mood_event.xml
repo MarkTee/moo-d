@@ -52,7 +52,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:text="is feeling"
-            android:textColor="#000000"
+            android:textColor="?attr/colorDefaultText"
             app:layout_constraintBottom_toBottomOf="@id/user_emotion_imageView"
 
             app:layout_constraintStart_toEndOf="@id/user_name_textView"
@@ -81,14 +81,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="."
-            android:textColor="#000000"
+            android:textColor="?attr/colorDefaultText"
             app:layout_constraintBottom_toBottomOf="@id/user_emotion_imageView"
 
             app:layout_constraintStart_toEndOf="@id/user_mood_textView"
             app:layout_constraintTop_toTopOf="parent" />
 
 
-        <!-- EDIT BUTTON -->
+        <!-- UNFOLLOW BUTTON -->
 
         <ImageButton
             android:id="@+id/unfollow_button"
@@ -101,6 +101,7 @@
 
             android:contentDescription="unfollow_button"
             android:background="#00000000"
+            android:tint="?attr/colorContainerImageButton"
             android:src="@drawable/ic_remove_gray_24dp"/>
 
 
@@ -132,6 +133,7 @@
             android:contentDescription="social icon"
             android:src="@drawable/ic_activity_people_black_24dp"
 
+            android:tint="?attr/colorContainerImageButton"
             app:layout_constraintStart_toStartOf="@id/date_time_textView"
             app:layout_constraintTop_toBottomOf="@id/date_time_textView" />
 
@@ -141,7 +143,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="6dp"
             android:text="1 person"
-            android:textColor="#000000"
+            android:textColor="?attr/colorDefaultText"
             android:textSize="12dp"
 
             app:layout_constraintBottom_toBottomOf="@id/num_people_imageView"
@@ -160,6 +162,7 @@
             android:src="@drawable/ic_near_me_black_24dp"
             app:layout_constraintBottom_toBottomOf="@id/num_people_imageView"
 
+            android:tint="?attr/colorContainerImageButton"
             app:layout_constraintStart_toEndOf="@id/num_people_textView"
             app:layout_constraintTop_toTopOf="@id/num_people_imageView" />
 
@@ -169,7 +172,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:text="University of Alberta"
-            android:textColor="#000000"
+            android:textColor="?attr/colorDefaultText"
             android:textSize="12dp"
 
             app:layout_constraintBottom_toBottomOf="@id/location_icon_imageView"
@@ -185,7 +188,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:text="Going to a party!"
-            android:textColor="#000000"
+            android:textColor="?attr/colorDefaultText"
 
             android:textSize="13dp"
             android:textStyle="italic"
