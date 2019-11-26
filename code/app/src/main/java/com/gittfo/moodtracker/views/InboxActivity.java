@@ -4,16 +4,15 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -25,10 +24,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.gittfo.moodtracker.database.Database;
 import com.gittfo.moodtracker.views.addmood.AddMoodEventActivity;
 import com.gittfo.moodtracker.views.map.MapActivity;
-import com.gittfo.moodtracker.views.map.MoodHistoryWrapper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * This is an activity for users to manage their inbox, containing things like follow requests.
@@ -36,7 +35,7 @@ import java.util.List;
 public class InboxActivity extends AppCompatActivity {
 
     private RecyclerView inboxViews;
-    private List<String> inboxItems;
+    private List<Pair<String, String>> inboxItems;
     private ImageButton dropDownButton;
     private ColorSchemeDialog colorDialog;
     private static int DEFAULT_THEME_ID = R.style.AppTheme;
@@ -55,15 +54,15 @@ public class InboxActivity extends AppCompatActivity {
         inboxViews = findViewById(R.id.inbox_items_view);
         inboxViews.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         inboxViews.setLayoutManager(new LinearLayoutManager(this));
-        inboxViews.setAdapter(new InboxRCAdapter(inboxItems));
+        inboxViews.setAdapter(new InboxRCAdapter(inboxItems, this));
 
         Database.get(this).getFollowRequests(followRequests -> {
             Log.d("JDB", "Got all requests");
             for (String fromUserId : followRequests) {
                 Log.d("JDB", "Found a request: " + fromUserId);
-                Database.get(this).getUserIdFromUsername(fromUserId, username -> {
+                Database.get(this).getUsernameFromUserId(fromUserId, username -> {
                     Log.d("JDB", "This person wants to follow you: " + username);
-                    inboxItems.add(username);
+                    inboxItems.add(new Pair<>(username, fromUserId));
                     inboxViews.getAdapter().notifyDataSetChanged();
                 });
             }
@@ -223,23 +222,26 @@ class ResponseDialog {
         this.usrid = usrid;
     }
 
-    public void open() {
+    public void open(Consumer<Boolean> callback) {
         AlertDialog.Builder builder = new AlertDialog.Builder(c);
         LayoutInflater inflater = c.getLayoutInflater();
         View layout = inflater.inflate(R.layout.mood_following_permission, null);
         builder.setView(layout);
 
+        ((TextView) layout.findViewById(R.id.requesting_username)).setText(this.usrname);
 
         AlertDialog ad = builder.create();
 
         layout.findViewById(R.id.cancel_permission_button).setOnClickListener(v -> ad.cancel());
 
-        layout.findViewById(R.id.allow_button).setOnClickListener(v ->
-            Database.get(c).completeFollowRequest(usrid, true)
-        );
-        layout.findViewById(R.id.deny_button).setOnClickListener(v ->
-            Database.get(c).completeFollowRequest(usrid, false)
-        );
+        layout.findViewById(R.id.allow_button).setOnClickListener(v -> {
+            ad.cancel();
+            callback.accept(true);
+        });
+        layout.findViewById(R.id.deny_button).setOnClickListener(v -> {
+            ad.cancel();
+            callback.accept(false);
+        });
 
         ad.show();
     }
@@ -258,10 +260,12 @@ class InboxRCViewHolder extends RecyclerView.ViewHolder {
 }
 class InboxRCAdapter extends RecyclerView.Adapter<InboxRCViewHolder> {
 
-    private final List<String> items;
+    private final List<Pair<String, String>> items;
+    private Activity c;
 
-    InboxRCAdapter(List<String> items) {
+    InboxRCAdapter(List<Pair<String, String>> items, Activity c) {
         this.items = items;
+        this.c = c;
 
     }
 
@@ -277,8 +281,15 @@ class InboxRCAdapter extends RecyclerView.Adapter<InboxRCViewHolder> {
     public void onBindViewHolder(@NonNull InboxRCViewHolder holder, int position) {
         Log.d("JUI", "Setting inbox for loc: " + position);
         TextView usr = holder.getLayout().findViewById(R.id.follow_request_username);
-        usr.setText(items.get(position));
-        holder.getLayout().setOnClickListener(v -> {});
+        usr.setText(items.get(position).first);
+        ResponseDialog rd = new ResponseDialog(c, items.get(position).first, items.get(position).second);
+        holder.getLayout().setOnClickListener(v ->
+            rd.open(didFollow -> {
+                Database.get(c).completeFollowRequest(items.get(position).second, didFollow);
+                items.remove(position);
+                this.notifyDataSetChanged();
+                Log.d("JUI", "Removing old follow");
+            }));
     }
 
     @Override

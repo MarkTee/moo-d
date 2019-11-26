@@ -39,6 +39,7 @@ import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -459,6 +460,23 @@ public class Database {
                 });
     }
 
+    /**
+     * Gets the username from the users id
+     * @param username the username to get the id for
+     * @param callback a callback that will pass through the userid when it finds it, otherwise it will pass through null
+     */
+    public void getUsernameFromUserId(String username, Consumer<String> callback) {
+        db.collection("users")
+                .document(username)
+                .get().addOnSuccessListener(doc -> {
+            if (doc.exists()) {
+                callback.accept(doc.getString("username"));
+            } else {
+                callback.accept(null);
+            }
+        });
+    }
+
 
     public void getFollowRequests(Consumer<List<String>> callback) {
         DocumentReference reqs = db.collection("requests")
@@ -468,8 +486,11 @@ public class Database {
             Log.d(TAG, "Found the requests");
 
             List<String> requestInfo = new ArrayList<>();
-            for (String obj : (ArrayList<String>)docs.getData().get("following")) {
-                requestInfo.add(obj);
+            Map<String, Object> items = docs.getData();
+            if (items != null) {
+                for (String obj : (ArrayList<String>) items.get("following")) {
+                    requestInfo.add(obj);
+                }
             }
 
             callback.accept(requestInfo);
