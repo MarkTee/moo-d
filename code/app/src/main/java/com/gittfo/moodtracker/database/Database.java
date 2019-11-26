@@ -365,7 +365,7 @@ public class Database {
                         Database.username = s;
                     }
                     if (callback != null) {
-                        callback.accept(s);
+                        callback.accept(s.trim());
                     }
                 });
 

@@ -39,17 +39,16 @@ public class FollowDialog {
         userFollowEditText = layout.findViewById(R.id.user_follow_editText);
         sendRequestButton = layout.findViewById(R.id.send_request_button);
 
-        exitButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                followDialog.dismiss();
-            }
+        exitButton.setOnClickListener(v -> followDialog.dismiss());
+
+        sendRequestButton.setOnClickListener(v -> {
+            String followee = userFollowEditText.getText().toString();
+            sendRequest(followee);
         });
 
-        sendRequestButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                String followee = userFollowEditText.getText().toString();
-                sendRequest(followee);
-            }
+        userFollowEditText.setOnEditorActionListener((p1, p2, p3) -> {
+            userFollowEditText.setError("");
+            return true;
         });
 
         Log.d("JUI", "Making builder");
@@ -75,11 +74,13 @@ public class FollowDialog {
 
             if (userId == null) {
                 Log.d("JDBCLOUD", String.format("{%s} does not exist. Unable to follow.", username, userId));
+                userFollowEditText.setError("User not Found");
                 return;
             }
 
             Database.get(this.c).followUser(userId, b -> {
                 Log.d("JDBCLOUD", String.format("Attempted to follow {%s} - {%s}", username, b));
+                followDialog.cancel();
             });
         });
     }
