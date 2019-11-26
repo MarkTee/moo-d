@@ -37,6 +37,7 @@ public class InboxActivity extends AppCompatActivity {
 
     public void startSigninActivity(View view){
         Intent i = new Intent(this, SigninActivity.class);
+        i.putExtra("sign out?", true);
         this.startActivity(i);
     }
 
@@ -70,7 +71,6 @@ public class InboxActivity extends AppCompatActivity {
                                 onChangeColorSchemePressed();
                                 break;
                             case (R.id.dropdown_three):
-                                //TODO: allow for proper log out?
                                 startSigninActivity(view);
                                 break;
                         }

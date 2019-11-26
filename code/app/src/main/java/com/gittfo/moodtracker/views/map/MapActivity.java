@@ -368,6 +368,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
     public void startSigninActivity(View view){
         Intent i = new Intent(this, SigninActivity.class);
+        i.putExtra("sign out?", true);
         this.startActivity(i);
     }
 
@@ -396,7 +397,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                                 onChangeColorSchemePressed();
                                 break;
                             case (R.id.dropdown_three):
-                                //TODO: allow for proper log out?
                                 startSigninActivity(view);
                                 break;
                         }
