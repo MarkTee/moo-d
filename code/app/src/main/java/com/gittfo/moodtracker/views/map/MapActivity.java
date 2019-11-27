@@ -404,10 +404,18 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         }); // close setOnClickListener method
     }
 
+    /**
+     * @param moodEvent event to check.
+     * @return whether the given event has a valid location, i.e., both coordinates not NaN.
+     */
     public boolean hasValidLocation(MoodEvent moodEvent) {
         return !Double.isNaN(moodEvent.getLatitude()) && !Double.isNaN(moodEvent.getLongitude());
     }
 
+    /**
+     * @param moodEvents a list of mood events which may have invalid locations.
+     * @return those moodevents from the list which have valid locations.
+     */
     public List<MoodEvent> extractValidLocations(List <MoodEvent> moodEvents) {
         List<MoodEvent> validLocations = new ArrayList<>();
         for (MoodEvent me : moodEvents) {
