@@ -22,6 +22,7 @@ public class ChangeUsernameActivity extends AppCompatActivity {
     private TextView welcomeBox;
 
     private String initialUsername = "";
+    private static int DEFAULT_THEME_ID = R.style.AppTheme;
 
     /**
      * In the onCreate method, determine whether the user has chosen a username. If not, prompt them
@@ -31,8 +32,12 @@ public class ChangeUsernameActivity extends AppCompatActivity {
      */
     @Override
     protected void onCreate(Bundle savedInstanceState){
+        setTheme(DEFAULT_THEME_ID);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_change_username); // Use a poorly made placeholder XML file
+        setContentView(R.layout.activity_change_username);
+
+        // Hide ActionBar
+        getSupportActionBar().hide();
 
         usernameView = findViewById(R.id.username);
         updateButton = findViewById(R.id.update_username_button);
@@ -98,6 +103,10 @@ public class ChangeUsernameActivity extends AppCompatActivity {
     public void startMain(){
         Intent i = new Intent(this, MainActivity.class);
         this.startActivity(i);
+    }
+
+    public static void setDefaultTheme(int THEME_ID) {
+        DEFAULT_THEME_ID = THEME_ID;
     }
 
 

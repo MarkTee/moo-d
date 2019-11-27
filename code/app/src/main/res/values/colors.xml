@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#9E75FF</color>
-    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorPrimaryDark">#069784</color>
     <color name="colorAccent">#728EEB</color>
 
 
@@ -30,5 +30,6 @@
     <color name="colorNeonThemeButton">#13CA91</color>
     <color name="colorPastelThemeButton">#A2D1F1</color>
     <color name="colorMonochromeThemeButton">#9BA3A7</color>
+
 
 </resources>
