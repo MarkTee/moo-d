@@ -28,6 +28,7 @@ import com.gittfo.moodtracker.views.MainActivity;
 import com.gittfo.moodtracker.views.R;
 import com.gittfo.moodtracker.views.SigninActivity;
 import com.gittfo.moodtracker.views.TimelineActivity;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -35,12 +36,15 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.type.LatLngOrBuilder;
 
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * An activity where users can view the locations of a list of MoodEvents on a map. Can be used for
@@ -183,8 +187,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
             return; // nothing to do
         }
 
-        double avgLat = 0;
-        double avgLon = 0;
+        // keep track of the moods to fit the camera onto them
+        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+
         for (MoodEvent moodEvent : moodEventList) {
             LatLng moodLocation = new LatLng(moodEvent.getLatitude(), moodEvent.getLongitude());
 
@@ -198,12 +203,15 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
             marker.setTag(moodEvent);
 
             markers.add(marker);
+            builder.include(marker.getPosition());
 
             updateInfoBox(moodEvent, moodLocation);
         }
 
         // move the camera over the mood events
-        centerCamera(moodEventList);
+        LatLngBounds bounds = builder.build();
+        int padding = 20;
+        googleMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, padding));
     }
 
     /**
@@ -409,37 +417,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         }
         return validLocations;
     }
-
-
-    public void centerCamera(List<MoodEvent> moodEvents) {
-        moodEvents = extractValidLocations(moodEvents);
-
-        if (moodEvents.isEmpty()) {
-            return;  // nothing to do
-        }
-
-        // compute the center of all the mood events
-        double avgLat = 0;
-        double avgLon = 0;
-        for (MoodEvent moodEvent : moodEvents) {
-            avgLat += moodEvent.getLatitude();
-            avgLon += moodEvent.getLongitude();
-        }
-        avgLat /= moodEvents.size();
-        avgLat /= moodEvents.size();
-
-        // find the furthest mood event from the center, to set the zoom properly
-        double maxDist = Double.NEGATIVE_INFINITY;
-        for (MoodEvent moodEvent : moodEvents) {
-            double dist = Math.sqrt(
-                    Math.pow((avgLat - moodEvent.getLatitude()), 2)
-                    + Math.pow((avgLat - moodEvent.getLongitude()), 2));
-            if (dist > maxDist) {
-                maxDist = dist;
-            }
-        }
-    }
-
 
     public static void setDefaultTheme(int THEME_ID) {
         DEFAULT_THEME_ID = THEME_ID;
