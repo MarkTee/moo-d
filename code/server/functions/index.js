@@ -16,9 +16,20 @@ exports.getFolloweeMoods = functions.https.onRequest(async (req, res) => {
   const user = data.data();
   console.log(`Starting get Followee moods for user ${uid}`);
 
+
   const moods = [];
   if (user.following) {
-    let promises = user.following.map(uid => Moods.iterateAllOfUser(db, uid, (mood) => moods.push(mood)));
+    let promises = user.following.map(async (uid) => {
+      let mostRecent = null;
+      console.log(`Following ${uid}`);
+      await Moods.iterateAllOfUser(db, uid.trim(), (mood) => {
+        if (mostRecent === null ||
+              mostRecent.date._seconds < mood.date._seconds) {
+          mostRecent = mood;
+        }
+      });
+      moods.push(mostRecent);
+    });
     await Promise.all(promises);
   } else {
     console.log("No followees found");
