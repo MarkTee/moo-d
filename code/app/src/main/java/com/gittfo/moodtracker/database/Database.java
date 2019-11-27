@@ -280,7 +280,7 @@ public class Database {
      * @param c the callback function
      */
     public void unFollowUser(String otherId, Consumer<Boolean> c) {
-        callCloudFunctionSimple(buildCloudURL(String.format("followUser?uid=%s&oid=%s", userId, otherId)), c);
+        callCloudFunctionSimple(buildCloudURL(String.format("unfollowUser?uid=%s&oid=%s", userId, otherId)), c);
     }
 
     /**
