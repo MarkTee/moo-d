@@ -55,7 +55,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     private ArrayList<MoodEvent> moodEvents;
     // level to zoom to once marker is clicked
     private float ONCLICK_ZOOMLVL = 17; // about usual map height
-    // our instamce of the googlemap
+    // our instance of the googlemap
     private GoogleMap googleMap;
     // keep track of placed markers, since google maps doesn't, and we need to be able to clear them
     private ArrayList<Marker> markers;
@@ -170,31 +170,29 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
      * @param moodEventList a List of MoodEvents to display.
      */
     public void showMoodEvents(List<MoodEvent> moodEventList) {
+
         // clear out the current markers
         for (Marker m : markers) {
             m.remove();
         }
         markers.clear();
 
-        // if there's no mood events with a valid location, don't show anything
-        if (!moodEventList
-                .stream()
-                .anyMatch(m -> !(Double.isNaN(m.getLatitude()) || Double.isNaN(m.getLongitude()))))
-        {
-            clearInfoBox();
-            return;
+        // filter out those moods with invalid locations
+        moodEventList = extractValidLocations(moodEventList);
+        if (moodEventList.isEmpty()) {
+            return; // nothing to do
         }
 
-        // for aesthetics, move the camera to the most recent mood event
-        LatLng lastPos = null;
+        // for aesthetics, move the camera to encompass the mood events
+
+        double avgLat = 0;
+        double avgLon = 0;
         for (MoodEvent moodEvent : moodEventList) {
 
-            if (Double.isNaN(moodEvent.getLatitude()) || Double.isNaN(moodEvent.getLongitude())) {
-                // this mood doesn't have a valid location
-                continue;
-            }
-
+            avgLat += moodEvent.getLatitude();
+            avgLon += moodEvent.getLongitude();
             LatLng moodLocation = new LatLng(moodEvent.getLatitude(), moodEvent.getLongitude());
+
             MarkerOptions markerOptions = new MarkerOptions();
 
             markerOptions.title("title");
@@ -210,12 +208,12 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
             markers.add(marker);
 
             updateInfoBox(moodEvent, moodLocation);
+        }
 
-            lastPos = moodLocation;
-        }
-        if (lastPos != null) {
-            googleMap.moveCamera(CameraUpdateFactory.newLatLng(lastPos));
-        }
+        avgLat /= moodEventList.size();
+        avgLon /= moodEventList.size();
+
+        
     }
 
     /**
@@ -408,6 +406,18 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         }); // close setOnClickListener method
     }
 
+    public boolean hasValidLocation(MoodEvent moodEvent) {
+        return !Double.isNaN(moodEvent.getLatitude()) && !Double.isNaN(moodEvent.getLongitude());
+    }
+
+    public List<MoodEvent> extractValidLocations(List <MoodEvent> moodEvents) {
+        List<MoodEvent> validLocations = new ArrayList<>();
+        for (MoodEvent me : moodEvents) {
+            if (hasValidLocation(me)) {
+                validLocations.add(me);
+            }
+        }
+    }
 
     public static void setDefaultTheme(int THEME_ID) {
         DEFAULT_THEME_ID = THEME_ID;
