@@ -183,23 +183,15 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
             return; // nothing to do
         }
 
-        // for aesthetics, move the camera to encompass the mood events
-
         double avgLat = 0;
         double avgLon = 0;
         for (MoodEvent moodEvent : moodEventList) {
-
-            avgLat += moodEvent.getLatitude();
-            avgLon += moodEvent.getLongitude();
             LatLng moodLocation = new LatLng(moodEvent.getLatitude(), moodEvent.getLongitude());
 
             MarkerOptions markerOptions = new MarkerOptions();
-
             markerOptions.title("title");
-
             markerOptions.position(new LatLng(moodEvent.getLatitude(), moodEvent.getLongitude()));
             Mood mood = Mood.moodFromEmotionalState(moodEvent.getMood());
-
             markerOptions.icon(fromDrawable(mood.getEmoticon(), mood.getColor()));
 
             Marker marker = googleMap.addMarker(markerOptions);
@@ -210,10 +202,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
             updateInfoBox(moodEvent, moodLocation);
         }
 
-        avgLat /= moodEventList.size();
-        avgLon /= moodEventList.size();
-
-        
+        // move the camera over the mood events
+        centerCamera(moodEventList);
     }
 
     /**
@@ -417,7 +407,39 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                 validLocations.add(me);
             }
         }
+        return validLocations;
     }
+
+
+    public void centerCamera(List<MoodEvent> moodEvents) {
+        moodEvents = extractValidLocations(moodEvents);
+
+        if (moodEvents.isEmpty()) {
+            return;  // nothing to do
+        }
+
+        // compute the center of all the mood events
+        double avgLat = 0;
+        double avgLon = 0;
+        for (MoodEvent moodEvent : moodEvents) {
+            avgLat += moodEvent.getLatitude();
+            avgLon += moodEvent.getLongitude();
+        }
+        avgLat /= moodEvents.size();
+        avgLat /= moodEvents.size();
+
+        // find the furthest mood event from the center, to set the zoom properly
+        double maxDist = Double.NEGATIVE_INFINITY;
+        for (MoodEvent moodEvent : moodEvents) {
+            double dist = Math.sqrt(
+                    Math.pow((avgLat - moodEvent.getLatitude()), 2)
+                    + Math.pow((avgLat - moodEvent.getLongitude()), 2));
+            if (dist > maxDist) {
+                maxDist = dist;
+            }
+        }
+    }
+
 
     public static void setDefaultTheme(int THEME_ID) {
         DEFAULT_THEME_ID = THEME_ID;
