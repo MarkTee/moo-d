@@ -8,7 +8,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="15dp">
+    android:padding="15dp"
+    android:background="?attr/colorDefaultBackground">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -55,7 +56,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:text="is feeling"
-            android:textColor="#000000"
+            android:textColor="?attr/colorDefaultText"
             app:layout_constraintBottom_toBottomOf="@id/user_emotion_imageView"
 
             app:layout_constraintStart_toEndOf="@id/user_name_textView"
@@ -89,7 +90,7 @@
             android:layout_height="wrap_content"
             android:textStyle="bold"
             android:text="."
-            android:textColor="#000000"
+            android:textColor="?attr/colorDefaultText"
             app:layout_constraintBottom_toBottomOf="@id/user_emotion_imageView"
 
             app:layout_constraintStart_toEndOf="@id/user_mood_textView"
@@ -109,7 +110,8 @@
             android:layout_marginLeft="5dp"
 
             android:contentDescription="edit mood button"
-            android:background="#00000000"
+            android:background="?attr/colorDefaultBackground"
+            android:tint="?attr/colorContainerImageButton"
             android:src="@drawable/ic_edit_gray_24dp"/>
 
         <!-- DELETE BUTTON -->
@@ -123,7 +125,8 @@
             app:layout_constraintEnd_toStartOf="@id/edit_button"
 
             android:contentDescription="delete button"
-            android:background="#00000000"
+            android:background="?attr/colorDefaultBackground"
+            android:tint="?attr/colorContainerImageButton"
             android:src="@drawable/ic_delete_gray_24dp"/>
 
 
@@ -137,6 +140,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="3dp"
             android:layout_marginTop="5dp"
+
+            android:textColor="?attr/colorSecondaryText"
             android:text="November 02, 2019 at 1:22 PM"
             android:textSize="12dp"
 
@@ -153,6 +158,8 @@
             android:layout_marginTop="5dp"
             android:contentDescription="social icon"
             android:src="@drawable/ic_activity_people_black_24dp"
+            android:background="?attr/colorDefaultBackground"
+            android:tint="?attr/colorContainerImageButton"
 
             app:layout_constraintStart_toStartOf="@id/date_time_textView"
             app:layout_constraintTop_toBottomOf="@id/date_time_textView" />
@@ -163,7 +170,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="6dp"
             android:text="A crowd"
-            android:textColor="#000000"
+            android:textColor="?attr/colorDefaultText"
             android:textSize="12dp"
 
             app:layout_constraintBottom_toBottomOf="@id/num_people_imageView"
@@ -182,6 +189,8 @@
             android:src="@drawable/ic_near_me_black_24dp"
             app:layout_constraintBottom_toBottomOf="@id/num_people_imageView"
 
+            android:background="?attr/colorDefaultBackground"
+            android:tint="?attr/colorContainerImageButton"
             app:layout_constraintStart_toEndOf="@id/num_people_textView"
             app:layout_constraintTop_toTopOf="@id/num_people_imageView" />
 
@@ -191,7 +200,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:text="University of Alberta"
-            android:textColor="#000000"
+            android:textColor="?attr/colorDefaultText"
             android:textSize="12dp"
 
             app:layout_constraintBottom_toBottomOf="@id/location_icon_imageView"
@@ -207,7 +216,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:text="Bought drawing supplies"
-            android:textColor="#000000"
+            android:textColor="?attr/colorDefaultText"
 
             android:textSize="13dp"
             android:textStyle="italic"

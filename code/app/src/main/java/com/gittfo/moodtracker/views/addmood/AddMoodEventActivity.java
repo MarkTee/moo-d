@@ -64,6 +64,8 @@ public class AddMoodEventActivity extends AppCompatActivity  {
     private static final int RESULT_LOAD_IMG = 1;
     private static final int IMAGE_HEIGHT = 150;
 
+    private static int DEFAULT_THEME_ID = R.style.AppTheme;
+
     // For getting the location
     private FusedLocationProviderClient fusedLocationClient;
 
@@ -101,6 +103,7 @@ public class AddMoodEventActivity extends AppCompatActivity  {
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(DEFAULT_THEME_ID);
         super.onCreate(savedInstanceState);
 
         // Hide ActionBar so that Mood Event entry is full-screen
@@ -560,5 +563,9 @@ public class AddMoodEventActivity extends AppCompatActivity  {
      */
     private void quickSnack(String msg) {
         Snackbar.make(findViewById(R.id.add_mood_root), msg, Snackbar.LENGTH_SHORT).show();
+    }
+
+    public static void setDefaultTheme(int THEME_ID) {
+        DEFAULT_THEME_ID = THEME_ID;
     }
 }

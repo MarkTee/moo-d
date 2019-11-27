@@ -24,6 +24,7 @@ import com.google.android.gms.tasks.Task;
 public class SigninActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 1;
     GoogleSignInClient mGoogleSignInClient;
+    private static int DEFAULT_THEME_ID = R.style.AppTheme;
 
     /**
      * In the onCreate method, create the signin client
@@ -32,6 +33,8 @@ public class SigninActivity extends AppCompatActivity {
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(DEFAULT_THEME_ID);
+
         Log.d("Aout", "Hit on create");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signin);
@@ -136,5 +139,9 @@ public class SigninActivity extends AppCompatActivity {
             // TODO: Notify User
             this.recreate();
         }
+    }
+
+    public static void setDefaultTheme(int THEME_ID) {
+        DEFAULT_THEME_ID = THEME_ID;
     }
 }
