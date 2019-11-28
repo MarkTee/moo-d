@@ -32,15 +32,14 @@ public class TimelineActivity extends AppCompatActivity {
     private MoodHistoryAdapter moodHistoryAdapter;
     private FilterDialog filterDialog;
     private ArrayList<MoodEvent> followeesMoods;
-    private ImageButton dropDownButton;
+    private AppBottomBar appBottomBar;
 
-    private ColorSchemeDialog colorDialog;
-    private static int DEFAULT_THEME_ID = R.style.AppTheme;
 
     protected void onCreate(Bundle savedInstanceState){
-        setTheme(DEFAULT_THEME_ID);
+        appBottomBar = new AppBottomBar(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
+        appBottomBar.setListeners();
 
         // Hide the ActionBar
         getSupportActionBar().hide();
@@ -64,8 +63,6 @@ public class TimelineActivity extends AppCompatActivity {
 
         filterDialog = new FilterDialog(this);
         findViewById(R.id.toolbar_filter_button).setOnClickListener(v -> filterDialog.show());
-
-        colorDialog = new ColorSchemeDialog(this);
     }
 
     /**
@@ -124,95 +121,6 @@ public class TimelineActivity extends AppCompatActivity {
     }
 
     /**
-     * When the New MoodEvent Button (the '+' icon in the bottom-middle of the screen) is clicked,
-     * pass the user through to AddMoodEventActivity.
-     *
-     * @param view The New MoodEvent Button
-     */
-    public void createMoodEvent(View view) {
-        Intent i = new Intent(this, AddMoodEventActivity.class);
-        this.startActivity(i);
-    }
-
-    /**
-     * When the "timeline" button is pressed, don't do anything (since we're already in TimelineActivity)
-     * @param view the Inbox button.
-     */
-    public void startTimelineActivity(View view) {
-    }
-
-    /**
-     * When the "inbox" button is pressed, go to the inbox activity.
-     * @param view the Inbox button.
-     */
-    public void startInboxActivity(View view) {
-        // don't animate transition between activities
-        Intent i = new Intent(this, InboxActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        this.startActivity(i);
-    }
-
-    /**
-     * When the "profile" button is pressed, go to the profile activity.
-     * @param view the Profile button.
-     */
-    public void startProfileActivity(View view) {
-        // don't animate transition between activities
-        Intent i = new Intent(this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        this.startActivity(i);
-    }
-
-    /**
-     * When the "map" button is pressed, go the map-viewing activity.
-     * @param view the Map button.
-     */
-    public void startMapActivity(View view) {
-        Intent i = new Intent(this, MapActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        this.startActivity(i);
-    }
-
-    public void onChangeColorSchemePressed(){
-        colorDialog.show();
-    }
-
-    public void validateNewTheme(){
-        Intent i = new Intent(this, TimelineActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        this.startActivity(i);
-    }
-
-    public void applyColorScheme(View v) {
-        int selectedButton = colorDialog.getSelectedNum();
-        Log.d("Selected", Integer.toString(selectedButton));
-
-        if (selectedButton == 0) {
-            DEFAULT_THEME_ID = R.style.AppTheme;
-        } else if (selectedButton == 1) {
-            DEFAULT_THEME_ID = R.style.NeonTheme;
-        } else if (selectedButton == 2) {
-            DEFAULT_THEME_ID = R.style.MonochromeTheme;
-        } else if (selectedButton == 3) {
-            DEFAULT_THEME_ID = R.style.PastelTheme;
-        }
-
-        colorDialog.cancel();
-        applyToAllActivities();
-        validateNewTheme();
-    }
-
-    public void applyToAllActivities() {
-        InboxActivity.setDefaultTheme(DEFAULT_THEME_ID);
-        MainActivity.setDefaultTheme(DEFAULT_THEME_ID);
-        MapActivity.setDefaultTheme(DEFAULT_THEME_ID);
-        AddMoodEventActivity.setDefaultTheme(DEFAULT_THEME_ID);
-        SigninActivity.setDefaultTheme(DEFAULT_THEME_ID);
-        ChangeUsernameActivity.setDefaultTheme(DEFAULT_THEME_ID);
-    }
-
-    public static void setDefaultTheme(int THEME_ID) {
-        DEFAULT_THEME_ID = THEME_ID;
-    }
-
-
-    /**
      * For smoother transitions between activities, disable animations when the back button is pressed.
      */
     @Override
@@ -221,46 +129,5 @@ public class TimelineActivity extends AppCompatActivity {
         overridePendingTransition(0, 0);
     }
 
-    public void startSigninActivity(View view){
-        Intent i = new Intent(this, SigninActivity.class);
-        i.putExtra("sign out?", true);
-        this.startActivity(i);
-    }
 
-    public void startUsernameActivity(View view) {
-        Intent i = new Intent(this, ChangeUsernameActivity.class);
-        this.startActivity(i);
-    }
-
-    public void dropdownPressed(View view){
-        dropDownButton = findViewById(R.id.settings_button);
-        // create a PopupMenu
-        PopupMenu popup = new PopupMenu(TimelineActivity.this, dropDownButton);
-        // inflate the popup via xml file
-        popup.getMenuInflater()
-                .inflate(R.menu.dropdown_menu, popup.getMenu());
-
-        // tie popup to OnMenuItemClickListener
-        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                switch(menuItem.getItemId()) {
-                    case (R.id.dropdown_one):
-                        // change username
-                        startUsernameActivity(view);
-                        break;
-                    case (R.id.dropdown_two):
-                        // change color scheme
-                        onChangeColorSchemePressed();
-                        break;
-                    case (R.id.dropdown_three):
-                        //TODO: fix log out functionality
-                        startSigninActivity(view);
-                        break;
-                }
-                return true;
-            }
-        });
-        popup.show(); // show popup menu
-    }
 }
