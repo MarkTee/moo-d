@@ -23,7 +23,7 @@ public class AppBottomBar {
         act.setTheme(DEFAULT_THEME_ID);
         this.act = act;
         colorDialog = new ColorSchemeDialog(act);
-
+        colorDialog.setOnClicker(c -> applyColorScheme());
     }
 
     public void setListeners() {
@@ -142,7 +142,6 @@ public class AppBottomBar {
 
     public void onChangeColorSchemePressed(){
         colorDialog.show();
-        act.findViewById(R.id.set_scheme_button).setOnClickListener(c -> applyColorScheme());
     }
 
     public void applyColorScheme() {

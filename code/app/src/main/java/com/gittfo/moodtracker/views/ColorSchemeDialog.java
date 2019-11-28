@@ -17,6 +17,7 @@ public class ColorSchemeDialog {
     private AlertDialog colorDialog;
     Activity c;
     private boolean[] buttonState;
+    private View.OnClickListener fn;
 
     /**
      * Create a new ColorSchemeDialog object
@@ -49,8 +50,13 @@ public class ColorSchemeDialog {
         colorDialog.findViewById(R.id.dark_theme_button_1).setOnClickListener(v -> this.updateButtonUI(v));
         colorDialog.findViewById(R.id.dark_theme_button_2).setOnClickListener(v -> this.updateButtonUI(v));
 
+        colorDialog.findViewById(R.id.set_scheme_button).setOnClickListener(fn);
     }
 
+    public void setOnClicker(View.OnClickListener fn) {
+        this.fn = fn;
+    }
+    
     /**
      * Update the color dialog when a button is selected.
      */
@@ -121,5 +127,4 @@ public class ColorSchemeDialog {
     public void cancel() {
         colorDialog.cancel();
     }
-
 }
