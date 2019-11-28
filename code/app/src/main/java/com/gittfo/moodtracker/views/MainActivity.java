@@ -44,9 +44,6 @@ public class MainActivity extends AppCompatActivity {
     private static int DEFAULT_THEME_ID = R.style.AppTheme;
 
 
-
-
-
     /**
      * Each time the user returns to this activity, update the RecyclerView with moods from the
      * database.

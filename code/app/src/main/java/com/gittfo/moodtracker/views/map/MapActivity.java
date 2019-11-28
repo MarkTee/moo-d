@@ -36,12 +36,15 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.type.LatLngOrBuilder;
 
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * An activity where users can view the locations of a list of MoodEvents on a map. Can be used for
@@ -56,7 +59,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     private ArrayList<MoodEvent> moodEvents;
     // level to zoom to once marker is clicked
     private float ONCLICK_ZOOMLVL = 17; // about usual map height
-    // our instamce of the googlemap
+    // our instance of the googlemap
     private GoogleMap googleMap;
     // keep track of placed markers, since google maps doesn't, and we need to be able to clear them
     private ArrayList<Marker> markers;
@@ -171,52 +174,44 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
      * @param moodEventList a List of MoodEvents to display.
      */
     public void showMoodEvents(List<MoodEvent> moodEventList) {
+
         // clear out the current markers
         for (Marker m : markers) {
             m.remove();
         }
         markers.clear();
 
-        // if there's no mood events with a valid location, don't show anything
-        if (!moodEventList
-                .stream()
-                .anyMatch(m -> !(Double.isNaN(m.getLatitude()) || Double.isNaN(m.getLongitude()))))
-        {
-            clearInfoBox();
-            return;
+        // filter out those moods with invalid locations
+        moodEventList = extractValidLocations(moodEventList);
+        if (moodEventList.isEmpty()) {
+            return; // nothing to do
         }
 
-        // for aesthetics, move the camera to the most recent mood event
-        LatLng lastPos = null;
+        // keep track of the moods to fit the camera onto them
+        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+
         for (MoodEvent moodEvent : moodEventList) {
-
-            if (Double.isNaN(moodEvent.getLatitude()) || Double.isNaN(moodEvent.getLongitude())) {
-                // this mood doesn't have a valid location
-                continue;
-            }
-
             LatLng moodLocation = new LatLng(moodEvent.getLatitude(), moodEvent.getLongitude());
+
             MarkerOptions markerOptions = new MarkerOptions();
-
             markerOptions.title("title");
-
             markerOptions.position(new LatLng(moodEvent.getLatitude(), moodEvent.getLongitude()));
             Mood mood = Mood.moodFromEmotionalState(moodEvent.getMood());
-
             markerOptions.icon(fromDrawable(mood.getEmoticon(), mood.getColor()));
 
             Marker marker = googleMap.addMarker(markerOptions);
             marker.setTag(moodEvent);
 
             markers.add(marker);
+            builder.include(marker.getPosition());
 
             updateInfoBox(moodEvent, moodLocation);
+        }
 
-            lastPos = moodLocation;
-        }
-        if (lastPos != null) {
-            googleMap.moveCamera(CameraUpdateFactory.newLatLng(lastPos));
-        }
+        // move the camera over the mood events
+        LatLngBounds bounds = builder.build();
+        int padding = 20;
+        googleMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, padding));
     }
 
     /**
@@ -408,6 +403,27 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         popup.show(); // show popup menu
     }
 
+    /**
+     * @param moodEvent event to check.
+     * @return whether the given event has a valid location, i.e., both coordinates not NaN.
+     */
+    public boolean hasValidLocation(MoodEvent moodEvent) {
+        return !Double.isNaN(moodEvent.getLatitude()) && !Double.isNaN(moodEvent.getLongitude());
+    }
+
+    /**
+     * @param moodEvents a list of mood events which may have invalid locations.
+     * @return those moodevents from the list which have valid locations.
+     */
+    public List<MoodEvent> extractValidLocations(List <MoodEvent> moodEvents) {
+        List<MoodEvent> validLocations = new ArrayList<>();
+        for (MoodEvent me : moodEvents) {
+            if (hasValidLocation(me)) {
+                validLocations.add(me);
+            }
+        }
+        return validLocations;
+    }
 
     public static void setDefaultTheme(int THEME_ID) {
         DEFAULT_THEME_ID = THEME_ID;
