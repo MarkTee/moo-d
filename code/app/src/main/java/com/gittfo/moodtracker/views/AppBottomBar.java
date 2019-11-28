@@ -1,8 +1,8 @@
 package com.gittfo.moodtracker.views;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
@@ -15,11 +15,20 @@ public class AppBottomBar {
 
     private final Activity act;
     public static int DEFAULT_THEME_ID = R.style.AppTheme;
+    public static int[] themes = new int[] {
+                R.style.AppTheme,
+                R.style.NeonTheme,
+                R.style.MonochromeTheme,
+                R.style.PastelTheme,
+                R.style.DarkTheme1,
+                R.style.DarkTheme2,
+    };
 
     private ImageButton dropDownButton;
     private ColorSchemeDialog colorDialog;
 
     public AppBottomBar(Activity act) {
+        DEFAULT_THEME_ID = act.getSharedPreferences("colors", Context.MODE_PRIVATE).getInt("theme", R.style.AppTheme);
         act.setTheme(DEFAULT_THEME_ID);
         this.act = act;
         colorDialog = new ColorSchemeDialog(act);
@@ -145,22 +154,11 @@ public class AppBottomBar {
     }
 
     public void applyColorScheme() {
-        int selectedButton = colorDialog.getSelectedNum();
-        Log.d("Selected", Integer.toString(selectedButton));
-
-        if (selectedButton == 0) {
-            DEFAULT_THEME_ID = R.style.AppTheme;
-        } else if (selectedButton == 1) {
-            DEFAULT_THEME_ID = R.style.NeonTheme;
-        } else if (selectedButton == 2) {
-            DEFAULT_THEME_ID = R.style.MonochromeTheme;
-        } else if (selectedButton == 3) {
-            DEFAULT_THEME_ID = R.style.PastelTheme;
-        }
-
+        DEFAULT_THEME_ID = themes[colorDialog.getSelectedNum()];
+        act.getSharedPreferences("colors", Context.MODE_PRIVATE).edit().putInt("theme", DEFAULT_THEME_ID).commit();
         colorDialog.cancel();
 
-        Intent i = new Intent(act, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        Intent i = new Intent(act, act.getClass()).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         act.startActivity(i);
     }
 
