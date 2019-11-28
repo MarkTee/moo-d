@@ -30,6 +30,8 @@
     <color name="colorNeonThemeButton">#13CA91</color>
     <color name="colorPastelThemeButton">#A2D1F1</color>
     <color name="colorMonochromeThemeButton">#9BA3A7</color>
+    <color name="colorDarkTheme1Button">#2F2F30</color>
+    <color name="colorDarkTheme2Button">#2F2F41</color>
 
 
 </resources>

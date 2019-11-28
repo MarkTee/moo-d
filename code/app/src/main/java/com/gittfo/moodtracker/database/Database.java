@@ -504,6 +504,25 @@ public class Database {
             callCloudFunctionSimple(buildCloudURL(String.format("denyFollowUser?uid=%s&oid=%s", userId, usrid)), null);
     }
 
+    public void getFollowees(Consumer<List<String>> callback) {
+        DocumentReference reqs = db.collection("users")
+                .document(currentUser());
+
+        reqs.get().addOnSuccessListener(docs -> {
+            Log.d(TAG, "Found the requests");
+
+            List<String> requestInfo = new ArrayList<>();
+            Map<String, Object> items = docs.getData();
+            if (items != null) {
+                for (String obj : (ArrayList<String>) items.get("following")) {
+                    requestInfo.add(obj);
+                }
+            }
+
+            callback.accept(requestInfo);
+        });
+    }
+
     /**
      * Initializes data in the database
     */
