@@ -239,8 +239,10 @@ public class Database {
                     JsonArray data = j.parse(res).getAsJsonArray();
                     List<MoodEvent> moods = new ArrayList<>(data.size());
                     for (JsonElement e : data) {
-                        MoodEvent me = MoodEvent.getMoodEventFromJson(e.getAsJsonObject());
-                        moods.add(me);
+                        if (e.isJsonObject()) {
+                            MoodEvent me = MoodEvent.getMoodEventFromJson(e.getAsJsonObject());
+                            moods.add(me);
+                        }
                     }
                     callback.accept(moods);
                 });
@@ -368,6 +370,9 @@ public class Database {
                     String s = documentSnapshot.getString("username");
                     if (s != null) {
                         Database.username = s;
+                    }else {
+                        Database.username = userId;
+                        s = userId; 
                     }
                     if (callback != null) {
                         callback.accept(s.trim());

@@ -5,25 +5,16 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageButton;
-import android.widget.PopupMenu;
-import android.widget.Toast;
 
 import com.gittfo.moodtracker.database.Database;
 import com.gittfo.moodtracker.mood.MoodEvent;
 import com.gittfo.moodtracker.mood.MoodHistoryAdapter;
-import com.gittfo.moodtracker.views.addmood.AddMoodEventActivity;
-import com.gittfo.moodtracker.views.map.MapActivity;
-import com.gittfo.moodtracker.views.map.MoodHistoryWrapper;
 import com.google.android.gms.tasks.Task;
 
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,11 +28,8 @@ public class MainActivity extends AppCompatActivity {
     private MoodHistoryAdapter moodHistoryAdapter;
     private FilterDialog filterDialog;
     private ArrayList<MoodEvent> moodHistory;
+    private AppBottomBar appBottomBar;
 
-    private ImageButton dropDownButton;
-    private ColorSchemeDialog colorDialog;
-
-    private static int DEFAULT_THEME_ID = R.style.AppTheme;
 
 
     /**
@@ -61,10 +49,10 @@ public class MainActivity extends AppCompatActivity {
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(DEFAULT_THEME_ID);
-
+        appBottomBar = new AppBottomBar(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        appBottomBar.setListeners();
 
         // Hide ActionBar
         getSupportActionBar().hide();
@@ -86,10 +74,6 @@ public class MainActivity extends AppCompatActivity {
 
         filterDialog = new FilterDialog(this);
         findViewById(R.id.toolbar_filter_button).setOnClickListener(v -> filterDialog.show());
-
-        colorDialog = new ColorSchemeDialog(this);
-
-
 
     }
 
@@ -120,7 +104,6 @@ public class MainActivity extends AppCompatActivity {
         // Get all moods from the database
         Log.d("JDB", "Getting Moods");
         Task<List<MoodEvent>> task = Database.get(this).getMoods();
-        //List<MoodEvent> moodl = task.getResult();
 
         Database.get(this).getMoods().addOnSuccessListener(moods -> {
             Log.d("JDB", "Success");
@@ -140,144 +123,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * When the New MoodEvent Button (the '+' icon in the bottom-middle of the screen) is clicked,
-     * pass the user through to AddMoodEventActivity.
-     *
-     * @param view The New MoodEvent Button
-     */
-    public void createMoodEvent(View view) {
-        Intent i = new Intent(this, AddMoodEventActivity.class);
-        this.startActivity(i);
-    }
-
-    /**
-     * When the "timeline" button is pressed, go to the inbox-managing activity.
-     * @param view the Inbox button.
-     */
-    public void startTimelineActivity(View view) {
-        // don't animate transition between activities
-        Intent i = new Intent(this, TimelineActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        this.startActivity(i);
-    }
-
-    /**
-     * When the "inbox" button is pressed, go to the inbox activity.
-     * @param view the Inbox button.
-     */
-    public void startInboxActivity(View view) {
-        // don't animate transition between activities
-        Intent i = new Intent(this, InboxActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        this.startActivity(i);
-    }
-
-    /**
-     * When the "profile" button is pressed, don't do anything (since we're already in MainActivity)
-     * @param view the Inbox button.
-     */
-    public void startProfileActivity(View view){
-    }
-
-    /**
-     * When the "map" button is pressed, go the map-viewing activity.
-     * @param view the Map button.
-     */
-    public void startMapActivity(View view) {
-        Intent i = new Intent(this, MapActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        MoodHistoryWrapper wrapper = new MoodHistoryWrapper(moodHistory);
-        i.putExtra(MapActivity.MOOD_HISTORY_WRAPPER, wrapper);
-        this.startActivity(i);
-    }
-
-    public void startSigninActivity(View view){
-        Intent i = new Intent(this, SigninActivity.class);
-        i.putExtra("sign out?", true);
-        this.startActivity(i);
-
-    }
-
-    public void startUsernameActivity(View view) {
-        Intent i = new Intent(this, ChangeUsernameActivity.class);
-        this.startActivity(i);
-    }
-
-    public void dropdownPressed(View view){
-        dropDownButton = findViewById(R.id.settings_button);
-        // create a PopupMenu
-        PopupMenu popup = new PopupMenu(MainActivity.this, dropDownButton);
-        // inflate the popup via xml file
-        popup.getMenuInflater()
-                .inflate(R.menu.dropdown_menu, popup.getMenu());
-
-        // tie popup to OnMenuItemClickListener
-        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                switch(menuItem.getItemId()) {
-                    case (R.id.dropdown_one):
-                        // change username
-                        startUsernameActivity(view);
-                        break;
-                    case (R.id.dropdown_two):
-                         // change color scheme
-                         onChangeColorSchemePressed();
-                         break;
-                    case (R.id.dropdown_three):
-                        //TODO: fix log out functionality
-                        startSigninActivity(view);
-                        break;
-                }
-                return true;
-            }
-        });
-        popup.show(); // show popup menu
-    }
-
-    public void onChangeColorSchemePressed(){
-        colorDialog.show();
-    }
-
-    public void validateNewTheme(){
-        Intent i = new Intent(this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        this.startActivity(i);
-    }
-
-    public void applyColorScheme(View v) {
-        int selectedButton = colorDialog.getSelectedNum();
-        Log.d("Selected", Integer.toString(selectedButton));
-
-        if (selectedButton == 0) {
-            DEFAULT_THEME_ID = R.style.AppTheme;
-        } else if (selectedButton == 1) {
-            DEFAULT_THEME_ID = R.style.NeonTheme;
-        } else if (selectedButton == 2) {
-            DEFAULT_THEME_ID = R.style.MonochromeTheme;
-        } else if (selectedButton == 3) {
-            DEFAULT_THEME_ID = R.style.PastelTheme;
-        } else if (selectedButton == 4) {
-            DEFAULT_THEME_ID = R.style.DarkTheme1;
-        } else if (selectedButton == 5) {
-            DEFAULT_THEME_ID = R.style.DarkTheme2;
-        }
-
-        colorDialog.cancel();
-        applyToAllActivities();
-        validateNewTheme();
-    }
-
-    public void applyToAllActivities() {
-        InboxActivity.setDefaultTheme(DEFAULT_THEME_ID);
-        TimelineActivity.setDefaultTheme(DEFAULT_THEME_ID);
-        MapActivity.setDefaultTheme(DEFAULT_THEME_ID);
-        AddMoodEventActivity.setDefaultTheme(DEFAULT_THEME_ID);
-        SigninActivity.setDefaultTheme(DEFAULT_THEME_ID);
-        ChangeUsernameActivity.setDefaultTheme(DEFAULT_THEME_ID);
-    }
-
-    public static void setDefaultTheme(int THEME_ID) {
-        DEFAULT_THEME_ID = THEME_ID;
-    }
-
-    /**
      * For smoother transitions between activities, disable animations when the back button is pressed.
      */
     @Override
@@ -285,4 +130,14 @@ public class MainActivity extends AppCompatActivity {
         super.onBackPressed();
         overridePendingTransition(0, 0);
     }
+
+    public ArrayList<MoodEvent> getMoodEvents() {
+        return this.moodHistory;
+    }
+
+    public static void setDefaultTheme(int THEME_ID) {
+        AppBottomBar.DEFAULT_THEME_ID = THEME_ID;
+    }
+
+
 }

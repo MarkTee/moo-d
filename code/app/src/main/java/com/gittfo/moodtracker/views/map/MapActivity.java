@@ -21,6 +21,7 @@ import androidx.fragment.app.FragmentActivity;
 import com.gittfo.moodtracker.database.Database;
 import com.gittfo.moodtracker.mood.Mood;
 import com.gittfo.moodtracker.mood.MoodEvent;
+import com.gittfo.moodtracker.views.AppBottomBar;
 import com.gittfo.moodtracker.views.ChangeUsernameActivity;
 import com.gittfo.moodtracker.views.ColorSchemeDialog;
 import com.gittfo.moodtracker.views.InboxActivity;
@@ -64,9 +65,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     // keep track of placed markers, since google maps doesn't, and we need to be able to clear them
     private ArrayList<Marker> markers;
 
-    private static int DEFAULT_THEME_ID = R.style.AppTheme;
-    private ColorSchemeDialog colorDialog;
-    private ImageButton dropDownButton;
+    private AppBottomBar appBottomBar;
 
     /**
      * Create a new map activity, set the view to the map view and call for a new map to populate
@@ -76,9 +75,10 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
      */
     @Override
     protected void onCreate(Bundle savedInstance) {
-        setTheme(DEFAULT_THEME_ID);
+        appBottomBar = new AppBottomBar(this);
         super.onCreate(savedInstance);
         setContentView(R.layout.maps_screen);
+        appBottomBar.setListeners();
 
         // we use fragments for now, not a full on map view
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -95,8 +95,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         }
 
         markers = new ArrayList<>();
-
-        colorDialog = new ColorSchemeDialog(this);
     }
 
     /**
@@ -292,117 +290,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         TextView moodText = findViewById(R.id.map_mood_text);
         moodText.setText("");
     }
-
-    /**
-     * When the "timeline" button is pressed, go to the inbox-managing activity.
-     * @param view the Inbox button.
-     */
-    public void startTimelineActivity(View view) {
-        // don't animate transition between activities
-        Intent i = new Intent(this, TimelineActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        this.startActivity(i);
-    }
-
-    /**
-     * When the "inbox" button is pressed, go to the inbox activity.
-     * @param view the Inbox button.
-     */
-    public void startInboxActivity(View view) {
-        // don't animate transition between activities
-        Intent i = new Intent(this, InboxActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        this.startActivity(i);
-    }
-
-    /**
-     * When the "profile" button is pressed, go to the inbox activity.
-     * @param view the Inbox button.
-     */
-    public void startProfileActivity(View view){
-        // don't animate transition between activities
-        Intent i = new Intent(this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        this.startActivity(i);
-    }
-
-    public void onChangeColorSchemePressed(){
-        colorDialog.show();
-    }
-
-    public void validateNewTheme(){
-        Intent i = new Intent(this, MapActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        this.startActivity(i);
-    }
-
-    public void applyColorScheme(View v) {
-        int selectedButton = colorDialog.getSelectedNum();
-        Log.d("Selected", Integer.toString(selectedButton));
-
-        if (selectedButton == 0) {
-            DEFAULT_THEME_ID = R.style.AppTheme;
-        } else if (selectedButton == 1) {
-            DEFAULT_THEME_ID = R.style.NeonTheme;
-        } else if (selectedButton == 2) {
-            DEFAULT_THEME_ID = R.style.MonochromeTheme;
-        } else if (selectedButton == 3) {
-            DEFAULT_THEME_ID = R.style.PastelTheme;
-        }
-
-        colorDialog.cancel();
-        applyToAllActivities();
-        validateNewTheme();
-    }
-
-    public void applyToAllActivities() {
-        InboxActivity.setDefaultTheme(DEFAULT_THEME_ID);
-        MainActivity.setDefaultTheme(DEFAULT_THEME_ID);
-        TimelineActivity.setDefaultTheme(DEFAULT_THEME_ID);
-        AddMoodEventActivity.setDefaultTheme(DEFAULT_THEME_ID);
-        SigninActivity.setDefaultTheme(DEFAULT_THEME_ID);
-        ChangeUsernameActivity.setDefaultTheme(DEFAULT_THEME_ID);
-    }
-
-    public void startUsernameActivity(View view) {
-        Intent i = new Intent(this, ChangeUsernameActivity.class);
-        this.startActivity(i);
-    }
-
-    public void startSigninActivity(View view){
-        Intent i = new Intent(this, SigninActivity.class);
-        i.putExtra("sign out?", true);
-        this.startActivity(i);
-    }
-
-    public void dropdownPressed(View view){
-        dropDownButton = findViewById(R.id.settings_button);
-        // create a PopupMenu
-        PopupMenu popup = new PopupMenu(MapActivity.this, dropDownButton);
-        // inflate the popup via xml file
-        popup.getMenuInflater()
-                .inflate(R.menu.dropdown_menu, popup.getMenu());
-
-        // tie popup to OnMenuItemClickListener
-        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                switch(menuItem.getItemId()) {
-                    case (R.id.dropdown_one):
-                        // change username
-                        startUsernameActivity(view);
-                        break;
-                    case (R.id.dropdown_two):
-                        // change color scheme
-                        onChangeColorSchemePressed();
-                        break;
-                    case (R.id.dropdown_three):
-                        //TODO: fix log out functionality
-                        startSigninActivity(view);
-                        break;
-                }
-                return true;
-            }
-        });
-        popup.show(); // show popup menu
-    }
-
     /**
      * @param moodEvent event to check.
      * @return whether the given event has a valid location, i.e., both coordinates not NaN.
@@ -425,14 +312,4 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         return validLocations;
     }
 
-    public static void setDefaultTheme(int THEME_ID) {
-        DEFAULT_THEME_ID = THEME_ID;
-    }
-
-    /**
-     * When the "map" button is pressed,  don't do anything (since we're already in MapActivity)
-     * @param view the Map button.
-     */
-    public void startMapActivity(View view) {
-    }
 }
