@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="?attr/colorDefaultBackground">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -23,11 +24,12 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@id/follow_allowed_textView"
 
-            android:background="#00000000"
+            android:background="?attr/colorDefaultBackground"
+            android:tint="?attr/colorContainerImageButton"
             android:contentDescription="cancel button"
             android:src="@drawable/ic_cancel_grey_24dp"/>
 
-        <!-- "Follow Request Denied" text -->
+        <!-- "Follow Request Allowed" text -->
 
         <TextView
             android:id="@+id/follow_allowed_textView"
@@ -42,7 +44,7 @@
 
             android:textStyle="bold"
             android:textSize="20sp"
-            android:textColor="#000000"
+            android:textColor="?attr/colorDefaultText"
             android:text="You've got a new follower!"/>
 
         <TextView
@@ -69,7 +71,7 @@
             app:layout_constraintEnd_toEndOf="@id/follow_allowed_textView"
             android:layout_marginStart="5dp"
 
-            android:textColor="#000000"
+            android:textColor="?attr/colorDefaultText"
             android:text="will now see your posts"/>
 
 
@@ -85,7 +87,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginStart="5dp"
 
-            android:textColor="#000000"
+            android:textColor="?attr/colorDefaultText"
             android:text="on their Timeline."/>
 
 

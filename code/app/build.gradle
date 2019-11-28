@@ -48,6 +48,7 @@ dependencies {
     testImplementation 'androidx.test:core:1.2.0'
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.4.2'
+    testImplementation 'org.mockito:mockito-core:2.7.22'
 
     androidTestImplementation 'androidx.test:core:1.2.1-alpha02'
     androidTestImplementation 'androidx.test:runner:1.2.0'
@@ -56,10 +57,8 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     androidTestImplementation 'com.jayway.android.robotium:robotium-solo:5.3.1'
     androidTestImplementation 'org.testng:testng:6.9.6'
+    androidTestImplementation 'org.mockito:mockito-android:2.7.22'
 
-
-    testCompile 'org.mockito:mockito-core:2.7.22'
-    androidTestCompile 'org.mockito:mockito-android:2.7.22'
 }
 
 apply plugin: 'com.google.gms.google-services'

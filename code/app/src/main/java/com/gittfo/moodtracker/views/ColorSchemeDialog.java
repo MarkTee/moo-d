@@ -32,7 +32,6 @@ public class ColorSchemeDialog {
 
 
         builder.setView(inflater.inflate(R.layout.color_scheme_dialog, null));
-        builder.setTitle("Change Color Scheme");
         Log.d("JUI", "Making builder");
         colorDialog = builder.create();
     }
@@ -42,6 +41,7 @@ public class ColorSchemeDialog {
      */
     public void show() {
         colorDialog.show();
+
         colorDialog.findViewById(R.id.default_theme_button).setOnClickListener(v -> this.updateButtonUI(v));
         colorDialog.findViewById(R.id.neon_theme_button).setOnClickListener(v -> this.updateButtonUI(v));
         colorDialog.findViewById(R.id.pastel_theme_button).setOnClickListener(v -> this.updateButtonUI(v));
@@ -107,4 +107,5 @@ public class ColorSchemeDialog {
     public void cancel() {
         colorDialog.cancel();
     }
+
 }

@@ -5,7 +5,8 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="15dp"
-    android:id="@+id/user_inbox_notification">
+    android:id="@+id/user_inbox_notification"
+    android:background="?attr/colorDefaultBackground">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -24,7 +25,7 @@
 
            android:textStyle="bold"
            android:textSize="18sp"
-           android:textColor="#000000"
+           android:textColor="?attr/colorDefaultText"
            android:text="New follow request"/>
 
         <TextView
@@ -50,7 +51,7 @@
             app:layout_constraintStart_toEndOf="@id/follow_request_username"
             android:layout_marginStart="5dp"
 
-            android:textColor="#000000"
+            android:textColor="?attr/colorDefaultText"
             android:text="would like permission to view your posts."/>
 
 

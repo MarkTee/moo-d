@@ -28,7 +28,7 @@ import com.gittfo.moodtracker.views.MainActivity;
 import com.gittfo.moodtracker.views.R;
 import com.gittfo.moodtracker.views.SigninActivity;
 import com.gittfo.moodtracker.views.TimelineActivity;
-import com.google.android.gms.maps.CameraUpdate;
+import com.gittfo.moodtracker.views.addmood.AddMoodEventActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -355,6 +355,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         InboxActivity.setDefaultTheme(DEFAULT_THEME_ID);
         MainActivity.setDefaultTheme(DEFAULT_THEME_ID);
         TimelineActivity.setDefaultTheme(DEFAULT_THEME_ID);
+        AddMoodEventActivity.setDefaultTheme(DEFAULT_THEME_ID);
+        SigninActivity.setDefaultTheme(DEFAULT_THEME_ID);
+        ChangeUsernameActivity.setDefaultTheme(DEFAULT_THEME_ID);
     }
 
     public void startUsernameActivity(View view) {
@@ -364,44 +367,40 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
     public void startSigninActivity(View view){
         Intent i = new Intent(this, SigninActivity.class);
+        i.putExtra("sign out?", true);
         this.startActivity(i);
     }
 
-    public void dropdownPressed(View view) {
-        dropDownButton = (ImageButton) findViewById(R.id.settings_button);
-        dropDownButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // create a PopupMenu
-                PopupMenu popup = new PopupMenu(MapActivity.this, dropDownButton);
-                // inflate the popup via xml file
-                popup.getMenuInflater()
-                        .inflate(R.menu.dropdown_menu, popup.getMenu());
+    public void dropdownPressed(View view){
+        dropDownButton = findViewById(R.id.settings_button);
+        // create a PopupMenu
+        PopupMenu popup = new PopupMenu(MapActivity.this, dropDownButton);
+        // inflate the popup via xml file
+        popup.getMenuInflater()
+                .inflate(R.menu.dropdown_menu, popup.getMenu());
 
-                // tie popup to OnMenuItemClickListener
-                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem menuItem) {
-                        switch(menuItem.getItemId()) {
-                            case (R.id.dropdown_one):
-                                // change username
-                                startUsernameActivity(view);
-                                break;
-                            case (R.id.dropdown_two):
-                                // change color scheme
-                                onChangeColorSchemePressed();
-                                break;
-                            case (R.id.dropdown_three):
-                                //TODO: allow for proper log out?
-                                startSigninActivity(view);
-                                break;
-                        }
-                        return true;
-                    }
-                });
-                popup.show(); // show popup menu
+        // tie popup to OnMenuItemClickListener
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                switch(menuItem.getItemId()) {
+                    case (R.id.dropdown_one):
+                        // change username
+                        startUsernameActivity(view);
+                        break;
+                    case (R.id.dropdown_two):
+                        // change color scheme
+                        onChangeColorSchemePressed();
+                        break;
+                    case (R.id.dropdown_three):
+                        //TODO: fix log out functionality
+                        startSigninActivity(view);
+                        break;
+                }
+                return true;
             }
-        }); // close setOnClickListener method
+        });
+        popup.show(); // show popup menu
     }
 
     /**

@@ -9,5 +9,9 @@
     <attr name="colorSecondary" format="reference|color"/>
     <attr name="colorDominantText" format="reference|color"/>
     <attr name="colorImageButtonTint" format="reference|color"/>
+    <attr name="colorDefaultText" format="reference|color"/>
+    <attr name="colorDefaultBackground" format="reference|color"/>
+    <attr name="colorContainerImageButton" format="reference|color"/>
+    <attr name="colorSecondaryText" format="reference|color"/>
 
 </resources>
