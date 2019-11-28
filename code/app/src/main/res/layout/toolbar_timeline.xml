@@ -77,8 +77,6 @@
                 android:src="@drawable/ic_menu_black_32dp"
                 android:tint="?attr/colorImageButtonTint"
 
-                android:onClick="dropdownPressed"
-
                 android:layout_marginRight="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
