@@ -253,6 +253,8 @@ public class MainActivity extends AppCompatActivity {
             DEFAULT_THEME_ID = R.style.MonochromeTheme;
         } else if (selectedButton == 3) {
             DEFAULT_THEME_ID = R.style.PastelTheme;
+        } else if (selectedButton == 4) {
+            DEFAULT_THEME_ID = R.style.DarkTheme1;
         }
 
         colorDialog.cancel();

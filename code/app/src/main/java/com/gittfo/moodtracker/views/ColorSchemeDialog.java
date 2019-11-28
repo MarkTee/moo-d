@@ -28,7 +28,7 @@ public class ColorSchemeDialog {
         AlertDialog.Builder builder = new AlertDialog.Builder(c);
         LayoutInflater inflater = c.getLayoutInflater();
 
-        buttonState = new boolean[]{false, false, false, false};
+        buttonState = new boolean[]{false, false, false, false, false};
 
 
         builder.setView(inflater.inflate(R.layout.color_scheme_dialog, null));
@@ -46,6 +46,7 @@ public class ColorSchemeDialog {
         colorDialog.findViewById(R.id.neon_theme_button).setOnClickListener(v -> this.updateButtonUI(v));
         colorDialog.findViewById(R.id.pastel_theme_button).setOnClickListener(v -> this.updateButtonUI(v));
         colorDialog.findViewById(R.id.monochrome_theme_button).setOnClickListener(v -> this.updateButtonUI(v));
+        colorDialog.findViewById(R.id.dark_theme_button_1).setOnClickListener(v -> this.updateButtonUI(v));
 
     }
 
@@ -58,6 +59,7 @@ public class ColorSchemeDialog {
                 colorDialog.findViewById(R.id.neon_theme_button),
                 colorDialog.findViewById(R.id.pastel_theme_button),
                 colorDialog.findViewById(R.id.monochrome_theme_button),
+                colorDialog.findViewById(R.id.dark_theme_button_1)
         };
 
         ColorStateList[] tints = new ColorStateList[]{
@@ -65,35 +67,40 @@ public class ColorSchemeDialog {
                 ContextCompat.getColorStateList(c, R.color.colorNeonThemeButton),
                 ContextCompat.getColorStateList(c, R.color.colorPastelThemeButton),
                 ContextCompat.getColorStateList(c, R.color.colorMonochromeThemeButton),
+                ContextCompat.getColorStateList(c, R.color.colorDarkTheme1Button),
                 ContextCompat.getColorStateList(c, R.color.design_default_color_background)
         };
 
-        for (int i = 0; i < 4; i++){
-            buttons[i].setBackgroundTintList(tints[4]);
+        for (int i = 0; i < 5; i++){
+            buttons[i].setBackgroundTintList(tints[5]);
         }
 
         if (v == buttons[0]) {
             buttons[0].setBackgroundTintList(tints[0]);
-            for(int i = 0; i < 4; i++) {buttonState[i] = false; }
+            for(int i = 0; i < 5; i++) {buttonState[i] = false; }
             buttonState[0] = true;
         } else if (v == buttons[1]) {
             buttons[1].setBackgroundTintList(tints[1]);
-            for(int i = 0; i < 4; i++) {buttonState[i] = false; }
+            for(int i = 0; i < 5; i++) {buttonState[i] = false; }
             buttonState[1] = true;
         } else if (v == buttons[2]) {
             buttons[2].setBackgroundTintList(tints[3]);
-            for(int i = 0; i < 4; i++) {buttonState[i] = false; }
+            for(int i = 0; i < 5; i++) {buttonState[i] = false; }
             buttonState[2] = true;
         } else if (v == buttons[3]) {
             buttons[3].setBackgroundTintList(tints[2]);
-            for(int i = 0; i < 4; i++) {buttonState[i] = false; }
+            for(int i = 0; i < 5; i++) {buttonState[i] = false; }
             buttonState[3] = true;
+        } else if (v == buttons[4]) {
+            buttons[4].setBackgroundTintList(tints[4]);
+            for (int i = 0; i < 5; i++) {buttonState[i] = false; }
+            buttonState[4] = true;
         }
 
     }
 
     public int getSelectedNum() {
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 5; i++) {
             if (buttonState[i]) {
                 return i;
             }
