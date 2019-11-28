@@ -331,9 +331,10 @@ public class AddMoodEventActivity extends AppCompatActivity  {
                     new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,
                             Manifest.permission.ACCESS_FINE_LOCATION}, 0);
             findViewById(R.id.save_mood_event_button).setEnabled(false);
-            getDeviceLocation();
+
 
         }
+        getDeviceLocation();
 
         Log.d("JLOC", "Using Location");
     }
@@ -412,6 +413,9 @@ public class AddMoodEventActivity extends AppCompatActivity  {
     private void syncMoodEventWithGUI(){
         moodEvent.setReason(reasonEditText.getText().toString());
         moodEvent.setMood(emotionalState);
+        if(addLocation){
+            getDeviceLocation();
+        }
         moodEvent.setLatitude(addLocation ? this.moodEvent.getLatitude() : Double.NaN);
         moodEvent.setLongitude(addLocation ? this.moodEvent.getLongitude() : Double.NaN);
     }
