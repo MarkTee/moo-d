@@ -83,28 +83,11 @@ public class MoodViewHolder extends RecyclerView.ViewHolder {
         eventEmoticon.setImageResource(mood.getEmoticon());
         eventEmoticon.setColorFilter(mood.getColor());
 
-
+        // Set the color or the color bar
         LinearLayout l = container.findViewById(R.id.color_bar);
-        if(moodEvent.getMood().name().equals("ANGRY")){
-            l.setBackgroundColor(Color.parseColor("#F4B2B2"));
-        }
-        if(moodEvent.getMood().name().equals("AFRAID")){
-            l.setBackgroundColor(Color.parseColor("#FFF1AA"));
-        }
-        if(moodEvent.getMood().name().equals("HAPPY")){
-            l.setBackgroundColor(Color.parseColor("#81c784"));
-        }
-        if(moodEvent.getMood().name().equals("SAD")){
-            l.setBackgroundColor(Color.parseColor("#64b5f6"));
-        }
-        if(moodEvent.getMood().name().equals("DISGUSTED")){
-            l.setBackgroundColor(Color.parseColor("#b39ddb"));
-        }
-        if(moodEvent.getMood().name().equals("SURPRISED")){
-            l.setBackgroundColor(Color.parseColor("#fff176"));
-        }
-
-        // The MoodEvent's photo is set in onBindViewHolder
+        l.setBackgroundColor(
+                Mood.moodFromEmotionalState(moodEvent.getMood()).getColor()
+        );
     }
 
 
