@@ -83,7 +83,7 @@ class ResponseDialog {
     public void open(Consumer<Boolean> callback) {
         AlertDialog.Builder builder = new AlertDialog.Builder(c);
         LayoutInflater inflater = c.getLayoutInflater();
-        View layout = inflater.inflate(R.layout.dialog_follow_request, null);
+        View layout = inflater.inflate(R.layout.dialog_allow_follow_request, null);
         builder.setView(layout);
 
         ((TextView) layout.findViewById(R.id.requesting_username)).setText(this.usrname);

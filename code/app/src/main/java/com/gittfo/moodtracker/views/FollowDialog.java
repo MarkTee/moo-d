@@ -32,7 +32,7 @@ public class FollowDialog {
         this.c = c;
         AlertDialog.Builder builder = new AlertDialog.Builder(c);
         LayoutInflater inflater = c.getLayoutInflater();
-        View layout = inflater.inflate(R.layout.dialog_follow, null);
+        View layout = inflater.inflate(R.layout.dialog_follow_user, null);
         builder.setView(layout);
 
         ImageButton exitButton = layout.findViewById(R.id.exit_button);
