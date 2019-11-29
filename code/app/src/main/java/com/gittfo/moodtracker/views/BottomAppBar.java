@@ -75,7 +75,7 @@ public class BottomAppBar {
      * When the New MoodEvent Button (the '+' icon in the bottom-middle of the screen) is clicked,
      * pass the user through to AddMoodEventActivity.
      */
-    public void createMoodEvent() {
+    private void createMoodEvent() {
         Intent i = new Intent(act, AddMoodEventActivity.class);
         act.startActivity(i);
     }
@@ -83,7 +83,7 @@ public class BottomAppBar {
     /**
      * When the "timeline" button is pressed, go to the inbox-managing activity.
      */
-    public void startTimelineActivity() {
+    private void startTimelineActivity() {
         // don't animate transition between activities
         if (!(act instanceof TimelineActivity)) {
             Intent i = new Intent(act, TimelineActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -94,7 +94,7 @@ public class BottomAppBar {
     /**
      * When the "inbox" button is pressed, go to the inbox activity.
      */
-    public void startInboxActivity() {
+    private void startInboxActivity() {
         if (!(act instanceof InboxActivity)) {
             Intent i = new Intent(act, InboxActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             act.startActivity(i);
@@ -104,7 +104,7 @@ public class BottomAppBar {
     /**
      * When the "profile" button is pressed, go to the profile activity (MainActivity.java).
      */
-    public void startProfileActivity(){
+    private void startProfileActivity(){
         if (!(act instanceof MainActivity)) {
             Intent i = new Intent(act, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             act.startActivity(i);
@@ -114,7 +114,7 @@ public class BottomAppBar {
     /**
      * When the "map" button is pressed, go the map-viewing activity.
      */
-    public void startMapActivity() {
+    private void startMapActivity() {
         if (!(act instanceof MapActivity)) {
             Intent i = new Intent(act, MapActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             if (this.act instanceof MainActivity) {
@@ -128,7 +128,7 @@ public class BottomAppBar {
     /**
      * Start the Signin Activity
      */
-    public void startSigninActivity(){
+    private void startSigninActivity(){
         Intent i = new Intent(act, SigninActivity.class);
         i.putExtra("sign out?", true);
         act.startActivity(i);
@@ -138,7 +138,7 @@ public class BottomAppBar {
     /**
      * Start the Username Activity
      */
-    public void startUsernameActivity() {
+    private void startUsernameActivity() {
         Intent i = new Intent(act, ChangeUsernameActivity.class);
         act.startActivity(i);
     }
@@ -147,7 +147,7 @@ public class BottomAppBar {
      * Handle the dropdown button (The menu icon in the top-right corner of the screen (in most
      * activities).
      */
-    public void dropdownPressed(){
+    private void dropdownPressed(){
         dropDownButton = act.findViewById(R.id.settings_button);
         // create a PopupMenu
         PopupMenu popup = new PopupMenu(act, dropDownButton);
@@ -179,14 +179,14 @@ public class BottomAppBar {
     /**
      * Handle the ColorScheme button by displaying the ColorSchemeDialog to the user
      */
-    public void onChangeColorSchemePressed(){
+    private void onChangeColorSchemePressed(){
         colorDialog.show();
     }
 
     /**
      * Apply the user's selected colour scheme to the app
      */
-    public void applyColorScheme() {
+    private void applyColorScheme() {
         DEFAULT_THEME_ID = themes[colorDialog.getSelectedNum()];
         act.getSharedPreferences("colors", Context.MODE_PRIVATE).edit().putInt("theme", DEFAULT_THEME_ID).commit();
         colorDialog.cancel();
