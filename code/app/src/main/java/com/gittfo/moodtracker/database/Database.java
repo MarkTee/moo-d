@@ -472,7 +472,7 @@ public class Database {
             }
         });
     }
-    
+
     /**
      * Retrieves any outstanding follow requests from the database
      *
