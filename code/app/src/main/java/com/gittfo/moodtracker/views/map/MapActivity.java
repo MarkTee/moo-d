@@ -182,6 +182,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         // filter out those moods with invalid locations
         moodEventList = extractValidLocations(moodEventList);
         if (moodEventList.isEmpty()) {
+            clearInfoBox();
             return; // nothing to do
         }
 
