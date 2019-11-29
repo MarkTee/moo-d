@@ -110,7 +110,6 @@ public class MoodTest {
 
         Mood testMood = new Mood(
                 R.drawable.ic_happy_icon_24dp,
-                Mood.EmotionalState.HAPPY,
                 "test_mood_name",
                 0
         );
