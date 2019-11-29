@@ -18,7 +18,7 @@ exports.getFolloweeMoods = functions.https.onRequest(async (req, res) => {
 
 
   const moods = [];
-  if (user.following) {
+  if (user && user.following) {
     let promises = user.following.map(async (uid) => {
       let mostRecent = null;
       console.log(`Following ${uid}`);
