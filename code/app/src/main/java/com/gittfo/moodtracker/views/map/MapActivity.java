@@ -14,7 +14,7 @@ import androidx.fragment.app.FragmentActivity;
 import com.gittfo.moodtracker.database.Database;
 import com.gittfo.moodtracker.mood.Mood;
 import com.gittfo.moodtracker.mood.MoodEvent;
-import com.gittfo.moodtracker.views.AppBottomBar;
+import com.gittfo.moodtracker.views.BottomAppBar;
 import com.gittfo.moodtracker.views.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -52,7 +52,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     // keep track of placed markers, since google maps doesn't, and we need to be able to clear them
     private ArrayList<Marker> markers;
 
-    private AppBottomBar appBottomBar;
+    private BottomAppBar bottomAppBar;
 
     /**
      * Create a new map activity, set the view to the map view and call for a new map to populate
@@ -62,10 +62,10 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
      */
     @Override
     protected void onCreate(Bundle savedInstance) {
-        appBottomBar = new AppBottomBar(this);
+        bottomAppBar = new BottomAppBar(this);
         super.onCreate(savedInstance);
         setContentView(R.layout.activity_map);
-        appBottomBar.setListeners();
+        bottomAppBar.setListeners();
 
         // we use fragments for now, not a full on map view
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()

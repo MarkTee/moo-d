@@ -30,13 +30,13 @@ public class InboxActivity extends AppCompatActivity {
 
     private RecyclerView inboxViews;
     private List<Pair<String, String>> inboxItems;
-    private AppBottomBar appBottomBar;
+    private BottomAppBar bottomAppBar;
 
     protected void onCreate(Bundle savedInstanceState){
-        appBottomBar = new AppBottomBar(this);
+        bottomAppBar = new BottomAppBar(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inbox);
-        appBottomBar.setListeners();
+        bottomAppBar.setListeners();
 
         // Hide the ActionBar
         getSupportActionBar().hide();

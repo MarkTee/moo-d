@@ -11,7 +11,7 @@ import com.gittfo.moodtracker.views.addmood.AddMoodEventActivity;
 import com.gittfo.moodtracker.views.map.MapActivity;
 import com.gittfo.moodtracker.views.map.MoodHistoryWrapper;
 
-public class AppBottomBar {
+public class BottomAppBar {
 
     private final Activity act;
     public static int DEFAULT_THEME_ID = R.style.AppTheme;
@@ -27,7 +27,7 @@ public class AppBottomBar {
     private ImageButton dropDownButton;
     private ColorSchemeDialog colorDialog;
 
-    public AppBottomBar(Activity act) {
+    public BottomAppBar(Activity act) {
         DEFAULT_THEME_ID = act.getSharedPreferences("colors", Context.MODE_PRIVATE).getInt("theme", R.style.AppTheme);
         act.setTheme(DEFAULT_THEME_ID);
         this.act = act;

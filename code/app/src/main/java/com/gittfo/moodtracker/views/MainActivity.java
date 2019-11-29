@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private MoodHistoryAdapter moodHistoryAdapter;
     private FilterDialog filterDialog;
     private ArrayList<MoodEvent> moodHistory;
-    private AppBottomBar appBottomBar;
+    private BottomAppBar bottomAppBar;
 
     /**
      * Each time the user returns to this activity, update the RecyclerView with moods from the
@@ -46,10 +46,10 @@ public class MainActivity extends AppCompatActivity {
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        appBottomBar = new AppBottomBar(this);
+        bottomAppBar = new BottomAppBar(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        appBottomBar.setListeners();
+        bottomAppBar.setListeners();
 
         // Hide ActionBar
         getSupportActionBar().hide();
