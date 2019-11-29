@@ -32,6 +32,12 @@ public class InboxActivity extends AppCompatActivity {
     private List<Pair<String, String>> inboxItems;
     private BottomAppBar bottomAppBar;
 
+    /**
+     * In the oncreate method, dynamically update the layout as needed, pulling in any outstanding
+     * follow requests (if they exist).
+     *
+     * @param savedInstanceState Reference to the Bundle object passed into the activity
+     */
     protected void onCreate(Bundle savedInstanceState){
         bottomAppBar = new BottomAppBar(this);
         super.onCreate(savedInstanceState);
