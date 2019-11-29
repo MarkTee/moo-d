@@ -474,6 +474,11 @@ public class Database {
     }
 
 
+    /**
+     * Retrieves any outstanding follow requests from the database
+     *
+     * @param callback a callback that will accept a list of follow requests (represented as a string)
+     */
     public void getFollowRequests(Consumer<List<String>> callback) {
         DocumentReference reqs = db.collection("requests")
                 .document(currentUser());
@@ -493,8 +498,12 @@ public class Database {
         });
     }
 
-    // true is accept
-    // false is deny
+    /**
+     * Respond to a follow request (i.e. allow the other user to follow the current user, or not)
+     *
+     * @param usrid The userid of the user who sent the follow request
+     * @param b True if follow permissions are granted, False if they're denied
+     */
     public void completeFollowRequest(String usrid, boolean b) {
         if (b)
             callCloudFunctionSimple(buildCloudURL(String.format("confirmFollowUser?uid=%s&oid=%s", userId, usrid)), null);
@@ -525,7 +534,7 @@ public class Database {
     }
 
     /**
-     * Initializes data in the database
+     * Initializes data in the database (ensures the current user has a username)
     */
     public void init() {
         getUserName();
