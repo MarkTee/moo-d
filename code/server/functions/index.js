@@ -59,15 +59,28 @@ exports.followUser = functions.https.onRequest(async (req, res) => {
 
 async function finalizeUserFollow(uid, otherId, isAccepted) {
   if (isAccepted) {
-    const user = db.doc(`users/${otherId}`);
-    const userData = (await user.get()).data() || {following: []};
+    const user = db.doc(`users/${otherId}`); // this should be otherId as uid is
+    // giving otherId permission to view uid moods
+    const userData = (user && (await user.get()).data()) || {following: []};
     userData.following = [
       ...(new Set((userData.following || []).concat([uid])))
     ];
     user.set(userData);
   }
 
-  await db.doc(`requests/${otherId}`).delete();
+  const reqsRef = db.doc(`requests/${uid}`); // this should be uid as the request
+  // will be on uid's phone
+  const reqs = await reqsRef.get()
+  if (reqs !== null) {
+    const reqsData = reqs.data();
+    const rFol = reqsData.following || [];
+    const rFolSet = new Set(rFol);
+    rFolSet.delete(otherId);
+    reqsRef.set({
+      following: [...rFolSet]
+    });
+  }
+
 
   return "Success\n";
 }
