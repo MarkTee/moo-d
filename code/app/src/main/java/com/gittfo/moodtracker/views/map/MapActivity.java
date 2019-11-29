@@ -1,19 +1,12 @@
 package com.gittfo.moodtracker.views.map;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
@@ -22,15 +15,8 @@ import androidx.fragment.app.FragmentActivity;
 import com.gittfo.moodtracker.database.Database;
 import com.gittfo.moodtracker.mood.Mood;
 import com.gittfo.moodtracker.mood.MoodEvent;
-import com.gittfo.moodtracker.views.AppBottomBar;
-import com.gittfo.moodtracker.views.ChangeUsernameActivity;
-import com.gittfo.moodtracker.views.ColorSchemeDialog;
-import com.gittfo.moodtracker.views.InboxActivity;
-import com.gittfo.moodtracker.views.MainActivity;
+import com.gittfo.moodtracker.views.BottomAppBar;
 import com.gittfo.moodtracker.views.R;
-import com.gittfo.moodtracker.views.SigninActivity;
-import com.gittfo.moodtracker.views.TimelineActivity;
-import com.gittfo.moodtracker.views.addmood.AddMoodEventActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -41,12 +27,9 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.type.LatLngOrBuilder;
-
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * An activity where users can view the locations of a list of MoodEvents on a map. Can be used for
@@ -56,17 +39,21 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
     // tag for passing in a mood history wrapper through intent extras
     public static final String MOOD_HISTORY_WRAPPER = "MOOD_HISTORY_WRAPPER";
+
     // list of mood events to show on the map. source-agnostic, so we can use this for a personal
     // history, or a friend's history, or whatever
     private ArrayList<MoodEvent> moodEvents;
+
     // level to zoom to once marker is clicked
     private float ONCLICK_ZOOMLVL = 17; // about usual map height
+
     // our instance of the googlemap
     private GoogleMap googleMap;
+
     // keep track of placed markers, since google maps doesn't, and we need to be able to clear them
     private ArrayList<Marker> markers;
 
-    private AppBottomBar appBottomBar;
+    private BottomAppBar bottomAppBar;
 
     /**
      * Create a new map activity, set the view to the map view and call for a new map to populate
@@ -76,10 +63,10 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
      */
     @Override
     protected void onCreate(Bundle savedInstance) {
-        appBottomBar = new AppBottomBar(this);
+        bottomAppBar = new BottomAppBar(this);
         super.onCreate(savedInstance);
         setContentView(R.layout.activity_map);
-        appBottomBar.setListeners();
+        bottomAppBar.setListeners();
 
         // we use fragments for now, not a full on map view
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -112,6 +99,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
     /**
      * When the "My Locations" button is pressed, get all of this user's moods, and show them.
+     *
      * @param view The "My Locations" button.
      */
     public void onMyLocations(View view) {
@@ -132,6 +120,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     /**
      * When the "Followed User Locations" button is pressed, get all of our followee's moods, and
      * show them.
+     *
      * @param view The "Followed User Locations" button.
      */
     public void onFolloweeLocations(View view) {
@@ -147,6 +136,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     /**
      * Turn a drawable into a bitmap, so that it can be displayed on a google maps marker.
      * This is used to draw mood icons onto the map.
+     *
      * @param id id of the drawable.
      * @param color color to tint the drawable.
      * @return a BitmapDescriptor for the new bitmap.
@@ -170,6 +160,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
     /**
      * Display a list of mood events as markers on the google map.
+     *
      * @param moodEventList a List of MoodEvents to display.
      */
     public void showMoodEvents(List<MoodEvent> moodEventList) {
@@ -216,6 +207,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
     /**
      * Turn a LatLng into a short readable string.
+     *
      * @param pos the LatLng to convert.
      * @return a short string representation of the LatLng.
      */
@@ -228,6 +220,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
     /**
      * When a marker is clicked, update the info box and zoom in.
+     *
      * @param marker the Marker that was clicked.
      * @return
      */
@@ -246,6 +239,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
     /**
      * Update the little mood info display with information.
+     *
      * @param moodEvent the MoodEvent whose information will be presented.
      * @param pos the LatLng of this MoodEvent
      */
@@ -293,16 +287,21 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         moodText.setText("");
     }
     /**
-     * @param moodEvent event to check.
-     * @return whether the given event has a valid location, i.e., both coordinates not NaN.
+     * Determines whether a MoodEvent has a valid location (i.e. ensure neither coordinate is NaN),
+     * so that it can be displayed on a map.
+     *
+     * @param moodEvent MoodEvent to check
+     * @return Whether or not the MoodEvent has a valid location
      */
     public boolean hasValidLocation(MoodEvent moodEvent) {
         return !Double.isNaN(moodEvent.getLatitude()) && !Double.isNaN(moodEvent.getLongitude());
     }
 
     /**
-     * @param moodEvents a list of mood events which may have invalid locations.
-     * @return those moodevents from the list which have valid locations.
+     * Filter a list of MoodEvents, only selecting those with valid locations
+     *
+     * @param moodEvents a list of mood events to be be checked
+     * @return A filtered list of MoodEvents, containing only those with valid locations
      */
     public List<MoodEvent> extractValidLocations(List <MoodEvent> moodEvents) {
         List<MoodEvent> validLocations = new ArrayList<>();

@@ -69,9 +69,6 @@ public class AddMoodEventActivity extends AppCompatActivity  {
 
     private Mood.EmotionalState emotionalState = null;
 
-    // Get the current date and time, which are used when creating a new MoodEvent
-    //
-
     // The Mood Event that's currently being changed
     private MoodEvent moodEvent;
 
@@ -83,7 +80,6 @@ public class AddMoodEventActivity extends AppCompatActivity  {
     private EditText reasonEditText;
 
     // the following enables image adding functionality
-    private static final int PICK_IMAGE_REQ = 100;
     private ImageView photoView;
     private LinearLayoutCompat photoInfo;
     private Button addPhotoButton;
@@ -197,7 +193,6 @@ public class AddMoodEventActivity extends AppCompatActivity  {
             dateDisplay.setText(mDate);
             TextView timeDisplay = findViewById(R.id.time_display);
             timeDisplay.setText(mTime);
-
 
             // Display current MoodEvent's emotional state
             emotionalState = moodEvent.getMood();
@@ -565,9 +560,5 @@ public class AddMoodEventActivity extends AppCompatActivity  {
      */
     private void quickSnack(String msg) {
         Snackbar.make(findViewById(R.id.add_mood_root), msg, Snackbar.LENGTH_SHORT).show();
-    }
-
-    public static void setDefaultTheme(int THEME_ID) {
-        DEFAULT_THEME_ID = THEME_ID;
     }
 }

@@ -9,6 +9,10 @@ import android.view.View;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 
+/**
+ * This class implements a Color Scheme Dialog, allowing the user to switch between pre-defined UI
+ * colour schemes.
+ */
 public class ColorSchemeDialog {
 
     private AlertDialog colorDialog;
@@ -56,6 +60,8 @@ public class ColorSchemeDialog {
     
     /**
      * Update the color dialog when a button is selected.
+     *
+     * @param v The view that caused the method to be called
      */
     private void updateButtonUI(View v) {
         View[] buttons = new View[]{
@@ -109,6 +115,11 @@ public class ColorSchemeDialog {
 
     }
 
+    /**
+     * Determine which colour scheme was selected
+     *
+     * @return the index of the chosen colour scheme button
+     */
     public int getSelectedNum() {
         for (int i = 0; i < 6; i++) {
             if (buttonState[i]) {

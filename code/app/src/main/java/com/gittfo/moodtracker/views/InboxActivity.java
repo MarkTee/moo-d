@@ -30,13 +30,19 @@ public class InboxActivity extends AppCompatActivity {
 
     private RecyclerView inboxViews;
     private List<Pair<String, String>> inboxItems;
-    private AppBottomBar appBottomBar;
+    private BottomAppBar bottomAppBar;
 
+    /**
+     * In the oncreate method, dynamically update the layout as needed, pulling in any outstanding
+     * follow requests (if they exist).
+     *
+     * @param savedInstanceState Reference to the Bundle object passed into the activity
+     */
     protected void onCreate(Bundle savedInstanceState){
-        appBottomBar = new AppBottomBar(this);
+        bottomAppBar = new BottomAppBar(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inbox);
-        appBottomBar.setListeners();
+        bottomAppBar.setListeners();
 
         // Hide the ActionBar
         getSupportActionBar().hide();
@@ -69,17 +75,25 @@ public class InboxActivity extends AppCompatActivity {
         overridePendingTransition(0, 0);
     }
 }
+
+
+/**
+ * This class manages responding to follow requests
+ */
 class ResponseDialog {
     private Activity c;
     private String usrname;
-    private String usrid;
 
-    public ResponseDialog(Activity c, String usrname, String usrid) {
+    public ResponseDialog(Activity c, String usrname) {
         this.c = c;
         this.usrname = usrname;
-        this.usrid = usrid;
     }
 
+    /**
+     * Display the ResponseDialog to the user
+     *
+     * @param callback Callback to handle the User's decision
+     */
     public void open(Consumer<Boolean> callback) {
         AlertDialog.Builder builder = new AlertDialog.Builder(c);
         LayoutInflater inflater = c.getLayoutInflater();
@@ -104,29 +118,64 @@ class ResponseDialog {
         ad.show();
     }
 }
+
+/**
+ * This class holds Follow Requests (which are displayed in the InboxActivity), and which will be
+ * displayed in the InboxActivity.
+ */
 class InboxRCViewHolder extends RecyclerView.ViewHolder {
 
     View layout;
+
+    /**
+     * Create an InboxRCViewHolder
+     *
+     * @param itemView The view for items in the holder
+     */
     public InboxRCViewHolder(@NonNull View itemView) {
         super(itemView);
         this.layout = itemView;
     }
 
+    /**
+     * Get the layout used for items in the holder
+     *
+     * @return The layout used for items in the holder
+     */
     public View getLayout() {
         return layout;
     }
 }
+
+
+/**
+ * This class functions as an adapter, in order to display FollowRequests in the InboxActivity's
+ * RecyclerView.
+ */
 class InboxRCAdapter extends RecyclerView.Adapter<InboxRCViewHolder> {
 
     private final List<Pair<String, String>> items;
     private Activity c;
 
+    /**
+     * Create an InboxRCAdapter
+     *
+     * @param items A list of <String, String> pairs that will be used in the Adapter
+     * @param c     The activity context that the dialog will be created in
+     */
     InboxRCAdapter(List<Pair<String, String>> items, Activity c) {
         this.items = items;
         this.c = c;
 
     }
 
+    /**
+     * Inflate the layout for this ViewHolder
+     *
+     * @param parent   The parent view for this ViewHolder
+     * @param viewType The type of view to be inflated
+     * @return         The View Holder, with the appropriate inflated view
+     */
     @NonNull
     @Override
     public InboxRCViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -135,12 +184,18 @@ class InboxRCAdapter extends RecyclerView.Adapter<InboxRCViewHolder> {
         return new InboxRCViewHolder(v);
     }
 
+    /**
+     * Handle interaction with this ViewHolder's items. Namely, respond to Follow Requests.
+     *
+     * @param holder   The ViewHolder containing items
+     * @param position The position of the item in the RecyclerView
+     */
     @Override
     public void onBindViewHolder(@NonNull InboxRCViewHolder holder, int position) {
         Log.d("JUI", "Setting inbox for loc: " + position);
         TextView usr = holder.getLayout().findViewById(R.id.follow_request_username);
         usr.setText(items.get(position).first);
-        ResponseDialog rd = new ResponseDialog(c, items.get(position).first, items.get(position).second);
+        ResponseDialog rd = new ResponseDialog(c, items.get(position).first);
         holder.getLayout().setOnClickListener(v ->
             rd.open(didFollow -> {
                 Database.get(c).completeFollowRequest(items.get(position).second, didFollow);
@@ -150,6 +205,11 @@ class InboxRCAdapter extends RecyclerView.Adapter<InboxRCViewHolder> {
             }));
     }
 
+    /**
+     * Get the number of items in the ViewHolder
+     *
+     * @return The number of items in the ViewHolder
+     */
     @Override
     public int getItemCount() {
         return items.size();

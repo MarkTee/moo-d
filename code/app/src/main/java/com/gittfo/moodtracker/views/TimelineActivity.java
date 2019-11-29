@@ -24,14 +24,20 @@ public class TimelineActivity extends AppCompatActivity {
     private MoodHistoryAdapter moodHistoryAdapter;
     private FilterDialog filterDialog;
     private ArrayList<MoodEvent> followeesMoods;
-    private AppBottomBar appBottomBar;
+    private BottomAppBar bottomAppBar;
 
 
+    /**
+     * In the onCreate method, setup the UI, and pull in any followee's methods from the database
+     * (if they exist).
+     *
+     * @param savedInstanceState Reference to the Bundle object passed into the activity
+     */
     protected void onCreate(Bundle savedInstanceState){
-        appBottomBar = new AppBottomBar(this);
+        bottomAppBar = new BottomAppBar(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
-        appBottomBar.setListeners();
+        bottomAppBar.setListeners();
 
         // Hide the ActionBar
         getSupportActionBar().hide();

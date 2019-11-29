@@ -14,7 +14,6 @@ import com.gittfo.moodtracker.mood.MoodEvent;
 import com.gittfo.moodtracker.mood.MoodHistoryAdapter;
 import com.google.android.gms.tasks.Task;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,9 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private MoodHistoryAdapter moodHistoryAdapter;
     private FilterDialog filterDialog;
     private ArrayList<MoodEvent> moodHistory;
-    private AppBottomBar appBottomBar;
-
-
+    private BottomAppBar bottomAppBar;
 
     /**
      * Each time the user returns to this activity, update the RecyclerView with moods from the
@@ -49,10 +46,10 @@ public class MainActivity extends AppCompatActivity {
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        appBottomBar = new AppBottomBar(this);
+        bottomAppBar = new BottomAppBar(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        appBottomBar.setListeners();
+        bottomAppBar.setListeners();
 
         // Hide ActionBar
         getSupportActionBar().hide();
@@ -131,13 +128,11 @@ public class MainActivity extends AppCompatActivity {
         overridePendingTransition(0, 0);
     }
 
+    /**
+     * Get an ArrayList containing all of the MoodEvents in this user's MoodHistory
+     * @return An ArrayList containing all of the MoodEvents in this user's MoodHistory
+     */
     public ArrayList<MoodEvent> getMoodEvents() {
         return this.moodHistory;
     }
-
-    public static void setDefaultTheme(int THEME_ID) {
-        AppBottomBar.DEFAULT_THEME_ID = THEME_ID;
-    }
-
-
 }
