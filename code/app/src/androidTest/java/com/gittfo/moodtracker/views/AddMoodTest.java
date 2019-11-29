@@ -124,7 +124,7 @@ public class AddMoodTest {
 
         onView(allOf(
                 withId(R.id.location_button),
-                withText("Use Location (optional)"))
+                withText("Attach Current Location (optional)"))
         ).perform(scrollTo(), click());
 
         TestUtil.saveMoodEvent();
