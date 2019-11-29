@@ -370,13 +370,9 @@ public class Database {
                     String s = documentSnapshot.getString("username");
                     if (s != null) {
                         Database.username = s;
-                    }else {
-                        Database.username = userId;
-                        s = userId;
-                        setUserName(s.trim());
                     }
                     if (callback != null) {
-                        callback.accept(s.trim());
+                        callback.accept(s == null ? null : s.trim());
                     }
                 });
 
