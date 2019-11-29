@@ -60,7 +60,7 @@ exports.followUser = functions.https.onRequest(async (req, res) => {
 async function finalizeUserFollow(uid, otherId, isAccepted) {
   if (isAccepted) {
     const user = db.doc(`users/${otherId}`);
-    const userData = (await user.get()).data();
+    const userData = (await user.get()).data() || {following: []};
     userData.following = [
       ...(new Set((userData.following || []).concat([uid])))
     ];
