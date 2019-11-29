@@ -27,6 +27,12 @@ public class TimelineActivity extends AppCompatActivity {
     private AppBottomBar appBottomBar;
 
 
+    /**
+     * In the onCreate method, setup the UI, and pull in any followee's methods from the database
+     * (if they exist).
+     *
+     * @param savedInstanceState Reference to the Bundle object passed into the activity
+     */
     protected void onCreate(Bundle savedInstanceState){
         appBottomBar = new AppBottomBar(this);
         super.onCreate(savedInstanceState);
