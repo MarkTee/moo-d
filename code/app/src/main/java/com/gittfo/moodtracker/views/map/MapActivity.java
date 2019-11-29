@@ -3,6 +3,7 @@ package com.gittfo.moodtracker.views.map;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -162,8 +163,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         // draw the drawable onto the bitmap
         Canvas canvas = new Canvas(bitmap);
         drawable.setTint(color);
-        //drawable.setColorFilter(color, PorterDuff.Mode.MULTIPLY);
         drawable.draw(canvas);
+        drawable.setTint(Color.BLACK);
         return BitmapDescriptorFactory.fromBitmap(bitmap);
     }
 
