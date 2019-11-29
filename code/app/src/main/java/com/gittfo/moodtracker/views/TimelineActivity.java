@@ -57,7 +57,7 @@ public class TimelineActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         moodView.setLayoutManager(layoutManager);
 
-        moodHistoryAdapter = new MoodHistoryAdapter(this, followeesMoods);
+        moodHistoryAdapter = new MoodHistoryAdapter(this, followeesMoods, R.layout.followed_mood_event);
         moodView.setAdapter(moodHistoryAdapter);
         getFromDB();
 
