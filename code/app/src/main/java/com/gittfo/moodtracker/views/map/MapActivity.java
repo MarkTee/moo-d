@@ -286,16 +286,21 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         moodText.setText("");
     }
     /**
-     * @param moodEvent event to check.
-     * @return whether the given event has a valid location, i.e., both coordinates not NaN.
+     * Determines whether a MoodEvent has a valid location (i.e. ensure neither coordinate is NaN),
+     * so that it can be displayed on a map.
+     *
+     * @param moodEvent MoodEvent to check
+     * @return Whether or not the MoodEvent has a valid location
      */
     public boolean hasValidLocation(MoodEvent moodEvent) {
         return !Double.isNaN(moodEvent.getLatitude()) && !Double.isNaN(moodEvent.getLongitude());
     }
 
     /**
-     * @param moodEvents a list of mood events which may have invalid locations.
-     * @return those moodevents from the list which have valid locations.
+     * Filter a list of MoodEvents, only selecting those with valid locations
+     *
+     * @param moodEvents a list of mood events to be be checked
+     * @return A filtered list of MoodEvents, containing only those with valid locations
      */
     public List<MoodEvent> extractValidLocations(List <MoodEvent> moodEvents) {
         List<MoodEvent> validLocations = new ArrayList<>();
