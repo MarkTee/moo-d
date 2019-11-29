@@ -75,15 +75,17 @@ public class InboxActivity extends AppCompatActivity {
         overridePendingTransition(0, 0);
     }
 }
+
+/**
+ * This class manages responding to follow requests
+ */
 class ResponseDialog {
     private Activity c;
     private String usrname;
-    private String usrid;
 
-    public ResponseDialog(Activity c, String usrname, String usrid) {
+    public ResponseDialog(Activity c, String usrname) {
         this.c = c;
         this.usrname = usrname;
-        this.usrid = usrid;
     }
 
     public void open(Consumer<Boolean> callback) {
@@ -146,7 +148,7 @@ class InboxRCAdapter extends RecyclerView.Adapter<InboxRCViewHolder> {
         Log.d("JUI", "Setting inbox for loc: " + position);
         TextView usr = holder.getLayout().findViewById(R.id.follow_request_username);
         usr.setText(items.get(position).first);
-        ResponseDialog rd = new ResponseDialog(c, items.get(position).first, items.get(position).second);
+        ResponseDialog rd = new ResponseDialog(c, items.get(position).first);
         holder.getLayout().setOnClickListener(v ->
             rd.open(didFollow -> {
                 Database.get(c).completeFollowRequest(items.get(position).second, didFollow);
