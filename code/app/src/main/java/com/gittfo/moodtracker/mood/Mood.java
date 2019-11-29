@@ -28,14 +28,11 @@ public class Mood implements Serializable {
         ANGRY,
     }
 
-    // Filename of emoticon representing this mood
-    private @DrawableRes int emoticon;
+    private @DrawableRes int emoticon; // Filename of emoticon representing this mood
 
-    // A String containing the name of the mood
-    private String name;
+    private String name; // A String containing the name of the mood
 
-    // A color for the mood, stored as an int
-    private int color;
+    private int color; // A color for the mood, stored as an int
 
     /**
      * Creates a new mood
