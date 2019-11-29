@@ -140,8 +140,4 @@ public class SigninActivity extends AppCompatActivity {
             this.recreate();
         }
     }
-
-    public static void setDefaultTheme(int THEME_ID) {
-        DEFAULT_THEME_ID = THEME_ID;
-    }
 }
