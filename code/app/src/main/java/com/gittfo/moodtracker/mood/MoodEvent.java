@@ -153,7 +153,7 @@ public class MoodEvent implements Serializable {
     public void setId(String id) {
         this.id = id;
     }
-    
+
     /**
      * Create a MoodEvent object based on data stored in Firebase.
      *

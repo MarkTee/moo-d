@@ -31,9 +31,6 @@ public class Mood implements Serializable {
     // Filename of emoticon representing this mood
     private @DrawableRes int emoticon;
 
-    // Enum holding the "emotional state" this mood represents
-    //private EmotionalState emotionalState;
-
     // A String containing the name of the mood
     private String name;
 
