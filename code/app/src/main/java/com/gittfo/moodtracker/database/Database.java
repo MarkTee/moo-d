@@ -6,7 +6,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 import android.util.Log;
-import android.util.Pair;
 
 import androidx.core.util.Consumer;
 
@@ -15,7 +14,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.gittfo.moodtracker.mood.MoodEvent;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.CollectionReference;
@@ -24,14 +22,12 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
-import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 
@@ -41,8 +37,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -55,12 +49,8 @@ public class Database {
     private static final String cloudRoot = "https://us-central1-moo-d-95679.cloudfunctions.net";
     private static final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private static final FirebaseStorage storage = FirebaseStorage.getInstance();
-    private static final ExecutorService executor = Executors.newSingleThreadExecutor();
     private static RequestQueue queue;
     private static String username;
-
-
-
     private String userId;
 
     /**
@@ -84,19 +74,6 @@ public class Database {
      */
     public static Database get(Context c) {
         return new Database(c);
-    }
-
-    /**
-     * Return an instance of the Database object with testymctestface301's
-     * user ID.
-     *
-     * @param c context
-     * @return instance of Database
-     */
-    public static Database getMock(Context c) {
-        Database mocked = new Database(c);
-        mocked.userId = "105648403813593449833";
-        return mocked;
     }
 
     /**
