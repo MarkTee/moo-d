@@ -181,6 +181,9 @@ public class FilterDialog {
         return this.filterState[ordinal];
     }
 
+    /**
+     * Set all of the filters to true (i.e. display all moods)
+     */
     public void setAllSet() {
         for (int i = 0; i < 6; i++){
             filterState[i] = true;
