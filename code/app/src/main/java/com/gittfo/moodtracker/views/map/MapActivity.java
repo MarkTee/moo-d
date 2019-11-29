@@ -163,7 +163,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
      *
      * @param moodEventList a List of MoodEvents to display.
      */
-    public void showMoodEvents(List<MoodEvent> moodEventList) {
+    private void showMoodEvents(List<MoodEvent> moodEventList) {
 
         // clear out the current markers
         for (Marker m : markers) {
@@ -211,7 +211,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
      * @param pos the LatLng to convert.
      * @return a short string representation of the LatLng.
      */
-    public String posToString(LatLng pos) {
+    private String posToString(LatLng pos) {
         double lat = pos.latitude;
         double lon = pos.longitude;
 
@@ -272,7 +272,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
      * Clear out the mood information box.
      * Used, for instance, when the user attempts to display an empty mood list.
      */
-    public void clearInfoBox() {
+    private void clearInfoBox() {
         TextView usernameView = findViewById(R.id.map_user_name);
         usernameView.setText("Nothing to display.");
 
@@ -286,6 +286,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         TextView moodText = findViewById(R.id.map_mood_text);
         moodText.setText("");
     }
+
     /**
      * Determines whether a MoodEvent has a valid location (i.e. ensure neither coordinate is NaN),
      * so that it can be displayed on a map.
@@ -293,7 +294,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
      * @param moodEvent MoodEvent to check
      * @return Whether or not the MoodEvent has a valid location
      */
-    public boolean hasValidLocation(MoodEvent moodEvent) {
+    private boolean hasValidLocation(MoodEvent moodEvent) {
         return !Double.isNaN(moodEvent.getLatitude()) && !Double.isNaN(moodEvent.getLongitude());
     }
 
@@ -303,7 +304,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
      * @param moodEvents a list of mood events to be be checked
      * @return A filtered list of MoodEvents, containing only those with valid locations
      */
-    public List<MoodEvent> extractValidLocations(List <MoodEvent> moodEvents) {
+    private List<MoodEvent> extractValidLocations(List <MoodEvent> moodEvents) {
         List<MoodEvent> validLocations = new ArrayList<>();
         for (MoodEvent me : moodEvents) {
             if (hasValidLocation(me)) {

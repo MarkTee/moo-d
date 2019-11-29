@@ -125,7 +125,7 @@ class ResponseDialog {
  */
 class InboxRCViewHolder extends RecyclerView.ViewHolder {
 
-    View layout;
+    private View layout;
 
     /**
      * Create an InboxRCViewHolder

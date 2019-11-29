@@ -100,7 +100,6 @@ public class MainActivity extends AppCompatActivity {
     public void getFromDB() {
         // Get all moods from the database
         Log.d("JDB", "Getting Moods");
-        Task<List<MoodEvent>> task = Database.get(this).getMoods();
 
         Database.get(this).getMoods().addOnSuccessListener(moods -> {
             Log.d("JDB", "Success");

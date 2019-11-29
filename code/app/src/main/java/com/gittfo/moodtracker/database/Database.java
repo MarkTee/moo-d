@@ -473,11 +473,10 @@ public class Database {
         });
     }
 
-
     /**
      * Retrieves any outstanding follow requests from the database
      *
-     * @param callback a callback that will accept a list of follow requests (represented as a string)
+     * @param callback a callback that will accept a list of follow requests (represented as strings)
      */
     public void getFollowRequests(Consumer<List<String>> callback) {
         DocumentReference reqs = db.collection("requests")
@@ -511,6 +510,11 @@ public class Database {
             callCloudFunctionSimple(buildCloudURL(String.format("denyFollowUser?uid=%s&oid=%s", userId, usrid)), null);
     }
 
+    /**
+     * Get a list of followees for the current user
+     *
+     * @param callback a callback that will accept a list of followees (represented as strings)
+     */
     public void getFollowees(Consumer<List<String>> callback) {
         DocumentReference reqs = db.collection("users")
                 .document(currentUser());
