@@ -105,9 +105,4 @@ public class ChangeUsernameActivity extends AppCompatActivity {
         this.startActivity(i);
     }
 
-    public static void setDefaultTheme(int THEME_ID) {
-        DEFAULT_THEME_ID = THEME_ID;
-    }
-
-
 }
