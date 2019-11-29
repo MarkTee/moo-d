@@ -94,7 +94,7 @@
         <!-- Set this to invisible by default. -->
         <include
             android:id="@id/map_mood_item"
-            layout="@layout/map_mood_item"
+            layout="@layout/map_mood_event_item"
             android:visibility="visible"/>
     </LinearLayout>
 
