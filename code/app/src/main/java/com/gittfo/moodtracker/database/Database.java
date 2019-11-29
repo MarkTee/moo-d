@@ -441,12 +441,12 @@ public class Database {
 
     /**
      * Gets the username from the users id
-     * @param username the username to get the id for
+     * @param userId the userId to get the username for
      * @param callback a callback that will pass through the userid when it finds it, otherwise it will pass through null
      */
-    public void getUsernameFromUserId(String username, Consumer<String> callback) {
+    public void getUsernameFromUserId(String userId, Consumer<String> callback) {
         db.collection("users")
-                .document(username)
+                .document(userId)
                 .get().addOnSuccessListener(doc -> {
             if (doc.exists()) {
                 callback.accept(doc.getString("username"));
