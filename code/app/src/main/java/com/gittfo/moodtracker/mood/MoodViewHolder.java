@@ -1,15 +1,11 @@
 package com.gittfo.moodtracker.mood;
 
-import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
-
-
 
 import com.gittfo.moodtracker.database.Database;
 import com.gittfo.moodtracker.views.R;
@@ -91,32 +87,24 @@ public class MoodViewHolder extends RecyclerView.ViewHolder {
         LinearLayout l = container.findViewById(R.id.color_bar);
         if(moodEvent.getMood().name().equals("ANGRY")){
             l.setBackgroundColor(Color.parseColor("#F4B2B2"));
-            //container.setBackgroundColor(Color.parseColor("#"));
         }
         if(moodEvent.getMood().name().equals("AFRAID")){
             l.setBackgroundColor(Color.parseColor("#FFF1AA"));
-            //container.setBackgroundColor(Color.parseColor("#"));
         }
         if(moodEvent.getMood().name().equals("HAPPY")){
             l.setBackgroundColor(Color.parseColor("#81c784"));
-            //container.setBackgroundColor(Color.parseColor("#"));
         }
         if(moodEvent.getMood().name().equals("SAD")){
             l.setBackgroundColor(Color.parseColor("#64b5f6"));
-            //container.setBackgroundColor(Color.parseColor("#"));
         }
         if(moodEvent.getMood().name().equals("DISGUSTED")){
             l.setBackgroundColor(Color.parseColor("#b39ddb"));
-            //container.setBackgroundColor(Color.parseColor("#"));
         }
         if(moodEvent.getMood().name().equals("SURPRISED")){
             l.setBackgroundColor(Color.parseColor("#fff176"));
-            //container.setBackgroundColor(Color.parseColor("#"));
         }
 
-        //container.setShowDividers(LinearLayout.SHOW_DIVIDER_END);
-        // Set the MoodEvent's photo
-        // done in onBindViewHolder
+        // The MoodEvent's photo is set in onBindViewHolder
     }
 
 
