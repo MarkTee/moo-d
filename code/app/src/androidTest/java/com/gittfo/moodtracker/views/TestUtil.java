@@ -306,4 +306,55 @@ public class TestUtil {
         }
     }
 
+    public static void gotoTimeline() {
+        onView(withId(R.id.timeline_menu_item)
+        ).perform(click());
+    }
+
+    public static void gotoProfile() {
+        onView(withId(R.id.profile_menu_item)
+        ).perform(click());
+    }
+
+    public static void gotoMaps() {
+        onView(withId(R.id.maps_menu_item)
+        ).perform(click());
+    }
+
+    public static void gotoInbox() {
+        onView(withId(R.id.inbox_menu_item)
+        ).perform(click());
+    }
+
+    public static void isTimeline() {
+        onView(allOf(
+                withId(R.id.timeline_menu_item),
+                withText("Timeline"),
+                isDisplayed()
+        ));
+    }
+
+    public static void isProfile() {
+        onView(allOf(
+                withId(R.id.profile_menu_item),
+                withText("Profile"),
+                isDisplayed()
+        ));
+    }
+
+    public static void isMaps() {
+        onView(allOf(
+                withId(R.id.maps_menu_item),
+                withText("Maps"),
+                isDisplayed()
+        ));
+    }
+
+    public static void isInbox() {
+        onView(allOf(
+                withId(R.id.toolbar_textView),
+                withText("Inbox"),
+                isDisplayed()
+        ));
+    }
 }
