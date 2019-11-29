@@ -38,27 +38,21 @@ public class MoodEvent implements Serializable {
         NA
     }
 
-    // The name of a photograph corresponding to this event
-    private String photoReference;
+    private String photoReference; // The name of a photograph corresponding to this event
 
-    // Brief textual comment describing the reason for this event
-    private String reason;
+    private String reason; // Brief textual comment describing the reason for this event
 
-    // The date/time the mood event was create
-    private Date dateTime;
+    private Date dateTime; // The date/time the mood event was create
 
-    // The number of people around during this event
-    private SocialSituation socialSituation;
+    private SocialSituation socialSituation; // The number of people around during this event
 
-    // Last but not least, the actual Mood associated to this event
-    private Mood.EmotionalState mood;
+    private Mood.EmotionalState mood; // Last but not least, the actual Mood associated to this event
+
+    private String username; // optional; tracks usernames of MoodEvents created by other users
 
     // The location the event was created
     private double latitude;
     private double longitude;
-
-    // an optional field, when we get "folowee" moods from the database, store the username here
-    private String username;
 
     // ID used for Firebase
     @Exclude
