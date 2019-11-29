@@ -100,15 +100,6 @@ public class Mood implements Serializable {
     }
 
     /**
-     * Return the valid emotional state that this mood represents.
-     *
-     * @return An enum describing the emotional state of this mood.
-     */
-    //public EmotionalState getEmotionalState() {
-    //    return emotionalState;
-    //}
-
-    /**
      * Return a textual description of this mood.
      *
      * @return A string containing the name of the mood
