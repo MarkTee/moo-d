@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         moodView.setLayoutManager(layoutManager);
 
-        moodHistoryAdapter = new MoodHistoryAdapter(this, moodHistory);
+        moodHistoryAdapter = new MoodHistoryAdapter(this, moodHistory, R.layout.mood_event_profile);
         moodView.setAdapter(moodHistoryAdapter);
         getFromDB();
 

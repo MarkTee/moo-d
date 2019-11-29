@@ -1,14 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!-- This is a mood event for FOLLOWED USERS. For the user's own mood events, refer to
-    mood_event.xml -->
+<!-- This is a mood event for the USER. For mood events for followed users, refer to
+    mood_event_timeline.xml -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="15dp">
+    android:orientation="horizontal"
+    android:padding="15dp"
+    android:background="?attr/colorDefaultBackground">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:id="@+id/color_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:padding="8dp"
+        />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -22,7 +31,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="user mood icon"
+
             android:src="@drawable/ic_happy_icon_24dp"
+            android:tint="@color/colorEmoticonHappy"
+
 
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -35,8 +47,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:text="moo_d_friend"
-            android:textColor="#0066CC"
+            android:text="moo_d_user"
+            android:textColor="@color/colorPrimaryDark"
             android:textStyle="bold"
 
             app:layout_constraintBottom_toBottomOf="@id/user_emotion_imageView"
@@ -66,8 +78,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
+            android:layout_marginRight="2dp"
             android:text="happy"
-            android:textColor="@color/colorPrimary"
+
+
+            android:textColor="@color/colorEmoticonHappy"
             android:textStyle="bold"
 
             app:layout_constraintBottom_toBottomOf="@id/user_emotion_imageView"
@@ -78,8 +93,10 @@
         <!-- period, just to keep from having to set text for user_mood_textView to "<mood>." -->
 
         <TextView
+            android:id="@+id/text_period_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textStyle="bold"
             android:text="."
             android:textColor="?attr/colorDefaultText"
             app:layout_constraintBottom_toBottomOf="@id/user_emotion_imageView"
@@ -88,22 +105,37 @@
             app:layout_constraintTop_toTopOf="parent" />
 
 
-        <!-- UNFOLLOW BUTTON -->
+        <!-- EDIT BUTTON -->
 
         <ImageButton
-            android:id="@+id/unfollow_button"
+            android:id="@+id/edit_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="@id/user_image"
+            app:layout_constraintStart_toEndOf="@id/delete_button"
+            app:layout_constraintTop_toTopOf="@id/delete_button"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/user_image"
-            android:layout_marginRight="8dp"
+            app:layout_constraintBottom_toBottomOf="@id/delete_button"
+            android:layout_marginLeft="5dp"
 
-            android:contentDescription="unfollow_button"
-            android:background="#00000000"
+            android:contentDescription="edit mood button"
+            android:background="?attr/colorDefaultBackground"
             android:tint="?attr/colorContainerImageButton"
-            android:src="@drawable/ic_remove_gray_24dp"/>
+            android:src="@drawable/ic_edit_gray_24dp"/>
 
+        <!-- DELETE BUTTON -->
+
+        <ImageButton
+            android:id="@+id/delete_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/edit_button"
+            app:layout_constraintTop_toTopOf="@id/user_mood_textView"
+            app:layout_constraintEnd_toStartOf="@id/edit_button"
+
+            android:contentDescription="delete button"
+            android:background="?attr/colorDefaultBackground"
+            android:tint="?attr/colorContainerImageButton"
+            android:src="@drawable/ic_delete_gray_24dp"/>
 
 
 
@@ -134,8 +166,9 @@
             android:layout_marginTop="5dp"
             android:contentDescription="social icon"
             android:src="@drawable/ic_activity_people_black_24dp"
-
+            android:background="?attr/colorDefaultBackground"
             android:tint="?attr/colorContainerImageButton"
+
             app:layout_constraintStart_toStartOf="@id/date_time_textView"
             app:layout_constraintTop_toBottomOf="@id/date_time_textView" />
 
@@ -144,7 +177,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="6dp"
-            android:text="1 person"
+            android:text="A crowd"
             android:textColor="?attr/colorDefaultText"
             android:textSize="12dp"
 
@@ -164,6 +197,7 @@
             android:src="@drawable/ic_near_me_black_24dp"
             app:layout_constraintBottom_toBottomOf="@id/num_people_imageView"
 
+            android:background="?attr/colorDefaultBackground"
             android:tint="?attr/colorContainerImageButton"
             app:layout_constraintStart_toEndOf="@id/num_people_textView"
             app:layout_constraintTop_toTopOf="@id/num_people_imageView" />
@@ -182,14 +216,14 @@
             app:layout_constraintTop_toTopOf="@id/location_icon_imageView" />
 
 
-        <!-- USER REASON -->
+        <!-- USER COMMENT -->
 
         <TextView
             android:id="@+id/user_reason_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:text="Going to a party!"
+            android:text="Bought drawing supplies"
             android:textColor="?attr/colorDefaultText"
 
             android:textSize="13dp"
@@ -204,14 +238,19 @@
             android:id="@+id/user_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/unfollow_button"
-            app:layout_constraintBottom_toBottomOf="@id/user_reason_textView"
-            app:layout_constraintStart_toEndOf="@id/location_textView"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="32dp"
 
-            android:contentDescription="user image"
+            app:layout_constraintTop_toBottomOf="@id/delete_button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/location_textView"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="10dp"
+            android:layout_gravity="center"
+            app:layout_constraintDimensionRatio="1:1"
+
+
+
             android:src="@drawable/ic_image_black_64dp"/>
 
 

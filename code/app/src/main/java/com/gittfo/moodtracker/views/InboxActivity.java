@@ -83,7 +83,7 @@ class ResponseDialog {
     public void open(Consumer<Boolean> callback) {
         AlertDialog.Builder builder = new AlertDialog.Builder(c);
         LayoutInflater inflater = c.getLayoutInflater();
-        View layout = inflater.inflate(R.layout.mood_following_permission, null);
+        View layout = inflater.inflate(R.layout.dialog_allow_follow_request, null);
         builder.setView(layout);
 
         ((TextView) layout.findViewById(R.id.requesting_username)).setText(this.usrname);
@@ -131,7 +131,7 @@ class InboxRCAdapter extends RecyclerView.Adapter<InboxRCViewHolder> {
     @Override
     public InboxRCViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LinearLayout v = (LinearLayout) LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.user_inbox_notification, parent, false);
+                .inflate(R.layout.follow_request_notification, parent, false);
         return new InboxRCViewHolder(v);
     }
 

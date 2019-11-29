@@ -1,13 +1,8 @@
 package com.gittfo.moodtracker.views;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageButton;
-import android.widget.PopupMenu;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -17,9 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.gittfo.moodtracker.database.Database;
 import com.gittfo.moodtracker.mood.MoodEvent;
 import com.gittfo.moodtracker.mood.MoodHistoryAdapter;
-import com.gittfo.moodtracker.views.addmood.AddMoodEventActivity;
-import com.gittfo.moodtracker.views.map.MapActivity;
-import com.gittfo.moodtracker.views.map.MoodHistoryWrapper;
 
 import java.util.ArrayList;
 
@@ -57,7 +49,7 @@ public class TimelineActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         moodView.setLayoutManager(layoutManager);
 
-        moodHistoryAdapter = new MoodHistoryAdapter(this, followeesMoods);
+        moodHistoryAdapter = new MoodHistoryAdapter(this, followeesMoods, R.layout.mood_event_timeline);
         moodView.setAdapter(moodHistoryAdapter);
         getFromDB();
 

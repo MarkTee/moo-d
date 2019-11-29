@@ -1,13 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/colorDefaultBackground">
 
-    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/map"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
+    <include
+        android:id="@+id/tool_bar"
+        layout="@layout/toolbar_map"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/my_locations_button"/>
+
+    <include
+        android:id="@id/bottom_app_bar_layout"
+        layout="@layout/bottom_app_bar" />
+
+    <!-- "My Locations" button -->
+
+    <Button
+        android:id="@+id/my_locations_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:onClick="onMyLocations"
+        android:text="My Locations"
+        app:layout_constraintBottom_toTopOf="@id/map_linear_layout"
+        app:layout_constraintEnd_toStartOf="@id/followed_locations_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tool_bar" />
+
+    <!-- "Followed User Locations" button -->
+
+    <Button
+        android:id="@+id/followed_locations_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onFolloweeLocations"
+        android:text="Followed User Locations"
+        app:layout_constraintBottom_toBottomOf="@id/my_locations_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/my_locations_button"
+        app:layout_constraintTop_toTopOf="@id/my_locations_button" />
+
+    <!-- Container for the map, has a border -->
+
+    <LinearLayout
+        android:id="@+id/map_linear_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context="com.gittfo.moodtracker.views.map.MapActivity" />
-</LinearLayout>
+        android:layout_height="300dp"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+
+        android:layout_marginRight="30dp"
+        android:layout_marginLeft="30dp"
+        app:layout_goneMarginTop="30dp"
+
+        app:layout_constraintTop_toBottomOf="@id/my_locations_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/mood_item_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        android:background="@drawable/border">
+
+        <fragment
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/mood_map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context="com.gittfo.moodtracker.views.map.MapActivity" >
+        </fragment>
+
+
+    </LinearLayout>
+
+    <!-- Mood item corresponding to a given location on the map -->
+
+    <LinearLayout
+        android:id="@+id/mood_item_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="18dp"
+        app:layout_constraintTop_toBottomOf="@id/map_linear_layout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+
+        <!-- Set this to invisible by default. -->
+        <include
+            android:id="@id/map_mood_item"
+            layout="@layout/map_mood_event_item"
+            android:visibility="visible"/>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

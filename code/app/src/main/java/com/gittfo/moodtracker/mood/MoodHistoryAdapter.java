@@ -27,15 +27,17 @@ public class MoodHistoryAdapter extends RecyclerView.Adapter<MoodViewHolder> {
 
     private ArrayList<MoodEvent> moodHistory;
     private Context context;
+    private int layout_type;
 
     /**
      * Create a new MoodHistoryAdapter.
      *
      * @param moodHistory The MoodHistory that this adapter will hold
      */
-    public MoodHistoryAdapter(Context context, ArrayList<MoodEvent> moodHistory){
+    public MoodHistoryAdapter(Context context, ArrayList<MoodEvent> moodHistory, int layout_type){
         this.moodHistory = moodHistory;
         this.context = context;
+        this.layout_type = layout_type;
     }
 
     /**
@@ -49,7 +51,7 @@ public class MoodHistoryAdapter extends RecyclerView.Adapter<MoodViewHolder> {
     @Override
     public MoodViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LinearLayout v = (LinearLayout) LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.mood_event, parent, false);
+                .inflate(this.layout_type, parent, false);
 
         return new MoodViewHolder(v);
     }
@@ -85,26 +87,30 @@ public class MoodHistoryAdapter extends RecyclerView.Adapter<MoodViewHolder> {
             // If the MoodEvent doesn't have a user-provided photo
             moodEventImage.setImageResource(android.R.color.transparent);
         }
-        
-        holder.container.findViewById(R.id.edit_button).setOnClickListener(v -> {
-            //Context c = moodHistory.getContext();
-            Intent i = new Intent(context, AddMoodEventActivity.class);
-            i.putExtra(AddMoodEventActivity.EDIT_MOOD, holder.moodEventID);
-            context.startActivity(i);
-        });
-        holder.container.findViewById(R.id.delete_button).setOnClickListener(v -> {
-            new AlertDialog.Builder(context)
-                    .setTitle("Delete Mood")
-                    .setMessage("Do you really want to delete this Mood Event?")
-                    .setIcon(android.R.drawable.ic_dialog_alert)
-                    .setPositiveButton(android.R.string.yes, (dialog, whichButton) -> {
-                                Database.get(context).deleteMoodEvent(MoodEvent.fromId(holder.moodEventID));
-                                moodHistory.remove(position); 
-                                notifyDataSetChanged();
-                            }
-                    )
-                    .setNegativeButton(android.R.string.no, null).show();
-        });
+
+
+        if(this.layout_type == R.layout.mood_event_profile){
+            holder.container.findViewById(R.id.edit_button).setOnClickListener(v -> {
+                //Context c = moodHistory.getContext();
+                Intent i = new Intent(context, AddMoodEventActivity.class);
+                i.putExtra(AddMoodEventActivity.EDIT_MOOD, holder.moodEventID);
+                context.startActivity(i);
+            });
+            holder.container.findViewById(R.id.delete_button).setOnClickListener(v -> {
+                new AlertDialog.Builder(context)
+                        .setTitle("Delete Mood")
+                        .setMessage("Do you really want to delete this Mood Event?")
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setPositiveButton(android.R.string.yes, (dialog, whichButton) -> {
+                                    Database.get(context).deleteMoodEvent(MoodEvent.fromId(holder.moodEventID));
+                                    moodHistory.remove(position);
+                                    notifyDataSetChanged();
+                                }
+                        )
+                        .setNegativeButton(android.R.string.no, null).show();
+            });
+        }
+
     }
 
     /**

@@ -441,7 +441,7 @@
                 android:gravity="center"
                 android:onClick="getLocation"
 
-                android:text="Use Location (optional)"
+                android:text="Insert Current Location (optional)"
                 app:layout_constraintBottom_toTopOf="@id/save_mood_event_button"
                 app:layout_constraintEnd_toEndOf="@id/mood_selection_buttons"
                 app:layout_constraintStart_toStartOf="@id/mood_selection_buttons"

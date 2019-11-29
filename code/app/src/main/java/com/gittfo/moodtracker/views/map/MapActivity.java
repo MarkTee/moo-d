@@ -77,7 +77,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     protected void onCreate(Bundle savedInstance) {
         appBottomBar = new AppBottomBar(this);
         super.onCreate(savedInstance);
-        setContentView(R.layout.maps_screen);
+        setContentView(R.layout.activity_map);
         appBottomBar.setListeners();
 
         // we use fragments for now, not a full on map view
@@ -182,6 +182,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         // filter out those moods with invalid locations
         moodEventList = extractValidLocations(moodEventList);
         if (moodEventList.isEmpty()) {
+            clearInfoBox();
             return; // nothing to do
         }
 
