@@ -34,7 +34,7 @@ public class FilterDialog {
         LayoutInflater inflater = c.getLayoutInflater();
 
 
-        builder.setView(inflater.inflate(R.layout.filter_dialog, null));
+        builder.setView(inflater.inflate(R.layout.dialog_filter, null));
         Log.d("JUI", "Making builder");
         filterDialog = builder.create();
     }
