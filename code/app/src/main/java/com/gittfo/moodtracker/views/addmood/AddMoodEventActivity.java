@@ -55,8 +55,6 @@ import static com.gittfo.moodtracker.mood.MoodEvent.ZERO_SOCIAL_INDEX;
  * through an intent).
  *
  * If the user chooses to save the MoodEvent, the data will be saved to the database.
- *
- * @author Mark Thomas
  */
 public class AddMoodEventActivity extends AppCompatActivity  {
 

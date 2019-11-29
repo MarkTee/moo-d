@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -33,7 +32,7 @@ public class FollowDialog {
         this.c = c;
         AlertDialog.Builder builder = new AlertDialog.Builder(c);
         LayoutInflater inflater = c.getLayoutInflater();
-        View layout = inflater.inflate(R.layout.follow_dialog, null);
+        View layout = inflater.inflate(R.layout.dialog_follow_user, null);
         builder.setView(layout);
 
         ImageButton exitButton = layout.findViewById(R.id.exit_button);

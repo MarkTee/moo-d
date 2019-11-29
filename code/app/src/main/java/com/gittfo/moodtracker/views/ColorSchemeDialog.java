@@ -1,13 +1,10 @@
 package com.gittfo.moodtracker.views;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.res.ColorStateList;
-import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
@@ -32,7 +29,7 @@ public class ColorSchemeDialog {
         buttonState = new boolean[]{false, false, false, false, false, false};
 
 
-        builder.setView(inflater.inflate(R.layout.color_scheme_dialog, null));
+        builder.setView(inflater.inflate(R.layout.dialog_color_scheme, null));
         Log.d("JUI", "Making builder");
         colorDialog = builder.create();
     }

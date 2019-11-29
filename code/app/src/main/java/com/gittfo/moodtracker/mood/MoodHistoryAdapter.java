@@ -89,7 +89,7 @@ public class MoodHistoryAdapter extends RecyclerView.Adapter<MoodViewHolder> {
         }
 
 
-        if(this.layout_type == R.layout.mood_event){
+        if(this.layout_type == R.layout.mood_event_profile){
             holder.container.findViewById(R.id.edit_button).setOnClickListener(v -> {
                 //Context c = moodHistory.getContext();
                 Intent i = new Intent(context, AddMoodEventActivity.class);
