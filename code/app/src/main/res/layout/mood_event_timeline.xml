@@ -218,7 +218,7 @@
             app:layout_constraintStart_toEndOf="@id/location_textView"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="8dp"
-            android:layout_marginStart="32dp"
+            android:layout_marginStart="64dp"
 
             android:contentDescription="user image"
             android:src="@drawable/ic_image_black_64dp"/>
