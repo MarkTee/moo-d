@@ -19,8 +19,8 @@ import java.util.Arrays;
 public class FilterDialog {
     private AlertDialog filterDialog;
     private boolean[] filterState;
-    Activity c;
-    int selectedCount = 0;
+    private Activity c;
+    private int selectedCount = 0;
 
     /**
      * Create a new FilterDialog object
