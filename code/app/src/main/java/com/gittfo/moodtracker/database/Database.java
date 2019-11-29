@@ -78,6 +78,7 @@ public class Database {
 
     /**
      * Gets all the mood events for the signed in user
+     *
      * Usage:
      *
      * <pre>
@@ -194,6 +195,7 @@ public class Database {
 
     /**
      * Gets all the moods of all the users the current user is following
+     *
      * Usage:
      * <pre><code>
      *   Database.get(this).getFolloweeMoods("", moods -> {
@@ -205,6 +207,7 @@ public class Database {
      *      }
      *   }
      * </code></pre>
+     *
      * @param callback the callback function
      */
     public void getFolloweeMoods(Consumer<List<MoodEvent>> callback) {
@@ -228,6 +231,7 @@ public class Database {
 
     /**
      * Follow a user
+     *
      * Usage:
      * <pre><code>
      *   Database.get(this).followUser("", b -> {
@@ -237,6 +241,7 @@ public class Database {
      *      Log.d("JDBCLOUD", "Attempted to follow" + b));
      *   }
      * </code></pre>
+     *
      * @param otherId the user to follow
      * @param c the callback function
      */
@@ -246,6 +251,7 @@ public class Database {
 
     /**
      * unfollow a user
+     *
      * Usage:
      * <pre><code>
      *   Database.get(this).unfollowUser("", b -> {
@@ -255,6 +261,7 @@ public class Database {
      *      Log.d("JDBCLOUD", "Attempted to follow" + b));
      *   }
      * </code></pre>
+     *
      * @param otherId the user to follow
      * @param c the callback function
      */
@@ -264,6 +271,7 @@ public class Database {
 
     /**
      * Creates the url for the cloud function
+     *
      * @param end url stub to attach to prfix
      * @return the completed ukl
      */
@@ -273,6 +281,7 @@ public class Database {
 
     /**
      * Makes a http request that either succeeds or fails, does not check the result
+     *
      * @param url the url to make a get request on
      * @param c the callback with the result of success or failure
      */
@@ -289,6 +298,7 @@ public class Database {
 
     /**
      * Makes an http get request that returns a string
+     *
      * @param url the url to get on
      * @param c the callback on success
      */
@@ -303,7 +313,8 @@ public class Database {
     }
 
     /**
-     * Sets the username in firebase
+     * Changes the current user's username in firebase
+     *
      * @param username the username to set to
      */
     public void setUserName(String username)  {
@@ -327,6 +338,7 @@ public class Database {
 
     /**
      * Gets the username synchronously, returning null if the information is not yet available
+     *
      * @return The username if available, or null
      */
     public String getUserName() {
@@ -357,7 +369,8 @@ public class Database {
     }
 
     /**
-     * Check if the given username is not in the database already
+     * Check if the given username is already in the database
+     *
      * @param username
      * @param cb the callback with the result
      */
@@ -375,6 +388,7 @@ public class Database {
 
     /**
      * Uploads an image to firebase, callback for success result
+     *
      * @param bitmap the bitmap to upload
      * @param callback the success status
      * @return the string at which the image can be found
@@ -399,7 +413,8 @@ public class Database {
     }
 
     /**
-     * Gets the image from firebase
+     * Downloads an image from firebase
+     *
      * @param loc The storage URL to get from
      * @param callback a function that has the image in Bitmap form, or null if it could not get the image
      */
@@ -423,7 +438,8 @@ public class Database {
     }
 
     /**
-     * Gets the userid for following and unfollowing by username
+     * Gets the userid for a given username
+     *
      * @param username the username to get the id for
      * @param callback a callback that will pass through the userid when it finds it, otherwise it will pass through null
      */
@@ -440,7 +456,8 @@ public class Database {
     }
 
     /**
-     * Gets the username from the users id
+     * Gets the username for a given users id
+     *
      * @param userId the userId to get the username for
      * @param callback a callback that will pass through the userid when it finds it, otherwise it will pass through null
      */
