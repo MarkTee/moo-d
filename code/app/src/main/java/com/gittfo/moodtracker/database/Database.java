@@ -282,7 +282,7 @@ public class Database {
      * @param c the callback function
      */
     public void unFollowUser(String otherId, Consumer<Boolean> c) {
-        callCloudFunctionSimple(buildCloudURL(String.format("followUser?uid=%s&oid=%s", userId, otherId)), c);
+        callCloudFunctionSimple(buildCloudURL(String.format("unfollowUser?uid=%s&oid=%s", userId, otherId)), c);
     }
 
     /**
@@ -499,6 +499,8 @@ public class Database {
         });
     }
 
+    // true is accept
+    // false is deny
     public void completeFollowRequest(String usrid, boolean b) {
         if (b)
             callCloudFunctionSimple(buildCloudURL(String.format("confirmFollowUser?uid=%s&oid=%s", userId, usrid)), null);
@@ -516,8 +518,11 @@ public class Database {
             List<String> requestInfo = new ArrayList<>();
             Map<String, Object> items = docs.getData();
             if (items != null) {
-                for (String obj : (ArrayList<String>) items.get("following")) {
-                    requestInfo.add(obj);
+                ArrayList<String> itmFol = (ArrayList<String>) items.get("following");
+                if (itmFol != null) {
+                    for (String obj : itmFol) {
+                        requestInfo.add(obj);
+                    }
                 }
             }
 
