@@ -1,5 +1,5 @@
 # moo-d
-![moo-d logo](https://raw.githubusercontent.com/CMPUT301F19T04/moo-d/master/code/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png)
+![moo-d logo](https://raw.githubusercontent.com/MarkTee/moo-d/master/code/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png)
 <br/>
 <br/>
 moo-d is an Android app that allows users to post, track, and share their moods.  
